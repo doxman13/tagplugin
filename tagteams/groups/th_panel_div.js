@@ -310,7 +310,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                     <tbody>
                         <tr>
-                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">ยินดีด้วย
+                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">ยินดีด้วย<br>
                             ติดตั้งใช้งานให้กับเคสของคุณเรียบร้อยแล้ว</td>
                             <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png" style="display: block;min-width:100px;" width="100"></td>
                         </tr>
@@ -323,21 +323,16 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span> thân mến!</td>
+                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">สวัสดีคุณ <span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span></td>
                                         </tr>
                                         <tr>
                                             <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                                                <p style="font-weight: normal;"><strong>Xin chúc mừng!&nbsp;</strong></p>
-                                                <p style="font-weight: normal;">Đối với trường hợp<strong> </strong>
-                                                    <span data-infocase="case_id">5-6594000033737</span>, chúng tôi rất vui mừng được thông báo rằng quá trình triển khai đã hoàn tất thành công. Chúng tôi đang ghi nhận các lượt hiển thị đã xác minh, nên có thể xác nhận rằng chiến dịch của <span data-infocase="customer_gender">bạn</span> đang hoạt động đúng cách và như dự kiến!
-                                                </p>
-                                                <p style="font-weight: normal;">Điều này có nghĩa là trường hợp <span data-infocase="case_id">5-6594000033737</span><strong> </strong>hiện đã được đóng thành công. Nếu <span data-infocase="customer_gender">bạn</span> gặp vấn đề, có mối lo ngại hay câu hỏi chung, thì nhóm của chúng tôi luôn sẵn sàng và rất mong được trợ giúp <span data-infocase="customer_gender">bạn</span>!</p>
-                                                <p style="font-weight: normal;"><span data-infocase_capitalize="customer_gender" >Bạn</span> nên liên hệ với Người quản lý tài khoản của Google nếu cần đặt lại lịch hẹn với chúng tôi trong tương lai.</p>
-                                                <p dir="auto" style="font-weight: normal;">
-                                                </p>
-                                                <p style="font-weight: normal;">Cảm ơn <span data-infocase="customer_gender">bạn</span> đã hợp tác lâu dài với Google!&nbsp;</p>
+                                                <p style="font-weight: normal;">เรายินดีที่จะรายงานว่าได้ติดตั้งใช้งาน <strong><span data-infocase="tasks_nowrap">task</span></strong> เรียบร้อยแล้ว</p>
+                                                <p style="font-weight: normal;">เมื่อพิจารณาจากการแสดงผลที่ยืนยันแล้ว แคมเปญทํางานตามที่คาดไว้และเราได้ปิดเคส <span data-infocase="case_id"> 4-7787000033946</span> แล้ว</p>
+                                                <p style="font-weight: normal;">หากคุณมีข้อสงสัยหรือต้องการสอบถามเพิ่มเติม เรายินดีให้ความช่วยเหลือ เพียงติดต่อผู้จัดการฝ่ายดูแลลูกค้าของ Google เพื่อนัดหมาย</p>
+                                                <p style="font-weight: normal;">ขอขอบคุณที่ให้ความร่วมมือทางธุรกิจกับ Google เสมอมา</p>
+                                                <p dir="auto" style="font-weight: normal;"></p>
                                                 <br>
-                                                <p dir="auto">Trân trọng!</p>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -355,7 +350,7 @@
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
                                                 <span data-infosetting="your-name">YOUR-NAME</span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                <span style="font-size: 16px;"><i>Technical Solutions Team</i><br><i>TDCX, on behalf of Google</i></span>
                                             </td>
                                         </tr>
                                         
@@ -374,7 +369,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
+                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">เคส # <span data-infocase="case_id">0-00000000000000</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -399,7 +394,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span> thân mến!</td>
+                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">สวัสดีคุณ <span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span></td>
                                         </tr>
                                         <tr>
                                             <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
@@ -1705,7 +1700,7 @@
                             </div>
                             <div class="_emailtemp-item" data-type="SO - Verified">
                                 <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-                                <div class="_emailtemp-item__title">+++ยินดีด้วย ติดตั้งใช้งานให้กับเคสของคุณเรียบร้อยแล้ว [<span data-infocase="case_id">5-6594000033737</span>]</div>
+                                <div class="_emailtemp-item__title">ทีมแก้ปัญหาด้านเทคนิค [<span data-infocase="case_id">5-6594000033737</span>]</div>
                                 <div class="_emailtemp-item__content">
                                     <div id="email-body-content-top" style="width:100%">
                                         <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">

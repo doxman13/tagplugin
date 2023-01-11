@@ -43,7 +43,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span> thân mến!</td>
+                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">สวัสดี คุณ<span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span></td>
                                         </tr>
                                         <tr>
                                             <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">

@@ -382,7 +382,8 @@
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                     <tbody>
                         <tr>
-                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Chúng tôi đã cố gắng liên lạc với <span data-infocase="customer_gender">bạn</span> hôm nay</td>
+                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">เราพยายามติดต่อคุณในวันนี้เกี่ยวกับ<br>
+                                เคสของคุณ</td>
                             <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/NI_Attempted_Contact_ts_ni_ac_v2.png" style="display: block;min-width:100px;" width="100"></td>
                         </tr>
                     </tbody>
@@ -399,22 +400,21 @@
                                         <tr>
                                             <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
                                                 <p dir="auto">
-                                                    Đầu thư, chúng tôi xin chúc <span data-infocase="customer_gender">bạn</span> có một ngày tốt lành!&nbsp;<br>
+                                                หวังว่าคุณจะสบายดี<br>
                                                     <br>
-                                                    Hôm nay, nhóm giải pháp kỹ thuật của chúng tôi đã cố gắng gọi điện cho <span data-infocase="customer_gender">bạn</span> để trao đổi về yêu cầu <b><span data-infocase="tasks_nowrap">Tasks</span> </b>cho
-                                                    <b><span data-infocase="customer_website">nhuahuongchi.com</span></b>.&nbsp;<br>
-                                                    Chúng tôi đã thử gọi cho bạn một lần nữa sau 10 phút, nhưng rất tiếc vẫn không thể gặp được <span data-infocase="customer_gender">bạn</span>.&nbsp;<br>
+                                                    ทีมโซลูชันทางเทคนิคได้ติดต่อคุณในวันนี้เกี่ยวกับคําขอ <b><span data-infocase="tasks_nowrap">Tasks</span></b> สำหรับ
+                                                    <b><span data-infocase="customer_website">nhuahuongchi.com</span></b><br>
+                                                    และพยายามโทรติดต่อคุณอีกครั้งหลังจากผ่านไป 10 นาที แต่ก็ไม่สามารถติดต่อคุณได้<br>
                                                     <br>
-                                                    Chúng tôi sẽ thử gọi cho <span data-infocase="customer_gender">bạn</span> một lần cuối vào ngày làm việc tiếp theo. Nếu vẫn không thể liên lạc với <span data-infocase="customer_gender">bạn</span>, chúng tôi sẽ đóng trường hợp này.&nbsp;<br>
+                                                    เราจะพยายามโทรหาคุณพรุ่งนี้เป็นครั้งสุดท้ายช่วง <span class="field">{AGENT TO FILL THIS OUT, FOR EXAMPLE: "9AM AND 12PM + TIMEZONE"}</span> และจะปิดเคสนี้หากยังคงติดต่อคุณไม่ได้<br>
                                                     <br>
-                                                    <span data-infocase_capitalize="customer_gender">Bạn</span> có thể mở lại trường hợp này bất cứ lúc nào theo một trong các cách sau:
+                                                    ทั้งนี้คุณจะเปิดเคสนี้ใหม่อีกครั้งได้ทุกเมื่อโดยทำตามวิธีใดวิธีหนึ่งต่อไปนี้
                                                 </p>
                                                 <ul style="font-weight: normal;">
-                                                    <li>Trả lời email này để cho biết ngày và giờ thuận tiện cho <span data-infocase="customer_gender">bạn</span>.</li>
-                                                    <li>Liên hệ với Người quản lý tài khoản của Google để nhờ họ giúp <span data-infocase="customer_gender">bạn</span> liên hệ lại với chúng tôi.&nbsp;</li>
+                                                    <li>ตอบกลับอีเมลฉบับนี้พร้อมแจ้งวันและเวลาที่สะดวก</li>
+                                                    <li>ติดต่อผู้จัดการฝ่ายดูแลลูกค้าของ Google ให้ช่วยให้คุณติดต่อเราได้อีกครั้ง</li>
                                                 </ul>
-                                                <p style="font-weight: normal;">Cảm ơn <span data-infocase="customer_gender">bạn</span>!</p>
-                                                <p dir="auto">Trân trọng!</p>
+                                                <p dir="auto">ขอขอบคุณ</p>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -432,7 +432,7 @@
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
                                                 <span data-infosetting="your-name">YOUR-NAME</span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                <span style="font-size: 16px;"><i>Technical Solutions Team</i><br><i>TDCX, on behalf of Google</i></span>
                                             </td>
                                         </tr>
                                         
@@ -451,7 +451,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
+                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">เคส #<span data-infocase="case_id">0-00000000000000</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1711,7 +1711,7 @@
                             </div>
                             <div class="_emailtemp-item" data-type="NI - Attempted Contact">
                                 <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-                                <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật - Thông báo không thể liên hệ được lần 1 [<span data-infocase="case_id">5-6594000033737</span>]</div>
+                                <div class="_emailtemp-item__title">ทีมแก้ปัญหาด้านเทคนิค [<span data-infocase="case_id">5-6594000033737</span>]</div>
                                 <div class="_emailtemp-item__content">
                                     <div id="email-body-content-top" style="width:100%">
                                         <div id="email-body-content-top-content">

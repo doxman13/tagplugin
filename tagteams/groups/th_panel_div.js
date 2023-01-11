@@ -464,7 +464,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                     <tbody>
                         <tr>
-                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Trường hợp của bạn đã bị đóng do không nhận được phản hồi từ phía bạn</td>
+                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">เคสของคุณปิดแล้วเนื่องจากไม่มีการใช้งาน</td>
                             <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/IN_Not_Reachable_ts_in_nrch.png" style="display: block;min-width:100px;" width="100"></td>
                         </tr>
                     </tbody>
@@ -476,23 +476,15 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span> thân mến!</td>
+                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">สวัสดีคุณ <span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span></td>
                                         </tr>
                                         <tr>
                                             <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                                                <p>Đối với trường hợp <span data-infocase="case_id">5-6594000033737</span> cho <strong><span data-infocase="customer_website">nhuahuongchi.com</span></strong>, chúng tôi đã chờ <span data-infocase="customer_gender">bạn</span> phản hồi để tiến hành việc triển khai.&nbsp; Rất tiếc, vì <span data-infocase="customer_gender">bạn</span> không phản hồi, nên chúng tôi hiện đã đóng trường hợp này.&nbsp;</p>
-                                                <p>Nếu vẫn muốn tiến hành việc triển khai này, <span data-infocase="customer_gender">bạn</span> có thể tham khảo <a href="https://support.google.com/google-ads/gethelp" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><u>Trung tâm trợ giúp của Google</u></a> hoặc liên hệ với Người quản lý tài khoản của Google bất cứ lúc nào. Họ luôn sẵn sàng trợ giúp <span data-infocase="customer_gender">bạn</span>!&nbsp;<br>
-                                                    Chúng tôi rất mong được tiếp tục hợp tác với <span data-infocase="customer_gender">bạn</span> trong tương lai!&nbsp;
+                                                <p>เกี่ยวกับเคส <span data-infocase="case_id">5-6594000033737</span> สำหรับ <strong><span data-infocase="customer_website">nhuahuongchi.com</span></strong>เรารอการตอบกลับจากคุณเพื่อให้ดําเนินการได้ ขออภัยในความไม่สะดวก เนื่องจากเราไม่ได้รับการตอบกลับจากคุณ จึงจำเป็นต้องปิดเคสนี้</p>
+                                                <p>หากคุณยังสนใจติดตั้งใช้งานต่อ โปรดดูที่ <a href="https://support.google.com/google-ads/gethelp" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><u>ศูนย์ช่วยเหลือของ Google</u></a> 
+                                                หรือติดต่อผู้จัดการฝ่ายดูแลลูกค้าของ Google ซึ่งยินดีอย่างยิ่งที่จะให้ความช่วยเหลือ<br>
                                                 </p>
-                                                <div>
-                                                    <p><em>Nếu <span data-infocase="customer_gender">bạn</span> muốn tìm hiểu thêm về tính năng Theo dõi lượt chuyển đổi ngoại tuyến, thì sau đây là một số đường liên kết đến các tài nguyên có giá trị mà <span data-infocase="customer_gender">bạn</span> có thể thấy hữu ích!&nbsp;</em></p>
-                                                    <ul>
-                                                        <li aria-level="1"><a href="https://support.google.com/google-ads/answer/2998031" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>Giới thiệu về tính năng theo dõi lượt chuyển đổi ngoại tuyến</u></em></a></li>
-                                                        <li aria-level="1"><a href="https://support.google.com/google-ads/answer/7012522" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>Thiết lập tính năng theo dõi lượt chuyển đổi ngoại tuyến</u></em></a></li>
-                                                        <li aria-level="1"><a href="https://support.google.com/google-ads/answer/7014069" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>Nhập lượt chuyển đổi từ lượt nhấp vào quảng cáo trên Google Ads</u></em></a></li>
-                                                    </ul>
-                                                </div>
-                                                <p dir="auto">Trân trọng!</p>
+                                                <p dir="auto">เราหวังว่าจะได้ร่วมงานกับคุณอีกในอนาคต</p>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -510,7 +502,7 @@
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
                                                 <span data-infosetting="your-name">YOUR-NAME</span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                <span style="font-size: 16px;"><i>Technical Solutions Team</i><br><i>TDCX, on behalf of Google</i></span>
                                             </td>
                                         </tr>
                                         
@@ -529,7 +521,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
+                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">เคส #<span data-infocase="case_id">0-00000000000000</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1722,7 +1714,7 @@
                             </div>
                             <div class="_emailtemp-item" data-type="IN - Not Reachable">
                                 <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-                                <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật - Thông báo đóng hỗ trợ kỹ thuật cho trường hợp [<span data-infocase="case_id">5-6594000033737</span>]</div>
+                                <div class="_emailtemp-item__title">ทีมแก้ปัญหาด้านเทคนิค [<span data-infocase="case_id">5-6594000033737</span>]</div>
                                 <div class="_emailtemp-item__content">
                                     <div id="email-body-content-top" style="width:100%">
                                         <div id="email-body-content-top-content">

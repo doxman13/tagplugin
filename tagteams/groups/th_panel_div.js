@@ -47,10 +47,10 @@
                                         </tr>
                                         <tr>
                                             <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                                                <p>ขอบคุณที่ทำการนัดหมายกับเราทีมแก้ปัญหาด้านเทคนิค ตัวแทน Google ของเราได้ร้องขอการนัดหมายนี้ในนามของคุณ และเราจะทำการช่วยเหลือคุณในหมายเลขเค <span data-infocase="case_id">0-00000000000000</span> cho <span data-infocase="customer_website">customer_website.com</span>.&nbsp;</p>
-                                                <p>Vui lòng kiểm tra hộp thư đến trong email của bạn để tìm lời mời trên lịch cho cuộc hẹn sắp tới với chúng tôi, và làm theo hướng dẫn được trình bày trong thư để xác nhận việc bạn sẽ tham dự cuộc hẹn. Để chuẩn bị cho cuộc gọi, vui lòng xem và hoàn tất những Việc cần làm được nêu <a href="https://support.google.com/google-ads/answer/11605860" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">tại đây</a>.</p>
+                                                <p>ขอบคุณที่ทำการนัดหมายกับเราทีมแก้ปัญหาด้านเทคนิค ตัวแทน Google ของเราได้ร้องขอการนัดหมายนี้ในนามของคุณ และเราจะทำการช่วยเหลือคุณในหมายเลขเคส <span data-infocase="case_id">0-00000000000000</span> สำหรับ: <span data-infocase="customer_website">customer_website.com</span>.&nbsp;</p>
+                                                <p>โปรดตรวจสอบกล่องจดหมายอีเมลของคุณสำหรับการนัดหมายกับทางเราและทำตามขั้นตอนตามนั้นเพื่อยืนยันการเข้าร่วมของคุณ ในการเตรียมตัวสำหรับการโทรของเรา โปรดตรวจสอบและกรอกรายการสิ่งที่ต้องทำที่ลิงก์ไว้ <a href="https://support.google.com/google-ads/answer/11605860" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">tại đây</a>.</p>
                                                 <p dir="auto" data-infocase="linkgooglemeet_section"></p>
-                                                <p>Nếu bạn có câu hỏi trước khi tham gia cuộc gọi hoặc muốn thêm những người tham dự khác, vui lòng cho chúng tôi biết bằng cách trả lời email này hoặc liên hệ với Người đại diện bán hàng của Google. Chúng tôi rất mong được làm việc với bạn! Cảm ơn bạn.</p>
+                                                <p>หากคุณมีคำถามใด ๆ ก่อนการโทรนัดหมาย  หรือต้องการเชิญผู้เข้าร่วมเพิ่มเติม  โปรดแจ้งให้เราทราบผ่านการตอบกลับอีเมลฉบับนี้  หรือติดต่อผู้ดูแลบัญชีของคุณ เรายินดีที่จะช่วยเหลือคุณ</p>
                                             </td>
                                         </tr>
                                     </tbody>

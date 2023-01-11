@@ -31,7 +31,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                     <tbody>
                         <tr>
-                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Tin vui! Nhóm giải pháp kỹ thuật đã nhận được yêu cầu của bạn</td>
+                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">ข่าวดี! ทีมโซลูชันทางเทคนิคได้รับเคสของคุณแล้ว</td>
                             <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png" style="display: block;min-width:100px;" width="100"></td>
                         </tr>
                     </tbody>
@@ -652,9 +652,11 @@
                                         <tr>
                                             <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
                                                 <p dir="auto"><span class="" style="font-weight: normal;">
-                                                    Cảm ơn <span data-infocase="customer_gender">bạn</span> đã liên hệ với Nhóm giải pháp kỹ thuật về việc <b><span data-infocase="tasks_nowrap">ZZZ</span></b>&nbsp;cho
+                                                ขอขอบคุณที่ติดต่อทีมโซลูชันทางเทคนิคเกี่ยวกับ <b><span data-infocase="tasks_nowrap">ZZZ</span></b>&nbsp;สําหรับ
                                                     <b><span data-infocase="customer_website">nhuahuongchi.com</span></b>
+                                                    <span>เราดําเนินการติดตั้งใช้งานเรียบร้อยแล้ว และกําลังตรวจสอบเคสของคุณเพื่อให้แน่ใจว่าทุกอย่างทํางานตามที่คาดไว้<span>
                                                 </p>
+                                               
                                                 <ul style="font-weight: normal;"></ul>
                                                 <p style="font-weight: normal;">Hiện tại, chúng tôi đã hoàn tất việc triển khai và đang theo dõi trường hợp này để đảm bảo mọi thứ hoạt động đúng như dự kiến và mang lại kết quả mong muốn.<br>
                                                     <br>
@@ -663,16 +665,17 @@
                                                     <br>
                                                     Nếu việc triển khai không diễn ra như dự kiến, chúng tôi sẽ cố gắng giải quyết/điều tra vấn đề và liên hệ với <span data-infocase="customer_gender">bạn</span> nếu cần.<br>
                                                     <br>
-                                                    <em>Nếu <span data-infocase="customer_gender">bạn</span> muốn tìm hiểu thêm, thì sau đây là một số đường liên kết dẫn đến các tài nguyên có giá trị liên quan đến việc Triển khai thẻ và nguồn cấp dữ liệu mua sắm. Các tài nguyên này có thể hữu ích để <span data-infocase="customer_gender">bạn</span> sử dụng trong tương lai!<br>
+                                                    <em>
+                                                    ในระหว่างนี้ คุณสามารถดูข้อมูลเพิ่มเติมเกี่ยวกับ Shopping และการติดตั้งใช้งานแท็กได้จากลิงก์ที่มีประโยชน์เหล่านี้<br>
                                                         <br>
-                                                        Thẻ liên quan</em>
+                                                        แหล่งข้อมูลเกี่ยวกับแท็ก</em>
                                                 </p>
                                                 <ul style="font-weight: normal;">
                                                     <li><u><em><a href="https://developers.google.com/gtagjs" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Hỗ trợ triển khai thẻ</a></em></u></li>
                                                     <li><u><em><a href="https://www.youtube.com/user/learnwithgoogle/playlists" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Google Ads</a></em></u></li>
                                                     <li><u><em><a href="https://www.youtube.com/user/googleanalytics" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Google Analytics</a></em></u></li>
                                                 </ul>
-                                                <p style="font-weight: normal;"><em>Nguồn cấp dữ liệu mua sắm liên quan</em></p>
+                                                <p style="font-weight: normal;"><em>แหล่งข้อมูลเกี่ยวกับ Shopping</em></p>
                                                 <ul style="font-weight: normal;">
                                                     <li><u><em><a href="https://www.google.com/retail/" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Google cho Nhà bán lẻ</a></em></u></li>
                                                     <li><u><em><a href="https://www.google.com/retail/solutions/merchant-center/" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Google Merchant Center</a></em></u></li>

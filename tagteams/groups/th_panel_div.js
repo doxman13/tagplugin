@@ -66,7 +66,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 2px;">Giải pháp kỹ thuật của Google</td>
+                                            <td align="left" style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 2px;">ทีมโซลูชันทางเทคนิคของ Google</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -83,7 +83,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
+                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">เคส # <span data-infocase="case_id">0-00000000000000</span></td>
                                         </tr>
                                     </tbody>
                                 </table>

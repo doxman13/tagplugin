@@ -217,6 +217,13 @@ function vi_tagTeamTDCXLoad() {
             cLog(() => {console.info(n_time_dkneed_compare , '=' , n_time_dkneed, '--- cuf-form-field - bassic')});
         });
 
+        // has caseview
+        n_time_dkneed++;
+        wait4Elem(".case-log-container.active-case-log-container case-message-view").then(function () {
+            is_ready(n_time_dkneed_compare++);
+            cLog(() => {console.info(n_time_dkneed_compare , '=' , n_time_dkneed, '--- case-message-view - bassic')});
+        });
+
         
         n_time_dkneed++;
         wait4Elem("#read-card-tab-panel-case-log .case-log-container.active-case-log-container .activities > div").then((elm1) => {    
@@ -756,7 +763,7 @@ function vi_tagTeamTDCXLoad() {
             panel_div.querySelectorAll('[data-type]').forEach((elm) => {
                 // elm
                 elm.style.display = 'none';
-                console.log(elm.getAttribute("data-type").toLowerCase().includes(_search))
+                cLog(()=> {console.log(elm.getAttribute("data-type").toLowerCase().includes(_search))})
                 if(elm.getAttribute("data-type").toLowerCase().includes(_search)) {
                     elm.style.display = '';
                 }
@@ -766,7 +773,7 @@ function vi_tagTeamTDCXLoad() {
 
 function activeListCase(caseid){
     panel_div.querySelectorAll('[data-caseid]').forEach((elm)=>{
-        console.log(elm.getAttribute('data-caseid'), caseid);
+        cLog(()=> {console.log(elm.getAttribute('data-caseid'), caseid);});
         if(elm.getAttribute('data-caseid') == caseid) {
             elm.classList.add("active");
         } else {

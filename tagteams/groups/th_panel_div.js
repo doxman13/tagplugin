@@ -623,7 +623,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                     <tbody>
                         <tr>
-                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Đang chờ hiển thị / chuyển đổi</td>
+                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">สถานะเคสอัปเดตแล้ว</td>
                             <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/NI_Awaiting_Inputs_ts_ni_ai_v2.png" style="display: block;min-width:100px;" width="100"></td>
                         </tr>
                     </tbody>
@@ -635,7 +635,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span> thân mến!</td>
+                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">สวัสดี คุณ<span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span></td>
                                         </tr>
                                         <tr>
                                             <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
@@ -646,20 +646,23 @@
                                                 </p>
                                                
                                                 <ul style="font-weight: normal;"></ul>
-                                                <p style="font-weight: normal;">Hiện tại, chúng tôi đã hoàn tất việc triển khai và đang theo dõi trường hợp này để đảm bảo mọi thứ hoạt động đúng như dự kiến và mang lại kết quả mong muốn.<br>
-                                                    <br>
-                                                    <u><strong>Các bước tiếp theo</strong></u><br>
-                                                    Việc cài đặt sẽ được coi là <strong>đã hoàn tất thành công</strong> sau khi chúng tôi ghi nhận lượt hiển thị/lượt chuyển đổi đúng như dự kiến.&nbsp;<br>
-                                                    <br>
-                                                    Nếu việc triển khai không diễn ra như dự kiến, chúng tôi sẽ cố gắng giải quyết/điều tra vấn đề và liên hệ với <span data-infocase="customer_gender">bạn</span> nếu cần.<br>
-                                                    <br>
-                                                    <em>
-                                                    ในระหว่างนี้ คุณสามารถดูข้อมูลเพิ่มเติมเกี่ยวกับ Shopping และการติดตั้งใช้งานแท็กได้จากลิงก์ที่มีประโยชน์เหล่านี้<br>
-                                                        <br>
-                                                        แหล่งข้อมูลเกี่ยวกับแท็ก</em>
-                                                </p>
+                                                <p style="font-weight: normal;">
+                                                    <u><strong>คุณตรวจสอบสถานะคําขอได้ที่ด้านล่าง</strong></u><br>
+                                                    <ul style="font-weight: normal;">
+                                                        <li>{Requested Task Type} - {Status} - {Reason (if applicable)}</i>
+                                                        <li>{Requested Task Type} - {Status} - {Reason (if applicable)}</i>
+                                                        <li>{Requested Task Type} - {Status} - {Reason (if applicable)}</i>
+                                                    </ul>
+                                                   <br>
+                                                   
+                                                   เราจะถือว่าการติดตั้งเสร็จสมบูรณ์เมื่อการแสดงผลและ Conversion ที่ได้รับเป็นไปตามที่คาดไว้ หากพบปัญหาเกี่ยวกับเรื่องนี้ เราจะตรวจสอบและติดต่อคุณ หากจําเป็น<br>
+                                                        
+                                                </p><br>
+
+                                                <p>ในระหว่างนี้ คุณสามารถดูข้อมูลเพิ่มเติมเกี่ยวกับ Shopping และการติดตั้งใช้งานแท็กได้จากลิงก์ที่มีประโยชน์เหล่านี้</p>
+                                                <p style="font-weight: normal;"><em>แหล่งข้อมูลเกี่ยวกับแท็ก</em></p>
                                                 <ul style="font-weight: normal;">
-                                                    <li><u><em><a href="https://developers.google.com/gtagjs" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Hỗ trợ triển khai thẻ</a></em></u></li>
+                                                    <li><u><em><a href="https://developers.google.com/gtagjs" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">ความช่วยเหลือเกี่ยวกับการติดตั้งใช้งานแท็ก</a></em></u></li>
                                                     <li><u><em><a href="https://www.youtube.com/user/learnwithgoogle/playlists" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Google Ads</a></em></u></li>
                                                     <li><u><em><a href="https://www.youtube.com/user/googleanalytics" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Google Analytics</a></em></u></li>
                                                 </ul>
@@ -667,9 +670,9 @@
                                                 <ul style="font-weight: normal;">
                                                     <li><u><em><a href="https://www.google.com/retail/" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Google cho Nhà bán lẻ</a></em></u></li>
                                                     <li><u><em><a href="https://www.google.com/retail/solutions/merchant-center/" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Google Merchant Center</a></em></u></li>
-                                                    <li><u><em><a href="https://support.google.com/merchants/answer/188924" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Thiết lập tài khoản và nguồn cấp dữ liệu</a></em></u></li>
-                                                    <li><u><em><a href="https://support.google.com/merchants/topic/7294606?ref_topic=7294771" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Tối ưu hoá nguồn cấp dữ liệu</a>&nbsp;</em></u></li>
-                                                    <li><u><em><a href="https://support.google.com/merchants/answer/9199328" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Các nền tảng của Google</a></em></u></li>
+                                                    <li><u><em><a href="https://support.google.com/merchants/answer/188924" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">การตั้งค่าบัญชีและฟีด</a></em></u></li>
+                                                    <li><u><em><a href="https://support.google.com/merchants/topic/7294606?ref_topic=7294771" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">การเพิ่มประสิทธิภาพฟีด</a>&nbsp;</em></u></li>
+                                                    <li><u><em><a href="https://support.google.com/merchants/answer/9199328" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">แพลตฟอร์มของ Google</a></em></u></li>
                                                 </ul>
                                                 <p dir="auto" style="font-weight: normal;">
                                                 </p>
@@ -692,7 +695,7 @@
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
                                                 <span data-infosetting="your-name">YOUR-NAME</span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                <span style="font-size: 16px;"><i>Technical Solutions Team </i><br><i>TDCX, on behalf of Google</i></span>
                                             </td>
                                         </tr>
                                         
@@ -711,7 +714,8 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
+                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
+                                            เคส #<span data-infocase="case_id">0-00000000000000</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1660,7 +1664,7 @@
                             </div>
                             <div class="_emailtemp-item" data-type="Send Google Meet Link">
                                 <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-                                <div class="_emailtemp-item__title"> ทีมแก้ปัญหาด้านเทคนิค [<span data-infocase="case_id">5-6594000033737</span>]</div>
+                                <div class="_emailtemp-item__title">ทีมแก้ปัญหาด้านเทคนิค [<span data-infocase="case_id">5-6594000033737</span>]</div>
                                 <div class="_emailtemp-item__content">
                                     <div id="email-body-content-top" style="width:100%" dir="auto">
                                         <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
@@ -1737,7 +1741,7 @@
                             </div>
                             <div class="_emailtemp-item" data-type="NI - Awaiting Validation">
                                 <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-                                <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật – Đợi xác minh luợt chuyển đổi - dữ liệu cho trường hợp [<span data-infocase="case_id">5-6594000033737</span>]</div>
+                                <div class="_emailtemp-item__title">ทีมแก้ปัญหาด้านเทคนิค [<span data-infocase="case_id">5-6594000033737</span>]</div>
                                 <div class="_emailtemp-item__content">
                                     <div id="email-body-content-top" style="width:100%">
                                         <div id="email-body-content-top-content">

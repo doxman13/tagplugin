@@ -877,7 +877,6 @@ function loadInputCase(_panel, _datatemp, _isvalidate = true) {
 
     if(_datatemp.customer_adsid) {
         loadInfoCaseInnerTextElm(_panel, 'customer_adsid_format', reformatAdsId(_datatemp.customer_adsid));
-        console.log('111111111111', document.querySelector('._panel_shortcut_gearloose_vanbo'));
         wait4Elem('._panel_shortcut_gearloose_vanbo').then(function (elm) {
             if(elm) {
                 elm.setAttribute("href", 'https://gearloose2.corp.google.com/#/search/merchants?q=awid:' + reformatAdsId(_datatemp.customer_adsid));
@@ -2218,7 +2217,7 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                         >
                                             <span class="content"></span>
                                         </a>
-                                        <a href="http://go/teamVN" target="_blank" class="material-button _panel_shortcut_go_teamvietnam"  >
+                                        <a href="http://go/teamVN" target="_blank" class="material-button _panel_shortcut_go_teamvietnam" data-textview="Hôm nay bạn chưa ghé go/TeamVN thì phải?"  >
                                             <img src="${window.dataTagteam.assets_url_img}/pepe-4chan.gif">
                                             <span class="content"></span>
                                         </a>
@@ -2333,6 +2332,12 @@ var loadpanelcaseconnect = (is_reload = false) => {
                             onClickElm(`[card-type="compose"] [data-highlight]`, `click`, (elm, e) => {
                                 // allow
                                 elm.removeAttribute("data-highlight");
+                            });
+                            
+                        // Script
+                            onClickElm(`._panel__script--elm`, `click`, (elm, e) => {
+                                // allow
+                                toggleClass("hide", elm)
                             });
 
 

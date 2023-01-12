@@ -124,89 +124,116 @@ var vi_load_remote = function (result, _default_action) {
         // Development
         // vi_api_blog | action: script4dev
         case 'Development':
-            var _key = "cdtx_scriptsync_dev";
-            var _body = {
-                "action": "script4dev",
-                "language": "vi"
-            };
-            load_fetch_post_content(vi_api_blog, _body, (response_api) => {
-                if(response_api.rs) {
-                    setChromeStorage(_key, response_api.rs , () => {
-                        if(response_api.typeaction == 'script_sync') {
-                            eval(response_api.script_str);
-                        } else {
-                            _default_action();
-                        }
-                    });
-                }
-            });
-        
+                var _key = "cdtx_scriptsync_dev";
+                var _body = {
+                    "action": "script4dev",
+                    "language": "vi"
+                };
+                load_fetch_post_content(vi_api_blog, _body, (response_api) => {
+                    if(response_api.rs) {
+                        setChromeStorage(_key, response_api.rs , () => {
+                            if(response_api.typeaction == 'script_sync') {
+                                try {
+                                    eval(response_api.script_str);
+                                } catch (e) {
+                                    if (e instanceof SyntaxError) {
+                                        console.error("Error", e);
+                                    }
+                                }
+                            } else {
+                                _default_action();
+                            }
+                        });
+                    }
+                });
             break;
     
         // Auto - auto sync
         // vi_api_blog  | action: script4agent
         default:
-            var _key = "cdtx_scriptsync_auto";
-
-            var _sync_api = (_objectvalue) => {
-                var _body = {
-                    "action": "script4agent",
-                    "language": "vi",
-                    "timesync": _timekey_current						
-                };
-                load_fetch_post_content(vi_api_blog, _body, (response_api) => {
-                    console.log("load_fetch_post_content", response_api);
-                    if(response_api.rs) {
-                        setChromeStorage(_key, response_api , () => {
-                            if(response_api.typeaction == 'script_sync') {
-                                eval(response_api.script_str);
-                            } else {
-                                _default_action();
+                var _key = "cdtx_scriptsync_auto";
+    
+                var _sync_api = (_objectvalue) => {
+                    var _body = {
+                        "action": "script4agent",
+                        "language": "vi",
+                        "timesync": _timekey_current						
+                    };
+                    load_fetch_post_content(vi_api_blog, _body, (response_api) => {
+                        console.log("load_fetch_post_content", response_api);
+                        if(response_api.rs) {
+                            setChromeStorage(_key, response_api , () => {
+                                if(response_api.typeaction == 'script_sync') {
+                                    try {
+                                        eval(response_api.script_str);
+                                    } catch (e) {
+                                        if (e instanceof SyntaxError) {
+                                            console.error("Error", e);
+                                            _default_action();
+                                        }
+                                    }
+                                } else {
+                                    _default_action();
+                                }
+                            });
+                        } else {
+                            cLog(() => {console.log("FETCH DATA ERROR or RETURN FALSE")})
+                            var _rsfalse = {
+                                rs: false,
+                                script_str: _objectvalue.script_str,
+                                timesync: _timekey_current,// day+hour
+                                typeaction: _objectvalue.typeaction, // script_sync
                             }
-                        });
-                    } else {
-                        cLog(() => {console.log("FETCH DATA ERROR or RETURN FALSE")})
-                        var _rsfalse = {
-                            rs: false,
-                            script_str: _objectvalue.script_str,
-                            timesync: _timekey_current,// day+hour
-                            typeaction: _objectvalue.typeaction, // script_sync
+                            setChromeStorage(_key, _rsfalse , () => {
+                                if(response_api.typeaction == 'script_sync') {
+                                    try {
+                                        eval(_objectvalue.script_str);
+                                    } catch (e) {
+                                        if (e instanceof SyntaxError) {
+                                            console.error("Error", e);
+                                            _default_action();
+                                        }
+                                    }
+                                } else {
+                                    _default_action();
+                                }
+    
+                            })
                         }
-                        setChromeStorage(_key, _rsfalse , () => {
-                            if(response_api.typeaction == 'script_sync') {
-                                eval(_objectvalue.script_str);
+                    });
+                }
+                
+                getChromeStorage(_key, (response) => {
+                    var _objectvalue = {};
+                    if(response.value) {
+                        _objectvalue = response.value;
+                        cLog(() => {console.log("===", _objectvalue)})
+                        // 
+                        if(_objectvalue.timesync == _timekey_current) {
+                            cLog(() => {console.log("_CACHE", _objectvalue.typeaction)})
+                            if(_objectvalue.typeaction == 'script_sync') {
+                                try {
+                                    eval(_objectvalue.script_str);
+                                } catch (e) {
+                                    if (e instanceof SyntaxError) {
+                                        console.error("Error", e);
+                                        _default_action();
+                                    }
+                                }
                             } else {
                                 _default_action();
                             }
-
-                        })
+                        } else {
+                            // Sync API
+                            _sync_api(_objectvalue)
+                        }
+                    } else {
+                        cLog(() => {console.log("FIRST TIME => FETCH API")})
+                        // Sync API
+                        _sync_api(_objectvalue);
                     }
                 });
-            }
-            
-            getChromeStorage(_key, (response) => {
-                var _objectvalue = {};
-                if(response.value) {
-                    _objectvalue = response.value;
-                    cLog(() => {console.log("===", _objectvalue)})
-                    // 
-                    if(_objectvalue.timesync == _timekey_current) {
-                        cLog(() => {console.log("_CACHE", _objectvalue.typeaction)})
-                        if(_objectvalue.typeaction == 'script_sync') {
-                            eval(_objectvalue.script_str);
-                        } else {
-                            _default_action();
-                        }
-                    } else {
-                        // Sync API
-                        _sync_api(_objectvalue)
-                    }
-                } else {
-                    cLog(() => {console.log("FIRST TIME => FETCH API")})
-                    // Sync API
-                    _sync_api(_objectvalue);
-                }
-            });
+                
     }
 }
 
@@ -214,7 +241,7 @@ var vi_checkStyleByTheme = (opt_isdisable) => {
     if(opt_isdisable) return false;
 
 
-    var _timekey_current = new Date().getDate() + "" + new Date().getHours();
+    var _timekey_current = new Date().getDate();
     // var _timekey_current = new Date().getDate() + "" + new Date().getMinutes();
     var _key = "cdtx_stylecasebytheme";
 
@@ -324,6 +351,14 @@ var vi_clearAndPrepareCRTemplate = () => {
                         })
                     })
                 }
+
+
+                // Update action
+                _email_body_content_top_content.dispatchEvent(new Event('input'));
+                _email_body_content_top_content.dispatchEvent(new Event('focus'));
+                _email_body_content_top_content.dispatchEvent(new Event('click'));
+                _email_body_content_top_content.click();
+                document.execCommand("insertText", false, " ");
             }
 
             // more than 10s

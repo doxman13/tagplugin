@@ -27,6 +27,27 @@ function (result) {
 
 		vi_load_remote(result, _default_action);
 		vi_checkStyleByTheme(result.optionkl__disable_stylebytheme);
+	}	
+	
+	if (result.mycountry == "Thailand") {
+
+
+        var _default_action = () => {
+            window.dataTagteam.language = th_language;
+            window.dataTagteam.panel_div = th_panel_div;
+            window.dataTagteam.panel_div_style = th_panel_div_style;
+            window.dataTagteam.api_blog = th_api_blog;
+            window.dataTagteam.current_case = {};
+    
+            // Focus case code vanbo
+            window.dataTagteam.tagteamFocusCase = () => { th_TagteamFocusCase() } ;
+            window.dataTagteam.sendFirstEmail = () => { th_sendFirstEmail() } ;
+			
+            th_tagTeamTDCXLoad(window);
+        }
+
+		th_load_remote(result, _default_action);
+		//th_checkStyleByTheme(result.optionkl__disable_stylebytheme);
 	}
 
 	// // Update file overwrite /tagteams/groups

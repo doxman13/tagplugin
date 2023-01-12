@@ -238,9 +238,9 @@
                 </table>
             </div>`,
         'as_reschedule_1': 
-        /*
         
-        <div id="email-body-content" style="width:94%;padding:3% 3% 0 3%">
+        
+        `<div id="email-body-content" style="width:94%;padding:3% 3% 0 3%">
     <div id="email-body-content-top" style="width:100%">
       <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
         <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
@@ -257,10 +257,10 @@
       <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
         <tbody>
           <tr>
-            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">สวัสดีคุณ <span class="replaced">Thitapa SME Jump</span></td>
+            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">สวัสดีคุณ <span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span></td>
           </tr>
           <tr>
-            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">เราได้รับคําขอจากคุณให้กําหนดเวลานัดหมายใหม่ในการโทรเพื่อติดตั้งใช้งาน <strong><span class="replaced">ads_enhanced_conversions</span></strong> สําหรับ <span class="replaced">SME Jump</span> โปรดดูรายละเอียดทั้งหมดที่ด้านล่าง</td>
+            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">เราได้รับคําขอจากคุณให้กําหนดเวลานัดหมายใหม่ในการโทรเพื่อติดตั้งใช้งาน <strong><span data-infocase="tasks_nowrap">Tasks</span> </strong> สําหรับ <span data-infocase="customer_website">nhuahuongchi.com</span> โปรดดูรายละเอียดทั้งหมดที่ด้านล่าง</td>
           </tr>
         </tbody>
       </table>
@@ -278,8 +278,8 @@
             <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
               <tbody>
                 <tr>
-                  <td align="left" style="font-size: 16px;line-height:26px;font-family: Roboto, Arial, sans-serif;color: #3c4043;font-weight: 700;" valign="middle">วันที่และเวลานัดหมาย: <span class="field">{Agent to Update Appointment Date, Time and Timezone}</span><br>
-                  หมายเลขโทรศัพท์ที่แจ้งไว้: <span class="replaced">+66 63 992 6854</span></td>
+                  <td align="left" style="font-size: 16px;line-height:26px;font-family: Roboto, Arial, sans-serif;color: #3c4043;font-weight: 700;" valign="middle">วันที่และเวลานัดหมาย: <span data-infocase="local_format_meeting_time">19/10/2022</span><br>
+                  หมายเลขโทรศัพท์ที่แจ้งไว้: <span data-infocase="customer_contact">+84 96 693 19 48</span></td>
                 </tr>
               </tbody>
             </table>
@@ -317,7 +317,9 @@
       <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
         <tbody>
           <tr>
-            <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;"><span class="replaced"><span style="font-size:11px">Patchari (Farie)  Khayankij <br> Technical Solutions Team <br>  TDCX, on behalf of Google <br> <br> <b>เพิ่มประสิทธิภาพโฆษณาในโลกที่ผู้คนให้ความสำคัญกับความเป็นส่วนตัว</b><br>เพิ่มประสิทธิภาพโฆษณาในโลกที่ผู้คนให้ความสำคัญกับความเป็นส่วนตัว ความคาดหวังที่สูงขึ้นในด้านความเป็นส่วนตัวได้เปลี่ยนวิธีที่นักการตลาดใช้เข้าถึงกลุ่มเป้าหมายและวัดผลลัพธ์<br> นี่คือคำแนะนำในการวัดและเพิ่มประสิทธิภาพโฆษณาด้วยกลยุทธ์และโซลูชันที่เหมาะสม โดยคำนึงถึงความเป็นส่วนตัวอยู่เสมอ: <a href="http://ads.google.com/intl/th_th/home/privacy/" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Link</a><p></p></span></span></td>
+            <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;"><span class="replaced">
+            <span data-infosetting="your-name">YOUR-NAME</span>
+            <span style="font-size:11px"> <br> Technical Solutions Team <br>  TDCX, on behalf of Google <br> <br> <b>เพิ่มประสิทธิภาพโฆษณาในโลกที่ผู้คนให้ความสำคัญกับความเป็นส่วนตัว</b><br>เพิ่มประสิทธิภาพโฆษณาในโลกที่ผู้คนให้ความสำคัญกับความเป็นส่วนตัว ความคาดหวังที่สูงขึ้นในด้านความเป็นส่วนตัวได้เปลี่ยนวิธีที่นักการตลาดใช้เข้าถึงกลุ่มเป้าหมายและวัดผลลัพธ์<br> นี่คือคำแนะนำในการวัดและเพิ่มประสิทธิภาพโฆษณาด้วยกลยุทธ์และโซลูชันที่เหมาะสม โดยคำนึงถึงความเป็นส่วนตัวอยู่เสมอ: <a href="http://ads.google.com/intl/th_th/home/privacy/" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Link</a><p></p></span></span></td>
           </tr>
           <tr>
             <td align="left" style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 2px;">ทีมโซลูชันทางเทคนิคของ Google</td>
@@ -349,16 +351,17 @@
       <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
         <tbody>
           <tr>
-            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">เคส # <span class="replaced">7-3966000033848</span></td>
+            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">เคส # <span data-infocase="case_id">0-00000000000000</span></td>
           </tr>
         </tbody>
       </table>
       </td>
     </tr>
-  </tbody></table></div>
-    </div>
+  </tbody></table>
   </div>
-  */ 
+    </div>
+  </div>`
+  
         
         
         

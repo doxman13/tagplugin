@@ -340,6 +340,7 @@
                             </td>
                         </tr>
                     </tbody>
+                    
                 </table>
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                     <tbody>
@@ -534,7 +535,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                     <tbody>
                         <tr>
-                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Trường hợp của bạn đã được triển khai thành công</td>
+                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">ติดตั้งใช้งานให้กับเคสของคุณเรียบร้อยแล้ว</td>
                             <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/SO_Verification_Not_Needed_ts_so_vnn.png" style="display: block;min-width:100px;" width="100"></td>
                         </tr>
                     </tbody>
@@ -546,7 +547,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck">CUSTOMER NAME</span> thân mến!</td>
+                                        <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">สวัสดี คุณ <span class="replaced">CUSTOMER NAME</span></td>
                                         </tr>
                                         <tr>
                                             <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
@@ -555,19 +556,19 @@
                                                 <p style="font-style: normal;">Chúng tôi sẽ đóng yêu cầu này. Tuy nhiên, nếu tình hình của <span data-infocase="customer_gender">bạn</span> thay đổi, vui lòng liên hệ với Người quản lý tài khoản của Google hoặc tham khảo <a href="https://support.google.com/" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><u>trung tâm trợ giúp</u></a>. Họ luôn sẵn sàng trợ giúp <span data-infocase="customer_gender">bạn</span>!</p>
                                                 <p style="font-style: normal;">Cảm ơn <span data-infocase="customer_gender">bạn</span> đã hợp tác lâu dài với Google!&nbsp;</p>
                                                 <p style="" dir="auto"><span style="font-style: normal;">Nếu <span data-infocase="customer_gender">bạn</span> muốn tìm hiểu thêm, thì sau đây là một số đường liên kết dẫn đến các tài nguyên có giá trị liên quan đến việc Triển khai thẻ và nguồn cấp dữ liệu mua sắm. Các tài nguyên này có thể hữu ích để <span data-infocase="customer_gender">bạn</span> sử dụng trong tương lai!</span></p>
-                                                <p style="font-style: normal;"><em>Thẻ liên quan</em></p>
+                                                <p style="font-style: normal;"><em>แหล่งข้อมูลเกี่ยวกับแท็ก</em></p>
                                                 <ul style="font-style: normal;">
-                                                    <li aria-level="1"><a href="https://developers.google.com/gtagjs" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>Hỗ trợ triển khai thẻ</u></em></a></li>
+                                                    <li aria-level="1"><a href="https://developers.google.com/gtagjs" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>ความช่วยเหลือเกี่ยวกับการติดตั้งใช้งานแท็ก</u></em></a></li>
                                                     <li aria-level="1"><a href="https://www.youtube.com/user/learnwithgoogle/playlists" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>Google Ads</u></em></a></li>
-                                                    <li aria-level="1"><a href="https://www.youtube.com/user/googleanalytics" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>Google Analytics&nbsp;</u></em></a></li>
+                                                    <li aria-level="1"><a href="https://www.youtube.com/user/googleanalytics" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>Google Analytics</u></em></a></li>
                                                 </ul>
-                                                <p style="font-style: normal;"><em>Nguồn cấp dữ liệu mua sắm liên quan</em></p>
+                                                <p style="font-style: normal;"><em>แหล่งข้อมูลเกี่ยวกับ Shopping</em></p>
                                                 <ul style="font-style: normal;">
-                                                    <li aria-level="1"><a href="https://www.google.com/retail/" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>Google cho Nhà bán lẻ&nbsp;</u></em></a></li>
+                                                    <li aria-level="1"><a href="https://www.google.com/retail/" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>Google for Retail</u></em></a></li>
                                                     <li aria-level="1"><a href="https://www.google.com/retail/solutions/merchant-center/" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>Google Merchant Center</u></em></a></li>
-                                                    <li aria-level="1"><a href="https://support.google.com/merchants/answer/188924" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>Thiết lập tài khoản và nguồn cấp dữ liệu</u></em></a><em>&nbsp;</em></li>
-                                                    <li aria-level="1"><a href="https://support.google.com/merchants/topic/7294606" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>Tối ưu hoá nguồn cấp dữ liệu&nbsp;</u></em></a></li>
-                                                    <li aria-level="1"><a href="https://support.google.com/merchants/answer/9199328" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>Các nền tảng của Google</u></em></a></li>
+                                                    <li aria-level="1"><a href="https://support.google.com/merchants/answer/188924" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>การตั้งค่าบัญชีและฟีด</u></em></a></li>
+                                                    <li aria-level="1"><a href="https://support.google.com/merchants/topic/7294606" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>การเพิ่มประสิทธิภาพฟีด</u></em></a></li>
+                                                    <li aria-level="1"><a href="https://support.google.com/merchants/answer/9199328" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;"><em><u>แพลตฟอร์มของ Google</u></em></a></li>
                                                 </ul>
                                                 <p dir="auto" style="font-style: normal;">
                                                 </p>
@@ -590,7 +591,7 @@
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
                                                 <span data-infosetting="your-name">YOUR-NAME</span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                <span style="font-size: 16px;"><i>Technical Solutions Team</i><br><i>TDCX, on behalf of Google</i></span>
                                             </td>
                                         </tr>
                                         
@@ -609,7 +610,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
+                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">เคส #<span data-infocase="case_id">0-00000000000000</span></td>
                                         </tr>
                                     </tbody>
                                 </table>

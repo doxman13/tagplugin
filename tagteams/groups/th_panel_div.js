@@ -238,7 +238,127 @@
                 </table>
             </div>`,
         'as_reschedule_1': 
+        /*
         
+        <div id="email-body-content" style="width:94%;padding:3% 3% 0 3%">
+    <div id="email-body-content-top" style="width:100%">
+      <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
+        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+  <tbody>
+    <tr>
+      <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">กําหนดเวลาการนัดหมายใหม่เรียบร้อยแล้ว</td>
+      <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Reschedule_1_ts_as_resched1.png" style="display: block;min-width:100px;" width="100"></td>
+    </tr>
+  </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+  <tbody>
+    <tr>
+      <td align="center" style="padding: 0px 40px 0px 30px;" valign="top">
+      <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+          <tr>
+            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">สวัสดีคุณ <span class="replaced">Thitapa SME Jump</span></td>
+          </tr>
+          <tr>
+            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">เราได้รับคําขอจากคุณให้กําหนดเวลานัดหมายใหม่ในการโทรเพื่อติดตั้งใช้งาน <strong><span class="replaced">ads_enhanced_conversions</span></strong> สําหรับ <span class="replaced">SME Jump</span> โปรดดูรายละเอียดทั้งหมดที่ด้านล่าง</td>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+    </tr>
+  </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+  <tbody>
+    <tr>
+      <td align="center" style="padding: 30px 0;" valign="top">
+      <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+          <tr>
+            <td align="left" style="background: #E6F4EA;padding: 30px 30px;">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+              <tbody>
+                <tr>
+                  <td align="left" style="font-size: 16px;line-height:26px;font-family: Roboto, Arial, sans-serif;color: #3c4043;font-weight: 700;" valign="middle">วันที่และเวลานัดหมาย: <span class="field">{Agent to Update Appointment Date, Time and Timezone}</span><br>
+                  หมายเลขโทรศัพท์ที่แจ้งไว้: <span class="replaced">+66 63 992 6854</span></td>
+                </tr>
+              </tbody>
+            </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+    </tr>
+  </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+  <tbody>
+    <tr>
+      <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+      <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+          <tr>
+            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">เนื่องจากมีความต้องการใช้บริการของเรามาก เราจึงให้บริการได้อย่างจํากัด ดังนั้น เราจึงขอให้คุณพร้อมที่จะรับสายนี้ในช่วงเวลาที่ระบุไว้ด้านบน</td>
+          </tr>
+          <tr>
+            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">เราได้เพิ่มการนัดหมายนี้ลงในปฏิทินของคุณเพื่อเป็นการช่วยเตือนแล้ว โปรดแจ้งให้เราทราบหากคุณยังไม่ได้รับการนัดหมาย หากต้องการกำหนดเวลานัดหมายใหม่ โปรดติดต่อเรา เนื่องจาก<strong>เราจะไม่สามารถกําหนดเวลาการนัดหมายใหม่ได้หากคุณพลาดการนัดหมายนี้</strong></td>
+          </tr>
+          <tr>
+            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 0px;">เราหวังเป็นอย่างยิ่งว่าจะได้พูดคุยกับคุณ</td>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+    </tr>
+  </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+  <tbody>
+    <tr>
+      <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
+      <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+          <tr>
+            <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;"><span class="replaced"><span style="font-size:11px">Patchari (Farie)  Khayankij <br> Technical Solutions Team <br>  TDCX, on behalf of Google <br> <br> <b>เพิ่มประสิทธิภาพโฆษณาในโลกที่ผู้คนให้ความสำคัญกับความเป็นส่วนตัว</b><br>เพิ่มประสิทธิภาพโฆษณาในโลกที่ผู้คนให้ความสำคัญกับความเป็นส่วนตัว ความคาดหวังที่สูงขึ้นในด้านความเป็นส่วนตัวได้เปลี่ยนวิธีที่นักการตลาดใช้เข้าถึงกลุ่มเป้าหมายและวัดผลลัพธ์<br> นี่คือคำแนะนำในการวัดและเพิ่มประสิทธิภาพโฆษณาด้วยกลยุทธ์และโซลูชันที่เหมาะสม โดยคำนึงถึงความเป็นส่วนตัวอยู่เสมอ: <a href="http://ads.google.com/intl/th_th/home/privacy/" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Link</a><p></p></span></span></td>
+          </tr>
+          <tr>
+            <td align="left" style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 2px;">ทีมโซลูชันทางเทคนิคของ Google</td>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+    </tr>
+  </tbody>
+</table><p dir="auto">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+  <tbody>
+    <tr>
+      <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+      <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+          <tr>
+            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">เคส # <span class="replaced">7-3966000033848</span></td>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+    </tr>
+  </tbody></table></div>
+    </div>
+  </div>
+  */ 
         
         
         

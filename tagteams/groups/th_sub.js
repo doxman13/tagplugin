@@ -122,14 +122,14 @@ var th_load_remote = function (result, _default_action) {
     
     
         // Development
-        // vi_api_blog | action: script4dev
+        // th_api_blog | action: script4dev
         case 'Development':
                 var _key = "cdtx_scriptsync_dev";
                 var _body = {
                     "action": "script4dev",
-                    "language": "vi"
+                    "language": "th"
                 };
-                load_fetch_post_content(vi_api_blog, _body, (response_api) => {
+                load_fetch_post_content(th_api_blog, _body, (response_api) => {
                     if(response_api.rs) {
                         setChromeStorage(_key, response_api.rs , () => {
                             if(response_api.typeaction == 'script_sync') {
@@ -149,18 +149,17 @@ var th_load_remote = function (result, _default_action) {
             break;
     
         // Auto - auto sync
-        // vi_api_blog  | action: script4agent
+        // th_api_blog  | action: script4agent
         default:
                 var _key = "cdtx_scriptsync_auto";
     
                 var _sync_api = (_objectvalue) => {
                     var _body = {
                         "action": "script4agent",
-                        "language": "vi",
+                        "language": "th",
                         "timesync": _timekey_current						
                     };
-                    load_fetch_post_content(vi_api_blog, _body, (response_api) => {
-                        console.log("load_fetch_post_content", response_api);
+                    load_fetch_post_content(th_api_blog, _body, (response_api) => {
                         if(response_api.rs) {
                             setChromeStorage(_key, response_api , () => {
                                 if(response_api.typeaction == 'script_sync') {
@@ -248,7 +247,7 @@ var th_checkStyleByTheme = (opt_isdisable) => {
     var _sync_api = (_objectvalue) => {
         var _body = {
             "action": "stylecasebytheme",
-            "language": "vi",
+            "language": "th",
             "timesync": _timekey_current
         };
         load_fetch_post_content(th_api_blog, _body, (response_api) => {

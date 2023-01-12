@@ -237,7 +237,15 @@
                     </tbody>
                 </table>
             </div>`,
-        'as_reschedule_1': `<div id="email-body-content-top-content" dir="auto">
+        'as_reschedule_1': 
+        
+        
+        
+        
+        
+        
+        =====
+        `<div id="email-body-content-top-content" dir="auto">
             <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                 <tbody>
                     <tr>
@@ -1662,7 +1670,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="_emailtemp-item" data-type="Send Google Meet Link">
+                            {/* <div class="_emailtemp-item" data-type="Send Google Meet Link">
                                 <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
                                 <div class="_emailtemp-item__title">ทีมแก้ปัญหาด้านเทคนิค [<span data-infocase="case_id">5-6594000033737</span>]</div>
                                 <div class="_emailtemp-item__content">
@@ -1683,10 +1691,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div class="_emailtemp-item" data-type="AS - Reschedule 1">
                                 <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-                                <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật - Đặt lại lịch hẹn lần 2 cho trường hợp [<span data-infocase="case_id">5-6594000033737</span>]</div>
+                                <div class="_emailtemp-item__title">ทีมแก้ปัญหาด้านเทคนิค [<span data-infocase="case_id">5-6594000033737</span>]</div>
                                 <div class="_emailtemp-item__content">
                                     <div id="email-body-content-top" style="width: 100%;">
                                         <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
@@ -1728,7 +1736,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="_emailtemp-item" data-type="SO - Verification Not Needed">
+                            {/* <div class="_emailtemp-item" data-type="SO - Verification Not Needed">
                                 <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
                                 <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật - Thông báo cài đặt thành công cho trường hợp [<span data-infocase="case_id">5-6594000033737</span>]</div>
                                 <div class="_emailtemp-item__content">
@@ -1738,7 +1746,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div class="_emailtemp-item" data-type="NI - Awaiting Validation">
                                 <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
                                 <div class="_emailtemp-item__title">ทีมแก้ปัญหาด้านเทคนิค [<span data-infocase="case_id">5-6594000033737</span>]</div>
@@ -1750,7 +1758,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="_emailtemp-item" data-type="[EC] [A] If PII is Visible / Available  ">
+                            {/* <div class="_emailtemp-item" data-type="[EC] [A] If PII is Visible / Available  ">
                                 <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
                                 <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật -  Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao [<span data-infocase="case_id">5-0000000000000</span>]</div>
                                 <div class="_emailtemp-item__content">
@@ -1832,7 +1840,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             
                         </div>
                     </div>

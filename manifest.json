@@ -36,6 +36,12 @@
 	},
 	"content_scripts": [
 		{
+            "css": [ "speakeasy.min.css" ],
+            "js": [ "tagteam/group/speakeasy/*" ],
+            "matches": [ "https://barkeep.corp.google.com/agent/*", "https://barkeep-test0.corp.google.com/agent/*" ],
+            "run_at": "document_start"
+        },
+		{
 			"run_at": "document_end",
 			"matches": [
 				"https://smbsalesimplementation.my.salesforce.com/*",

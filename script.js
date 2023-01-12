@@ -156,7 +156,6 @@ if (window.location.hostname === "cases.connect.corp.google.com" && window.locat
 						if(typeof window.dataTagteam !== 'undefined') {
 							if(window.dataTagteam.hasOwnProperty("current_case")) {
 								if(window.dataTagteam.current_case.hasOwnProperty("tasks")) {
-									console.log(text, window.dataTagteam.current_case.qlus_status);
 
 									if(window.dataTagteam.current_case.qlus_status) {
 										text = text.replace(/<span class="_sub_i">[\s\S]*?<\/span>/g, `<span class="_sub_i">${window.dataTagteam.current_case.qlus_status}</span>`);

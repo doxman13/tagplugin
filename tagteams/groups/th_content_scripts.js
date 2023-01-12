@@ -877,7 +877,6 @@ function loadInputCase(_panel, _datatemp, _isvalidate = true) {
 
     if(_datatemp.customer_adsid) {
         loadInfoCaseInnerTextElm(_panel, 'customer_adsid_format', reformatAdsId(_datatemp.customer_adsid));
-        console.log('111111111111', document.querySelector('._panel_shortcut_gearloose_vanbo'));
         wait4Elem('._panel_shortcut_gearloose_vanbo').then(function (elm) {
             if(elm) {
                 elm.setAttribute("href", 'https://gearloose2.corp.google.com/#/search/merchants?q=awid:' + reformatAdsId(_datatemp.customer_adsid));

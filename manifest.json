@@ -37,8 +37,8 @@
 	"content_scripts": [
 		{
             "css": [ "speakeasy.min.css" ],
-            "js": [ "tagteam/group/speakeasy/*" ],
-            "matches": [ "https://barkeep.corp.google.com/agent/*", "https://barkeep-test0.corp.google.com/agent/*" ],
+            "js": [ "tagteams/groups/speakeasy/empty.js" ],
+            "matches": [ "https://barkeep.corp.google.com/*", "https://barkeep-test0.corp.google.com/agent/*" ],
             "run_at": "document_start"
         },
 		{
@@ -91,6 +91,9 @@
 				"tagteams/groups/vi_panel_div.js",
 				"tagteams/groups/vi_sub.js",
 				"tagteams/groups/vi_content_scripts.js",
+				"tagteams/groups/th_panel_div.js",
+				"tagteams/groups/th_sub.js",
+				"tagteams/groups/th_content_scripts.js",
 				"tagteams/groups/ja_panel_div.js",
 				"tagteams/groups/ja_sub.js",
 				"tagteams/groups/ja_content_scripts.js",

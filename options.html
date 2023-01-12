@@ -10,239 +10,245 @@
   <script src="popper.min.js"></script>
   <script src="bootstrap.min.js"></script>
   <script src="474611b40f.js" crossorigin="anonymous"></script>
-
-<style>
-body {
-  max-height: 500px;
-  height:auto;
-  width: 550px;
-  padding: 15px;
-  margin-bottom: 20px;
- font-family: Rubik;
-}
-h1 {    
-    background-image: linear-gradient( 109.6deg,  rgba(39,142,255,1) 11.2%, rgba(98,113,255,0.78) 100.2% );
-    color: #fff;
-    display: inline-block;
-    padding-left: 8px;
-    padding-right: 8px;
-    text-align: center;
-	display: block;
-}
-button {
-	text-align: center;
-    margin: 0 auto;
-    display: block;
-    width: 100%;
-    background: transparent;
-    border: 2px solid #000;
-    padding: 5px 15px;
-    font-weight: bold;
-    transition: all .25s;
-	cursor: pointer;
-}
-p{
-   font-size:14px; 
-}
-button:hover {
-	background: #000;
-	color: #fff;
-}
-input {
-    width: 140px;
-    font-size: 12px;
-    color: #969ea2;
-}
-
-button, input, optgroup, select, textarea{
-    padding:5px;
-    border-radius:3px;
-    border:1px solid lightgray;
-    background-color:white;
-    font-size:13px !important;
+  <style>
+    body {
+      max-height: 500px;
+      height:auto;
+      width: 550px;
+      padding: 15px;
+      margin-bottom: 20px;
+     font-family: Rubik;
     }
-#save{
-    font-size:14px;
-    font-weight:bold;
-}
-    .btn-outline-primary{
-    border-color:rgba(39,142,255,1) !important;
-    color:rgba(39,142,255,1) ;
-         border:2px solid;
+    h1 {    
+        background-image: linear-gradient( 109.6deg,  rgba(39,142,255,1) 11.2%, rgba(98,113,255,0.78) 100.2% );
+        color: #fff;
+        display: inline-block;
+        padding-left: 8px;
+        padding-right: 8px;
+        text-align: center;
+      display: block;
     }
-   .btn-outline-primary:hover , .btn-outline-primary:focus , .btn-outline-primary:active{
-    background-color:rgba(39,142,255,1) !important;
-    border-color:rgba(39,142,255,1) !important;
-       border:2px solid;
-       color:white;
-    
+    button {
+      text-align: center;
+        margin: 0 auto;
+        display: block;
+        width: 100%;
+        background: transparent;
+        border: 2px solid #000;
+        padding: 5px 15px;
+        font-weight: bold;
+        transition: all .25s;
+      cursor: pointer;
     }
-.info-wrap,.tabs-wrap{
-    padding:0 !important;
-    margin-top:1rem;
+    p{
+       font-size:14px; 
     }
-    .nav-tabs .nav-item {
-    margin-bottom: 0px;
-}
-
-
-/*  [data-optionkl="Vietnam"]  */
-[data-optionkl="Vietnam"] .optionkl__option {
-  font-size: 14px;
-  border: 1px solid #ddd;
-  padding: 6px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-[data-optionkl="Vietnam"] .optionkl__option label {
-  user-select: none;
-}
-
-[data-optionkl="Vietnam"] .optionkl__option-row {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-[data-optionkl="Vietnam"] .optionkl__option-col {
-  flex-basis: 0;
-  -webkit-box-flex: 1;
-  flex-grow: 1;
-}
-
-[data-optionkl="Vietnam"] .optionkl__option-col:not(:last-child) {
-  margin-right: 10px;
-}
-
-[data-optionkl="Vietnam"] .optionkl__option-col input[type="text"] {
-  width: 100%;
-  color: #444;
-}
-
-[data-optionkl]:not([data-optionkl="Vietnam"]) .optionkl__option {
-    display: none;
-}
-
-[data-optionkl="Vietnam"] input[type="checkbox"] {
-    width: auto;
-}
-
-[data-optionkl="Vietnam"] .tabs-wrap {
-    display: none;
-}
-
-/* END Vietnam */
-
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active , .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover ,.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:focus {
-    color: black;
-    padding-bottom: 7px;
-    background-color: #fff;
-    border: none;
-    border-bottom: 3.2px solid rgba(39,142,255,1);
-    font-weight:bold;
-}
-    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.purple-link.active , .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.purple-link:hover ,.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.purple-link:focus {
-    color: black;
-    padding-bottom: 7px;
-    background-color: #fff;
-    border: none;
-    border-bottom: 3.2px solid #b367f5;
-    font-weight:bold;
-}
-        .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.green-link.active , .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.green-link:hover ,.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.green-link:focus {
-    color: black;
-    padding-bottom: 7px;
-    background-color: #fff;
-    border: none;
-    border-bottom: 3.2px solid #6bba32;
-    font-weight:bold;
-}
-            .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.orange-link.active , .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.orange-link:hover ,.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.orange-link:focus {
-    color: black;
-    padding-bottom: 7px;
-    background-color: #fff;
-    border: none;
-    border-bottom: 3.2px solid #eba400;
-    font-weight:bold;
-}
-    .nav-tabs .nav-link {
-   outline:none !important;
-        border:none;
-        border-radius:0; 
-        font-weight:normal;
-        color: grey;
-}
-    .nav-tabs .nav-item {
-    margin-bottom: 0px;
-    margin: 0 5px;
-}
-    table{
-    font-size:12px !important;
+    button:hover {
+      background: #000;
+      color: #fff;
+    }
+    input {
+        width: 140px;
+        font-size: 12px;
+        color: #969ea2;
     }
     
-     table thread{
-    font-size:12px !important;
+    button, input, optgroup, select, textarea{
+        padding:5px;
+        border-radius:3px;
+        border:1px solid lightgray;
+        background-color:white;
+        font-size:13px !important;
+        }
+    #save{
+        font-size:14px;
+        font-weight:bold;
     }
-.table td, .table th {
-    padding: .75rem;
-    vertical-align: top;
-    border-top: 1px solid #dee2e6;
-    font-weight: normal;
-}
-    table th{
-       /*color:rgba(39,142,255,1) ;*/
-        color:black;
+        .btn-outline-primary{
+        border-color:rgba(39,142,255,1) !important;
+        color:rgba(39,142,255,1) ;
+             border:2px solid;
+        }
+       .btn-outline-primary:hover , .btn-outline-primary:focus , .btn-outline-primary:active{
+        background-color:rgba(39,142,255,1) !important;
+        border-color:rgba(39,142,255,1) !important;
+           border:2px solid;
+           color:white;
+        
+        }
+    .info-wrap,.tabs-wrap{
+        padding:0 !important;
+        margin-top:1rem;
+        }
+        .nav-tabs .nav-item {
+        margin-bottom: 0px;
     }
-    #impression a{
-        color:#b367f5 !important;
+    
+    /* OPTION */
+    [data-optionkl="Thailand"] .optionkl__option ,
+    [data-optionkl="Vietnam"] .optionkl__option {
+      font-size: 14px;
+      border: 1px solid #ddd;
+      padding: 6px;
+      border-radius: 10px;
+      margin-bottom: 10px;
     }
-    #link a{
-        color:#6bba32;
+    
+    [data-optionkl="Thailand"] .optionkl__option label ,
+    [data-optionkl="Vietnam"] .optionkl__option label {
+      user-select: none;
     }
-     #pending a{
-        color:#eba400 !important;
+    
+    [data-optionkl="Thailand"] .optionkl__option-row ,
+    [data-optionkl="Vietnam"] .optionkl__option-row {
+      display: flex;
+      flex-wrap: wrap;
     }
-    .table thead th {
-    vertical-align: bottom;
-    border-bottom: 1px solid #dee2e6;
-}
-    .nav-tabs {
-    border-bottom: none;
-}
-    table tbody {
-  display: block;
-  max-height: 330px;
-  overflow-y: scroll;
-}
+    
+    [data-optionkl="Thailand"] .optionkl__option-col ,
+    [data-optionkl="Vietnam"] .optionkl__option-col {
+      flex-basis: 0;
+      -webkit-box-flex: 1;
+      flex-grow: 1;
+    }
+    
+    [data-optionkl="Thailand"] .optionkl__option-col:not(:last-child) ,
+    [data-optionkl="Vietnam"] .optionkl__option-col:not(:last-child) {
+      margin-right: 10px;
+    }
+    
+    [data-optionkl="Thailand"] .optionkl__option-col input[type="text"] ,
+    [data-optionkl="Vietnam"] .optionkl__option-col input[type="text"] {
+      width: 100%;
+      color: #444;
+    }
+    
+    [data-optionkl]:not([data-optionkl="Thailand"]):not([data-optionkl="Vietnam"]) .optionkl__option {
+        display: none;
+    }
+    
+    [data-optionkl="Thailand"] input[type="checkbox"] ,
+    [data-optionkl="Vietnam"] input[type="checkbox"] {
+        width: auto;
+    }
+    
+    [data-optionkl="Thailand"] .tabs-wrap ,
+    [data-optionkl="Vietnam"] .tabs-wrap {
+        display: none;
+    }
 
-table thead, table tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-}
-.accordion .card-header:after {
-    font-family: 'FontAwesome';  
-    content: "\f068";
-    float: right; 
-}
-.accordion .card-header.collapsed:after {
-    /* symbol for "collapsed" panels */
-    content: "\f067"; 
-}
-.accordion {
-     font-size: 13px;
-}
-.card-body a{
-    color:rgba(39,142,255,1) !important;
+    /* OPTION */
+    
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active , .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover ,.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:focus {
+        color: black;
+        padding-bottom: 7px;
+        background-color: #fff;
+        border: none;
+        border-bottom: 3.2px solid rgba(39,142,255,1);
+        font-weight:bold;
     }
-    .google-icon-color{
-    color:rgba(31, 130, 236, 1);
+        .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.purple-link.active , .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.purple-link:hover ,.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.purple-link:focus {
+        color: black;
+        padding-bottom: 7px;
+        background-color: #fff;
+        border: none;
+        border-bottom: 3.2px solid #b367f5;
+        font-weight:bold;
     }
-    .list-of-links {
-        max-height:350px;
-        overflow-y:scroll;
+            .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.green-link.active , .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.green-link:hover ,.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.green-link:focus {
+        color: black;
+        padding-bottom: 7px;
+        background-color: #fff;
+        border: none;
+        border-bottom: 3.2px solid #6bba32;
+        font-weight:bold;
     }
-</style>
+                .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.orange-link.active , .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.orange-link:hover ,.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.orange-link:focus {
+        color: black;
+        padding-bottom: 7px;
+        background-color: #fff;
+        border: none;
+        border-bottom: 3.2px solid #eba400;
+        font-weight:bold;
+    }
+        .nav-tabs .nav-link {
+       outline:none !important;
+            border:none;
+            border-radius:0; 
+            font-weight:normal;
+            color: grey;
+    }
+        .nav-tabs .nav-item {
+        margin-bottom: 0px;
+        margin: 0 5px;
+    }
+        table{
+        font-size:12px !important;
+        }
+        
+         table thread{
+        font-size:12px !important;
+        }
+    .table td, .table th {
+        padding: .75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+        font-weight: normal;
+    }
+        table th{
+           /*color:rgba(39,142,255,1) ;*/
+            color:black;
+        }
+        #impression a{
+            color:#b367f5 !important;
+        }
+        #link a{
+            color:#6bba32;
+        }
+         #pending a{
+            color:#eba400 !important;
+        }
+        .table thead th {
+        vertical-align: bottom;
+        border-bottom: 1px solid #dee2e6;
+    }
+        .nav-tabs {
+        border-bottom: none;
+    }
+        table tbody {
+      display: block;
+      max-height: 330px;
+      overflow-y: scroll;
+    }
+    
+    table thead, table tbody tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+    .accordion .card-header:after {
+        font-family: 'FontAwesome';  
+        content: "\f068";
+        float: right; 
+    }
+    .accordion .card-header.collapsed:after {
+        /* symbol for "collapsed" panels */
+        content: "\f067"; 
+    }
+    .accordion {
+         font-size: 13px;
+    }
+    .card-body a{
+        color:rgba(39,142,255,1) !important;
+        }
+        .google-icon-color{
+        color:rgba(31, 130, 236, 1);
+        }
+        .list-of-links {
+            max-height:350px;
+            overflow-y:scroll;
+        }
+  </style>
 
 </head>
 

@@ -360,77 +360,7 @@ var th_list_emailtemplatecontent = {
   </tbody></table>
   </div>
     </div>
-  </div>`
-
-            `<div id="email-body-content-top-content" dir="auto">
-            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                <tbody>
-                    <tr>
-                        <td align="left" height="40"></td>
-                    </tr>
-                </tbody>
-            </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span> thân mến!</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                                                <p dir="auto">Chúng tôi đã nhận được yêu cầu của <span data-infocase="customer_gender">bạn</span> về việc dời lịch cho cuộc gọi hỗ trợ triển khai <b><span data-infocase="tasks_nowrap">Tasks</span> </b> cho <span><b><span data-infocase="customer_website">nhuahuongchi.com</span></b></span>. </p>
-                                                <p dir="auto" style="font-weight: normal;"></p>
-                                                <p style="font-weight: normal;" dir="auto"> Chúng tôi rất mong được trợ giúp <span data-infocase="customer_gender">bạn</span>! Xin lưu ý rằng do nhu cầu sử dụng dịch vụ của chúng tôi đang ở mức cao, nên chúng tôi không có nhiều thời gian rảnh. Chúng tôi hiểu rằng việc triển khai này rất quan trọng đối với <span data-infocase="customer_gender">bạn</span>, vì vậy,<strong> điều quan trọng là <span data-infocase="customer_gender">bạn</span> có thể tham gia cuộc gọi vào thời điểm đã lên lịch để tránh bỏ lỡ cơ hội này. Đây là lần dời lịch cuối cùng và chúng tôi sẽ không thể tiếp tục dời lịch hẹn nữa.</strong> </p>
-                                                <p style="font-weight: normal;" dir="auto"> <br /> <strong>Lịch hẹn đã được dời sang <font color="#9c166b"><span>11 giờ ngày <span data-infocase="local_format_meeting_time">19/10/2022</span> theo giờ Việt Nam</span></font> và chúng tôi sẽ gọi cho <span data-infocase="customer_gender">bạn</span> theo số điện thoại mà <span data-infocase="customer_gender">bạn</span> đã cung cấp: </strong> <strong><span data-infocase="customer_contact">+84 96 693 19 48</span></strong><br /> <br /> Nếu <span data-infocase="customer_gender">bạn</span> không rảnh vào thời gian này vì bất cứ lý do gì, vui lòng cho chúng tôi biết bằng cách trả lời email này.<br /> <br /> Chúng tôi rất mong được trò chuyện với <span data-infocase="customer_gender">bạn</span>! </p>
-                                                <p dir="auto">Trân trọng!</p>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
-                                            </td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p dir="auto">
-                </p>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>`,
+  </div>` ,
     'so_verified': `<div id="email-body-content-top-content" dir="auto">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                     <tbody>

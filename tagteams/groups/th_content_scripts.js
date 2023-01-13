@@ -1111,82 +1111,84 @@ function loadCase(elm) {
         
         // Case ID
         var sLoadCase = function(n_time_recall = 0) {
-            var _caseid = document.querySelector(".case-id").innerText;
-            if(location.hash.includes(_caseid) === false) {
-                
-                cLog(() => {console.log("1. case id != hash")})
-                var myTimeLoadCase = setTimeout(() => {
-                    n_time_recall = n_time_recall + 1;
-                    cLog(() => {console.log("1.2 rerun sLoadCase | ntime", n_time_recall)})
-                    sLoadCase(n_time_recall);
-                }, 1500);
-                
-                if(n_time_recall > 10) {
-                    cLog(() => {console.log("1.3 n_time_recall limit Clear case id != hash")})
-                    clearTimeout(myTimeLoadCase);
-                }
-
-                return false;
-            }
-
-            
-            
-            var caseload = loadCaseDatabaseByID(_caseid);
-            
-            cLog(() => {console.log("2. case id === hash => OK | ntime", _caseid, caseload, n_time_recall)})
-            
-            
-            if(caseload) {
-                cLog(() => {console.log("1. Has Data ========="); })
-                cLog(() => { console.log('loadInputCase | 3'); })
-                loadInputCase(elm, caseload);
-
-
-
-                // Change status btn
-                panel_div.querySelector('#formCase [action="save"]').innerText = "SAVED";
-                panel_div.querySelector('#formCase [action="save"]').classList.remove("_panel_btn--success");
-
-            } else {
-                Toastify({
-                    text: 'NEW!!!! This case is new',
-                    duration: 3000,
-                    class: "success",
-                    callback: function(){
-                        this.remove();
+            isReadyBasic(() => {
+                var _caseid = document.querySelector(".case-id").innerText;
+                if(location.hash.includes(_caseid) === false) {
+                    
+                    cLog(() => {console.log("1. case id != hash")})
+                    var myTimeLoadCase = setTimeout(() => {
+                        n_time_recall = n_time_recall + 1;
+                        cLog(() => {console.log("1.2 rerun sLoadCase | ntime", n_time_recall)})
+                        sLoadCase(n_time_recall);
+                    }, 1500);
+                    
+                    if(n_time_recall > 10) {
+                        cLog(() => {console.log("1.3 n_time_recall limit Clear case id != hash")})
+                        clearTimeout(myTimeLoadCase);
                     }
-                }).showToast();
-
-                // is_readycaseconnect(() => {
-                    // unmark_all_and_crawl();
-                    cLog(()=>{console.log('_caseid', _caseid)})
-                    crawl_basic(_caseid);
-
-                //     // Show Input
-                //     if(document.querySelector('[debug-id="target-input"]')) {
-                //         document.querySelector('[debug-id="target-input"]').dispatchEvent(new Event("mouseover"));
-                                        
-                //         wait4Elem('target-item .value').then(function () {                                            
-                //             var ads_id = document.querySelector("target-item .value").innerText;
-                //             if(document.querySelector('._panel_shortcut_gearloose_vanbo')) {
-                //                 document.querySelector('._panel_shortcut_gearloose_vanbo').setAttribute("href", 'https://gearloose2.corp.google.com/#/search/merchants?q=awid:' + reformatAdsId(ads_id));
-                //                 document.querySelector('._panel_shortcut_gearloose_vanbo').style.display = "";
-                //             }
-                //         });
-                //     }
-                // });
-
-
-                // Change status btn
-                panel_div.querySelector('#formCase [action="save"]').innerText = "FIRST SAVE";
-                panel_div.querySelector('#formCase [action="save"]').classList.add("_panel_btn--success");
-            }
-
-
-            // Open dial
-            document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
-            // Close dial
-            document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseleave'));
+    
+                    return false;
+                }
+    
+                
+                
+                var caseload = loadCaseDatabaseByID(_caseid);
+                
+                cLog(() => {console.log("2. case id === hash => OK | ntime", _caseid, caseload, n_time_recall)})
+                
+                
+                if(caseload) {
+                    cLog(() => {console.log("1. Has Data ========="); })
+                    cLog(() => { console.log('loadInputCase | 3'); })
+                    loadInputCase(elm, caseload);
+    
+    
+    
+                    // Change status btn
+                    panel_div.querySelector('#formCase [action="save"]').innerText = "SAVED";
+                    panel_div.querySelector('#formCase [action="save"]').classList.remove("_panel_btn--success");
+    
+                } else {
+                    Toastify({
+                        text: 'NEW!!!! This case is new',
+                        duration: 3000,
+                        class: "success",
+                        callback: function(){
+                            this.remove();
+                        }
+                    }).showToast();
+    
+                    // is_readycaseconnect(() => {
+                        // unmark_all_and_crawl();
+                        cLog(()=>{console.log('_caseid', _caseid)})
+                        crawl_basic(_caseid);
+    
+                    //     // Show Input
+                    //     if(document.querySelector('[debug-id="target-input"]')) {
+                    //         document.querySelector('[debug-id="target-input"]').dispatchEvent(new Event("mouseover"));
+                                            
+                    //         wait4Elem('target-item .value').then(function () {                                            
+                    //             var ads_id = document.querySelector("target-item .value").innerText;
+                    //             if(document.querySelector('._panel_shortcut_gearloose_vanbo')) {
+                    //                 document.querySelector('._panel_shortcut_gearloose_vanbo').setAttribute("href", 'https://gearloose2.corp.google.com/#/search/merchants?q=awid:' + reformatAdsId(ads_id));
+                    //                 document.querySelector('._panel_shortcut_gearloose_vanbo').style.display = "";
+                    //             }
+                    //         });
+                    //     }
+                    // });
+    
+    
+                    // Change status btn
+                    panel_div.querySelector('#formCase [action="save"]').innerText = "FIRST SAVE";
+                    panel_div.querySelector('#formCase [action="save"]').classList.add("_panel_btn--success");
+                }
+    
+    
+                // Open dial
+                document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
+                // Close dial
+                document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseleave'));
+            });
         };
         
         // s1: load start

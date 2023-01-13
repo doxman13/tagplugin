@@ -473,7 +473,7 @@ function noteBarAlert(note, caseid) {
         
                     if(_is_add) {
                         var _str = _TrustScript(note);
-                        _noted.innerHTML += `<span class="_str">${_str}</span>`;
+                        _noted.innerHTML += `<span class="_str" data-text="${_str}">${_str}</span>`;
                     }
                 } else {
         

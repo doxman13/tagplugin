@@ -2219,7 +2219,7 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                         >
                                             <span class="content"></span>
                                         </a>
-                                        <a href="http://go/teamVN" target="_blank" class="material-button _panel_shortcut_go_teamvietnam"  >
+                                        <a href="http://go/thms" target="_blank" class="material-button _panel_shortcut_go_teamvietnam"  >
                                             <img src="${window.dataTagteam.assets_url_img}/pepe-4chan.gif">
                                             <span class="content"></span>
                                         </a>
@@ -2243,7 +2243,7 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                     });
 
 
-                                    // go/TeamVn
+                                    /*
                                     var _timekey_current = new Date().getDate();
                                     if(sessionStorage.getItem("goTeamVNToDay") != _timekey_current) {
                                         document.querySelector('._panel_shortcut_go_teamvietnam').classList.add('notview_today');
@@ -2252,7 +2252,7 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                     document.querySelector('._panel_shortcut_go_teamvietnam').addEventListener("click", (e) => {
                                         sessionStorage.setItem("goTeamVNToDay", _timekey_current);
                                         e.target.remove();
-                                    });
+                                    });*/
 
                                     
                                 }

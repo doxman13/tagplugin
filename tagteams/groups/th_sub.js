@@ -65,7 +65,7 @@ var th_heading_searchandreplace = `
     Please provide additional details for your case:Vui lòng cung cấp thêm chi tiết cho trường hợp của bạn
     Your case cannot be completed due to technical issues:Trường hợp của bạn không thể được hoàn thành do các vấn đề kỹ thuật
     Your case has been closed due to inactivity:Trường hợp của bạn đã bị đóng do không nhận được phản hồi từ nhà quảng cáo
-    Your case has been closed:Trường hợp của bạn đã được đóng lại
+    Your case has been closed: ทางเราจะทำการปิดเคส
     Your case is not ready for implementation. Tìm hiểu lý do:Trường hợp của bạn chưa sẵn sàng để triển khai. Tìm hiểu lý do
     Your case has been rerouted to the correct support team:Trường hợp của bạn đã được chuyển hướng đến nhóm hỗ trợ phù hợp
     We are working to reroute your case to the correct support team:Chúng tôi đang làm việc để chuyển trường hợp của bạn đến đúng nhóm hỗ trợ
@@ -74,28 +74,28 @@ var th_heading_searchandreplace = `
 `;
 
 var th_hotkey_email = {
-    'ts as new':'Đội giải pháp kỹ thuật - Xác nhận lịch hẹn',
-    'ts as wip offtfr':'Đội giải pháp kỹ thuật – Đang triển khai việc cài đặt',
-    'ts as wip offs':'Đội giải pháp kỹ thuật – Đang triển khai việc cài đặt',
-    'ts as resched1':'Đội giải pháp kỹ thuật – Đặt lại lịch hẹn lần 1',
-    'ts as reschedok':'Đội giải pháp kỹ thuật – Đặt lại lịch hẹn lần 2',
-    'ts so verif':'Đội giải pháp kỹ thuật – Đã xác minh lượt hiển thị/lượt chuyển đổi',
-    'ts so verif nrc':'Đội giải pháp kỹ thuật – Xác nhận triển khai thành công',
-    'ts so unv':'Đội giải pháp kỹ thuật – Triển khai Tag đã hoàn tất',
-    'ts so vnn':'Đội giải pháp kỹ thuật – Triển khai thành công',
-    'ts ni ai':'Đội giải pháp kỹ thuật – Chờ thông tin phản hồi từ nhà quảng cáo',
-    'ts ni ic':'Đội giải pháp kỹ thuật – Đang tham khảo Nhóm hỗ trợ nội bộ',
-    'ts ni av':'Đội giải pháp kỹ thuật – Đang chờ Hiển thị/ Chuyển đổi',
-    'ts ni ac':'Đội giải pháp kỹ thuật – Không liên lạc được với nhà quảng cáo',
-    'ts ni oth':'Đội giải pháp kỹ thuật – Chờ thêm thông tin đầu vào',
-    'ts in inf':'Đội giải pháp kỹ thuật – Không thể khả thi về mặt kỹ thuật',
-    'ts in nrch':'Đội giải pháp kỹ thuật – Không nhận được phản hồi từ nhà quảng cáo',
-    'ts in ni':'Đội giải pháp kỹ thuật – Nhà quảng cáo không cần hỗ trợ',
-    'ts in nrdy':'Đội giải pháp kỹ thuật – Nhà quảng cáo chưa sẵn sàng',
-    'ts in oost':'Đội giải pháp kỹ thuật – Chuyển yêu cầu cho đội ngũ thích hợp',
-    'ts in oosu':'Đội giải pháp kỹ thuật – Không thể chuyển tiếp yêu cầu',
-    'ts in oos seller':'Đội giải pháp kỹ thuật – Ngoài phạm vi hỗ trợ ',
-    'ts in oth':'Đội giải pháp kỹ thuật – Trường hợp của bạn đã được đóng',
+    'ts as new':'ทีมโซลูชันทางเทคนิค - Xác nhận lịch hẹn',
+    'ts as wip offtfr':'ทีมโซลูชันทางเทคนิค – Đang triển khai việc cài đặt',
+    'ts as wip offs':'ทีมโซลูชันทางเทคนิค – Đang triển khai việc cài đặt',
+    'ts as resched1':'ทีมโซลูชันทางเทคนิค – Đặt lại lịch hẹn lần 1',
+    'ts as reschedok':'ทีมโซลูชันทางเทคนิค – Đặt lại lịch hẹn lần 2',
+    'ts so verif':'ทีมโซลูชันทางเทคนิค – Đã xác minh lượt hiển thị/lượt chuyển đổi',
+    'ts so verif nrc':'ทีมโซลูชันทางเทคนิค – Xác nhận triển khai thành công',
+    'ts so unv':'ทีมโซลูชันทางเทคนิค – Triển khai Tag đã hoàn tất',
+    'ts so vnn':'ทีมโซลูชันทางเทคนิค – Triển khai thành công',
+    'ts ni ai':'ทีมโซลูชันทางเทคนิค – Chờ thông tin phản hồi từ nhà quảng cáo',
+    'ts ni ic':'ทีมโซลูชันทางเทคนิค – Đang tham khảo Nhóm hỗ trợ nội bộ',
+    'ts ni av':'ทีมโซลูชันทางเทคนิค – Đang chờ Hiển thị/ Chuyển đổi',
+    'ts ni ac':'ทีมโซลูชันทางเทคนิค – Không liên lạc được với nhà quảng cáo',
+    'ts ni oth':'ทีมโซลูชันทางเทคนิค – Chờ thêm thông tin đầu vào',
+    'ts in inf':'ทีมโซลูชันทางเทคนิค – Không thể khả thi về mặt kỹ thuật',
+    'ts in nrch':'ทีมโซลูชันทางเทคนิค – ไม่มีการตอบสนองจากผู้ลงโฆษณา',
+    'ts in ni':'ทีมโซลูชันทางเทคนิค – ผู้ลงโฆษณาไม่สะดวกสำหรับการสนับสนุน',
+    'ts in nrdy':'ทีมโซลูชันทางเทคนิค – ผู้ลงโฆษณาไม่สะดวกสำหรับการสนับสนุน',
+    'ts in oost':'ทีมโซลูชันทางเทคนิค – ส่งคำขอไปยังทีมที่เหมาะสม',
+    'ts in oosu':'ทีมโซลูชันทางเทคนิค – ไม่สามารถส่งต่อคำขอ',
+    'ts in oos seller':'ทีมโซลูชันทางเทคนิค – อยู่นอกขอบเขตทางเราให้การสนับสนุน ',
+    'ts in oth':'ทีมโซลูชันทางเทคนิค – ทางเราจะทำการปิดเคส สำหรับเคส ',
 };
 
 var th_searchandremove = [

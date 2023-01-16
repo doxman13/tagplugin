@@ -46,7 +46,8 @@ function (result) {
             th_tagTeamTDCXLoad(window);
         }
 
-		th_load_remote(result, _default_action);
+		_default_action();
+		//th_load_remote(result, _default_action);
 		//th_checkStyleByTheme(result.optionkl__disable_stylebytheme);
 	}
 

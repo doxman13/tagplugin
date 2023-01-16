@@ -420,7 +420,7 @@ function vi_tagTeamTDCXLoad() {
 // ACTION
 // ===
     var load_script_action = () => {
-        panel_div.querySelectorAll(`[data-btnaction]`).forEach(function(elm) {
+        document.querySelectorAll(`[data-btnaction]`).forEach(function(elm) {
             elm.addEventListener('click', function(e){
                 var _action = this.getAttribute("data-btnaction");
                 panel_div.setAttribute("data-btnaction_status", _action);
@@ -454,12 +454,17 @@ function vi_tagTeamTDCXLoad() {
                 }
                 
                 // emailtemplate
-                if(_action === 'openemailtemplate') {
-                    // 2. Click Step2step
-                        document.querySelector('[data-btnaction="openmain"]').click();
-                        document.querySelector('[data-btnaction="email-template"]').click();
+                if(_action === 'openemailtemplate' ||
+                    _action === 'hide_panel-emailtemplate') {
+                    // 2. Click Step2step _panel_emailtemplate
+                    
+                        toggleClass("active", document.querySelector('._panel_emailtemplate'));
+
+                        // document.querySelector('[data-btnaction="openmain"]').click();
+                        // document.querySelector('[data-btnaction="email-template"]').click();
                         
                 }
+
                 
                 // emailtemplate
                 if(_action === 'crawl_case') {
@@ -662,7 +667,7 @@ function vi_tagTeamTDCXLoad() {
 
 // Load Email Template 
     function loadEmailTemplateAction(){                
-        panel_div.querySelectorAll("._panel_btn--addtemplate").forEach(function(elm) {
+        document.querySelectorAll("._panel_btn--addtemplate").forEach(function(elm) {
             elm.addEventListener("click", function() {
                 cLog(() => {
                     console.log(1, "Here");
@@ -717,8 +722,10 @@ function vi_tagTeamTDCXLoad() {
                                     document.querySelector('[debug-id="dock-item-issue"]').click();
                                 }
                                 
-                                _card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled):not(._active)').click();
-                                _card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled)').classList.add('_active');
+                                if(_card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled)')) {
+                                    _card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled):not(._active)').click();
+                                    _card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled)').classList.add('_active');
+                                }
                             }
 
                         // Open document doc list
@@ -758,9 +765,10 @@ function vi_tagTeamTDCXLoad() {
             });
         });
         
-        panel_div.querySelector('#_emailtemp_search_input').addEventListener("keyup", (e) => {
-            var _search = panel_div.querySelector('#_emailtemp_search_input').innerText.toLowerCase();
-            panel_div.querySelectorAll('[data-type]').forEach((elm) => {
+        
+        onClickElm('._emailtemp_search_input', 'keyup', function(elm_inputparent, e){
+            var _search = elm_inputparent.innerText.toLowerCase();
+            elm_inputparent.closest('[data-panel="email-template"]').querySelectorAll('[data-type]').forEach((elm) => {
                 // elm
                 elm.style.display = 'none';
                 cLog(()=> {console.log(elm.getAttribute("data-type").toLowerCase().includes(_search))})
@@ -768,7 +776,19 @@ function vi_tagTeamTDCXLoad() {
                     elm.style.display = '';
                 }
             });
+
         });
+        // panel_div.querySelector('#_emailtemp_search_input').addEventListener("keyup", (e) => {
+        //     var _search = panel_div.querySelector('#_emailtemp_search_input').innerText.toLowerCase();
+        //     panel_div.querySelectorAll('[data-type]').forEach((elm) => {
+        //         // elm
+        //         elm.style.display = 'none';
+        //         cLog(()=> {console.log(elm.getAttribute("data-type").toLowerCase().includes(_search))})
+        //         if(elm.getAttribute("data-type").toLowerCase().includes(_search)) {
+        //             elm.style.display = '';
+        //         }
+        //     });
+        // });
     }
 
 function activeListCase(caseid){
@@ -2175,16 +2195,20 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                 // // Open
                                 // document.querySelector('[data-btnaction="openmain"]').click();
                                 dock_container.insertAdjacentHTML("afterEnd", dock_container_add);
-                                document.querySelector('._panel_shortcut_toggleopenmain_withoutsave').addEventListener("click", (e) => {
-                                    toggleClass("hide_main", panel_div)
-                                    toggleClass("_hide_main", document.documentElement)
-                                });
+                                if(document.querySelector('._panel_shortcut_toggleopenmain_withoutsave')) {
+                                    document.querySelector('._panel_shortcut_toggleopenmain_withoutsave').addEventListener("click", (e) => {
+                                        toggleClass("hide_main", panel_div)
+                                        toggleClass("_hide_main", document.documentElement)
+                                    });
+                                }
                             }
                             
                         }
                     };
-                    
-                    _addshortcutbtn_meet();
+
+                    if(window.tagteamoption.optionkl__disable_dialog === false) {
+                        _addshortcutbtn_meet();
+                    }
                 }
 
                 if(window.location.hostname === "cases.connect.corp.google.com" ) {
@@ -2196,12 +2220,17 @@ var loadpanelcaseconnect = (is_reload = false) => {
                             if(!_panel_addshortcutbtn) {
                                 var dock_container = document.querySelector(".dock-container");
                                 if(dock_container) {
-                                    var strhtml = `<div class="dock-container _panel_btnshortcut">
-                                        <div class="material-button _panel_shortcut_toggleopenmain_withoutsave"  >
-                                            <div class="content">
-                                                <img src="${window.dataTagteam.assets_url_img}/355037/google.svg">
-                                            </div>
-                                        </div>
+                                    var strhtml = `<div class="dock-container _panel_btnshortcut">`;
+
+                                    if(window.tagteamoption.optionkl__disable_dialog === false) {
+                                        strhtml += `<div class="material-button _panel_shortcut_toggleopenmain_withoutsave"  >
+                                                <div class="content">
+                                                    <img src="${window.dataTagteam.assets_url_img}/355037/google.svg">
+                                                </div>
+                                            </div>`;
+                                    }
+
+                                    strhtml += `
                                         <div class="material-button _panel_shortcut_openemailtemplate"  >
                                             <div class="content">
                                                 <img src="${window.dataTagteam.assets_url_img}/194000/mail.svg">
@@ -2231,10 +2260,12 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                     // // Open
                                     // document.querySelector('[data-btnaction="openmain"]').click();
                                     dock_container.insertAdjacentHTML("afterEnd", dock_container_add);
-                                    document.querySelector('._panel_shortcut_toggleopenmain_withoutsave').addEventListener("click", (e) => {
-                                        toggleClass("hide_main", panel_div)
-                                        toggleClass("_hide_main", document.documentElement)
-                                    });
+                                    if(document.querySelector('._panel_shortcut_toggleopenmain_withoutsave')) {
+                                        document.querySelector('._panel_shortcut_toggleopenmain_withoutsave').addEventListener("click", (e) => {
+                                            toggleClass("hide_main", panel_div)
+                                            toggleClass("_hide_main", document.documentElement)
+                                        });
+                                    }
 
                                     document.querySelector('._panel_shortcut_openemailtemplate').addEventListener("click", (e) => {
                                         document.querySelector('[data-btnaction="openemailtemplate"]').click();
@@ -2247,12 +2278,17 @@ var loadpanelcaseconnect = (is_reload = false) => {
 
                                     // go/TeamVn
                                     var _timekey_current = new Date().getDate();
-                                    if(sessionStorage.getItem("goTeamVNToDay") != _timekey_current) {
-                                        document.querySelector('._panel_shortcut_go_teamvietnam').classList.add('notview_today');
-                                    }
+                                    getChromeStorage('goTeamVNToDay', (response) => {
+                                        var _timestorage = response.value || false;
+                                        if(_timestorage != _timekey_current) {
+                                            document.querySelector('._panel_shortcut_go_teamvietnam').classList.add('notview_today');
+                                        }
+                                    });
 
                                     document.querySelector('._panel_shortcut_go_teamvietnam').addEventListener("click", (e) => {
-                                        sessionStorage.setItem("goTeamVNToDay", _timekey_current);
+                                        // sessionStorage.setItem("goTeamVNToDay", _timekey_current);
+                                        setChromeStorage('goTeamVNToDay', _timekey_current);
+
                                         e.target.remove();
                                     });
 
@@ -2294,27 +2330,27 @@ var loadpanelcaseconnect = (is_reload = false) => {
                             });
 
                         // 3. Show  by dock
-                            onClickElm(`.dock-container [debug-id]:not([debug-id="dock-item-home"])`, `click`, (elm, e) => {
-                                // allow
-                                if(window.tagteamoption.optionkl__disable_dialog === false) {
-                                    // Detech human click by XY
-                                    if(e.offsetX > 0 && e.offsetY > 0) {
-                                        panel_div.classList.remove("hide_main");
-                                        document.documentElement.classList.remove("_hide_main");
-                                    }
-                                }
-                            });
+                            // onClickElm(`.dock-container [debug-id]:not([debug-id="dock-item-home"])`, `click`, (elm, e) => {
+                            //     // allow
+                            //     if(window.tagteamoption.optionkl__disable_dialog === false) {
+                            //         // Detech human click by XY
+                            //         if(e.offsetX > 0 && e.offsetY > 0) {
+                            //             panel_div.classList.remove("hide_main");
+                            //             document.documentElement.classList.remove("_hide_main");
+                            //         }
+                            //     }
+                            // });
 
-                            onClickElm(`.dock-container [debug-id="dock-item-home"]`, `click`, (elm, e) => {
-                                // allow
-                                if(window.tagteamoption.optionkl__disable_dialog === false) {
-                                    // Detech human click by XY
-                                    if(e.offsetX > 0 && e.offsetY > 0) {
-                                        panel_div.classList.add("hide_main");
-                                        document.documentElement.classList.add("_hide_main");
-                                    }
-                                }
-                            });
+                            // onClickElm(`.dock-container [debug-id="dock-item-home"]`, `click`, (elm, e) => {
+                            //     // allow
+                            //     if(window.tagteamoption.optionkl__disable_dialog === false) {
+                            //         // Detech human click by XY
+                            //         if(e.offsetX > 0 && e.offsetY > 0) {
+                            //             panel_div.classList.add("hide_main");
+                            //             document.documentElement.classList.add("_hide_main");
+                            //         }
+                            //     }
+                            // });
 
                             onClickElm(`#cr-list li`, `click`, (elm, e) => {
                                 vi_clearAndPrepareCRTemplate();
@@ -2451,9 +2487,7 @@ function loadInit() {
         }
     
     // 0.1 Load panel
-        if(window.tagteamoption.optionkl__disable_dialog == false) {
-            loadpanelcaseconnect();
-        }
+        loadpanelcaseconnect();
     
     // 0.1 Load focus case
         if(window.tagteamoption.optionkl__disable_focuscase == false) {

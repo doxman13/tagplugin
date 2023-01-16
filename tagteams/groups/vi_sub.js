@@ -301,12 +301,6 @@ var vi_clearAndPrepareCRTemplate = () => {
         
         var ntime = 0;
         var myInterval = setInterval(() => {
-            _email_body_content_top_content.dispatchEvent(new Event('input'));
-            _email_body_content_top_content.dispatchEvent(new Event('focus'));
-            _email_body_content_top_content.dispatchEvent(new Event('click'));
-            _email_body_content_top_content.click();
-            
-
             cLog(()=>{console.log("CR -> interval focus cursor point and check content")});
 
             addCursor2Contenteditable(_email_body_content_top_content);

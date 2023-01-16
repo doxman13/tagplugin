@@ -214,24 +214,47 @@ function checkInputEmailInbox(){
                         return false;
                     }
                     
+                    var _email_input_from = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top email-address-dropdown.input.from');
+                    
                     var _email_input_to = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top email-address-input.input.to');
+                    
                     var _email_input_cc = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top email-address-input.input.cc');
                     var _email_input_bcc = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top email-address-input.input.bcc');
 
-                    if(_email_input_to && _email_input_cc && _email_input_bcc) {
+                    if(_email_input_from && _email_input_to && _email_input_cc && _email_input_bcc) {
+                        _email_input_from.style.backgroundColor = "";
                         _email_input_to.style.backgroundColor = "";
                         _email_input_cc.style.backgroundColor = "";
                         _email_input_bcc.style.backgroundColor = "";
 
+                        if(_email_input_from.innerText.includes('technical-solutions@google.com') === false) {
+                            _email_input_from.style.backgroundColor = "#ff8f8f";
+                            if(_email_input_from.closest('.header')) {
+                                _email_input_from.closest('.header').classList.add("_chk_email_agains");
+                            }
+                            _email_input_from.classList.add("_chk_email_from_wrong");
+
+                            noteBarAlert('Mail From => wrong', caseload.case_id);
+                        }
+                        
                         if(_email_input_to.innerText.includes(caseload.customer_email) === false) {
-                            cLog(() => {console.log("---> check CC", window.dataTagteam.current_case.case_id); });
                             _email_input_to.style.backgroundColor = "#ff8f8f";
+                            if(_email_input_to.closest('.header')) {
+                                _email_input_to.closest('.header').classList.add("_chk_email_agains");
+                            }
+                            _email_input_to.classList.add("_chk_email_to_wrong");
+                            
                             noteBarAlert('Mail TO => wrong / missing', caseload.case_id);
     
                         }
     
                         if(_email_input_cc.innerText.includes(caseload.am_email) === false) {
                             _email_input_cc.style.backgroundColor = "#ff8f8f";
+                            if(_email_input_cc.closest('.header')) {
+                                _email_input_cc.closest('.header').classList.add("_chk_email_agains");
+                            }
+                            _email_input_cc.classList.add("_chk_email_cc_wrong");
+                            
                             noteBarAlert('Mail CC => wrong / missing', caseload.case_id);
     
                         }
@@ -239,6 +262,11 @@ function checkInputEmailInbox(){
                         if(caseload.am_isgcc) {
                             if(_email_input_bcc.innerText.includes(caseload.am_email) === false) {
                                 _email_input_bcc.style.backgroundColor = "#ff8f8f";
+                                if(_email_input_bcc.closest('.header')) {
+                                    _email_input_bcc.closest('.header').classList.add("_chk_email_agains");
+                                }
+                                _email_input_bcc.classList.add("_chk_email_bcc_wrong");
+                            
                                 noteBarAlert('Is BCC => BCC => wrong / missing', caseload.case_id);
     
                             }

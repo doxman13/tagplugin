@@ -6,46 +6,46 @@ var th_language = {
 };
 
 var th_key_task_searchandreplace = `
-    ads_conversion_tracking_troubleshooting:Ads Conversion Tracking Troubleshooting:kiểm tra khắc phục sự cố theo dõi lượt chuyển đổi
-    ads_conversion_tracking:Ads Conversion Tracking:triển khai theo dõi lượt chuyển đổi
-    ga4_migration:GA4 Migration:triển khai theo dõi số liệu Google Analytics 4
-    shopping_onboarding:Shopping Onboarding:triển khai Google Shopping 
-    ads_remarketing:Ads Remarketing:triển khai tiếp thị lại
-    ads_dynamic_remarketing:Ads Dynamic Remarketing:triển khai tiếp thị lại động
-    ads_enhanced_conversions:Ads Enhanced Conversions:triển khai chuyển đổi nâng cao
+    ads_conversion_tracking_troubleshooting:Ads Conversion Tracking Troubleshooting:ตรวจสอบและแก้ไขเครื่องมือวัด Conversion
+    ads_conversion_tracking:Ads Conversion Tracking:Conversion
+    ga4_migration:GA4 Migration:ใช้การติดตั้งตามเมตริกของ Google Analytics 4
+    shopping_onboarding:Shopping Onboarding:Google Shopping
+    ads_remarketing:Ads Remarketing:รีมาร์เก็ตติ้ง
+    ads_dynamic_remarketing:Ads Dynamic Remarketing:ไดนามิกรีมาร์เก็ตติ้ง
+    ads_enhanced_conversions:Ads Enhanced Conversions:Enhanced Conversion
     ads_website_call_conversion:Ads Website Call Conversion:triển khai lượt chuyển đổi cuộc gọi
     analytics_cross_domain_tracking:Analytics Cross Domain Tracking:phân tích theo dõi tên miền chéo
     analytics_dynamic_remarketing:Analytics Dynamic Remarketing:phân tích tiếp thị lại động 
-    analytics_e-commerce_tracking:Analytics E-Commerce Tracking:phân tích theo dõi thương mại điện tử
-    analytics_enhanced_e-commerce_tracking:Analytics Enhanced E-Commerce Tracking:phân tích theo dõi thương mại điện tử nâng cao
-    analytics_event_tracking:Analytics Event Tracking:theo dõi các sự kiện phân tích
-    analytics_health_check:Analytics Health Check:kiểm tra khả năng ghi nhận phân tích
-    analytics_remarketing:Analytics Remarketing:phân tích tiếp thị lại
-    analytics_setup:Analytics Setup:cài đặt phân tích
-    analytics_troubleshooting:Analytics Troubleshooting:kiểm tra khắc phục sự cố phân tích
-    consent_mode:Consent Mode:triển khai chế độ đồng ý cho trang web
-    fix_sitewide_tagging_ogt_ct:Fix Sitewide Tagging (OGT & CT):sửa lỗi gắn thẻ trên toàn trang web (OGT & CT)
-    ga4_e-commerce_migration:GA4 E-Commerce Migration:triển khai theo dõi số liệu mua hàng với Google Analytics 4
-    google_tag_manager_installation:Google Tag Manager Installation:cài đặt trình quản lý thẻ cho website
-    ads_conversion_code:Ads Conversion Code:triển khai mã nguồn lượt chuyển đổi
+    analytics_e-commerce_tracking:Analytics E-Commerce Tracking:การติดตามการกระทำ Ecommerce ด้วย Google Analytics 4
+    analytics_enhanced_e-commerce_tracking:Analytics Enhanced E-Commerce Tracking:การติดตามการกระทำ Ecommerce ด้วย Google Analytics 4
+    analytics_event_tracking:Analytics Event Tracking:การติดตามเหตุการณ์ของ Google Analytics
+    analytics_health_check:Analytics Health Check:ตรวจสอบการทำงานของ Google Analytics
+    analytics_remarketing:Analytics Remarketing:ติดตั้งรีมาร์เก็ตติ้งแท็ก
+    analytics_setup:Analytics Setup:ติดตั้ง Google Analytics
+    analytics_troubleshooting:Analytics Troubleshooting:ตรวจสอบการวิเคราะห์การแก้ไขปัญหา Google Analytics
+    consent_mode:Consent Mode:ใช้โหมดยินยอมสำหรับเว็บไซต์ (Consent Mode)
+    fix_sitewide_tagging_ogt_ct:Fix Sitewide Tagging (OGT & CT):แก้ไขการติดแท็กทั่วเว็บไซต์ (OGT & CT)
+    ga4_e-commerce_migration:GA4 E-Commerce Migration:การติดตามการกระทำ Ecommerce ด้วย Google Analytics 4
+    google_tag_manager_installation:Google Tag Manager Installation:ติดตั้งตัวจัดการแท็กสำหรับเว็บไซต์ (Google Tag Manager)
+    ads_conversion_code:Ads Conversion Code:ติดตั้ง Conversion ด้วยการใช้โค๊ด
     website_call_conversion:Website Call Conversion:triển khai lượt chuyển đổi cuộc gọi cho trang web
-    ga_destination_tracking:GA Destination Tracking:triển khai theo dõi trang đích với Google Analytics
-    ga_event_tracking:GA Event Tracking:triển khai theo dõi sự kiện Google Analytics
+    ga_destination_tracking:GA Destination Tracking:การติดตามหน้าเว็บไซต์ ด้วย Google Analytics
+    ga_event_tracking:GA Event Tracking:การติดตามเหตุการณ์ของ Google Analytics
     ga_smart_goals:GA Smart Goals:triển khai mục tiêu thông minh với Google Analytics
     site_wide_tag_-_conversion_tracking_fix(ogt_&_ct):Site Wide Tag - Conversion Tracking Fix(OGT & CT):sửa lỗi gắn thẻ và lượt chuyển đổi trên toàn trang web (OGT & CT)
     dynamic_remarketing_retail:Dynamic Remarketing - Retail:triển khai tiếp thị lại động - retail (bán lẻ)
     dynamic_remarketing_x_non_retail:Dynamic Remarketing - X (Non-Retail):triển khai tiếp thị lại động - X (Non-Retail)
     google_analytics_dynamic_remarketing_non_retail:Google Analytics Dynamic Remarketing (Non-Retail):triển khai tiếp thị lại động trên Google Analytics (Non-Retail)
     google_analytics_dynamic_remarketing_retail:Google Analytics Dynamic Remarketing (Retail):triển khai tiếp thị lại động trên Google Analytics - X (Non-Retail)
-    google_analytics_health_check:Google Analytics Health Check:triển khai kiểm tra khả năng ghi nhận của Google Analytics 
+    google_analytics_health_check:Google Analytics Health Check:ตรวจสอบการทำงานของ Google Analytics
     ga_starter_pack:GA Starter Pack:làm quen với Google Analytics
-    google_analytics_troubleshooting:Google Analytics Troubleshooting:kiểm tra khắc phục sự cố Google Analytics
-    offline_conversion_tracking:Offline Conversion Tracking:triển khai chuyển đổi theo dõi ngoại tuyến
+    google_analytics_troubleshooting:Google Analytics Troubleshooting:ตรวจสอบการแก้ปัญหาของ Google Analytics
+    offline_conversion_tracking:Offline Conversion Tracking:การติดตามคอนเวอร์ชั่นออฟไลน์
     recaptcha_implementation:ReCaptcha Implementation:triển khai ReCaptcha
-    cross_domain_tracking:Cross Domain Tracking:triển khai theo dõi tên miền chéo
+    cross_domain_tracking:Cross Domain Tracking:การติดตามผลแบบข้ามโดเมน
     lead_form_ad_extension:Lead Form Ad Extension:triển khai tiện ích mở rộng biểu mẫu khách hàng tiềm năng
-    enhanced_conversions:Enhanced Conversions:triển khai chuyển đổi nâng cao
-    shopping_feed_optimization:Shopping Feed Optimization:tối ưu nguồn cấp dữ liệu trên Google Shopping
+    enhanced_conversions:Enhanced Conversions:Enhanced Conversion
+    shopping_feed_optimization:Shopping Feed Optimization:การเพิ่มประสิทธิภาพฟีด Google Shopping
 `;
 
 var th_heading_searchandreplace = `
@@ -74,21 +74,21 @@ var th_heading_searchandreplace = `
 `;
 
 var th_hotkey_email = {
-    'ts as new':'ทีมโซลูชันทางเทคนิค - Xác nhận lịch hẹn',
-    'ts as wip offtfr':'ทีมโซลูชันทางเทคนิค – Đang triển khai việc cài đặt',
-    'ts as wip offs':'ทีมโซลูชันทางเทคนิค – Đang triển khai việc cài đặt',
-    'ts as resched1':'ทีมโซลูชันทางเทคนิค – Đặt lại lịch hẹn lần 1',
-    'ts as reschedok':'ทีมโซลูชันทางเทคนิค – Đặt lại lịch hẹn lần 2',
-    'ts so verif':'ทีมโซลูชันทางเทคนิค – Đã xác minh lượt hiển thị/lượt chuyển đổi',
-    'ts so verif nrc':'ทีมโซลูชันทางเทคนิค – Xác nhận triển khai thành công',
-    'ts so unv':'ทีมโซลูชันทางเทคนิค – Triển khai Tag đã hoàn tất',
-    'ts so vnn':'ทีมโซลูชันทางเทคนิค – Triển khai thành công',
-    'ts ni ai':'ทีมโซลูชันทางเทคนิค – Chờ thông tin phản hồi từ nhà quảng cáo',
-    'ts ni ic':'ทีมโซลูชันทางเทคนิค – Đang tham khảo Nhóm hỗ trợ nội bộ',
-    'ts ni av':'ทีมโซลูชันทางเทคนิค – Đang chờ Hiển thị/ Chuyển đổi',
-    'ts ni ac':'ทีมโซลูชันทางเทคนิค – Không liên lạc được với nhà quảng cáo',
-    'ts ni oth':'ทีมโซลูชันทางเทคนิค – Chờ thêm thông tin đầu vào',
-    'ts in inf':'ทีมโซลูชันทางเทคนิค – Không thể khả thi về mặt kỹ thuật',
+    'ts as new':'ทีมโซลูชันทางเทคนิค – ยืนยันการนัดหมาย',
+    'ts as wip offtfr':'ทีมโซลูชันทางเทคนิค – กำลังดำเนินการติดตั้ง',
+    'ts as wip offs':'ทีมโซลูชันทางเทคนิค – กำลังดำเนินการติดตั้ง',
+    'ts as resched1':'ทีมโซลูชันทางเทคนิค – กำหนดการการเลื่อนนัดหมายครั้งที่ 1',
+    'ts as reschedok':'ทีมโซลูชันทางเทคนิค – กำหนดการการเลื่อนนัดหมายครั้งที่ 2',
+    'ts so verif':'ทีมโซลูชันทางเทคนิค – ยืนยันการแสดงผล/การแปลง/การแก้ไข',
+    'ts so verif nrc':'ทีมโซลูชันทางเทคนิค – ยืนยันการแสดงผล/การแปลง/การแก้ไข',
+    'ts so unv':'ทีมโซลูชันทางเทคนิค – การติดตั้งแท็กเสร็จสมบูรณ์',
+    'ts so vnn':'ทีมโซลูชันทางเทคนิค – การปรับใช้/ติดตั้ง/แก้ไขสำเร็จ',
+    'ts ni ai':'ทีมโซลูชันทางเทคนิค – รอการตอบรับจากผู้ลงโฆษณา',
+    'ts ni ic':'ทีมโซลูชันทางเทคนิค – อ้างถึงทีมสนับสนุนภายใน',
+    'ts ni av':'ทีมโซลูชันทางเทคนิค – การแสดงผล/การแปลงที่รอดำเนินการ',
+    'ts ni ac':'ทีมโซลูชันทางเทคนิค – ไม่สามารถติดต่อผู้ลงโฆษณาได้',
+    'ts ni oth':'ทีมโซลูชันทางเทคนิค – กำลังรอการแก้ไข/เปลี่ยนปลง/ติดตั้งเพิ่มเติม',
+    'ts in inf':'ทีมโซลูชันทางเทคนิค – ไม่สามารถติดตั้ง/แก้ไข/เปลี่ยนแปลงได้ในทางเทคนิค',
     'ts in nrch':'ทีมโซลูชันทางเทคนิค – ไม่มีการตอบสนองจากผู้ลงโฆษณา',
     'ts in ni':'ทีมโซลูชันทางเทคนิค – ผู้ลงโฆษณาไม่สะดวกสำหรับการสนับสนุน',
     'ts in nrdy':'ทีมโซลูชันทางเทคนิค – ผู้ลงโฆษณาไม่สะดวกสำหรับการสนับสนุน',
@@ -99,7 +99,7 @@ var th_hotkey_email = {
 };
 
 var th_searchandremove = [
-    'Giải pháp kỹ thuật của Google',
+    'ทีมโซลูชันทางเทคนิค Google',
 ];
 
 var th_api_blog = 'https://cdtx.lyl.vn/wordpress/wp-json/tagteam/blogs';

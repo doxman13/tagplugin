@@ -1958,9 +1958,8 @@ var th_TagteamFocusCase = () => {
                     document.querySelector('canned-response-dialog search-panel').appendChild(divLoading);
                     waitForElm('.suggestion-list .list-item').then(elm => {
                         elm.click();
-                        divLoading.remove();
-                        var _title = th_hotkey_email[key] ? th_hotkey_email[key] : "Đội giải pháp kỹ thuật - Thông báo";
-                        document.querySelector('.is-top .subject').value = `${_title} cho trường hợp [${caseid}]`;
+                        divLoading.remove();                        var _title = th_hotkey_email[key] ? th_hotkey_email[key] : "ทีมโซลูชันทางเทคนิค - ";
+                        document.querySelector('.is-top .subject').value = `${_title} สำหรับเคส [${caseid}]`;
                         document.querySelector('.is-top .subject').focus();
                         document.querySelector('.is-top .subject').dispatchEvent(new Event('input'));
                         document.execCommand('innerText', false, ' ')

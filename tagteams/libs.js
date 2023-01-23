@@ -215,6 +215,18 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
         var _obj_wait = () => {
             var caseload = window.dataTagteam.current_case;
             if(caseload) {
+                
+                // Email customer empty
+                    if(!caseload.customer_email) {
+                        cLog(() => {console.log("eie --- caseload.customer_email NOT ISSET 1 "  ); });
+                        return false;
+                    } 
+                    if(caseload.customer_email.includes('@') === false) {
+                        cLog(() => {console.log("eie --- caseload.customer_email NOT ISSET 2 "  ); });
+                        return false;
+                    }
+
+                // Case ID is match
                 var _caseid_elm = document.querySelector('[debug-id="case-id"] .case-id');
                 if(_caseid_elm) {
                     if(window.dataTagteam.current_case.case_id !== _caseid_elm.innerText.trim()) {
@@ -513,9 +525,6 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
 // Check Input Email Inbox
 // ====
 function checkInputEmailInbox(){
-    var _global_status = {
-        "test": true
-    };
 
     var str_elmparent = '.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"] ';
 
@@ -534,14 +543,21 @@ function checkInputEmailInbox(){
                         unmaskbutton.forEach(function (elm) {
                             elm.click();
                             
-                            if(_global_status.test) {
-                                elm.classList.remove("unmask-button");
-                            }
+                            // if(_global_status.test) {
+                            //     elm.classList.remove("unmask-button");
+                            // }
                         });
                     }
         
-                    
-                    var recheckand_alert = (isfix = false) => {
+                    var n_oncedequi = 0;
+                    var recheckand_alert = () => {
+                        cLog(() => {console.log("eie --- DEQUI", n_oncedequi); });
+                        
+                        if(n_oncedequi > 10) {
+                            cLog(() => {console.log("eie --- STOP DEQUI"); });
+                            return false;
+                        }
+                        n_oncedequi++;
                         
                         setTimeout(function(){
                             var unmaskbutton = document.querySelectorAll(str_elmparent + '.unmask-button');
@@ -562,7 +578,7 @@ function checkInputEmailInbox(){
                                     var n_err = 0;
                                     if(_email_input_from.innerText.includes('technical-solutions@google.com') === false) {
                                         if(_email_input_from.closest('.header')) {
-                                            _email_input_from.closest('.header').classList.add("_chk_email_agains");
+                                            _email_input_from.closest('.header').setAttribute("data-type", "_chk_email_agains");
                                         }
                                         _email_input_from.classList.add("_chk_email_from_wrong");
             
@@ -573,7 +589,7 @@ function checkInputEmailInbox(){
                                     
                                     if(_email_input_to.innerText.includes(caseload.customer_email) === false) {
                                         if(_email_input_to.closest('.header')) {
-                                            _email_input_to.closest('.header').classList.add("_chk_email_agains");
+                                            _email_input_to.closest('.header').setAttribute("data-type", "_chk_email_agains");
                                         }
                                         _email_input_to.classList.add("_chk_email_to_wrong");
                                         
@@ -584,7 +600,7 @@ function checkInputEmailInbox(){
                                     if(caseload.am_isgcc) {
                                         if(_email_input_bcc.innerText.includes(caseload.am_email) === false) {
                                             if(_email_input_bcc.closest('.header')) {
-                                                _email_input_bcc.closest('.header').classList.add("_chk_email_agains");
+                                                _email_input_bcc.closest('.header').setAttribute("data-type", "_chk_email_agains");
                                             }
                                             _email_input_bcc.classList.add("_chk_email_bcc_wrong");
                                         
@@ -595,7 +611,7 @@ function checkInputEmailInbox(){
                                         
                                         if(_email_input_cc.innerText.includes(caseload.am_email) === false) {
                                             if(_email_input_cc.closest('.header')) {
-                                                _email_input_cc.closest('.header').classList.add("_chk_email_agains");
+                                                _email_input_cc.closest('.header').setAttribute("data-type", "_chk_email_agains");
                                             }
                                             _email_input_cc.classList.add("_chk_email_cc_wrong");
                                             noteBarAlert('Mail CC => wrong / missing', caseload.case_id);

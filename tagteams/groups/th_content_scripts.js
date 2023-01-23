@@ -40,13 +40,15 @@ function th_tagTeamTDCXLoad() {
         optionkl__inputyourshortname: "Your shortname",
         optionkl__inputyourname: "Your name",
         optionkl__disable_dialog: false,
-        optionkl__disable_focuscase: false
+        optionkl__disable_focuscase: false,
+        optionkl__disable_autofixemail: false,
     }, function (result) {
         window.tagteamoption.optionkl__modecase = result.optionkl__modecase;
         window.tagteamoption.optionkl__inputyourshortname = result.optionkl__inputyourshortname;
         window.tagteamoption.optionkl__inputyourname = result.optionkl__inputyourname;
         window.tagteamoption.optionkl__disable_dialog = result.optionkl__disable_dialog;
         window.tagteamoption.optionkl__disable_focuscase = result.optionkl__disable_focuscase;
+        window.tagteamoption.optionkl__disable_autofixemail = result.optionkl__disable_autofixemail;
     });
 
     // ============
@@ -88,8 +90,8 @@ function th_tagTeamTDCXLoad() {
                 }
                 
                 // Check email 
-                cLog(() => {console.log("checkInputEmailInbox 1"); });
-                checkInputEmailInbox();
+                cLog(() => {console.log("checkInputEmailInboxAndFix 1"); });
+                checkInputEmailInboxAndFix();
             }
         }
 
@@ -596,6 +598,9 @@ function th_tagTeamTDCXLoad() {
                         panel_div.classList.add("hide_main");
                         document.documentElement.classList.add("_hide_main");
                     
+                        document.documentElement.classList.remove("email_template");
+                        document.documentElement.classList.remove("mainpanel_template");
+                        
                     // 2. Save
                         setChromeStorage('cdtx_hidepanel-' + location.hostname, false , () => {
                             // Empty
@@ -622,11 +627,22 @@ function th_tagTeamTDCXLoad() {
 
 
                 if(_action === 'close_panel') {
-                    this.closest("[data-panel]").classList.remove("active");
-                    if(this.closest('[data-panel="list-case"]')) {
-                        if(panel_div.classList.contains("list-case__active")) {
-                            panel_div.classList.remove("list-case__active");
+                    
+                    document.documentElement.classList.remove("email_template");
+                    document.documentElement.classList.remove("mainpanel_template");
+                    
+                    
+                    if(panel_div.querySelector('[data-panel="main"]').classList.contains("active")) {
+                        this.closest("[data-panel]").classList.remove("active");
+                        if(this.closest('[data-panel="list-case"]')) {
+                            if(panel_div.classList.contains("list-case__active")) {
+                                panel_div.classList.remove("list-case__active");
+                            }
                         }
+                    } else {
+                        toggleClass("hide_main", panel_div)
+                        toggleClass("_hide_main", document.documentElement)
+                        toggleClass("active", panel_div.querySelector('[data-panel="main"]'));
                     }
                 }
 
@@ -681,8 +697,8 @@ function th_tagTeamTDCXLoad() {
                     
                     // Wait and insert
                     wait4Elem('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"] #email-body-content-top').then(function (elm) {
-                        cLog(() => {console.log("checkInputEmailInbox 2"); });
-                        checkInputEmailInbox();
+                        cLog(() => {console.log("checkInputEmailInboxAndFix 2"); });
+                        checkInputEmailInboxAndFix();
                         
                         var _card_istop = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top');
 
@@ -1222,6 +1238,7 @@ function loadCase(elm) {
                 hashchange_once = true;
                 window.addEventListener('hashchange', () => {
                     wait4Elem(".case-id").then(function () {
+                        noteBarAlert("CLEAR");
                         cLog(() => {console.log("hashchange => sLoadCase | ", window.dataTagteam.current_case)});
                         sLoadCase();
                     });
@@ -2195,8 +2212,25 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                 dock_container.insertAdjacentHTML("afterEnd", dock_container_add);
                                 if(document.querySelector('._panel_shortcut_toggleopenmain_withoutsave')) {
                                     document.querySelector('._panel_shortcut_toggleopenmain_withoutsave').addEventListener("click", (e) => {
-                                        toggleClass("hide_main", panel_div)
-                                        toggleClass("_hide_main", document.documentElement)
+                                        var is_open = toggleClass("mainpanel_template", document.documentElement);
+
+                                        document.documentElement.classList.remove("email_template");
+
+                                        if(is_open) {
+                                            document.documentElement.classList.remove("_hide_main");
+                                            panel_div.classList.remove("hide_main");
+
+                                            var _panels = panel_div.querySelectorAll(`[data-panel]`);
+                                            _panels.forEach((elm) => {
+                                                elm.classList.remove("active");
+                                            });
+
+                                            var _panel_elm_email = panel_div.querySelector(`[data-panel="main"]`);
+                                            _panel_elm_email.classList.add("active");
+                                        } else {
+                                            document.documentElement.classList.add("_hide_main");
+                                            panel_div.classList.add("hide_main");
+                                        }
                                     });
                                 }
                             }
@@ -2260,13 +2294,49 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                     dock_container.insertAdjacentHTML("afterEnd", dock_container_add);
                                     if(document.querySelector('._panel_shortcut_toggleopenmain_withoutsave')) {
                                         document.querySelector('._panel_shortcut_toggleopenmain_withoutsave').addEventListener("click", (e) => {
-                                            toggleClass("hide_main", panel_div)
-                                            toggleClass("_hide_main", document.documentElement)
+                                            var is_open = toggleClass("mainpanel_template", document.documentElement);
+
+                                            document.documentElement.classList.remove("email_template");
+
+                                            if(is_open) {
+                                                document.documentElement.classList.remove("_hide_main");
+                                                panel_div.classList.remove("hide_main");
+    
+                                                var _panels = panel_div.querySelectorAll(`[data-panel]`);
+                                                _panels.forEach((elm) => {
+                                                    elm.classList.remove("active");
+                                                });
+    
+                                                var _panel_elm_email = panel_div.querySelector(`[data-panel="main"]`);
+                                                _panel_elm_email.classList.add("active");
+                                            } else {
+                                                document.documentElement.classList.add("_hide_main");
+                                                panel_div.classList.add("hide_main");
+                                            }
                                         });
                                     }
 
                                     document.querySelector('._panel_shortcut_openemailtemplate').addEventListener("click", (e) => {
-                                        document.querySelector('[data-btnaction="openemailtemplate"]').click();
+                                        var is_open = toggleClass("email_template", document.documentElement);
+
+                                        document.documentElement.classList.remove("mainpanel_template");
+
+                                        if(is_open) {
+                                            document.documentElement.classList.remove("_hide_main");
+                                            panel_div.classList.remove("hide_main");
+
+                                            var _panels = panel_div.querySelectorAll(`[data-panel]`);
+                                            _panels.forEach((elm) => {
+                                                elm.classList.remove("active");
+                                            });
+
+                                            var _panel_elm_email = panel_div.querySelector(`[data-panel="email-template"]`);
+                                            _panel_elm_email.classList.add("active");
+                                        } else {
+                                            document.documentElement.classList.add("_hide_main");
+                                            panel_div.classList.add("hide_main");
+                                        }
+                                        
                                     });
 
                                     document.querySelector('._panel_shortcut_fisrtemail').addEventListener("click", (e) => {
@@ -2318,8 +2388,8 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                 // });
                             
                                 // Check
-                                cLog(() => {console.log("checkInputEmailInbox 3"); });
-                                checkInputEmailInbox();
+                                cLog(() => {console.log("checkInputEmailInboxAndFix 3"); });
+                                checkInputEmailInboxAndFix();
                             });
 
                         // 3. Show  by dock
@@ -2354,6 +2424,12 @@ var loadpanelcaseconnect = (is_reload = false) => {
                             onClickElm(`noted span`, `click`, (elm, e) => {
                                 // allow
                                 elm.remove();
+                            });
+
+                        // Action _chk_email_agains
+                            onClickElm(`._chk_email_agains`, `click`, (elm, e) => {
+                                // allow
+                                elm.classList.remove("_chk_email_agains");
                             });
 
                         // Remove Note

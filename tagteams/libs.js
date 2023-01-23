@@ -141,12 +141,24 @@ function getDataTimeFormat(_datestring) {
 // Toggle Class
 // ====
 function toggleClass(_class, _elm) {
-    if (_elm.classList.contains(_class)) {
-        _elm.classList.remove(_class);
-        return false;
+    if(typeof _elm === 'string') {
+        document.querySelectorAll(_elm).forEach(() => {
+            if (_elm.classList.contains(_class)) {
+                _elm.classList.remove(_class);
+                return false;
+            } else {
+                _elm.classList.add(_class);
+                return true;
+            }
+        })
     } else {
-        _elm.classList.add(_class);
-        return true;
+        if (_elm.classList.contains(_class)) {
+            _elm.classList.remove(_class);
+            return false;
+        } else {
+            _elm.classList.add(_class);
+            return true;
+        }
     }
 }
 
@@ -175,6 +187,328 @@ function wait4Elem(selector) {
     });
 }
 
+function checkInputEmailInboxAndFix(n_once_check = 0){
+    if(window.tagteamoption.optionkl__disable_autofixemail == true) {
+        checkInputEmailInbox();
+        return false;
+    }
+
+    var str_elmparent = '.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"] ';
+
+    var _global_status = {
+        "test": true
+    };
+
+    if(n_once_check > 3) {
+        console.log("eie - recheck ???")
+        return false;
+    }
+
+            
+    cLog(() => {console.log("eie --- wait checkInputEmailInboxAndFix"  ); });
+    // as least has 1 input cc
+
+    wait4Elem(str_elmparent + 'email-address-input.input.cc input.input').then((_caseid_elm) => {
+        
+        cLog(() => {console.log("eie --- START Wait - has input "  ); });
+        
+        var _obj_wait = () => {
+            var caseload = window.dataTagteam.current_case;
+            if(caseload) {
+                var _caseid_elm = document.querySelector('[debug-id="case-id"] .case-id');
+                if(_caseid_elm) {
+                    if(window.dataTagteam.current_case.case_id !== _caseid_elm.innerText.trim()) {
+                        setTimeout(() => {
+                            checkInputEmailInboxAndFix(n_once_check + 1);
+                        }, 1000);
+    
+                        return false;
+                    }
+                }
+                
+                cLog(() => {console.log("eie --- START", "Case ID", window.dataTagteam.current_case.case_id ); });
+                    
+                // n > 10 stop ngay
+                var n_oncedequi = 0;
+                var n_email_am_haserror = 0;
+                var timekey = Date.now();
+                var elm_str_elmparent_headers = document.querySelector(str_elmparent + ".headers");
+    
+                // ONCE IF HAS DATA-EIEID
+                if(elm_str_elmparent_headers.getAttribute('data-eieid')) {
+                    cLog(() => { console.log("eie --- STOP -> IF HAS RUN! ") });
+    
+                    return false;
+                }
+                
+                if(elm_str_elmparent_headers) {
+                    elm_str_elmparent_headers.setAttribute('data-eieid', timekey);
+                }
+    
+                var elm_parentheader = document.querySelector(`[data-eieid="${timekey}"]`);
+                if(!elm_parentheader) {
+                    elm_parentheader = elm_str_elmparent_headers;
+                }
+    
+                
+                var recheck_fix_alert = (_callback, n_step = "0unmark", elm_parentheader) => {
+                    
+                    cLog(() => { console.log("eie - recheck_fix_alert - step: ", n_step) });
+    
+                    if(n_oncedequi > 10) {
+                        cLog(() => {console.log("eie --- STOP DEQUI"); });
+                        document.body.classList.remove("is_recheck_fix_alert_fixing");
+                        elm_parentheader.classList.add("finished");
+                        return false;
+                    }
+                    n_oncedequi++;
+    
+    
+                        var _email_input_from = elm_parentheader.querySelector('email-address-dropdown.input.from');
+                        var _email_input_to = elm_parentheader.querySelector('email-address-input.input.to');
+                        var _email_input_cc = elm_parentheader.querySelector('email-address-input.input.cc');
+                        var _email_input_bcc = elm_parentheader.querySelector('email-address-input.input.bcc');
+                        
+                        if(_email_input_from && _email_input_to && _email_input_cc && _email_input_bcc) {
+                            
+                            // Explore 0unmark
+                            if(n_step === "0unmark") {
+                                var unmaskbutton = elm_parentheader.querySelectorAll('.unmask-button');
+                                
+                                cLog(() => {console.log("eie --- 0unmark - length ", unmaskbutton.length); });
+    
+                                if(unmaskbutton.length) {
+                                    unmaskbutton.forEach(function (elm) {
+                                        elm.click();
+                                        
+                                        // if(_global_status.test) {
+                                        //     elm.classList.remove("unmask-button");
+                                        // }
+                                    });
+                                    
+                                    
+                                    setTimeout(() => {
+                                        recheck_fix_alert(_callback, "0unmark", elm_parentheader);
+                                    }, 2000);
+                                    return false;
+                                } else {
+    
+                                    // NEXT Step => CHECK
+                                    recheck_fix_alert(_callback, "1checkemail", elm_parentheader);
+                                }
+    
+                                return false;
+                            }
+    
+                            if(n_step === "1checkemail") {
+                                var n_err = 0;
+                                if(_email_input_from.innerText.includes('technical-solutions@google.com') === false) {
+                                    n_err++;
+                                }
+                                
+                                if(_email_input_to.innerText.includes(caseload.customer_email) === false) {
+                                    cLog(() => { console.log("eie - recheck_fix_alert customer_email ") });
+                                    n_err++;
+                                }
+                            
+                                if(caseload.am_isgcc) {
+                                    if(_email_input_cc.innerText.includes("@") !== false) {
+                                        cLog(() => { console.log("eie - recheck_fix_alert is gcc CC has DATA => It should empty ") });
+                                        n_err++;
+                                        n_email_am_haserror++;
+                                    }
+    
+                                    if(_email_input_bcc.innerText.includes(caseload.am_email) === false) {
+                                        cLog(() => { console.log("eie - recheck_fix_alert is gcc caseload.am_email wrong ") });
+                                        n_err++;
+                                        n_email_am_haserror++;
+                                    }
+                                } else {
+                                    if(_email_input_cc.innerText.includes(caseload.am_email) === false) {
+                                        cLog(() => { console.log("eie - recheck_fix_alert am email wrong ") });
+                                        n_err++;
+                                        n_email_am_haserror++;
+                                    }
+    
+                                    if(_email_input_bcc.innerText.includes("@") !== false) {
+                                        cLog(() => { console.log("eie - recheck_fix_alert BCC has DATA => It should empty ") });
+                                        n_err++;
+                                        n_email_am_haserror++;
+                                    }
+                                }
+    
+                                if(n_err > 0) {
+                                    
+                                    var _elm_expand_more = elm_parentheader.querySelector('compose-card-content-wrapper .headers [icon="expand_more"]:not(.rotated)');
+                                    
+                                    if(_elm_expand_more) {
+                                        _elm_expand_more.click();
+                                    }
+    
+                                    // NEXT Step => clear Input
+                                    recheck_fix_alert(_callback, "2clearinputtoccbcc_and_fix", elm_parentheader);
+                                } else {
+    
+                                    // Done
+                                    document.body.classList.remove("is_recheck_fix_alert_fixing");
+                                    elm_parentheader.classList.add("finished");
+                                    _callback();
+                                    return false;
+                                }
+                            }
+    
+                            if(n_step === '2clearinputtoccbcc_and_fix') {
+                                
+                                    // clearInput
+                                    if(_email_input_to.innerText.includes(caseload.customer_email) === false) {
+                                        var elm_to_remove = elm_parentheader.querySelectorAll(".input.to cases-icon.remove");
+                                        elm_to_remove.forEach(function (elm) {
+                                            setTimeout(() => {
+                                                elm.click();
+                                            }, 300)
+                                        });
+                                    }
+                                
+                                    if(n_email_am_haserror > 0) {
+                                        var elm_cc_remove = elm_parentheader.querySelectorAll(".input.cc cases-icon.remove");
+                                        elm_cc_remove.forEach(function (elm) {
+                                            setTimeout(() => {
+                                                elm.click();
+                                            }, 300)
+                                        });
+                                    
+                                        var elm_bcc_remove = elm_parentheader.querySelectorAll(".input.bcc cases-icon.remove");
+                                        elm_bcc_remove.forEach(function (elm) {
+                                            setTimeout(() => {
+                                                elm.click();
+                                            }, 300)
+                                        });
+                                    }
+    
+                                    setTimeout(()=>{
+                                        recheck_fix_alert(_callback, "3fix", elm_parentheader);
+                                    }, 1500);
+                            }
+    
+                            if(n_step === '3fix') {
+                                document.body.classList.add("is_recheck_fix_alert_fixing");
+                                // Fix mail from
+                                    if(_email_input_from.innerText.includes('technical-solutions@google.com') === false) {
+                                        document.querySelector(str_elmparent + ".input.from material-dropdown-select material-icon").click();
+                                        var n_time = 0;
+                                        var time_input_key1 = setInterval(function(){
+                                            var elm_technical = document.querySelector('[id="email-address-id--technical-solutions@google.com"]');
+                                            if(elm_technical) {
+                                                elm_technical.click();
+                                                clearInterval(time_input_key1);
+                                            }
+                                    
+                                            if(n_time > 5) {
+                                                clearInterval(time_input_key1);
+                                            }
+                                            n_time++;
+                                            
+                                        }, 1000);   
+                                    } 
+    
+                                // Fix mail to
+                                    if(_email_input_to.innerText.includes(caseload.customer_email) === false) {
+                                        var elm_input_to = elm_parentheader.querySelector(".input.to input");
+                                        elm_input_to.value = caseload.customer_email;
+                                        elm_input_to.dispatchEvent(new Event('input'));
+                                        elm_input_to.dispatchEvent(new Event('enter'));
+                                        elm_input_to.dispatchEvent(new Event('change'));
+                                    
+                                    
+                                        var n_time = 0;
+                                        var time_input_key2 = setInterval(function(){
+                                            // debug-id email is outdiv
+                                            var elm_technical = document.querySelector('email-address-content [debug-id="email"]')
+                                            if(elm_technical) {
+                                                elm_technical.click();
+                                                clearInterval(time_input_key2);
+                                            }
+    
+                                            //
+                                            if(n_time > 5) {
+                                                clearInterval(time_input_key2);
+                                            }
+                                            n_time++;
+                                            
+                                        }, 1000);
+                                    }
+    
+                                // Fix cc bcc
+                                    var elm_area = elm_parentheader.querySelector(".input.cc");
+                                    if (caseload.am_isgcc) {
+                                        elm_area = elm_parentheader.querySelector(".input.bcc");
+                                    }
+                                
+                                    var elm_input = elm_area.querySelector("input");
+                                    if (elm_area.innerText.includes(caseload.am_email) === false) {
+                                        elm_input.value = caseload.am_email;
+                            
+                                        elm_input.dispatchEvent(new Event('input'));
+                                        elm_input.dispatchEvent(new Event('enter'));
+                                        elm_input.dispatchEvent(new Event('change'));
+                            
+                            
+                                        var n_time = 0;
+                                        var time_input_key3 = setInterval(function () {
+                                            var elm_technical = document.querySelector('[debug-id="email"]')
+                                            if (elm_technical) {
+                                                elm_technical.click();
+                                                clearInterval(time_input_key3);
+                                            }
+                            
+                            
+                                            //
+                                            if (n_time > 5) {
+                                                clearInterval(time_input_key3);
+                                            }
+                                            n_time++;
+                            
+                                        }, 1000);
+                                    }
+    
+    
+                                // Recheck after 3s
+                                setTimeout(function(){
+                                    recheck_fix_alert(_callback, "1checkemail", elm_parentheader);
+                                }, 4000);
+    
+                            }
+    
+                        } 
+                }
+    
+                setTimeout(() => {
+                    recheck_fix_alert(() => {
+                        console.log("eie -- All OK????");
+                    }, '0unmark', elm_parentheader);
+                }, 1000);
+            }
+        }
+
+        
+        var _my_settimeout = setTimeout(() => {
+            cLog(() => {console.log("eie --- *** TIME OUT"  ); });
+            _obj_wait();
+        }, 4000);
+
+        
+        wait4Elem(str_elmparent + '.unmask-button').then((_caseid_elm) => {
+            cLog(() => {console.log("eie --- *** Has unmark-button"  ); });
+            clearTimeout(_my_settimeout);
+            _obj_wait();
+            
+        });
+    });
+        
+    
+
+}
+
 // ====
 // Check Input Email Inbox
 // ====
@@ -183,103 +517,130 @@ function checkInputEmailInbox(){
         "test": true
     };
 
+    var str_elmparent = '.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"] ';
 
-    var _caseid_elm = document.querySelector('[debug-id="case-id"] .case-id');
-    if(_caseid_elm) {
-        cLog(() => {console.log("checkInputEmailInbox", window.dataTagteam.current_case.case_id); });
-        // var caseload = loadCaseDatabaseByID(_caseid_elm.innerText);
-        var caseload = window.dataTagteam.current_case;
-        if(caseload) {
+    wait4Elem(str_elmparent + 'email-address-input.input.cc input.input').then((_caseid_elm) => {
+        
+        var _obj_wait = () => {
 
-            // Explore unmark
-            var unmaskbutton = document.querySelectorAll('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top .unmask-button');
-            if(unmaskbutton.length) {
-                unmaskbutton.forEach(function (elm) {
-                    elm.click();
-                    
-                    if(_global_status.test) {
-                        elm.classList.remove("unmask-button");
-                    }
-                });
-            }
-
-            
-            var recheckand_alert = () => {
-                
-                setTimeout(function(){
-                    var unmaskbutton = document.querySelectorAll('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top .unmask-button');
+            var _caseid_elm = document.querySelector('[debug-id="case-id"] .case-id');
+            if(_caseid_elm) {
+                // var caseload = loadCaseDatabaseByID(_caseid_elm.innerText);
+                var caseload = window.dataTagteam.current_case;
+                if(caseload) {
+                    // Explore unmark
+                    var unmaskbutton = document.querySelectorAll(str_elmparent + '.unmask-button');
                     if(unmaskbutton.length) {
-                        recheckand_alert();
-
-                        return false;
-                    }
-                    
-                    var _email_input_from = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top email-address-dropdown.input.from');
-                    
-                    var _email_input_to = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top email-address-input.input.to');
-                    
-                    var _email_input_cc = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top email-address-input.input.cc');
-                    var _email_input_bcc = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top email-address-input.input.bcc');
-
-                    if(_email_input_from && _email_input_to && _email_input_cc && _email_input_bcc) {
-                        _email_input_from.style.backgroundColor = "";
-                        _email_input_to.style.backgroundColor = "";
-                        _email_input_cc.style.backgroundColor = "";
-                        _email_input_bcc.style.backgroundColor = "";
-
-                        if(_email_input_from.innerText.includes('technical-solutions@google.com') === false) {
-                            _email_input_from.style.backgroundColor = "#ff8f8f";
-                            if(_email_input_from.closest('.header')) {
-                                _email_input_from.closest('.header').classList.add("_chk_email_agains");
+                        unmaskbutton.forEach(function (elm) {
+                            elm.click();
+                            
+                            if(_global_status.test) {
+                                elm.classList.remove("unmask-button");
                             }
-                            _email_input_from.classList.add("_chk_email_from_wrong");
-
-                            noteBarAlert('Mail From => wrong', caseload.case_id);
-                        }
+                        });
+                    }
+        
+                    
+                    var recheckand_alert = (isfix = false) => {
                         
-                        if(_email_input_to.innerText.includes(caseload.customer_email) === false) {
-                            _email_input_to.style.backgroundColor = "#ff8f8f";
-                            if(_email_input_to.closest('.header')) {
-                                _email_input_to.closest('.header').classList.add("_chk_email_agains");
+                        setTimeout(function(){
+                            var unmaskbutton = document.querySelectorAll(str_elmparent + '.unmask-button');
+                            if(unmaskbutton.length) {
+                                recheckand_alert();
+        
+                                return false;
                             }
-                            _email_input_to.classList.add("_chk_email_to_wrong");
                             
-                            noteBarAlert('Mail TO => wrong / missing', caseload.case_id);
-    
-                        }
-    
-                        if(_email_input_cc.innerText.includes(caseload.am_email) === false) {
-                            _email_input_cc.style.backgroundColor = "#ff8f8f";
-                            if(_email_input_cc.closest('.header')) {
-                                _email_input_cc.closest('.header').classList.add("_chk_email_agains");
-                            }
-                            _email_input_cc.classList.add("_chk_email_cc_wrong");
-                            
-                            noteBarAlert('Mail CC => wrong / missing', caseload.case_id);
-    
-                        }
-    
-                        if(caseload.am_isgcc) {
-                            if(_email_input_bcc.innerText.includes(caseload.am_email) === false) {
-                                _email_input_bcc.style.backgroundColor = "#ff8f8f";
-                                if(_email_input_bcc.closest('.header')) {
-                                    _email_input_bcc.closest('.header').classList.add("_chk_email_agains");
-                                }
-                                _email_input_bcc.classList.add("_chk_email_bcc_wrong");
-                            
-                                noteBarAlert('Is BCC => BCC => wrong / missing', caseload.case_id);
-    
-                            }
-                        }
-                    }
-
-                }, 1000)
-            }
-
-            recheckand_alert();
+                            var _email_input_from = document.querySelector(str_elmparent + 'email-address-dropdown.input.from');
+                            var _email_input_to = document.querySelector(str_elmparent + 'email-address-input.input.to');
+                            var _email_input_cc = document.querySelector(str_elmparent + 'email-address-input.input.cc');
+                            var _email_input_bcc = document.querySelector(str_elmparent + 'email-address-input.input.bcc');
+        
+                            if(_email_input_from && _email_input_to && _email_input_cc && _email_input_bcc) {
+        
+                                    
+                                    var n_err = 0;
+                                    if(_email_input_from.innerText.includes('technical-solutions@google.com') === false) {
+                                        if(_email_input_from.closest('.header')) {
+                                            _email_input_from.closest('.header').classList.add("_chk_email_agains");
+                                        }
+                                        _email_input_from.classList.add("_chk_email_from_wrong");
             
+                                        noteBarAlert('Mail From => wrong', caseload.case_id);
+                                        n_err++;
+                                        
+                                    }
+                                    
+                                    if(_email_input_to.innerText.includes(caseload.customer_email) === false) {
+                                        if(_email_input_to.closest('.header')) {
+                                            _email_input_to.closest('.header').classList.add("_chk_email_agains");
+                                        }
+                                        _email_input_to.classList.add("_chk_email_to_wrong");
+                                        
+                                        noteBarAlert('Mail TO => wrong / missing', caseload.case_id);
+                                        n_err++;
+                                    }
+                                
+                                    if(caseload.am_isgcc) {
+                                        if(_email_input_bcc.innerText.includes(caseload.am_email) === false) {
+                                            if(_email_input_bcc.closest('.header')) {
+                                                _email_input_bcc.closest('.header').classList.add("_chk_email_agains");
+                                            }
+                                            _email_input_bcc.classList.add("_chk_email_bcc_wrong");
+                                        
+                                            noteBarAlert('Is BCC => BCC => wrong / missing', caseload.case_id);
+                                            n_err++;
+                                        }
+                                    } else {
+                                        
+                                        if(_email_input_cc.innerText.includes(caseload.am_email) === false) {
+                                            if(_email_input_cc.closest('.header')) {
+                                                _email_input_cc.closest('.header').classList.add("_chk_email_agains");
+                                            }
+                                            _email_input_cc.classList.add("_chk_email_cc_wrong");
+                                            noteBarAlert('Mail CC => wrong / missing', caseload.case_id);
+                                            n_err++;
+                                        }
+                    
+                                    }
+                                    
+                                    if(n_err > 0) {
+                                        var _elm_expand_more = document.querySelector(str_elmparent + 'compose-card-content-wrapper .headers [icon="expand_more"]:not(.rotated)');
+                                        
+                                        if(_elm_expand_more) {
+                                            _elm_expand_more.click();
+                                        }
+                                    }
+                                    
+            
+                                
+                            }
+        
+                        }, 3000)
+                    }
+        
+        
+                    recheckand_alert();
+                    
+                }
+            }
         }
-    }
+
+        
+        var _my_settimeout = setTimeout(() => {
+            cLog(() => {console.log("eie --- *** TIME OUT"  ); });
+            _obj_wait();
+        }, 4000);
+
+        
+        wait4Elem(str_elmparent + '.unmask-button').then((_caseid_elm) => {
+            cLog(() => {console.log("eie --- *** Has unmark-button"  ); });
+            clearTimeout(_my_settimeout);
+            _obj_wait();
+            
+        });
+
+    });
 }
 
 

@@ -5,6 +5,7 @@ chrome.storage.sync.get({
 	ouremail: "xxx@google.com",
 	optionkl__modecase: "Auto",
 	optionkl__disable_stylebytheme: false,
+	optionkl__disable_autofixemail: false,
 },
 function (result) {
 

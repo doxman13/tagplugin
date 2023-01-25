@@ -24,6 +24,7 @@ function (result) {
             window.dataTagteam.sendFirstEmail = () => { vi_sendFirstEmail() } ;
 			
             vi_tagTeamTDCXLoad(window);
+            globalForAll(window);
         }
 
 		vi_load_remote(result, _default_action);
@@ -45,6 +46,7 @@ function (result) {
             window.dataTagteam.sendFirstEmail = () => { th_sendFirstEmail() } ;
 			
             th_tagTeamTDCXLoad(window);
+            globalForAll(window);
         }
 
 		_default_action();

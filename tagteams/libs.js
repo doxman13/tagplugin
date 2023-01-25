@@ -660,6 +660,84 @@ function checkInputEmailInbox(){
 }
 
 
+function globalForAll(window) {
+    // Feature auto save and recall case id
+    if(window.location.hostname === "analytics-ics.corp.google.com" ) {
+
+        try {
+        
+            var _key = 'cdtx_analytics-ics_listcaseandlink';
+            var _datatemp = "";
+            var _caseid_indata = "";
+            var n_once = 0;
+            
+            getChromeStorage(_key, (response) => {
+                _datatemp = response.value || "";
+                cLog(() => {console.log("analytics", _datatemp)});
+
+                if(_datatemp) {
+                    var _caseinput = _datatemp.split("|--|");
+                    _caseinput = _caseinput.filter(function(e){return e});
+                    
+                    _caseinput.forEach((elm) => {
+                        if(elm.includes(location.href)) {
+                            _caseid_indata = elm.split('|-|')[1];
+                        }
+                    });
+                    cLog(() => {console.log("analytics - list", _caseinput)});
+
+                }
+
+                onClickElm('md-dialog.ics-data-access-reason-dialog button.ics-dialog-confirm', 'click', function(elm, e){
+                    var _parent = elm.closest('md-dialog.ics-data-access-reason-dialog');
+                    var caseid = _parent.querySelector('[name="caseId"]').value;
+                    var _keysave = (location.href + "|-|" + caseid );
+                    if(_datatemp.includes(_keysave) == false) {
+                        _datatemp = _datatemp + "|--|" + _keysave;
+                        setChromeStorage(_key, _datatemp);
+                    }
+                });
+            });
+
+
+            // Select the node that will be observed for mutations
+            var targetNode = document.body;
+    
+            // Options for the observer (which mutations to observe)
+            var config = { attributes: true, childList: true, subtree: true };
+    
+            // Callback function to execute when mutations are observed
+            var callback = function(mutationList, observer) {
+                // on-call, precall button 
+                var _istopelm = document.querySelector(`md-dialog.ics-data-access-reason-dialog [name="caseId"]`);
+                cLog(() => { console.log("analytics - 1") });
+                if(_istopelm) {
+                    cLog(() => { console.log("analytics - 2", _caseid_indata, _datatemp) });
+                    if(_istopelm.value.trim() === '' && _caseid_indata !== '' && n_once === 0) {
+                        _istopelm.value = _caseid_indata;
+                        
+                        _istopelm.dispatchEvent(new Event('input'));
+                        _istopelm.dispatchEvent(new Event('enter'));
+                        _istopelm.dispatchEvent(new Event('change'));
+
+                        n_once++;
+                    }
+                } else {
+                    n_once = 0;
+                }
+            };
+    
+            // Create an observer instance linked to the callback function
+            var observer = new MutationObserver(callback);
+    
+            // Start observing the target node for configured mutations
+            observer.observe(targetNode, config);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+}
+
 // =====
 // addCursor2contenteditable
 // Add position cursor point 

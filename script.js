@@ -163,6 +163,11 @@ if (window.location.hostname === "cases.connect.corp.google.com" && window.locat
 
 									if(window.dataTagteam.current_case.tasks) {
 										text = text.replace(/<span class="_task_i">[\s\S]*?<\/span>/g, `<span class="_task_i">${window.dataTagteam.current_case.tasks}</span>`);
+
+										var _task_i = window.dataTagteam.current_case.tasks;
+										if(_task_i.includes("Ads Enhanced Conversions")) {
+											text = text.replace(/<span class="_document_attachurl_i">[\s\S]*?<\/span>/g, `<span class="_document_attachurl_i">DOCUMENT EC: <span data-infocase="customer_name" data-highlight="need_recheck">ZZZZ</span></span>`);
+										}
 									}
 
 								}
@@ -192,7 +197,7 @@ if (window.location.hostname === "cases.connect.corp.google.com" && window.locat
 			var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top`);
 			if(_istopelm) {
 				if (_istopelm.querySelector("#pre-call") === null && _istopelm.querySelector("#on-call") === null) {
-					createDomWithText("Precall", `<ul dir="auto"><li>Emails or feedback from Advertiser/Seller (including seller request to join the call)[C]&nbsp;</li><li>Call being made in business hours[C]</li><li>Program ,task type (including special instructions),advertiser need and readiness [C]</li><li>Related cases [C]</li><li>CMS being used  [C]</li><li>Gtag/GTM/GA already exists  [C] (NA applicable only for Shopping or OCT cases)</li></ul>`, "pre-call");
+					createDomWithText("Precall", `<ul dir="auto"><li>Emails or feedback from Advertiser/Seller (including seller request to join the call)[C]&nbsp;</li><li>Call being made in business hours[C]</li><li>Program ,task type (including special instructions),advertiser need and readiness [C]</li><li>Related cases [C]</li><li>CMS being used  [C]</li><li>Gtag/GTM/GA already exists  [C] (NA applicable only for Shopping or OCT cases)</li></ul><span class="_document_attachurl_i"></span>`, "pre-call");
 					createDomWithText("OnCall", `<b>Sub-status:&nbsp;<span class="_sub_i"></span></b>&nbsp; <p dir="auto"><b>Sub-status Reason:</b>&nbsp;</p><p dir="auto"><b>Speakeasy ID:&nbsp;</b></p><p dir="auto"><b>On Call Comments:</b>&nbsp;</p><p dir="auto"><b>Tags Implemented:</b>&nbsp;<span class="_task_i"></span></p><p dir="auto"><b>Screenshots:&nbsp;</b></p><p dir="auto"><b>Multiple CIDs:&nbsp;</b></p><p dir="auto"><b>On Call Screenshot:</b>&nbsp;</p>`, "on-call");
 
 

@@ -2433,12 +2433,12 @@ var loadpanelcaseconnect = (is_reload = false) => {
                             });
 
                         // Remove Note
-                            onClickElm(`[card-type="compose"] [data-notetitle]`, `click`, (elm, e) => {
+                            onClickElm(`[card-type] [data-notetitle]`, `click`, (elm, e) => {
                                 // allow
                                 elm.removeAttribute("data-notetitle");
                                 elm.setAttribute("data-notetitlestatus", "ischange");
                             });
-                            onClickElm(`[card-type="compose"] [data-highlight]`, `click`, (elm, e) => {
+                            onClickElm(`[card-type] [data-highlight]`, `click`, (elm, e) => {
                                 // allow
                                 elm.removeAttribute("data-highlight");
                             });

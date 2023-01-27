@@ -432,7 +432,8 @@ function vi_tagTeamTDCXLoad() {
                     // 1. openmain
                         panel_div.classList.remove("hide_main");
                         document.documentElement.classList.remove("_hide_main");
-
+                        panel_div.querySelector('[data-panel="openmain"]').classList.add("active");
+                        
                     // 2. openmain
                         setChromeStorage('cdtx_hidepanel-' + location.hostname, true , () => {
                             // Empty
@@ -2072,15 +2073,15 @@ var set_init_load = () => {
             });
 
         // 7. Show Panel Default 
-            getChromeStorage('cdtx_hidepanel-' + location.hostname, (response) => {
-                if(response.value) {
-                    panel_div.classList.remove("hide_main");
-                    document.documentElement.classList.remove("_hide_main");
-                } else {
-                    panel_div.classList.add("hide_main");
-                    document.documentElement.classList.add("_hide_main");
-                }
-            });
+            // getChromeStorage('cdtx_hidepanel-' + location.hostname, (response) => {
+            //     if(response.value) {
+            //         panel_div.classList.remove("hide_main");
+            //         document.documentElement.classList.remove("_hide_main");
+            //     } else {
+            //         panel_div.classList.add("hide_main");
+            //         document.documentElement.classList.add("_hide_main");
+            //     }
+            // });
 
         // 8. Load current for other case connect
             getChromeStorage('cdtx_casecurrent', (response) => {

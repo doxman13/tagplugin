@@ -1506,7 +1506,7 @@
     var vi_panel_div = `
     <div id="_panel_div" class="_panel active minisize hide_toolbar hide_opentiptutorial hide_opensetting hide_emailtemplate hide_firstemail hide_main" >
         
-        <div class="_panel_toolbarmove">
+        <div class="_panel_toolbarmove" style="opacity: 0; display: none;">
             <span data-btnaction="move"><svg width="48px" height="48px" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="48" height="48" fill="white" fill-opacity="0.01" />
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M19 10.3075C19 12.6865 17.2091 14.615 15 14.615C12.7909 14.615 11 12.6865 11 10.3075C11 7.92854 12.7909 6 15 6C17.2091 6 19 7.92854 19 10.3075ZM15 28.615C17.2091 28.615 19 26.6865 19 24.3075C19 21.9285 17.2091 20 15 20C12.7909 20 11 21.9285 11 24.3075C11 26.6865 12.7909 28.615 15 28.615ZM15 42.615C17.2091 42.615 19 40.6865 19 38.3075C19 35.9285 17.2091 34 15 34C12.7909 34 11 35.9285 11 38.3075C11 40.6865 12.7909 42.615 15 42.615Z" fill="black" />

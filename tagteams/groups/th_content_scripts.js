@@ -432,7 +432,8 @@ function th_tagTeamTDCXLoad() {
                     // 1. openmain
                         panel_div.classList.remove("hide_main");
                         document.documentElement.classList.remove("_hide_main");
-
+                        panel_div.querySelector('[data-panel="openmain"]').classList.add("active");
+                        
                     // 2. openmain
                         setChromeStorage('cdtx_hidepanel-' + location.hostname, true , () => {
                             // Empty
@@ -472,7 +473,9 @@ function th_tagTeamTDCXLoad() {
                 if(_action === 'crawl_case') {
                     console.log("crawl_case")
                     // 2. Click Step2step
-                    unmark_all_and_crawl();
+                    unmark_all_and_crawl(() => {
+                        cLog(() => {console.log('crawl_case')});
+                    });
                         
                 }
                 
@@ -543,7 +546,7 @@ function th_tagTeamTDCXLoad() {
                 if(_action === 'opensetting') {
                     // 2. Save
                         setChromeStorage('cdtx_opensetting-' + location.hostname, toggleClass("hide_opensetting", panel_div) , () => {
-                            // Empty
+                            toggleClass("active", panel_div.querySelector('[data-panel="opensetting"]'));
                         });
                 }
                 
@@ -2069,15 +2072,15 @@ var set_init_load = () => {
             });
 
         // 7. Show Panel Default 
-            getChromeStorage('cdtx_hidepanel-' + location.hostname, (response) => {
-                if(response.value) {
-                    panel_div.classList.remove("hide_main");
-                    document.documentElement.classList.remove("_hide_main");
-                } else {
-                    panel_div.classList.add("hide_main");
-                    document.documentElement.classList.add("_hide_main");
-                }
-            });
+            // getChromeStorage('cdtx_hidepanel-' + location.hostname, (response) => {
+            //     if(response.value) {
+            //         panel_div.classList.remove("hide_main");
+            //         document.documentElement.classList.remove("_hide_main");
+            //     } else {
+            //         panel_div.classList.add("hide_main");
+            //         document.documentElement.classList.add("_hide_main");
+            //     }
+            // });
 
         // 8. Load current for other case connect
             getChromeStorage('cdtx_casecurrent', (response) => {
@@ -2392,6 +2395,83 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                 checkInputEmailInboxAndFix();
                             });
 
+                        // 2. toggleShow content
+
+                            var _shortcutlink_actsave = (elm) => {
+                                var _parent = elm.closest('.panel_addshortcutlink'),
+                                _url = _parent.querySelector('.panel_addshortcutlink_gr-url'),
+                                _text = _parent.querySelector('.panel_addshortcutlink_gr-text');
+
+                                if(_text.innerText.trim() === '' || _url.innerText.trim() === '') {
+                                    cLog(() => { console.log('panel_addshortcutlink - URL or text this empty value') });
+                                    return false;
+                                }
+
+                                if(/^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(_url.innerText.trim()) != true) {
+                                    cLog(() => { console.log('panel_addshortcutlink - URL wrong ' + _url.innerText.trim()) });
+                                    return false;
+                                }
+                                
+                                var _htmltrust = _TrustScript(`<span class="panel_addshortcutlink_gr-grbtn"><a href="${_url.innerText.trim()}" data-keytext="${_text.innerText.trim()}" data-link="${_url.innerText.trim()}" target="_blank">${_text.innerText.trim()}</a><span class="panel_addshortcutlink_gr-removebtn">X</span></span>`);
+                                _parent.querySelector('.panel_addshortcutlink_gr-list').insertAdjacentHTML("beforeEnd", _htmltrust);
+                                
+                                // Reset
+                                _url.innerText = '';
+                                _text.innerText = '';
+                                // Close
+                                var isopen = toggleClass("content_open", elm.closest(".panel_addshortcutlink"));
+
+                                // Save localstorage
+                                
+                                var _html_linkelm = _parent.querySelector('.panel_addshortcutlink_gr-list');
+                                var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+                                if(_case_idelm) {
+                                    setChromeStorage('cdtx_shortcutlink_caseid_' + _case_idelm.innerText , _html_linkelm.innerHTML, () => {
+                                        cLog(() => { console.log('DONE - ' + _html_linkelm.innerHTML) });
+                                    });
+                                }
+                            }
+
+                            onClickElm('.panel_addshortcutlink_toggle', 'click', function(elm, e){
+                                var isopen = toggleClass("content_open", elm.closest(".panel_addshortcutlink"));
+                            });
+                            
+                            onClickElm('.panel_addshortcutlink [contenteditable]', 'keypress', function(elm, e){
+                                if (e.which === 13) {
+                                    e.preventDefault();
+                                    _shortcutlink_actsave(elm);
+                                }
+
+                            });
+                            
+                            onClickElm('.panel_addshortcutlink [contenteditable]', 'paste', function(elm, e){
+                                e.preventDefault();
+                                var text = e.clipboardData.getData("text/plain");
+                                document.execCommand("insertHTML", false, text);
+                            });
+                            
+                            onClickElm('.panel_addshortcutlink .panel_addshortcutlink_gr-removebtn', 'click', function(elm, e) {
+                                var _parent = elm.closest('.panel_addshortcutlink');
+
+                                if (confirm("You sure remove?")) {
+                                    elm.closest('.panel_addshortcutlink_gr-grbtn').remove();
+    
+                                    // Remove data
+                                    var _html_linkelm = _parent.querySelector('.panel_addshortcutlink_gr-list');
+                                    var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+                                    if(_case_idelm) {
+                                        setChromeStorage('cdtx_shortcutlink_caseid_' + _case_idelm.innerText , _html_linkelm.innerHTML, () => {
+                                            cLog(() => { console.log('panel_addshortcutlink update data -  DONE - ' + _html_linkelm.innerHTML) });
+                                        });
+                                    }
+                                }
+                                
+                            });
+
+                            onClickElm('.panel_addshortcutlink .panel_addshortcutlink_save', 'click', function(elm, e){
+                                _shortcutlink_actsave(elm);
+                            });
+
                         // 3. Show  by dock
                             // onClickElm(`.dock-container [debug-id]:not([debug-id="dock-item-home"])`, `click`, (elm, e) => {
                             //     // allow
@@ -2539,6 +2619,69 @@ function autoLoadCode(keyaction) {
     });
 }
 
+// Add more short link 
+function panel_addshortcutlink() {
+    try {
+        
+		// Select the node that will be observed for mutations
+		var targetNode = document.body;
+
+		// Options for the observer (which mutations to observe)
+		var config = { attributes: true, childList: true, subtree: true };
+
+		// Callback function to execute when mutations are observed
+		var callback = function(mutationList, observer) {
+			// on-call, precall button 
+			var _istopelm = document.querySelector(`csl-customer-information .body`);
+			if(_istopelm) {
+				if (_istopelm.querySelector("#panel_addshortcutlink") === null) {
+                    
+                    var panel_addshortcutlink_html = _TrustScript(`<div id="panel_addshortcutlink" class="panel_addshortcutlink">
+                        <div class="panel_addshortcutlink_row">
+                            <div class="panel_addshortcutlink_gr-row panel_addshortcutlink_gr-list"></div>
+                        </div>
+                        <span class="panel_addshortcutlink_btn panel_addshortcutlink_toggle">+ Add shortlink</span>
+                        <div class="panel_addshortcutlink_row">
+                            <div class="panel_addshortcutlink_gr-row panel_addshortcutlink_gr-content" >
+                                <span class="panel_addshortcutlink_gr-url" contenteditable="true">Url</span>
+                                <span class="panel_addshortcutlink_gr-text" contenteditable="true">Name</span>
+                                <span class="panel_addshortcutlink_btn panel_addshortcutlink_save">Save</span>
+                                <span class="panel_addshortcutlink_btn panel_addshortcutlink_toggle">Close</span>
+                            </div>
+                        </div>
+                    </div>`);
+                    _istopelm.insertAdjacentHTML("beforeEnd", panel_addshortcutlink_html);
+
+                    
+                    
+                    var _html_linkelm = document.querySelector('#panel_addshortcutlink .panel_addshortcutlink_gr-list');
+                    var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+                    if(_case_idelm) {
+                        
+                        getChromeStorage('cdtx_shortcutlink_caseid_' + _case_idelm.innerText, (response) => {
+                            var _datatemp = response.value || false;
+                            if(_datatemp) {
+                                _html_linkelm.innerHTML = _datatemp;
+                                cLog(() => { console.log('panel_addshortcutlink -  DONE - ' + _datatemp) });
+                            }
+                        });
+                    }
+
+
+				}
+			}
+		};
+
+		// Create an observer instance linked to the callback function
+		var observer = new MutationObserver(callback);
+
+		// Start observing the target node for configured mutations
+		observer.observe(targetNode, config);
+    } catch (error) {
+        
+    }
+}
+
 function loadInit() {
     // 0.0
     // Load style    
@@ -2577,6 +2720,8 @@ function loadInit() {
                 // }
             }
         }
+    // 0.2
+    panel_addshortcutlink();
     
 }    
 

@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "KL TAG TEAM",
-	"version": "6.9",
+	"version": "7.0",
 	"description": "KL TAG TEAM",
 	"icons": {
 		"16": "icon16x16.png",
@@ -52,7 +52,9 @@
 				"https://mail.google.com/chat/u/*",
 				"https://cases.connect.corp.google.com/*",
 				"https://partnerdash.google.com/*",
-				"https://support-dossiers.corp.google.com/"
+				"https://support-dossiers.corp.google.com/",
+				"*://*.connect.corp.google.com/*",
+				"https://appointments.connect.corp.google.com/"
 			],
 			"js": [
 				"script.js",

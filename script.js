@@ -620,7 +620,7 @@ document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new E
 //Auto refresh and check on Unassigned page in connect dash
 
 setInterval(function () {
-	if(window.location.href === "https://partnerdash.google.com/apps/appointments/" && document.querySelector('input:checked + label').textContent === "Unbooked "){
+	if(window.location.href === "https://appointments.connect.corp.google.com/" && document.querySelector('input:checked + label').textContent === "Unbooked "){
     	
     	document.querySelector('[mattooltip="Refresh"]').click();
        	console.log('click refrehs button - dash page test test'); 

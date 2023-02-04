@@ -31,6 +31,26 @@ function vi_tagTeamTDCXLoad() {
         _global_status.test = true;
     }
     
+    // ?rmkey
+    if(window.location.search.includes("rmkey")) {
+        var _key = window.location.search.split("=")[1];
+        removeChromeStorage(_key, () => {
+
+            const url = new URL(window.location);
+            url.searchParams.delete('rmkey');
+            window.history.pushState({}, '', url);
+
+            Toastify({
+                text: `Remove ${_key} success`,
+                duration: 3000,
+                callback: function(){
+                    this.remove();
+                }
+            }).showToast();
+
+        });    
+    }
+    
     chrome.storage.sync.get({ 
         mycountry: 'Thailand',
         ouremail: 'xxx@google.com', 

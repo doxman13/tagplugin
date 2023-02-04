@@ -27,7 +27,7 @@ function (result) {
             globalForAll(window);
         }
 
-		vi_load_remote(result, _default_action);
+		load_remote(result, _default_action);
 		vi_checkStyleByTheme(result.optionkl__disable_stylebytheme);
 	}	
 	
@@ -49,9 +49,7 @@ function (result) {
             globalForAll(window);
         }
 
-		_default_action();
-		//th_load_remote(result, _default_action);
-		//th_checkStyleByTheme(result.optionkl__disable_stylebytheme);
+		load_remote(result, _default_action);
 	}
 
 	// // Update file overwrite /tagteams/groups

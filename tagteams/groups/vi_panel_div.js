@@ -1769,18 +1769,18 @@
                     <div class=" _panel__inner">
                         <div class="_panel__script--header"><span data-infocase="customer_gender">C2</span> <span data-infocase="customer_name">B2</span></div>
                         <div class="_panel__script"> <br>
-                            <div class="_panel__script--elm hide" data-title="1. Chào hỏi xác nhận thông Adv"> <br>Dạ em chào <span data-infocase="customer_gender">C2</span>, em là <span data-infosetting="your-shortname">Your shortname</span> đến từ đội giải pháp kỹ thuật đại diện Google
+                            <div class="_panel__script--elm" data-title="1. Chào hỏi xác nhận thông Adv"> <br>Dạ em chào <span data-infocase="customer_gender">C2</span>, em là <span data-infosetting="your-shortname">Your shortname</span> đến từ đội giải pháp kỹ thuật đại diện Google
                                 <br>có phải em <span data-infosetting="your-shortname">Your shortname</span> đang nghe máy với <span data-infocase="customer_gender">C2</span> <span data-infocase="customer_name">B2</span> đó không?
                                 <br>// KH: đúng rồi em!
                                 <br> <br>
-                                <p data-am_donvi="GCC">Em nhận được yêu cầu từ đội hỗ trợ Google Ads, là hôm nay hỗ trợ cài đặt <span data-infocase="tasks_nowrap">Tasks</span> cho website <span data-infocase="customer_website">F2</span>, phải không <span data-infocase="customer_gender">C2</span> ạ?
+                                <p data-am_donvi="GCC">Em nhận được yêu cầu từ đội hỗ trợ Google Ads, là hôm nay hỗ trợ triển khai <span data-infocase="tasks_nowrap">Tasks</span> cho website <span data-infocase="customer_website">F2</span>, phải không <span data-infocase="customer_gender">C2</span> ạ?
                                     <br>// KH: đúng rồi em!</p> <br>
-                                <p data-am_donvi="OTHER">Em có nhận được yêu cầu từ bạn <strong><span data-infocase="am_name">C2</span></strong> (người quản lý của Google)hôm nay sẽ hỗ trợ <span data-infocase="customer_gender">C2</span> cài đặt <span data-infocase="tasks_nowrap">Tasks</span> cho trang web <span data-infocase="customer_website">F2</span>. phải không ạ?
-                                    <br>// KH: đúng rồi em!</p> <br>dạ, Ước tính thời gian cài đặt này là <span data-infocase="est_setup">G2</span> phút, vậy mình có đang ngồi máy tính để tiện cài đặt không <span data-infocase="customer_gender">C2</span>?
+                                <p data-am_donvi="OTHER">Em có nhận được yêu cầu từ bạn <strong><span data-infocase="am_name">C2</span></strong> (người quản lý của Google)hôm nay sẽ hỗ trợ <span data-infocase="customer_gender">C2</span> triển khai <span data-infocase="tasks_nowrap">Tasks</span> cho trang web <span data-infocase="customer_website">F2</span>. phải không ạ?
+                                    <br>// KH: đúng rồi em!</p> <br>dạ, Ước tính thời gian triển khai này là <span data-infocase="est_setup">G2</span> phút, vậy mình có đang ngồi máy tính để tiện triển khai không <span data-infocase="customer_gender">C2</span>?
                                 <br>// KH: Có em
                                 <br>
                             </div>
-                            <div class="_panel__script--elm hide" data-title="2. Thủ tục"> <br>Trước khi bắt đầu cài đặt <span data-infocase="customer_gender">C2</span> lưu ý giúp em cuộc gọi này sẽ được ghi âm nhằm nâng cao chất lượng dịch vụ [cho] khách hàng , <span data-infocase="customer_gender">C2</span> nha!
+                            <div class="_panel__script--elm" data-title="2. Thủ tục"> <br>Trước khi bắt đầu triển khai <span data-infocase="customer_gender">C2</span> lưu ý giúp em cuộc gọi này sẽ được ghi âm nhằm nâng cao chất lượng dịch vụ [cho] khách hàng , <span data-infocase="customer_gender">C2</span> nha!
                                 <br>// KH: Ok em
                                 <br>Nếu sảy sự cố mất kết nối, <span data-infocase="customer_gender">C2</span> vui lòng không liên hệ qua số này, em sẽ chủ động gọi lại cho <span data-infocase="customer_gender">C2</span> <br>// KH: Ok em
                                 <br>em <span data-infosetting="your-shortname">Your shortname</span> có gởi cho <span data-infocase="customer_gender">C2</span> một email có link google meet [á] để chia sẽ màn hình với em, <span data-infocase="customer_gender">C2</span> truy cập vào giúp em nha
@@ -1790,39 +1790,39 @@
                                 <br>// KH: OK em
                                 <br> <br>// Me: em đã thấy màn hình của <span data-infocase="customer_gender">C2</span> rồi,
                                 <br> <br></div>
-                            <div class="_panel__script--elm hide" data-title="3. Điều khoản"> <br>à <span data-infocase="customer_gender">C2</span>! Bên em trước đó có gởi cho <span data-infocase="customer_gender">C2</span> một email xác nhận lịch hẹn ngày hôm nay [á], mình đã đọc qua nội dung bên trong rồi đúng không ạ?
+                            <div class="_panel__script--elm" data-title="3. Điều khoản"> <br>à <span data-infocase="customer_gender">C2</span>! Bên em trước đó có gởi cho <span data-infocase="customer_gender">C2</span> một email xác nhận lịch hẹn ngày hôm nay [á], mình đã đọc qua nội dung bên trong rồi đúng không ạ?
                                 <br>// KH: có rồi
-                                <br>Nếu như <span data-infocase="customer_gender">C2</span> thấy mọi vấn đề nêu trên <span data-infocase="customer_gender">C2</span> cảm thấy thỏa, thì mình tiến hành cài đặt luôn nha!
+                                <br>Nếu như <span data-infocase="customer_gender">C2</span> thấy mọi vấn đề nêu trên <span data-infocase="customer_gender">C2</span> cảm thấy thỏa, thì mình tiến hành triển khai luôn nha!
                                 <br> <br>// KH: Chưa
-                                <br>Thế thì em sẽ mô tả sơ nội dung về điều mình cần chuẩn bị cho việc cài đặt code trên website của mình nha
+                                <br>Thế thì em sẽ mô tả sơ nội dung về điều mình cần chuẩn bị cho việc triển khai code trên website của mình nha
                                 <br>Trước tiên là mình cần đủ quyền truy cập cho Google Ads, Analytics, GTM, quản trị admin website.
-                                <br>Nếu như <span data-infocase="customer_gender">C2</span> thấy mọi vấn đề nêu trên <span data-infocase="customer_gender">C2</span> cảm thấy thỏa, thì mình tiến hành cài đặt luôn nha!
+                                <br>Nếu như <span data-infocase="customer_gender">C2</span> thấy mọi vấn đề nêu trên <span data-infocase="customer_gender">C2</span> cảm thấy thỏa, thì mình tiến hành triển khai luôn nha!
                                 <br> <br>// KH: OK em
                                 <br>.............
                                 <br>.............
                                 <br></div>
-                            <div class="_panel__script--elm hide" data-title="4. Đọc báo cáo"> <br>Hướng dẫn KH đọc báo cáo
+                            <div class="_panel__script--elm" data-title="4. Đọc báo cáo"> <br>Hướng dẫn KH đọc báo cáo
                                 <br>
                             </div>
-                            <div class="_panel__script--elm hide" data-title="5. Tóm tắt, thông báo theo dõi về trường hợp"> 
+                            <div class="_panel__script--elm" data-title="5. Tóm tắt, thông báo theo dõi về trường hợp"> 
                             <br>
-                            // 1. Tóm tắt lại quá trình cài đặt <br>
+                            // 1. Tóm tắt lại quá trình triển khai <br>
                             // 2. các trường hợp <br>
-                                2.1. Việc cài đặt đã thành công. Sau cuộc gọi này bên em sẽ gởi email thông báo thành công có kèm phần đánh giá chất lượng dịch vụ. <span data-infocase="customer_gender">C2</span> có thời gian thì phản hồi giúp em.<br>
+                                2.1. Việc triển khai đã thành công. Sau cuộc gọi này bên em sẽ gởi email thông báo thành công có kèm phần đánh giá chất lượng dịch vụ. <span data-infocase="customer_gender">C2</span> có thời gian thì phản hồi giúp em.<br>
                                 2.2. Bên em sẽ theo dõi trong 2 ngày tới để đảm bảo dữ liệu được ghi nhận đúng. Nếu không có vấn đề gì thì sau 2 ngày bên em sẽ gửi 1 email thông báo thành công có kèm phần đánh giá chất lượng dịch vụ. <span data-infocase="customer_gender">C2</span> có thời gian thì phản hồi giúp em.<br>
                                 2.3. Bên em sẽ theo dõi thêm 2 ngày để đảm bảo dữ liệu được ghi nhận đúng. Nếu không có vấn đề gì thì trong vòng 2 ngày bên em sẽ gửi 1 email thông báo thành công có kèm phần đánh giá chất lượng dịch vụ. <span data-infocase="customer_gender">C2</span> có thời gian thì phản hồi giúp em.<br>
                                 2.4. Tạm ngưng phần hỗ trợ tại đây và sẽ tiếp tục trong sau 24h. <span data-infocase="customer_gender">C2</span> có thể sắp xếp lịch hẹn vào <span data-infocase="next_timeinstall">ZZZZZ</span> <br> <br>
                                 2.5. *** Tùy vào case nhé
                             </div>
-                            <div class="_panel__script--elm hide" data-title="6. Xác nhận giải đáp thắc mắc, dừng chia sẽ màn hình và KẾT THÚC"> <br>Mình còn thắc mắc nào trong quá trình cài đặt không <span data-infocase="customer_gender">C2</span> <span data-infocase="customer_name">B2</span> ơi!<br>
+                            <div class="_panel__script--elm" data-title="6. Xác nhận giải đáp thắc mắc, dừng chia sẽ màn hình và KẾT THÚC"> <br>Mình còn thắc mắc nào trong quá trình triển khai không <span data-infocase="customer_gender">C2</span> <span data-infocase="customer_name">B2</span> ơi!<br>
                                 // Có<br>
                                 // Tự tin giải đáp, giúp họ clear hơn trong phạm vi mình có thể<br><br>
                                 
                                 // Không<br>
-                                Sau buổi hôm nay em sẽ gửi cho <span data-infocase="customer_gender">C2</span> email thông báo mình đã cài đặt thành công, kèm theo bảng đánh giá chất lượng dịch vụ, <span data-infocase="customer_gender">C2</span> có thời gian <span data-infocase="customer_gender">C2</span> phản hồi giúp em!<br>
+                                Sau buổi hôm nay em sẽ gửi cho <span data-infocase="customer_gender">C2</span> email thông báo mình đã triển khai thành công, kèm theo bảng đánh giá chất lượng dịch vụ, <span data-infocase="customer_gender">C2</span> có thời gian <span data-infocase="customer_gender">C2</span> phản hồi giúp em!<br>
                                 Và trong thời gian tiếp theo <span data-infocase="customer_gender">C2</span> cũng theo dõi, nếu có vấn đề gì thì <span data-infocase="customer_gender">C2</span> cứ phản hồi qua mail này, em sẵn sàng hỗ trợ lại <span data-infocase="customer_gender">C2</span> ha!<br>
                                 // OK em
-                                Em cảm ơn <span data-infocase="customer_gender">C2</span> đã dành thời gian cho buổi cài đặt ngày hôm nay, giờ <span data-infocase="customer_gender">C2</span> có thể nhấn dừng chia sẽ màn hình được rồi ạ!<br>
+                                Em cảm ơn <span data-infocase="customer_gender">C2</span> đã dành thời gian cho buổi triển khai ngày hôm nay, giờ <span data-infocase="customer_gender">C2</span> có thể nhấn dừng chia sẽ màn hình được rồi ạ!<br>
                                 Cảm ơn <span data-infocase="customer_gender">C2</span> và em chào <span data-infocase="customer_gender">C2</span>!<br>
                             </div>
     

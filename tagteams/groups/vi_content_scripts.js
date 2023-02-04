@@ -1383,6 +1383,26 @@ function loadCase(elm) {
 
                                 if(itemelm) {
                                     itemelm.click();
+                                    var is_open = toggleClass("mainpanel_template", document.documentElement);
+
+                                    document.documentElement.classList.remove("email_template");
+
+                                    if(is_open) {
+                                        document.documentElement.classList.remove("_hide_main");
+                                        panel_div.classList.remove("hide_main");
+
+                                        var _panels = panel_div.querySelectorAll(`[data-panel]`);
+                                        _panels.forEach((elm) => {
+                                            elm.classList.remove("active");
+                                        });
+
+                                        var _panel_elm_email = panel_div.querySelector(`[data-panel="main"]`);
+                                        _panel_elm_email.classList.add("active");
+                                    } else {
+                                        document.documentElement.classList.add("_hide_main");
+                                        panel_div.classList.add("hide_main");
+                                    }
+                                    
                                 }
 
                     
@@ -1425,6 +1445,25 @@ function loadCase(elm) {
                                 // Open
                                 if(window.tagteamoption.optionkl__disable_dialog == false) {
                                     document.querySelector('[data-btnaction="openmain"]').click();
+                                    var is_open = toggleClass("mainpanel_template", document.documentElement);
+
+                                    document.documentElement.classList.remove("email_template");
+
+                                    if(is_open) {
+                                        document.documentElement.classList.remove("_hide_main");
+                                        panel_div.classList.remove("hide_main");
+
+                                        var _panels = panel_div.querySelectorAll(`[data-panel]`);
+                                        _panels.forEach((elm) => {
+                                            elm.classList.remove("active");
+                                        });
+
+                                        var _panel_elm_email = panel_div.querySelector(`[data-panel="main"]`);
+                                        _panel_elm_email.classList.add("active");
+                                    } else {
+                                        document.documentElement.classList.add("_hide_main");
+                                        panel_div.classList.add("hide_main");
+                                    }
                                 }
                             }
                         }
@@ -1531,7 +1570,7 @@ var s_crawl_case = (_caseid, callback = function(){}) => {
                 _datatemp.sales_program = dataList[1];
                 
                 // Is GCC
-                if(dataList.join(" ").includes("GCC")){
+                if(dataList.join(" ").toUpperCase().includes("GCC")){
                     _datatemp.am_isgcc = 1;
                     
                     Toastify({
@@ -1751,7 +1790,7 @@ var crawl_basic = (_caseid) => {
             _datatemp.sales_program = dataList[1];
             
             // Is GCC
-            if(dataList.join(" ").includes("GCC")){
+            if(dataList.join(" ").toUpperCase().includes("GCC")){
                 _datatemp.am_isgcc = 1;
                 
                 Toastify({
@@ -2661,21 +2700,44 @@ function panel_addshortcutlink() {
 
                     
                     
-                    var _html_linkelm = document.querySelector('#panel_addshortcutlink .panel_addshortcutlink_gr-list');
-                    var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
-                    if(_case_idelm) {
+                    // var _html_linkelm = document.querySelector('#panel_addshortcutlink .panel_addshortcutlink_gr-list');
+                    // var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+                    // if(_case_idelm) {
                         
-                        getChromeStorage('cdtx_shortcutlink_caseid_' + _case_idelm.innerText, (response) => {
-                            var _datatemp = response.value || false;
-                            if(_datatemp) {
-                                _html_linkelm.innerHTML = _datatemp;
-                                cLog(() => { console.log('panel_addshortcutlink -  DONE - ' + _datatemp) });
-                            }
-                        });
-                    }
+                    //     getChromeStorage('cdtx_shortcutlink_caseid_' + _case_idelm.innerText, (response) => {
+                    //         var _datatemp = response.value || false;
+                    //         if(_datatemp) {
+                    //             _html_linkelm.innerHTML = _datatemp;
+                    //             cLog(() => { console.log('panel_addshortcutlink -  DONE - ' + _datatemp) });
+                    //         }
+                    //     });
+                    // }
 
 
 				}
+				
+                var _html_linkelm = document.querySelector('#panel_addshortcutlink .panel_addshortcutlink_gr-list');
+                var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+                if(_case_idelm) {
+                    if(_case_idelm.innerText != window._temp_caseid) {
+                        getChromeStorage('cdtx_shortcutlink_caseid_' + _case_idelm.innerText, (response) => {
+                            var _datatemp = response.value || false;
+                            if(_datatemp) {
+                                if(_html_linkelm) {
+                                    _html_linkelm.innerHTML = _datatemp;
+                                    cLog(() => { console.log('panel_addshortcutlink -  DONE - ' + _datatemp) });    
+                                }
+                            }
+                        });
+                        
+                        window._temp_caseid = _case_idelm.innerText
+                    }
+                }
+                
+                
+                     
+                
+                
 			}
 		};
 

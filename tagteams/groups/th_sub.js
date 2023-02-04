@@ -1747,7 +1747,7 @@ var th_TagteamFocusCase = () => {
                         }
 
                         if (field == 'Sales Program') {
-                            isGCC = matchingElement.innerText.includes('GCC');
+                            isGCC = matchingElement.innerText.toUpperCase().includes('GCC');
                             if(ntime == 0) {
                                 ntime++;
                                 onClickElm('[debug-id="canned_response_button"]', 'click', function(elm){ 

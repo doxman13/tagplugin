@@ -86,7 +86,10 @@
 				"*://calendar.google.com/*",
 				"*://tagmanager.google.com/*",
 				"*://tagmanager-ics.corp.google.com/*",
-				"*://analytics-ics.corp.google.com/*"
+				"*://analytics-ics.corp.google.com/*",
+				"*://barkeep.corp.google.com/*",
+				"*://gauge.corp.google.com/*"
+				
 			],
 			"js": [
 				"tagteams/libs.js",

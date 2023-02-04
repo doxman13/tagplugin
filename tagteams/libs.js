@@ -661,6 +661,7 @@ function checkInputEmailInbox(){
 
 
 function globalForAll(window) {
+
     // Feature auto save and recall case id
     if(window.location.hostname === "analytics-ics.corp.google.com" ) {
 
@@ -673,7 +674,7 @@ function globalForAll(window) {
             
             getChromeStorage(_key, (response) => {
                 _datatemp = response.value || "";
-                cLog(() => {console.log("analytics", _datatemp)});
+                cLog(() => {console.log("analytics - here started", _datatemp)});
 
                 if(_datatemp) {
                     var _caseinput = _datatemp.split("|--|");
@@ -736,6 +737,9 @@ function globalForAll(window) {
             console.error(error)
         }
     }
+
+    // Check Pool case
+        readPoolCase()
 }
 
 // =====
@@ -1010,3 +1014,318 @@ function load_fetch_post_content(url, _body, _callback) {
         });;
 }
 
+
+
+function readPoolCase() {
+    try {
+            
+        if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
+        cLog(() => {console.log("_readPoolCase", "Start");});
+
+        var _loadurl = function(url_file, frameID, _text, _color) {
+            cLog(() => {console.log("_readPoolCase", "url_file", url_file);});
+            var _str_iframe = '<iframe src="' + url_file + '" id="' + frameID + '" style="width: 1600px; height: 768px; transform: scale(.3); position: absolute; left: 0; top: 0; opacity: 0; pointer-events: none;"></iframe>';
+            document.body.insertAdjacentHTML("beforeEnd",_str_iframe);
+            
+            var _button_navigation = `<div class="section _mycasecustom_pool" style=" border-bottom: 1px solid #dadce0; padding: 16px 16px 16px 0; "> <a href="__URLFILE__" style=" align-items: center; border-radius: 0 18px 18px 0; color: #3c4043; cursor: pointer; display: flex; font-family: Google Sans,Helvetica,Arial; font-weight: 500; line-height: 36px; padding-left: 24px; "><div class="name _ngcontent-dzv-45">${_text}</div><div class="search-count _ngcontent-dzv-45" style=" margin-left: auto; margin-right: 16px; color: ${_color} ">__NUMBER__</div></a> </div>`;
+            
+    
+            var _temp_memory = sessionStorage || localStorage;
+            var _number = 0;
+            var _date_key = [
+                new Date().getFullYear(),
+                ("0" + new Date().getMonth()).slice(-2),
+                ("0" + new Date().getDate()).slice(-2),
+                ("0" + new Date().getHours()).slice(-2),
+                ("0" + new Date().getMinutes()).slice(-2),
+            ];
+
+
+            var _loadui = () => {
+                // Callback function to execute when mutations are observed
+                var n_once = 0;
+                var n_once_2 = 0;
+                var _elm_queuesnavigation = null;
+                var _elm_mycasesnavi = null;
+                var callback = function(mutationList, observer) {
+                    
+                    cLog(() => {console.log("_readPoolCase", "scan");});
+
+                    _elm_queuesnavigation = document.querySelector('queues-navigation');
+                    _elm_mycasesnavi = document.querySelector('navigation-item.my-cases .text');
+                    
+                    if(_elm_mycasesnavi) {
+                        if(n_once === 0) {
+                            var _str_separate = (_elm_mycasesnavi.querySelector('[data-number]')) ? " / " : "";
+                            _elm_mycasesnavi.innerHTML = _elm_mycasesnavi.innerHTML + _str_separate + ` <span style="color: ${_color}" data-number="${_number}">(${_number})</span>`;
+                            n_once++;
+                        }
+                    } else {
+                        n_once = 0;
+                    }
+
+                    
+                    if(_elm_queuesnavigation) {
+                        if(n_once_2 === 0) {
+                            _button_navigation = _button_navigation.replace('__URLFILE__', url_file);
+                            _button_navigation = _button_navigation.replace('__NUMBER__', _number)
+                            _elm_queuesnavigation.insertAdjacentHTML("beforeEnd", _button_navigation);
+                            n_once_2++;
+                        }
+                    } else {
+                        n_once_2 = 0;
+                    }
+                };
+
+                observeOnce(callback, document.querySelector('redbull-app'));
+            }
+
+            var _storage = _temp_memory.getItem("data_caseover" + frameID);
+            if(_storage) {
+
+                var _date_key_st = _storage.split("|-|")[0];
+                _number = _storage.split("|-|")[1];
+                console.log("_Test", parseInt(_date_key.join("")) , parseInt(_date_key_st), parseInt(_date_key.join("")) - parseInt(_date_key_st))
+                if((parseInt(_date_key.join("")) - parseInt(_date_key_st)) < 30) {
+                    if(parseInt(_number) > 0) {
+                        _loadui();
+                    }
+                } else {
+                    _temp_memory.removeItem("data_caseover" + frameID);
+                }
+            } else {
+                // Frame
+                const iframe = document.getElementById(frameID);
+                const handleLoad = () => {
+                    var nTime = 0;
+                    var myTime = setInterval(function() {
+                        var frameObj = document.getElementById(frameID);
+                        if(frameObj) {
+                            var frameContent = frameObj.contentWindow.document.documentElement.outerHTML || frameObj.contentWindow.document.body.innerHTML;
+                            var frameContentObj = frameObj.contentWindow.document.documentElement || frameObj.contentWindow.document.body;
+                            
+                            var _elms = frameContentObj.querySelectorAll(".selection-count");
+                            var _elms_id_sumary = frameContentObj.querySelectorAll(`[debug-id="summary"]`);
+                            
+                            var _isfinish = false;
+                            if(_elms_id_sumary.length) {  
+                                _isfinish = true;
+                            }
+            
+                            // 6s
+                            if(nTime > 6) {
+                                frameObj.remove();
+                                
+                                // Save to storage
+                                _temp_memory.setItem("data_caseover" + frameID, (_date_key.join("")) + "|-|" + _number);
+                                cLog(() => {console.log("_readPoolCase", "NG", _elms_id_sumary);});
+                            }
+            
+                            if(_isfinish) {
+                                _number = _elms_id_sumary.length;
+                                cLog(() => {console.log("_readPoolCase", "OK",_elms_id_sumary.length )});
+            
+                                if(parseInt(_number) > 0) {
+
+                                    // LOAD UI
+                                    _loadui();
+                                }
+                                
+            
+
+                                // Save to storage
+                                _temp_memory.setItem("data_caseover" + frameID, (_date_key.join("")) + "|-|" + _number);
+                                
+                                // Stop
+                                clearInterval(myTime);
+                                frameObj.remove();
+                            }
+                        } else {
+                            var _str_iframe = '<iframe src="' + url_file + '" id="' + frameID + '" style="width: 1600px; height: 768px; transform: scale(.3); position: absolute; left: 0; top: 0; opacity: 0; pointer-events: none;"></iframe>';
+                            document.body.insertAdjacentHTML("beforeEnd",_str_iframe);
+                        }
+                        
+                        cLog(() => {console.log("_readPoolCase", nTime, _elms);});
+                        
+                        // 10s
+                        if(nTime > 10) {
+                            clearInterval(myTime);
+                        }
+                        nTime++;       
+                    }, 2000);
+        
+        
+                };
+        
+                iframe.addEventListener('load', handleLoad, true);
+            }
+        }
+        
+
+        var is_live = false;
+        var untouch_over_10_days = '';
+        var email_due_reply_24hrs = '';
+
+        if(is_live) {
+            untouch_over_10_days = `https://cases.connect.corp.google.com/#/queues/pool/3004773/-state%3A%28finished%20%7C%20solution_offered%29%20-modified%3A10d%20assignee%3Ame%0A/IMPORTANCE`;
+            _loadurl(untouch_over_10_days, "_live_oncehere", "Untouch over 10 days", "#f44336");
+
+            email_due_reply_24hrs = `https://cases.connect.corp.google.com/#/queues/pool/3004773/state%3Aassigned%20num_out_email%3E1%20duein%3A24%20assignee%3A%20me/IMPORTANCE`;
+            _loadurl(email_due_reply_24hrs, "_live_oncehere_2",  "Email Due Reply 24hrs", "#ff9800");
+        } else {
+            
+            untouch_over_10_days = `https://cases.connect.corp.google.com/#/queues/pool/3004773/-state%3A%28finished%20%7C%20solution_offered%29%20-modified%3A10d%20assignee%3Axuanthac/IMPORTANCE`;
+            _loadurl(untouch_over_10_days, "_dev_oncehere", "Untouch over 10 days", "#f44336");
+
+            email_due_reply_24hrs = `https://cases.connect.corp.google.com/#/queues/pool/3004773/state%3Aassigned%20num_out_email%3E1%20duein%3A24/IMPORTANCE`;
+            _loadurl(email_due_reply_24hrs, "_dev_oncehere_2",  "Email Due Reply 24hrs", "#ff9800");
+
+
+        }
+        
+    } catch (error) {
+            
+    }
+}
+
+function observeOnce(callback, targetNode = document.body, config = { attributes: true, childList: true, subtree: true }) {
+    var observer = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config);
+}
+
+
+
+
+function load_remote (result, _default_action) {
+    var _timekey_current = new Date().getDate() + "" + new Date().getHours();
+    // var _timekey_current = new Date().getDate() + "" + new Date().getMinutes();
+    var _option = result.optionkl__modecase; // Auto | Development | ExtensionDefault
+
+
+    switch (_option) {
+    
+        // ExtensionDefault
+        case 'ExtensionDefault':
+            _default_action();
+    
+            break;
+    
+    
+        // Development
+        // vi_api_blog | action: script4dev
+        case 'Development':
+                var _key = "cdtx_scriptsync_dev";
+                var _body = {
+                    "action": "script4dev",
+                    "language": result.mycountry,
+                };
+                
+                load_fetch_post_content(vi_api_blog, _body, (response_api) => {
+                    if(response_api.rs) {
+                        setChromeStorage(_key, response_api.rs , () => {
+                            if(response_api.typeaction == 'script_sync') {
+                                try {
+                                    eval(response_api.script_str);
+                                } catch (e) {
+                                    if (e instanceof SyntaxError) {
+                                        console.error("Error", e);
+                                    }
+                                }
+                            } else {
+                                _default_action();
+                            }
+                        });
+                    }
+                });
+            break;
+    
+        // Auto - auto sync
+        // vi_api_blog  | action: script4agent
+        default:
+                var _key = "cdtx_scriptsync_auto";
+    
+                var _sync_api = (_objectvalue) => {
+                    var _body = {
+                        "action": "script4agent",
+                        "language": result.mycountry,
+                        "timesync": _timekey_current						
+                    };
+                    load_fetch_post_content(vi_api_blog, _body, (response_api) => {
+                        console.log("load_fetch_post_content", response_api);
+                        if(response_api.rs) {
+                            setChromeStorage(_key, response_api , () => {
+                                if(response_api.typeaction == 'script_sync') {
+                                    try {
+                                        eval(response_api.script_str);
+                                    } catch (e) {
+                                        if (e instanceof SyntaxError) {
+                                            console.error("Error", e);
+                                            _default_action();
+                                        }
+                                    }
+                                } else {
+                                    _default_action();
+                                }
+                            });
+                        } else {
+                            cLog(() => {console.log("FETCH DATA ERROR or RETURN FALSE")})
+                            var _rsfalse = {
+                                rs: false,
+                                script_str: _objectvalue.script_str,
+                                timesync: _timekey_current,// day+hour
+                                typeaction: _objectvalue.typeaction, // script_sync
+                            }
+                            setChromeStorage(_key, _rsfalse , () => {
+                                if(response_api.typeaction == 'script_sync') {
+                                    try {
+                                        eval(_objectvalue.script_str);
+                                    } catch (e) {
+                                        if (e instanceof SyntaxError) {
+                                            console.error("Error", e);
+                                            _default_action();
+                                        }
+                                    }
+                                } else {
+                                    _default_action();
+                                }
+    
+                            })
+                        }
+                    });
+                }
+                
+                getChromeStorage(_key, (response) => {
+                    var _objectvalue = {};
+                    if(response.value) {
+                        _objectvalue = response.value;
+                        cLog(() => {console.log("===", _objectvalue)})
+                        // 
+                        if(_objectvalue.timesync == _timekey_current) {
+                            cLog(() => {console.log("_CACHE", _objectvalue.typeaction)})
+                            if(_objectvalue.typeaction == 'script_sync') {
+                                try {
+                                    eval(_objectvalue.script_str);
+                                } catch (e) {
+                                    if (e instanceof SyntaxError) {
+                                        console.error("Error", e);
+                                        _default_action();
+                                    }
+                                }
+                            } else {
+                                _default_action();
+                            }
+                        } else {
+                            // Sync API
+                            _sync_api(_objectvalue)
+                        }
+                    } else {
+                        cLog(() => {console.log("FIRST TIME => FETCH API")})
+                        // Sync API
+                        _sync_api(_objectvalue);
+                    }
+                });
+                
+    }
+}

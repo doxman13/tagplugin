@@ -1530,7 +1530,7 @@ var s_crawl_case = (_caseid, callback = function(){}) => {
                 _datatemp.sales_program = dataList[1];
                 
                 // Is GCC
-                if(dataList.join(" ").includes("GCC")){
+                if(dataList.join(" ").toUpperCase().includes("GCC")){
                     _datatemp.am_isgcc = 1;
                     
                     Toastify({
@@ -1750,7 +1750,7 @@ var crawl_basic = (_caseid) => {
             _datatemp.sales_program = dataList[1];
             
             // Is GCC
-            if(dataList.join(" ").includes("GCC")){
+            if(dataList.join(" ").toUpperCase().includes("GCC")){
                 _datatemp.am_isgcc = 1;
                 
                 Toastify({

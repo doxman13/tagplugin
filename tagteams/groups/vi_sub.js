@@ -106,7 +106,6 @@ var vi_api_blog = 'https://cdtx.lyl.vn/wordpress/wp-json/tagteam/blogs';
 
 
 
-
 var vi_checkStyleByTheme = (opt_isdisable) => {
     if(opt_isdisable) return false;
 

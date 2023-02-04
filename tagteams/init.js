@@ -9,6 +9,7 @@ chrome.storage.sync.get({
 },
 function (result) {
 
+	window.result = result;
 	if (result.mycountry == "Vietnam") {
 
 

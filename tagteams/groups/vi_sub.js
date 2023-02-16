@@ -1,4 +1,3 @@
-
 var vi_language = {
     'appointment_time': 'Appointment Time',
     'google_ads_external_customer_id': 'Google Ads External Customer ID',
@@ -1611,7 +1610,7 @@ var vi_TagteamFocusCase = () => {
                         }
 
                         if (field == 'Sales Program') {
-                            isGCC = matchingElement.innerText.toUpperCase().includes('GCC');
+                            isGCC = matchingElement.innerText.toUpperCase().includes('gCC');
                             if(ntime == 0) {
                                 ntime++;
                                 onClickElm('[debug-id="canned_response_button"]', 'click', function(elm){ 
@@ -1716,8 +1715,10 @@ var vi_TagteamFocusCase = () => {
         }
 
         function ogtDashboard() {
-            var ogtUrl = 'https://dashboards.corp.google.com/view/_7f750f18_1d9b_4f6e_82b8_70e37c1e992a?f=customer_id:eq:' + cid;
-            window.open(ogtUrl, '_blank').focus();
+            var ogtauditUrl = 'https://dashboards.corp.google.com/view/_a186557f_a4ad_4e9b_b1f0_fc360bc3143e?f=customer_id:in:' + cid;
+            var ogtTechsolURL = 'https://dashboards.corp.google.com/view/_7f750f18_1d9b_4f6e_82b8_70e37c1e992a?f=customer_id:eq:'+cid
+            window.open(ogtauditUrl, '_blank').focus();
+            window.open(ogtTechsolURL, '_blank');
         }
 
         function ecDashboard() {
@@ -1854,7 +1855,7 @@ var vi_TagteamFocusCase = () => {
                     if (isGCC) {
                         var emailCC = document.evaluate('//span[contains(text(),"CC")]//following-sibling::email-address-input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
                         var emailBCC = document.evaluate('//span[contains(text(),"BCC")]//following-sibling::email-address-input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                        emailBCC.querySelector('input').value = emailCC.querySelector('.value').innerText;
+                        emailBCC.querySelector('input').value = document.querySelector('material-input.action-input.input-email .input').value;
                         emailBCC.querySelector('input').dispatchEvent(new Event('input'));
                         if (emailCC) emailCC.querySelector('.remove').click();
                         waitForElm('focus-trap [debug-id="email"]').then(item => {

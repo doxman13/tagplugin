@@ -153,6 +153,7 @@ function restore_options() {
 	y = items.mycountry;
 	window.superx = y;
 	console.log(superx);
+  console.log('English - Testing');
     document.getElementById('c_country').innerHTML = superx;
 	chrome.runtime.sendMessage({message: country});
 	});

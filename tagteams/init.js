@@ -1,5 +1,5 @@
 
-
+console.log('a123123123');
 chrome.storage.sync.get({ 
 	mycountry: "thailand", 
 	ouremail: "xxx@google.com",
@@ -51,7 +51,7 @@ function (result) {
 
 		load_remote(result, _default_action);
 	}
-	
+
 	if (result.mycountry == "English") {
 
 

@@ -2542,7 +2542,7 @@ var loadpanelcaseconnect = (is_reload = false) => {
                             // });
 
                             onClickElm(`#cr-list li`, `click`, (elm, e) => {
-                                vi_clearAndPrepareCRTemplate();
+                                en_clearAndPrepareCRTemplate();
                             });
 
 

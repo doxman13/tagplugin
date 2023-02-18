@@ -42,6 +42,11 @@
             "run_at": "document_start"
         },
 		{
+            "js": [ "wfm_helper.js" ],
+            "matches": [ "https://appointments.connect.corp.google.com/*" ],
+            "run_at": "document_end"
+        },
+		{
 			"run_at": "document_end",
 			"matches": [
 				"https://smbsalesimplementation.my.salesforce.com/*",

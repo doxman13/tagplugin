@@ -237,6 +237,169 @@
                     </tbody>
                 </table>
             </div>`,
+        'umm_no_show': `<div id="email-body-content-top-content"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+          <tr>
+            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Trường hợp của bạn đã đóng do không nhận được phản hồi từ nhà quảng cáo</td>
+            <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/IN_Not_Reachable_ts_in_nrch.png" style="display: block;min-width:100px;" width="100"></td>
+          </tr>
+        </tbody>
+      </table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+          <tr>
+            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+              <tbody>
+                <tr>
+                  <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span class="replaced"data-infocase="customer_name" data-highlight="need_recheck">Customer Name</span> thân mến!</td>
+                </tr>
+                <tr>
+                  <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">Đối với Trường hợp <span class="replaced"data-infocase="case_id" data-highlight="need_recheck">0-0000000000000</span> của bạn cho <span class="replaced" data-infocase="customer_website" data-highlight="need_recheck">https://abc.com/</span>, chúng tôi đã chờ bạn phản hồi để tiến hành việc triển khai. Hôm nay chúng tôi đã cố gọi cho bạn về yêu cầu <span data-infocase="tasks_nowrap" data-highlight="need_recheck"> {IDENTIFIER_APPOINTMENT_TASK}</span>. Chúng tôi đã thực hiện thêm một cuộc gọi khác sau 10 phút, nhưng rất tiếc là chúng tôi vẫn chưa thể kết nối đến bạn.
+      </td>
+                </tr>
+                <tr>
+                  <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">Do trong thời gian cao điểm, chúng tôi hiện không thể sắp xếp lại cuộc hẹn này và sẽ đóng trường hợp này. Tuy nhiên, nếu vẫn muốn tiến hành việc triển khai này, bạn có thể tham khảo <a href="https://support.google.com/google-ads/gethelp" style="color: rgb(26, 115, 232); text-decoration-line: none;" target="_BLANK" class="ignore-globals">Trung tâm trợ giúp của Google</a> hoặc liên hệ với Người quản lý tài khoản của Google bất cứ lúc nào. Họ luôn sẵn sàng trợ giúp bạn.</td>
+                </tr>
+                <tr>
+                  <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">Chúng tôi rất tiếc về sự bất tiện này và mong sẽ được hợp tác với bạn lâu dài trong tương lai!
+      </td>
+                </tr>
+              </tbody>
+            </table>
+            </td>
+          </tr>
+        </tbody>
+      </table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+          <tr>
+            <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+              <tbody>
+                <tr>
+                  <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;"><span class="replaced">Linh Vo <br> Đội giải pháp kỹ thuật <br>  TDCX đại diện của Google</span></td>
+                </tr>
+                <tr>
+                  <td align="left" style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 2px;">Giải pháp kỹ thuật của Google</td>
+                </tr>
+              </tbody>
+            </table>
+            </td>
+          </tr>
+        </tbody>
+      </table><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+          <tr>
+            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+              <tbody>
+                <tr>
+                  <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Trường hợp số <span class="replaced" data-infocase="case_id" data-highlight="need_recheck">0-000000000000</span></td>
+                </tr>
+              </tbody>
+            </table>
+            </td>
+          </tr>
+        </tbody>
+      </table><p dir="auto">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      </p><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+          <tr>
+            <td align="center" style="padding: 0 30px 30px;" valign="top">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+              <tbody>
+                <tr>
+                  <td align="left" style="background: #f8f9f9;padding: 30px 30px;">
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                      <tr>
+                        <td align="left" style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;" valign="middle">Nếu bạn muốn tìm hiểu thêm, thì sau đây là một số đường liên kết đến những nguồn tham khảo hữu ích liên quan đến việc Triển khai thẻ và nguồn cấp dữ liệu Mua sắm. Những nguồn tham khảo này có thể giúp ích cho bạn trong tương lai!</td>
+                      </tr>
+                    </tbody>
+                  </table>
+      
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                      <tr>
+                        <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: #3c4043; font-weight: 700;" valign="middle">Nguồn tham khảo liên quan đến thẻ</td>
+                      </tr>
+                      <tr>
+                        <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                          <tbody>
+                            <tr>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle">•</td>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle"><a href="https://developers.google.com/gtagjs" style="color: rgb(26, 115, 232); text-decoration-line: none;" target="_BLANK" class="ignore-globals">Dịch vụ hỗ trợ triển khai thẻ</a></td>
+                            </tr>
+                            <tr>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle">•</td>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle"><a href="https://www.youtube.com/user/learnwithgoogle/playlists" style="color: rgb(26, 115, 232); text-decoration-line: none;" target="_BLANK" class="ignore-globals">Google Ads</a></td>
+                            </tr>
+                            <tr>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle">•</td>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle"><a href="https://www.youtube.com/user/googleanalytics" style="color: rgb(26, 115, 232); text-decoration-line: none;" target="_BLANK" class="ignore-globals">Google Analytics</a></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+      
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                      <tr>
+                        <td align="left" style="padding-top: 18px;font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: #3c4043; font-weight: 700;" valign="middle">Nguồn hỗ trợ liên quan đến nguồn cấp dữ liệu Mua sắm</td>
+                      </tr>
+                      <tr>
+                        <td align="center" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                          <tbody>
+                            <tr>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle">•</td>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle"><a href="https://www.google.com/retail/" style="color: rgb(26, 115, 232); text-decoration-line: none;" target="_BLANK" class="ignore-globals">Google cho Nhà bán lẻ </a></td>
+                            </tr>
+                            <tr>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle">•</td>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle"><a href="https://www.google.com/retail/solutions/merchant-center/" style="color: rgb(26, 115, 232); text-decoration-line: none;" target="_BLANK" class="ignore-globals">Google Merchant Center</a></td>
+                            </tr>
+                            <tr>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle">•</td>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle"><a href="https://support.google.com/merchants/answer/188924?hl=en" style="color: rgb(26, 115, 232); text-decoration-line: none;" target="_BLANK" class="ignore-globals">Thiết lập tài khoản và nguồn cấp dữ liệu</a></td>
+                            </tr>
+                            <tr>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle">•</td>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle"><a href="https://support.google.com/merchants/topic/7294606?hl=vi&amp;ref_topic=7294771" style="color: rgb(26, 115, 232); text-decoration-line: none;" target="_BLANK" class="ignore-globals">Tối ưu hoá nguồn cấp dữ liệu</a></td>
+                            </tr>
+                            <tr>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle">•</td>
+                              <td align="left" style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);" valign="middle"><a href="https://support.google.com/merchants/answer/9199328?hl=en" style="color: rgb(26, 115, 232); text-decoration-line: none;" target="_BLANK" class="ignore-globals">Các nền tảng của Google</a></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </td>
+          </tr>
+        </tbody></table></div>
+        
+                 `,
         'as_reschedule_1': `<div id="email-body-content-top-content" dir="auto">
             <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                 <tbody>
@@ -1332,11 +1495,22 @@
         </div>
         <div class="_emailtemp-item" data-type="Send Google Meet Link">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-            <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật - Link cuộc họp Google Meet cho trường hợp [<span data-infocase="case_id">5-6594000033737</span>]</div>
+            <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật - Link cuộc họp Google Meet [<span data-infocase="case_id">5-6594000033737</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
                     <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
                         ${vi_list_emailtemplatecontent.send_google_meet_link}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="_emailtemp-item" data-type="UMM No Show Closing Email">
+            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
+            <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật – Không nhận được phản hồi từ nhà quảng cáo [<span data-infocase="case_id">5-6594000033737</span>]</div>
+            <div class="_emailtemp-item__content">
+                <div id="email-body-content-top" style="width:100%" dir="auto">
+                    <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
+                        ${vi_list_emailtemplatecontent.umm_no_show}
                     </div>
                 </div>
             </div>

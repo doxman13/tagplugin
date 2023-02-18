@@ -1,11 +1,11 @@
 
-var vi_language = {
+var en_language = {
     'appointment_time': 'Appointment Time',
     'google_ads_external_customer_id': 'Google Ads External Customer ID',
     'phone_prefix' : "+84",
 };
 
-var vi_key_task_searchandreplace = `
+var en_key_task_searchandreplace = `
     ads_conversion_tracking_troubleshooting:Ads Conversion Tracking Troubleshooting:kiểm tra khắc phục sự cố theo dõi lượt chuyển đổi
     ads_conversion_tracking:Ads Conversion Tracking:triển khai theo dõi lượt chuyển đổi
     ga4_migration:GA4 Migration:triển khai theo dõi số liệu Google Analytics 4
@@ -48,8 +48,8 @@ var vi_key_task_searchandreplace = `
     shopping_feed_optimization:Shopping Feed Optimization:tối ưu nguồn cấp dữ liệu trên Google Shopping
 `;
 
-var vi_heading_searchandreplace = `
-    TGood news, the Technical Solutions Team has received your case
+var en_heading_searchandreplace = `
+    Good news, the Technical Solutions Team has received your case
     Good news, the Technical Solutions Team has received your case
     Here's the latest update regarding your case:Here's the latest update regarding your case
     Your appointment has been successfully rescheduled:Your appointment has been successfully rescheduled:
@@ -73,32 +73,32 @@ var vi_heading_searchandreplace = `
     Your case will be closed. Learn more:Your case will be closed. Learn more
 `;
 
-var vi_hotkey_email = {
+var en_hotkey_email = {
     'ts as new':'Good news, the Technical Solutions Team has received your case',
     'ts as wip offtfr':'Good news, the Technical Solutions Team has received your case',
-    'ts as wip offs':"The Technical Solutions Team - Here's the latest update regarding your case",
-    'ts as resched1':'The Technical Solutions Team - Your appointment has been successfully rescheduled',
-    'ts as reschedok':'The Technical Solutions Team - Your appointment has been rescheduled',
+    'ts as wip offs':"Technical Solutions Team - Here's the latest update regarding your case",
+    'ts as resched1':'Technical Solutions Team - Your appointment has been successfully rescheduled',
+    'ts as reschedok':'Technical Solutions Team - Your appointment has been rescheduled',
     'ts so verif':'Congratulations, your case has been successfully implemented',
     'ts so verif nrc':'Congratulations, your case has been successfully implemented',
     'ts so unv':'Congratulations on implementing your case',
     'ts so vnn':'Congratulations, your case has been successfully implemented',
-    'ts ni ai':'The Technical Solutions Team - Your case status has been updated',
-    'ts ni ic':'The Technical Solutions Team - Your case is in consultation',
-    'ts ni av':'The Technical Solutions Team - Your case status has been updated',
-    'ts ni ac':'The Technical Solutions Team - We tried to reach you today regarding your case',
-    'ts ni oth':'The Technical Solutions Team - Your case will be closed',
-    'ts in inf':'The Technical Solutions Team - Your case cannot be completed due to technical issues',
-    'ts in nrch':'The Technical Solutions Team - Your case has been closed due to inactivity',
-    'ts in ni':'The Technical Solutions Team - Your case has been closed',
-    'ts in nrdy':'The Technical Solutions Team - Your case is not ready for implementation',
-    'ts in oost':'The Technical Solutions Team - Your case has been rerouted to the correct support team',
-    'ts in oosu':'The Technical Solutions Team - We are working to reroute your case to the correct support team',
-    'ts in oos seller':'The Technical Solutions Team - Your request is out of scope for the Technical Solutions Team',
-    'ts in oth':'The Technical Solutions Team - Your case will be closed',
+    'ts ni ai':'Technical Solutions Team - Your case status has been updated',
+    'ts ni ic':'Technical Solutions Team - Your case is in consultation',
+    'ts ni av':'Technical Solutions Team - Your case status has been updated',
+    'ts ni ac':'Technical Solutions Team - We tried to reach you today regarding your case',
+    'ts ni oth':'Technical Solutions Team - Your case will be closed',
+    'ts in inf':'Technical Solutions Team - Your case cannot be completed due to technical issues',
+    'ts in nrch':'Technical Solutions Team - Your case has been closed due to inactivity',
+    'ts in ni':'Technical Solutions Team - Your case has been closed',
+    'ts in nrdy':'Technical Solutions Team - Your case is not ready for implementation',
+    'ts in oost':'Technical Solutions Team - Your case has been rerouted to the correct support team',
+    'ts in oosu':'Technical Solutions Team - We are working to reroute your case to the correct support team',
+    'ts in oos seller':'TTechnical Solutions Team - Your request is out of scope for the Technical Solutions Team',
+    'ts in oth':'Technical Solutions Team - Your case will be closed',
 };
 
-var vi_searchandremove = [
+var en_searchandremove = [
     'Technical Solutions Team',
 ];
 
@@ -121,7 +121,7 @@ var en_checkStyleByTheme = (opt_isdisable) => {
             "language": "en",
             "timesync": _timekey_current
         };
-        load_fetch_post_content(vi_api_blog, _body, (response_api) => {
+        load_fetch_post_content(en_api_blog, _body, (response_api) => {
             if(response_api.rs) {
                 setChromeStorage(_key, response_api , () => {
                     var cdtx_panel_div_style = _TrustScript(response_api.style_str);
@@ -152,7 +152,7 @@ var en_checkStyleByTheme = (opt_isdisable) => {
     });
 }
 
-var vi_clearAndPrepareCRTemplate = () => {
+var en_clearAndPrepareCRTemplate = () => {
     // Prepare
     var _composeemailcard = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"]');
     if(_composeemailcard) {
@@ -183,7 +183,7 @@ var vi_clearAndPrepareCRTemplate = () => {
                 if(_tdcellist.length) {
                     _tdcellist.forEach((item) => {
                         var _heading = item.innerText.trim();
-                        var _getvalue = searchAndReturnValue(vi_heading_searchandreplace, _heading, 1);
+                        var _getvalue = searchAndReturnValue(en_heading_searchandreplace, _heading, 1);
                         if(_getvalue) {
                             item.innerText = _getvalue;
                         }
@@ -196,7 +196,7 @@ var vi_clearAndPrepareCRTemplate = () => {
                     _tdcellist.forEach((item) => {
                         var _heading = item.innerText.trim();
                         var _list = ['']
-                        var _getvalue = searchAndReturnValue(vi_key_task_searchandreplace, _heading, 1);
+                        var _getvalue = searchAndReturnValue(en_key_task_searchandreplace, _heading, 1);
                         if(_getvalue) {
                             item.innerText = _getvalue;
                         }
@@ -208,7 +208,7 @@ var vi_clearAndPrepareCRTemplate = () => {
                 if(_tr.length) {
                     _tr.forEach((item) => {
                         var _text = item.innerText.trim();
-                        vi_searchandremove.forEach((item2) => {
+                        en_searchandremove.forEach((item2) => {
                             if(_text == item2) {
                                 item.remove();
                             }
@@ -240,7 +240,7 @@ var vi_clearAndPrepareCRTemplate = () => {
 
 
 // -- Send 1st email
-/* var vi_sendFirstEmail = () => {
+/* var en_sendFirstEmail = () => {
     function waitForElm(selector) {
         return new Promise(resolve => {
             if (document.querySelector(selector)) {
@@ -1824,8 +1824,8 @@ var en_TagteamFocusCase = () => {
                     waitForElm('.suggestion-list .list-item').then(elm => {
                         elm.click();
                         divLoading.remove();
-                        var _title = vi_hotkey_email[key] ? vi_hotkey_email[key] : "Đội giải pháp kỹ thuật - Thông báo";
-                        document.querySelector('.is-top .subject').value = `${_title} cho trường hợp [${caseid}]`;
+                        var _title = en_hotkey_email[key] ? en_hotkey_email[key] : "Technical Solutions Team - Update";
+                        document.querySelector('.is-top .subject').value = `${_title} [${caseid}]`;
                         document.querySelector('.is-top .subject').focus();
                         document.querySelector('.is-top .subject').dispatchEvent(new Event('input'));
                         document.execCommand('innerText', false, ' ')

@@ -28,151 +28,156 @@
 // tagteamext_demo-vi_panel_div.js.php
 var en_list_emailtemplatecontent = {
     'first_email': `<div id="email-body-content-top-content" dir="auto">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                            <tbody>
-                                <tr>
-                                    <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Good news, the Technical Solutions Team has received your case</td>
-                                    <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png" style="display: block;min-width:100px;" width="100"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                            <tbody>
-                                <tr>
-                                    <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">Hi <span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span>,</td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                                                        <p>Thank you for scheduling an appointment with the Google Technical Solutions Team. Your Google Representative has requested this appointment on your behalf and we will be supporting you on Case ID  <span data-infocase="case_id">0-00000000000000</span> for <span data-infocase="customer_website">customer_website.com</span>.&nbsp;</p>
-                                                        <p>Please check your e-mail inbox for the calendar invite of your upcoming appointment with us, and follow the instructions specified therein to confirm your attendance. In preparation for our call, please also review and complete the To Do list linked  <a href="https://support.google.com/google-ads/answer/11605860" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">here</a>.</p>
-                                                        <p dir="auto" data-infocase="linkgooglemeet_section"></p>
-                                                        <p>If you have any questions before our call or would like to add more attendees, please let us know by replying to this email or by contacting your Google Sales Representative. We are excited to work with you! Thank you.</p>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                            <tbody>
-                                <tr>
-                                    <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
-                                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="left" style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 2px;">Google Technical Solutions</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p dir="auto">
-                        </p>
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                            <tbody>
-                                <tr>
-                                    <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
-                                                </tr>
-                                                
-                                                <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
-                                                        <p><span style="font-size:10px"><span style="font-family:Roboto,sans-serif"><span style="color:#000000"><span style="background-color:#ffffff"><em><strong>Terms:</strong> By replying to this message you acknowledge that you hereby authorize the Technical Specialist to guide you through the installation of relevant codes on your website and/or campaign and/or analytics account as needed. You hereby acknowledge and recognize that all changes suggested and/or implemented by Google shall be undertaken solely of your own accord and at your own risk. Google does not guarantee or promise any results whatsoever from implementation of such changes. Furthermore, Google shall not be responsible for any effects of such changes, including, but not limited to, any spending increase related to your Google Ads campaign(s) for which you shall be solely responsible.You also agree to validate that your website continues to function as you intend it to.&nbsp;</em></span></span></span></span></p>
-
-                <p><span style="font-size:px"><span style="font-family:Roboto,sans-serif"><span style="color:#000000"><span style="background-color:#ffffff"><em><strong>Note: </strong>We recommend that you ensure your website is fully backed-up before making any changes. Also, you should NOT share your site credentials with me or anyone else from Google. Finally, making changes to your website / account while we are working on your request may cause you to lose some of your changes / settings. We advise you to refrain from making changes to your website / account until the changes recommended have been completed.</em></span></span></span></span></p>
-
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+            <tr>
+                <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Good news, the Technical Solutions Team has received your case</td>
+                <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png" style="display: block;min-width:100px;" width="100"></td>
+            </tr>
+        </tbody>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+            <tr>
+                <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody>
+                            <tr>
+                                <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">Hi <span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span>,</td>
+                            </tr>
+                            <tr>
+                                <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
+                                    <p>Thank you for scheduling an appointment with the Google Technical Solutions Team. Your Google Representative has requested this appointment on your behalf and we will be supporting you on Case ID  <span data-infocase="case_id" data-highlight="need_recheck">0-00000000000000</span> for <span data-infocase="customer_website" data-highlight="need_recheck">customer_website.com</span>.&nbsp;</p>
+                                    <p>Please check your e-mail inbox for the calendar invite of your upcoming appointment with us, and follow the instructions specified therein to confirm your attendance. In preparation for our call, please also review and complete the To Do list linked  <a href="https://support.google.com/google-ads/answer/11605860" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">here</a>.</p>
+                                    <p dir="auto" data-infocase="linkgooglemeet_section"></p>
+                                    <p>If you have any questions before our call or would like to add more attendees, please let us know by replying to this email or by contacting your Google Sales Representative. We are excited to work with you! Thank you.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </td>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </tbody>
+            </tr>
+        </tbody>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+            <tr>
+                <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody>
+                            <tr>
+                                <td align="left" style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 2px;">Google Technical Solutions</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p dir="auto">
+    </p>
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+            <tr>
+                <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody>
+                            <tr>
+                                <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Case # <span data-infocase="case_id">0-00000000000000</span></td>
+                            </tr>
                             
-                        </table>
-                    </div> `,
+                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
+                                    <p><span style="font-size:10px"><span style="font-family:Roboto,sans-serif"><span style="color:#000000"><span style="background-color:#ffffff"><em><strong>Terms:</strong> By replying to this message you acknowledge that you hereby authorize the Technical Specialist to guide you through the installation of relevant codes on your website and/or campaign and/or analytics account as needed. You hereby acknowledge and recognize that all changes suggested and/or implemented by Google shall be undertaken solely of your own accord and at your own risk. Google does not guarantee or promise any results whatsoever from implementation of such changes. Furthermore, Google shall not be responsible for any effects of such changes, including, but not limited to, any spending increase related to your Google Ads campaign(s) for which you shall be solely responsible.You also agree to validate that your website continues to function as you intend it to.&nbsp;</em></span></span></span></span></p>
+
+<p><span style="font-size:10px"><span style="font-family:Roboto,sans-serif"><span style="color:#000000"><span style="background-color:#ffffff"><em><strong>Note: </strong>We recommend that you ensure your website is fully backed-up before making any changes. Also, you should NOT share your site credentials with me or anyone else from Google. Finally, making changes to your website / account while we are working on your request may cause you to lose some of your changes / settings. We advise you to refrain from making changes to your website / account until the changes recommended have been completed.</em></span></span></span></span></p>
+
+</td>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+        
+    </table>
+</div> `,
     'first_email_confirm_working_hour': `<div id="email-body-content-top-content" dir="auto">
-                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                        <tbody>
-                            <tr>
-                                <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Good news, the Technical Solutions Team has received your case</td>
-                                <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png" style="display: block;min-width:100px;" width="100"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                        <tbody>
-                            <tr>
-                                <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                        <tbody>
-                                            <tr>
-                                                <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">Hi <span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span>,</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                                                    <p>Thank you for scheduling an appointment with the Google Technical Solutions Team. Your Google Representative has requested this appointment on your behalf and we will be supporting you on Case ID  <span data-infocase="case_id">0-00000000000000</span> for <span data-infocase="customer_website">customer_website.com</span>.&nbsp;</p>
-                                                    <p>Please check your e-mail inbox for the calendar invite of your upcoming appointment with us, and follow the instructions specified therein to confirm your attendance. In preparation for our call, please also review and complete the To Do list linked  <a href="https://support.google.com/google-ads/answer/11605860" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">here</a>.</p>
-                                                    <p dir="auto" data-infocase="linkgooglemeet_section"></p>
-                                                    <p>If you have any questions before our call or would like to add more attendees, please let us know by replying to this email or by contacting your Google Sales Representative. We are excited to work with you! Thank you.</p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                        <tbody>
-                            <tr>
-                                <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
-                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                        <tbody>
-                                            <tr>
-                                                <td align="left" style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 2px;">Google Technical Solutions</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p dir="auto">
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+      <tbody>
+        <tr>
+          <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Good news, the Technical Solutions Team has received your case</td>
+          <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png" style="display: block;min-width:100px;" width="100"></td>
+        </tr>
+      </tbody>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+      <tbody>
+        <tr>
+          <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+              <tbody>
+                <tr>
+                  <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">Hi <span data-infocase="customer_name" data-highlight="need_recheck">CUSTOMER NAME</span>,</td>
+                </tr>
+                <tr>
+                  <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
+                    <p>Thank you for scheduling an appointment with the Google Technical Solutions Team. Your Google Representative has requested this appointment on your behalf and we will be supporting you on Case ID <span data-infocase="case_id"data-highlight="need_recheck">0-00000000000000</span> for <span data-infocase="customer_website" data-highlight="need_recheck">customer_website.com</span>.&nbsp;</p>
+                    <p>However, we noticed that the appointment time is on <span style="color:#ff0000"data-highlight="need_recheck"><strong>TIME</strong></span> and <span style="color:#3c4043"><strong>is not within the normal working hours</strong></span>. We would like to confirm again that this is the time you wish to have your appointment with us.
                     </p>
-                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                        <tbody>
-                            <tr>
-                                <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                        <tbody>
-                                            <tr>
-                                                <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
-                                            </tr>
-                                            
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
-                                                    <p><span style="font-size:10px"><span style="font-family:Roboto,sans-serif"><span style="color:#000000"><span style="background-color:#ffffff"><em><strong>Terms:</strong> By replying to this message you acknowledge that you hereby authorize the Technical Specialist to guide you through the installation of relevant codes on your website and/or campaign and/or analytics account as needed. You hereby acknowledge and recognize that all changes suggested and/or implemented by Google shall be undertaken solely of your own accord and at your own risk. Google does not guarantee or promise any results whatsoever from implementation of such changes. Furthermore, Google shall not be responsible for any effects of such changes, including, but not limited to, any spending increase related to your Google Ads campaign(s) for which you shall be solely responsible.You also agree to validate that your website continues to function as you intend it to.&nbsp;</em></span></span></span></span></p>
-
-            <p><span style="font-size:px"><span style="font-family:Roboto,sans-serif"><span style="color:#000000"><span style="background-color:#ffffff"><em><strong>Note: </strong>We recommend that you ensure your website is fully backed-up before making any changes. Also, you should NOT share your site credentials with me or anyone else from Google. Finally, making changes to your website / account while we are working on your request may cause you to lose some of your changes / settings. We advise you to refrain from making changes to your website / account until the changes recommended have been completed.</em></span></span></span></span></p>
-
-            </td>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                        
-                    </table>
-                </div> `,
+                    <p><span style="color:#3c4043"><strong>If you wish to proceed with the appointment at the aforementioned time</strong></span>, please check your e-mail inbox for the calendar invite of your upcoming appointment with us, and follow the instructions specified therein to confirm your attendance. In preparation for our call, please also review and complete the To Do list linked <a href="https://support.google.com/google-ads/answer/11605860" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">here</a>.</p>
+  
+                    <p><span style="color:#3c4043"><strong>If you wish to proceed with the appointment at the aforementioned time</strong></span>, you can check our available time for rescheduling <span style="color:#ff0000"data-highlight="need_recheck"><strong>INSERT LINK HERE (press ctrl+k)</strong></span>. To proceed with booking, click on a time you would like to have your appointment on, fill in your name and email, then click on Book.</p>
+                    <p dir="auto" data-infocase="linkgooglemeet_section"></p>
+  
+                    <p>If you have any questions before our call or would like to add more attendees, please let us know by replying to this email or by contacting your Google Sales Representative. We are excited to work with you! Thank you.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+      <tbody>
+        <tr>
+          <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+              <tbody>
+                <tr>
+                  <td align="left" style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 2px;">Google Technical Solutions</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p dir="auto">
+    </p>
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+      <tbody>
+        <tr>
+          <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+              <tbody>
+                <tr>
+                  <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Case # <span data-infocase="case_id">0-00000000000000</span></td>
+                </tr>
+  
+                <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
+                  <p><span style="font-size:10px"><span style="font-family:Roboto,sans-serif"><span style="color:#000000"><span style="background-color:#ffffff"><em><strong>Terms:</strong> By replying to this message you acknowledge that you hereby authorize the Technical Specialist to guide you through the installation of relevant codes on your website and/or campaign and/or analytics account as needed. You hereby acknowledge and recognize that all changes suggested and/or implemented by Google shall be undertaken solely of your own accord and at your own risk. Google does not guarantee or promise any results whatsoever from implementation of such changes. Furthermore, Google shall not be responsible for any effects of such changes, including, but not limited to, any spending increase related to your Google Ads campaign(s) for which you shall be solely responsible.You also agree to validate that your website continues to function as you intend it to.&nbsp;</em></span></span></span></span></p>
+  
+                  <p><span style="font-size:10px"><span style="font-family:Roboto,sans-serif"><span style="color:#000000"><span style="background-color:#ffffff"><em><strong>Note: </strong>We recommend that you ensure your website is fully backed-up before making any changes. Also, you should NOT share your site credentials with me or anyone else from Google. Finally, making changes to your website / account while we are working on your request may cause you to lose some of your changes / settings. We advise you to refrain from making changes to your website / account until the changes recommended have been completed.</em></span></span></span></span></p>
+                </td>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+  
+    </table>
+  </div>
+  `,
     'send_google_meet_link': `<div id="email-body-content-top-content" dir="auto">
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                             <tbody>
@@ -193,8 +198,8 @@ var en_list_emailtemplatecontent = {
                                                 <tr>
                                                     <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
                                                         <p dir="auto">We hope you’re having a great day, and thank you for scheduling an appointment with the Google Technical Solutions Team. We are excited to work with you on our upcoming call!</p>
-                                                        <p dir="auto" data-highlight="need_recheck">Please click the link below to join the meeting and share the screen. </p>
-                            <p dir="auto">Meeting link:                          
+                                                        <p dir="auto">Please click the link below to join the meeting and share the screen. </p>
+                            <p dir="auto" data-highlight="need_recheck">Meeting link:                          
                 <a href="https://meet.google.com" data-infocase_link="customer_gmeet">Here</a>
                                                     
                                                         <p dir="auto">We’re looking forward to speaking with you!
@@ -259,10 +264,10 @@ var en_list_emailtemplatecontent = {
         <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
           <tbody>
             <tr>
-              <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">Hi <span class="replaced">Vasudevan NA</span>,</td>
+              <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">Hi <span class="replaced" data-infocase="customer_name" data-highlight="need_recheck">Vasudevan NA</span>,</td>
             </tr>
             <tr>
-              <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">Regarding your Case <span data-infocase="case_id" class="replaced">0-000000000000000</span> for <span data-infocase="customer_website"class="replaced">https://abc.com</span>we tried calling you today regarding the request for <span data-infocase="tasks_nowrap">Task</span>. Another attempt was made after 10 mins, but unfortunately we were still unable to connect with you.
+              <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">Regarding your Case <span data-infocase="case_id" class="replaced" data-highlight="need_recheck"> 0-000000000000000</span> for <span data-infocase="customer_website"class="replaced" data-highlight="need_recheck">https://abc.com</span>we tried calling you today regarding the request for <span data-infocase="tasks_nowrap" data-highlight="need_recheck">Task</span>. Another attempt was made after 10 mins, but unfortunately we were still unable to connect with you.
   </td>
             </tr>
             <tr>
@@ -411,587 +416,6 @@ var en_list_emailtemplatecontent = {
   </table></div>
                     </div>`,
 
-    'ec_a_if_pii_is_visible_available': `<div id="email-body-content-top-content" dir="auto">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao</td>
-                            <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/NI_Awaiting_Inputs_ts_ni_ai_v2.png" style="display: block;min-width:100px;" width="100"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span> thân mến!</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                                                                                    
-                                                <p dir="ltr">Cảm ơn bạn đã lên lịch hẹn với Đội giải pháp kỹ thuật vào lúc <span data-highlight="need_recheck" >00 giờ chiều ngày 01/01/2023</span> theo giờ Việt Nam. Để chia sẻ màn hình hỗ trợ cho quá trình triển khai, vui lòng nhấp vào đường liên kết sau để tham gia cuộc họp Google Meet: <a href="#" data-infocase_link="customer_gmeet" data-infocase="customer_gmeet" data-highlight="need_recheck" >LINK</a> . Chúng tôi sẽ liên hệ đến bạn theo số điện thoại được cung cấp:&nbsp; <span data-infocase="customer_contact" data-highlight="need_recheck" >0978000000</span>.</p><br>
-                                                <p dir="ltr">Để buổi cài đặt được triển khai thành công, bạn vui lòng xem qua và <span style="font-weight: bold;">hoàn thành</span> danh sách sau <span style="text-decoration-line: underline;">trước khi cuộc gọi diễn ra</span>:</p><br>
-                                                <ol>
-                                                    <li dir="ltr" aria-level="1"><span style="font-weight: bold;">Chấp thuận “Điều khoản dữ liệu khách hàng"</span> trong mục Cài đặt Lượt chuyển đổi trước khi cuộc gọi diễn ra. Vui lòng thao tác theo các bước sau: Trên tài khoản Google Ads của bạn, chọn “Đo lường" &gt; chọn “Lượt chuyển đổi" &gt; chọn “Cài đặt" &gt; chấp nhận mục “Điều khoản dữ liệu khách hàng”.</li>
-                                                    <li dir="ltr" aria-level="1">Đảm bảo rằng <span style="font-weight: bold;">trang chuyển đổi của bạn có chứa “Thông tin nhận dạng cá nhân của người dùng” </span>(địa chỉ Email, Số điện thoại).&nbsp;</li>
-                                                    <li dir="ltr" aria-level="1">Đảm bảo trang web của bạn được <span style="font-weight: bold;">mã hóa thông qua HTTPS.</span></li>
-                                                    <li dir="ltr" aria-level="1">Đảm bảo rằng người có <span style="font-weight: bold;">quyền quản trị đối với tài khoản Google Ads</span> (người có thể thực hiện các thay đổi đối với quảng cáo Google Ads)<span style="font-weight: bold;"> tham gia vào cuộc gọi.</span></li>
-                                                    <li dir="ltr" aria-level="1">Đảm bảo rằng người có <span style="font-weight: bold;">quyền quản trị đối với mã nguồn trang web của bạn/ hoặc GTM </span>(ví dụ như quyền truy cập vào bảng điều khiển của Quản trị viên và/ hoặc GTM) <span style="font-weight: bold;">tham gia cuộc gọi</span> và đảm bảo <span style="font-weight: bold;">tạo bản sao lưu trang web</span> trước khi triển khai.</li>
-                                                    <li dir="ltr" aria-level="1"><span style="font-weight: bold;">Kiểm tra lượt chuyển đổi </span>(Gửi biểu mẫu/ Đặt hàng thành công) là bước quan trọng để xác nhận việc triển khai. Vui lòng đảm bảo người có đủ thẩm quyền để thực hiện các hành động này tham gia vào cuộc gọi.</li>
-                                                </ol><br>
-                                                <p dir="ltr">Lưu ý : Lượt chuyển đổi nâng cao cho trang web chỉ đủ điều kiện để theo dõi lượt chuyển đổi được thiết lập từ trong tài khoản Google Ads và không được nhập từ các nguồn khác, ví dụ như Google Analytics. Nguồn chuyển đổi phải là Trang web và được cài đặt qua GTM hoặc mã nguồn website thông qua Thẻ toàn trang web. Bạn có thể tham khảo <a href="https://support.google.com/google-ads/answer/9888656?hl=vi" style="color: rgb(26, 115, 232); text-decoration-line: none;" class="ignore-globals">tài liệu này</a> để biết thêm thông tin.</p><br>
-                                                <p dir="ltr">Trong trường hợp bạn gặp bất kỳ khó khăn nào với các bước triển khai được liệt kê trên, cuộc gọi sẽ cần phải hẹn lại để hoàn tất cho việc triển khai. <span style="font-weight: bold;">Nếu bạn cần dời lại cuộc hẹn này, vui lòng cho chúng tôi biết bằng cách trả lời email này và chúng tôi sẽ sắp xếp thời gian phù hợp hơn cho bạn.</span></p><br>
-                                                <p dir="auto">Trân trọng,</p>
-
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
-                                            </td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p dir="auto">
-                </p>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>`,
-    'ec_b_automatic_eligible_if_pii_is_not_visible_available': `<div id="email-body-content-top-content" dir="auto">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao</td>
-                            <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/NI_Awaiting_Inputs_ts_ni_ai_v2.png" style="display: block;min-width:100px;" width="100"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span> thân mến!</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                                                    
-                                                <p dir="ltr">Cảm ơn bạn đã lên lịch hẹn với Đội giải pháp kỹ thuật vào lúc <span data-highlight="need_recheck" >00 giờ chiều ngày 01/01/2023</span> theo giờ Việt Nam. Để chia sẻ màn hình hỗ trợ cho quá trình triển khai, vui lòng nhấp vào đường liên kết sau để tham gia cuộc họp Google Meet: <a href="#" data-infocase_link="customer_gmeet" data-infocase="customer_gmeet" data-highlight="need_recheck" >LINK</a> . Chúng tôi sẽ liên hệ đến bạn theo số điện thoại được cung cấp: &nbsp;<span data-infocase="customer_contact" data-highlight="need_recheck" >0978000000</span>.</p>
-                                                <p dir="ltr">Để buổi cài đặt được triển khai thành công, bạn vui lòng xem qua và <span style="font-weight: bold;">hoàn thành</span> danh sách sau <span style="text-decoration-line: underline;">trước khi cuộc gọi diễn ra</span>:</p>
-                                                <ol dir="auto">
-                                                    <li dir="ltr" aria-level="1"><span style="font-weight: bold;">Chấp thuận 'điều khoản dữ liệu khách hàng' </span>trong Cài đặt chuyển đổi trước cuộc gọi. Vui lòng thực hiện theo các bước bên dưới để hoàn tất quá trình này: trong tài khoản Google Ads của bạn , hãy nhấp vào “Đo lường &gt; Chuyển đổi &gt; Cài đặt &gt; chấp nhận mục “ Điều khoản dữ liệu khách hàng”.<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Đảm bảo trang web của bạn <span style="font-weight: bold;">được mã hóa thông qua HTTPS.<br><br></span></li>
-                                                    <li dir="ltr" aria-level="1">Đảm bảo rằng người có<span style="font-weight: bold;"> quyền quản trị đối với tài khoản Google Ads </span>(người có thể thực hiện các thay đổi đối với quảng cáo Google Ads)<span style="font-weight: bold;"> tham gia vào cuộc gọi.<br><br></span></li>
-                                                    <li dir="ltr" aria-level="1">Đảm bảo rằng người có <span style="font-weight: bold;">quyền quản trị đối với mã nguồn trang web của bạn/ hoặc GTM </span>(ví dụ như quyền truy cập vào bảng điều khiển của Quản trị viên và/ hoặc GTM) <span style="font-weight: bold;">tham gia cuộc gọi</span> và <span style="font-weight: bold;">đảm bảo tạo bản sao lưu trang web trước khi triển khai</span>.<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Vui lòng liên hệ với Người quản lý tài khoản Google Ads của bạn để đảm bảo bạn có đủ điều kiện tham gia EC Alpha và nó có phù hợp với bạn hay không. Tuy nhiên, nếu bạn vẫn muốn tiếp tục triển khai với phương pháp thủ công, xin hãy liên hệ với Nhà phát triển website của bạn và <span style="font-weight: bold;">đảm bảo rằng trang chuyển đổi của bạn có thông tin Người dùng bắt buộc</span> (Số điện thoại, địa chỉ email hoặc Tên đầy đủ cùng với Địa chỉ vật lý). Đây là đoạn mẫu của biến lớp dữ liệu <span data-highlight="need_replace">{Add data layer code for GTM/Gtag code here}</span>.</li>
-                                                </ol><br>
-                                                <p dir="ltr">Lưu ý : Lượt chuyển đổi nâng cao cho trang web chỉ khả dụng cho các lượt chuyển đổi được thiết lập từ trong tài khoản Google Ads và không được nhập từ các nguồn khác, ví dụ như Google Analytics.<span style="font-weight: bold;"> Nguồn chuyển đổi phải là Trang web</span> và được cài đặt qua GTM hoặc mã nguồn website thông qua Thẻ toàn trang web. Bạn có thể tham khảo <a href="https://support.google.com/google-ads/answer/9888656?hl=vi" style="color: rgb(26, 115, 232); text-decoration-line: none;" class="ignore-globals">tài liệu này</a> để biết thêm thông tin.</p><br>
-                                                <p dir="ltr">Trong trường hợp bạn gặp bất kỳ khó khăn nào với các bước được liệt kê trước khi triển khai ở trên, cuộc gọi sẽ phải được đặt lại để hoàn tất cho việc triển khai. Nếu bạn cần<span style="font-weight: bold;"> dời lại cuộc hẹn này, vui lòng cho chúng tôi biết bằng cách trả lời email này và chúng tôi sẽ sắp xếp thời gian phù hợp hơn cho bạn</span>.</p><br>
-                                                <p dir="auto">Trân trọng,</p>
-                                                                
-
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
-                                            </td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p dir="auto">
-                </p>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>`,
-    'ec_c_automatic_not_eligible_if_pii_is_not_visible_available': `<div id="email-body-content-top-content" dir="auto">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao</td>
-                            <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/NI_Awaiting_Inputs_ts_ni_ai_v2.png" style="display: block;min-width:100px;" width="100"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span> thân mến!</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                                                <p dir="auto">Cảm ơn bạn đã lên lịch hẹn với Đội giải pháp kỹ thuật vào lúc <span data-highlight="need_recheck" >00 giờ chiều ngày 01/01/2023</span> theo giờ Việt Nam. Để chia sẻ màn hình hỗ trợ cho quá trình triển khai, vui lòng nhấp vào đường liên kết sau để tham gia cuộc họp Google Meet: <a href="#" data-infocase_link="customer_gmeet" data-infocase="customer_gmeet"  data-highlight="need_recheck" >LINK</a> . Chúng tôi sẽ liên hệ đến bạn theo số điện thoại được cung cấp: &nbsp;<span data-infocase="customer_contact"  data-highlight="need_recheck" >0978000000</span>.</p>
-                                                <p dir="auto">Để buổi cài đặt được triển khai thành công, bạn vui lòng xem qua và <span style="font-weight: bold;">hoàn thành</span> danh sách sau <span style="text-decoration-line: underline;">trước khi cuộc gọi diễn ra</span>:</p>
-                                                <ol dir="auto">
-                                                    <li dir="ltr" aria-level="1"><span style="font-weight: bold;">Chấp thuận 'điều khoản dữ liệu khách hàng' </span>trong Cài đặt chuyển đổi trước cuộc gọi. Vui lòng thực hiện theo các bước bên dưới để hoàn tất quá trình này: trong tài khoản Google Ads của bạn , hãy nhấp vào “Đo lường &gt; Chuyển đổi &gt; Cài đặt &gt; chấp nhận mục “ Điều khoản dữ liệu khách hàng”.</li>
-                                                </ol>
-                                                <ol start="2" dir="auto">
-                                                    <li dir="ltr" aria-level="1">Đảm bảo rằng <span style="font-weight: bold;">trang chuyển đổi của bạn có chứa</span> <span style="font-weight: bold;">“Thông tin nhận dạng cá nhân của người dùng” </span>(địa chỉ Email, Số điện thoại). &nbsp;Đây là đoạn mẫu của biến lớp dữ liệu &nbsp;<span data-highlight="need_replace">{Add data layer code for GTM/Gtag code here}</span>.</li>
-                                                </ol>
-                                                <ol start="3" dir="auto">
-                                                    <li dir="ltr" aria-level="1">Đảm bảo trang web của bạn được <span style="font-weight: bold;">mã hóa thông qua HTTPS</span>.</li>
-                                                </ol>
-                                                <ol start="4" dir="auto">
-                                                    <li dir="ltr" aria-level="1">Đảm bảo rằng người có<span style="font-weight: bold;"> quyền quản trị đối với tài khoản Google Ads </span>(người có thể thực hiện các thay đổi đối với quảng cáo Google Ads)<span style="font-weight: bold;"> tham gia vào cuộc gọi.</span></li>
-                                                </ol>
-                                                <ol start="5" dir="auto">
-                                                    <li dir="ltr" aria-level="1">Đảm bảo rằng người có <span style="font-weight: bold;">quyền quản trị đối với mã nguồn trang web của bạn/ hoặc GTM </span>(ví dụ như quyền truy cập vào bảng điều khiển của Quản trị viên và/ hoặc GTM) <span style="font-weight: bold;">tham gia cuộc gọi</span> và <span style="font-weight: bold;">đảm bảo tạo bản sao lưu trang web trước khi triển khai</span>.</li>
-                                                </ol>
-                                                <ol start="6" dir="auto">
-                                                    <li dir="ltr" aria-level="1"><span style="font-weight: bold;">Kiểm tra lượt chuyển đổi </span>(Gửi biểu mẫu/ Đặt hàng thành công) là bước quan trọng để xác nhận việc triển khai. Vui lòng đảm bảo người có đủ thẩm quyền để thực hiện các hành động này tham gia vào cuộc gọi.</li>
-                                                </ol>
-                                                <p dir="ltr">Lưu ý : Lượt chuyển đổi nâng cao cho trang web chỉ khả dụng cho lượt chuyển đổi được thiết lập từ trong tài khoản Google Ads và không được nhập từ các nguồn khác, ví dụ như Google Analytics.<span style="font-weight: bold;"> Nguồn chuyển đổi phải là Trang web</span> và được cài đặt qua GTM hoặc mã nguồn website&nbsp; thông qua Thẻ toàn trang web. Bạn có thể tham khảo <a href="https://support.google.com/google-ads/answer/9888656?hl=vi" style="color: rgb(26, 115, 232); text-decoration-line: none;" class="ignore-globals">tài liệu này</a> để biết thêm thông tin.</p>
-                                                <p dir="auto">Trong trường hợp bạn gặp bất kỳ khó khăn nào với các bước triển khai được liệt kê trên, cuộc gọi sẽ cần phải hẹn lại để hoàn tất cho việc triển khai. Nếu bạn cần<span style="font-weight: bold;"> dời lại cuộc hẹn này, vui lòng cho chúng tôi biết bằng cách trả lời email này và chúng tôi sẽ sắp xếp thời gian phù hợp hơn cho bạn</span>.</p>
-                                                <p dir="ltr">Trân trọng,</p>
-
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
-                                            </td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p dir="auto">
-                </p>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>`,
-    'ec_d_ecommerce_website_or_cases_when_you_are_unable_to_check_pii': `<div id="email-body-content-top-content" dir="auto">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao</td>
-                            <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/NI_Awaiting_Inputs_ts_ni_ai_v2.png" style="display: block;min-width:100px;" width="100"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span> thân mến!</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                                                <p dir="auto">Cảm ơn bạn đã lên lịch hẹn với Đội giải pháp kỹ thuật vào lúc <span data-highlight="need_recheck" >00 giờ chiều ngày 01/01/2023</span> theo giờ Việt Nam. Để chia sẻ màn hình hỗ trợ cho quá trình triển khai, vui lòng nhấp vào đường liên kết sau để tham gia cuộc họp Google Meet: <a href="#" data-infocase_link="customer_gmeet" data-infocase="customer_gmeet"  data-highlight="need_recheck" >LINK</a> . Chúng tôi sẽ liên hệ đến bạn theo số điện thoại được cung cấp:&nbsp; <span data-infocase="customer_contact"  data-highlight="need_recheck" >0978000000</span>.</p>
-                                                <p dir="auto">Để buổi cài đặt được triển khai thành công, bạn vui lòng xem qua và hoàn thành danh sách sau <span style="text-decoration-line: underline;">trước khi cuộc gọi diễn ra</span>:</p>
-                                                <ol dir="auto">
-                                                    <li dir="ltr" aria-level="1"><span style="font-weight: bold;">Chấp thuận “Điều khoản dữ liệu khách hàng"</span> trong mục Cài đặt Lượt chuyển đổi trước khi cuộc gọi diễn ra. Vui lòng thao tác theo các bước sau: Trên tài khoản Google Ads của bạn, chọn “Đo lường" &gt; chọn “Lượt chuyển đổi" &gt; chọn “Cài đặt" &gt; chấp nhận mục “Điều khoản dữ liệu khách hàng”.<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Đảm bảo rằng <span style="font-weight: bold;">trang chuyển đổi của bạn có chứa “Thông tin nhận dạng cá nhân của người dùng” </span>(địa chỉ Email, Số điện thoại). Bạn có thể tìm hiểu thêm từ <a href="https://support.google.com/google-ads/answer/10172785?hl=vi#zippy=%2Cidentify-and-define-your-enhanced-conversions-variables" style="color: rgb(26, 115, 232); text-decoration-line: none;" class="ignore-globals">bài viết này</a> để kiểm tra sự hiện diện của các trường thông tin cần thiết trên trang website.<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Nếu không, bạn cần kiểm tra tài khoản Google Ads có đang ghi nhận hơn 5 lượt chuyển đổi mỗi ngày, lượt chuyển đổi có thể đến từ bất kỳ hành động nào với Nguồn chuyển đổi là “Trang web”. Nếu không, bạn sẽ cần liên hệ đến nhà phát triển website để đảm bảo <span style="font-weight: bold;">trang chuyển đổi của bạn có chứa “Thông tin nhận dạng cá nhân của người dùng”</span> (địa chỉ Email, Số điện thoại) hoặc nhà phát triển website có thể đẩy biến lớp dữ liệu vào trang chuyển đổi của bạn hay không?<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Đảm bảo trang web của bạn được <span style="font-weight: bold;">mã hóa thông qua HTTPS.<br><br></span></li>
-                                                    <li dir="ltr" aria-level="1">Đảm bảo rằng người có <span style="font-weight: bold;">quyền quản trị đối với tài khoản Google Ads</span> (người có thể thực hiện các thay đổi đối với quảng cáo Google Ads)<span style="font-weight: bold;"> tham gia vào cuộc gọi.<br><br></span></li>
-                                                    <li dir="ltr" aria-level="1">Đảm bảo rằng người có <span style="font-weight: bold;">quyền quản trị đối với mã nguồn trang web của bạn/ hoặc GTM </span>(ví dụ như quyền truy cập vào bảng điều khiển của Quản trị viên và/ hoặc GTM) <span style="font-weight: bold;">tham gia cuộc gọi</span> và đảm bảo <span style="font-weight: bold;">tạo bản sao lưu trang web</span> trước khi triển khai.<br><br></li>
-                                                    <li dir="ltr" aria-level="1"><span style="font-weight: bold;">Kiểm tra lượt chuyển đổi </span>(Gửi biểu mẫu/ Đặt hàng thành công) là bước quan trọng để xác nhận việc triển khai. Vui lòng đảm bảo người có đủ thẩm quyền để thực hiện các hành động này tham gia vào cuộc gọi.</li>
-                                                </ol>
-                                                <p dir="auto">Lưu ý : Lượt chuyển đổi nâng cao cho trang web chỉ khả dụng cho các lượt chuyển đổi được thiết lập từ trong tài khoản Google Ads và không được nhập từ các nguồn khác, ví dụ như Google Analytics. Nguồn chuyển đổi phải là Trang web và được cài đặt qua GTM hoặc mã nguồn website&nbsp; thông qua Thẻ toàn trang web. Bạn có thể tham khảo <a href="https://support.google.com/google-ads/answer/9888656?hl=vi" style="color: rgb(26, 115, 232); text-decoration-line: none;" class="ignore-globals">tài liệu này</a> để biết thêm thông tin.</p><br>
-                                                <p dir="ltr">Trong trường hợp bạn gặp bất kỳ khó khăn nào với các bước triển khai được liệt kê trên, cuộc gọi sẽ cần phải hẹn lại để hoàn tất cho việc triển khai. <span style="font-weight: bold;">Nếu bạn cần dời lại cuộc hẹn này, vui lòng cho chúng tôi biết bằng cách trả lời email này và chúng tôi sẽ sắp xếp thời gian phù hợp hơn cho bạn.</span></p><br>
-                                                <p dir="ltr">Trân trọng,</p>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
-                                            </td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p dir="auto">
-                </p>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>`,
-    'ec_e_if_an_advertiser_is_eligible_for_the_automatic_option_based_on_pre_call_checks_keep_either_gtm_or_gtag_one_of_the_two_options_below_option_based_on_advertisers_conversion_set_up': `<div id="email-body-content-top-content" dir="auto">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao</td>
-                            <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/NI_Awaiting_Inputs_ts_ni_ai_v2.png" style="display: block;min-width:100px;" width="100"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span> thân mến!</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                                                <p dir="ltr">Cảm ơn bạn đã quan tâm về việc triển khai Chuyển đổi Nâng cao. Chúng tôi nhận thấy bạn đã đủ điều kiện để thiết lập theo dõi Chuyển đổi Nâng cao tự động. Vui lòng thao tác theo các bước sau để hoàn tất thiết lập.</p>
-                                                <h3 dir="ltr">Hướng dẫn</h3>
-                                                <ol>
-                                                    <li dir="ltr" aria-level="1">Đăng nhập vào <a href="https://ads.google.com/intl/vi_vn/home/" style="color: rgb(26, 115, 232); text-decoration-line: none;" class="ignore-globals">tài khoản Google Ads</a> của bạn.<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Ở góc trên bên phải của tài khoản, hãy nhấp vào biểu tượng công cụ và bên dưới mục "<span style="font-weight: bold;">Đo lường</span>", hãy nhấp vào <span style="font-weight: bold;">Lượt</span> <span style="font-weight: bold;">chuyển đổi</span>.<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Mở hành động chuyển đổi mà bạn muốn sử dụng tính năng lượt chuyển đổi nâng cao.<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Trong phần "Lượt chuyển đổi nâng cao" ở dưới cùng, hãy nhấp vào Bật tính năng lượt chuyển đổi nâng cao.<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Nhấp vào Đồng ý với tuyên bố tuân thủ điều khoản điều kiện. Bằng cách bật tính năng lượt chuyển đổi nâng cao, bạn xác nhận rằng mình tuân thủ các <a href="https://support.google.com/adspolicy/answer/7475709?hl=vi" style="color: rgb(26, 115, 232); text-decoration-line: none;" class="ignore-globals">chính sách của chúng tôi</a>. <a href="https://business.safety.google/adsprocessorterms/" style="color: rgb(26, 115, 232); text-decoration-line: none;" class="ignore-globals">Điều khoản xử lý dữ liệu của Google Ads</a> (chỉ có bản Tiếng Anh) áp dụng cho việc bạn sử dụng tính năng lượt chuyển đổi nâng cao.<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Kiểm tra trang web của bạn để tìm thẻ Google bằng cách nhập URL trang đích của bạn và nhấp vào Kiểm tra URL.<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Trong “Loại thẻ”, bạn sẽ thấy tính năng cài đặt mặc định là Trình quản lý thẻ của Google hoặc thẻ Google của bạn. Bất kỳ phương pháp nào bạn đã sử dụng để thiết lập thẻ trang web cũng sẽ được sử dụng để thiết lập lượt chuyển đổi nâng cao.<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Nếu bạn đang sử dụng thẻ Google, bạn sẽ được mặc định sử dụng “Thiết lập tự động” nếu khả dụng và có thể hoàn tất thiết lập của mình từ màn hình này. Nếu đang sử dụng Trình quản lý thẻ của Google, bạn có thể nhấp vào Lưu và mở tài khoản Trình quản lý thẻ của Google để hoàn tất <a href="https://support.google.com/google-ads/answer/10763826?hl=vi&amp;ref_topic=11337914#Complete_GTM&amp;zippy=%2Ccompleting-automatic-setup-in-google-tag-manager%2Cho%C3%A0n-t%E1%BA%A5t-quy-tr%C3%ACnh-thi%E1%BA%BFt-l%E1%BA%ADp-t%E1%BB%B1-%C4%91%E1%BB%99ng-trong-tr%C3%ACnh-qu%E1%BA%A3n-l%C3%BD-th%E1%BA%BB-c%E1%BB%A7a-google" style="color: rgb(26, 115, 232); text-decoration-line: none;" class="ignore-globals">phần còn lại của quá trình thiết lập</a>.<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Tiếp theo, bạn sẽ chọn những phần thông tin khách hàng mà bạn muốn sử dụng cho lượt chuyển đổi nâng cao. Tại thời điểm này, <span style="font-weight: bold;">chỉ có Email khả dụng</span> nhưng trong tương lai có thể có các tùy chọn khác như Địa chỉ và Số điện thoại.<br><br></li>
-                                                    <li dir="ltr" aria-level="1">Nhấp vào Lưu. Bạn sẽ thấy thông báo rằng Google cần một chút thời gian để đánh giá xem chuyển đổi của bạn có hoạt động bình thường với “Thiết lập tự động” hay không. Bạn có thể kiểm tra lại sau khoảng 1 tuần để xem xét trạng thái của hành động chuyển đổi của mình và xem liệu có cần thực hiện bất kỳ hành động bổ sung nào.<br><br></li>
-                                                </ol>
-                                                <p dir="ltr">Tới đây bạn đã triển khai thành công lượt chuyển đổi nâng cao cho hành động chuyển đổi này. Lặp lại các bước này cho từng hành động chuyển đổi mà bạn muốn triển khai tính năng lượt chuyển đổi nâng cao.</p><br>
-                                                <p dir="ltr">Vui lòng lưu ý rằng bạn sẽ thấy thông báo rằng <span style="font-weight: bold;">“Google cần một chút thời gian để đánh giá xem chuyển đổi của bạn có hoạt động bình thường với “Thiết lập tự động”</span> hay không. B<span style="font-weight: bold;">ạn có thể kiểm tra lại sau 1 tuần để xem lại trạng thái của hành động chuyển đổi</span> và liên hệ với Đội ngũ Kỹ thuật đại diện Google nếu cần thực hiện bất kỳ hành động khắc phục hay bổ sung, và chúng tôi sẵn lòng hỗ trợ bạn.</p><br>
-                                                
-
-                                                <div data-notetitle="[KHÔNG BAO GỒM sau phần này NẾU đó là thiết lập gTag] Hoàn tất Thiết lập tự động trong Trình quản lý thẻ của Google), cân nhắc để xóa hoặc thay đổi">
-                                                    <p dir="auto">Hoàn tất Thiết lập tự động trong Trình quản lý thẻ của Google</p>
-                                                    <p dir="auto">Trước tiên, hãy đảm bảo rằng bạn đã đợi 5 ngày sau khi ký Điều khoản dịch vụ trong tài khoản Google Ads của mình. Sau khoảng thời gian này, bạn có thể kiểm tra các thẻ theo dõi chuyển đổi của mình trong Trình quản lý thẻ của Google để xem các thẻ đó có được bật cho chuyển đổi nâng cao hay không và tiếp tục triển khai thiết lập.<br></p>
-                                                    <ol dir="auto">
-                                                        <li dir="ltr" aria-level="1">Đăng nhập vào tài khoản <a href="https://tagmanager.google.com/#/home" style="color: rgb(26, 115, 232); text-decoration-line: none;" class="ignore-globals">Trình quản lý thẻ của Google</a>.<br><br></li>
-                                                        <li dir="ltr" aria-level="1">Nhấp vào Không gian làm việc, sau đó nhấp vào <a href="https://support.google.com/tagmanager/answer/3281060" style="color: rgb(26, 115, 232); text-decoration-line: none;" class="ignore-globals">Thẻ</a> từ menu điều hướng.<br><br></li>
-                                                        <li dir="ltr" aria-level="1">Chọn thẻ theo dõi lượt chuyển đổi Google Ads mà bạn muốn triển khai tính năng lượt chuyển đổi nâng cao và chỉnh sửa thẻ đó. <br><br>Nếu bạn chưa thiết lập thẻ theo dõi chuyển đổi Google Ads trong tài khoản Trình quản lý thẻ của Google, hãy tìm hiểu thêm về <a href="https://support.google.com/tagmanager/answer/6105160" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">chuyển đổi Google Ads</a>. <br><br>Đảm bảo hành động chuyển đổi này có cùng ID theo dõi lượt chuyển đổi và nhãn chuyển đổi giống như hành động chuyển đổi mà bạn đã bật tính năng lượt chuyển đổi nâng cao trong tài khoản Google Ads của mình.</li>
-                                                    </ol>
-                                                    <p dir="auto"><br></p>
-                                                    <ol start="4" dir="auto">
-                                                        <li dir="ltr" aria-level="1">Nhấp vào Bao gồm dữ liệu do người dùng cung cấp từ trang web của bạn.<br>Nếu bạn không thấy điều này, hãy đảm bảo rằng bạn đã ký vào điều khoản dịch vụ trong tài khoản Google Ads đang quản lý hành động chuyển đổi mà bạn đang thiết lập tính năng lượt chuyển đổi nâng cao. Nếu bạn cho rằng mình đã làm việc này, đợi 5 ngày mà vẫn không thấy trường dữ liệu "Cung cấp lượt chuyển đổi nâng cao" trong Trình quản lý thẻ của Google, hãy liên hệ với Đại diện quản lý Google hoặc bộ phận hỗ trợ của Google nếu bạn không có người đại diện quản lý.</li>
-                                                    </ol>
-                                                    <ol start="5" dir="auto">
-                                                        <li dir="ltr" aria-level="1">Trong Dữ liệu người dùng, chọn Biến mới, rồi chọn Dữ liệu do người dùng cung cấp.<br><br></li>
-                                                        <li dir="ltr" aria-level="1">Chọn Bộ sưu tập tự động.<br><br></li>
-                                                        <li dir="ltr" aria-level="1">Nhấp vào Lưu cho biến rồi lưu thẻ theo dõi chuyển đổi.<br><br></li>
-                                                    </ol>
-                                                    <p dir="ltr">Vui lòng lưu ý rằng bạn sẽ thấy thông báo rằng “Google cần một chút thời gian để đánh giá xem chuyển đổi của bạn có hoạt động bình thường với “Thiết lập tự động” hay không. Bạn có thể kiểm tra lại sau 1 tuần để xem lại trạng thái của hành động chuyển đổi và liên hệ với Đội ngũ Kỹ thuật đại diện Google nếu cần thực hiện bất kỳ hành động khắc phục hay bổ sung, và chúng tôi sẵn lòng hỗ trợ bạn.</p>
-                                                    
-                                                </div>
-
-                                                <p><br>Bạn cũng có thể tham khảo <a href="https://support.google.com/google-ads/answer/10763826?hl=vi&amp;ref_topic=11337914">Trung tâm trợ giúp</a> để được hướng dẫn thêm về vấn đề này. </p>
-                                                <p>Trân trọng,</p>
-
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
-                                            </td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p dir="auto">
-                </p>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>`,
-    'ec_f_if_advertiser_imports_google_analytics_conversions_for_tracking_and_wants_to_implement_ec': `<div id="email-body-content-top-content" dir="auto">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao</td>
-                            <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/NI_Awaiting_Inputs_ts_ni_ai_v2.png" style="display: block;min-width:100px;" width="100"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span> thân mến!</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                                                <p dir="auto">Cảm ơn bạn đã quan tâm đến việc triển khai Lượt chuyển đổi nâng cao.</p>
-                                                <p dir="auto">Chúng tôi nhận thấy rằng bạn đang nhập chuyển đổi Google Analytics (GA) vào Google Ads. Nếu bạn đang tìm cách triển khai Lượt chuyển đổi nâng cao cho các lượt chuyển đổi đã nhập từ GA, thì lưu ý rằng&nbsp; <span style="font-weight: bold;">Lượt chuyển đổi nâng cao hiện tại chỉ khả dụng cho những lượt chuyển đổi sử dụng nguồn từ Website / sử dụng tính năng theo dõi lượt chuyển đổi gTag</span>.</p>
-                                                <p dir="auto">Chúng tôi xin lỗi vì bất kỳ sự bất tiện nào mà điều này có thể đã gây ra.</p>
-                                                <p dir="auto">Trân trọng,</p>
-
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
-                                            </td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p dir="auto">
-                </p>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>`,
-    'ec_g_if_advertiser_cms_is_not_supported_for_ec_implementation_send_this_email': `<div id="email-body-content-top-content" dir="auto">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao</td>
-                            <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/NI_Awaiting_Inputs_ts_ni_ai_v2.png" style="display: block;min-width:100px;" width="100"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"><span data-infocase="customer_name" data-highlight="need_recheck" >CUSTOMER NAME</span> thân mến!</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                                                <p dir="auto">Cảm ơn bạn đã quan tâm đến việc triển khai Lượt chuyển đổi nâng cao.&nbsp;</p>
-                                                <p dir="auto">Chúng tôi nhận thấy rằng bạn đang sử dụng Hệ thống quản lý nội dung (CMS) của <span data-highlight="need_replace">{Insert CMS Name}</span> và hiện tại chúng tôi không thể hỗ trợ triển khai cho CMS này. Vui lòng liên hệ với Đội ngũ hỗ trợ nền tảng CMS tương ứng của bạn để được hướng dẫn.&nbsp;</p>
-                                                <p dir="auto">Chúng tôi xin lỗi vì bất kỳ sự bất tiện nào mà điều này có thể đã gây ra.</p>
-                                                <p dir="auto">Trân trọng,</p>
-
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 50px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
-                                            </td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p dir="auto">
-                </p>
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">Yêu cầu số <span data-infocase="case_id">0-00000000000000</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>`,
 
 };
 
@@ -1026,7 +450,7 @@ var en_email_temp = `
 
         <div class="_emailtemp-item" data-type="Send Google Meet Link">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-            <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật - Link cuộc họp Google Meet cho trường hợp [<span data-infocase="case_id">5-6594000033737</span>]</div>
+            <div class="_emailtemp-item__title">Technical Solutions Team - Google Meet link [<span data-infocase="case_id">5-6594000033737</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
                     <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
@@ -1039,7 +463,7 @@ var en_email_temp = `
     
         <div class="_emailtemp-item" data-type="UMM No Show">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-            <div class="_emailtemp-item__title">The Technical Solutions Team - Your case has been closed due to inactivity [<span data-infocase="case_id">5-6594000033737</span>]</div>
+            <div class="_emailtemp-item__title">Technical Solutions Team - Your case has been closed due to inactivity [<span data-infocase="case_id">5-6594000033737</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%">
                     <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
@@ -1049,90 +473,6 @@ var en_email_temp = `
             </div>
         </div>
         
-
-        <div class="_emailtemp-item" data-type="[EC] [A] If PII is Visible / Available  ">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-            <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật -  Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao [<span data-infocase="case_id">5-0000000000000</span>]</div>
-            <div class="_emailtemp-item__content">
-                <div id="email-body-content-top" style="width:100%">
-                    <div id="email-body-content-top-content">
-                        ${en_list_emailtemplatecontent.ec_a_if_pii_is_visible_available}
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="_emailtemp-item" data-type="[EC] [B] (Automatic eligible) If PII is not Visible / Available  ">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-            <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật -  Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao [<span data-infocase="case_id">5-0000000000000</span>]</div>
-            <div class="_emailtemp-item__content">
-                <div id="email-body-content-top" style="width:100%">
-                    <div id="email-body-content-top-content">
-                        ${en_list_emailtemplatecontent.ec_b_automatic_eligible_if_pii_is_not_visible_available}
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="_emailtemp-item" data-type="[EC] [C] (Automatic - Not eligible) If PII is not Visible / Available   ">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-            <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật - Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao [<span data-infocase="case_id">5-0000000000000</span>]</div>
-            <div class="_emailtemp-item__content">
-                <div id="email-body-content-top" style="width:100%">
-                    <div id="email-body-content-top-content">
-                        ${en_list_emailtemplatecontent.ec_c_automatic_not_eligible_if_pii_is_not_visible_available}
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="_emailtemp-item" data-type="[EC] [D] Ecommerce website Or Cases when you are unable to check PII ">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-            <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật -  Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao [<span data-infocase="case_id">5-0000000000000</span>]</div>
-            <div class="_emailtemp-item__content">
-                <div id="email-body-content-top" style="width:100%">
-                    <div id="email-body-content-top-content">
-                        ${en_list_emailtemplatecontent.ec_d_ecommerce_website_or_cases_when_you_are_unable_to_check_pii}
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="_emailtemp-item" data-type="[EC] [E] If an advertiser is Eligible for the  Automatic Option (based on Pre-Call Checks) - Keep either GTM or gTag (one of the two options below) option based on Advertiser’s conversion set up [E-GTAG]">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-            <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật -  Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao [<span data-infocase="case_id">5-0000000000000</span>]</div>
-            <div class="_emailtemp-item__content">
-                <div id="email-body-content-top" style="width:100%">
-                    <div id="email-body-content-top-content">
-                        ${en_list_emailtemplatecontent.ec_e_if_an_advertiser_is_eligible_for_the_automatic_option_based_on_pre_call_checks_keep_either_gtm_or_gtag_one_of_the_two_options_below_option_based_on_advertisers_conversion_set_up}
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="_emailtemp-item" data-type="[EC] [F] If Advertiser imports Google Analytics conversions for tracking and wants to implement EC">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-            <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật -  Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao [<span data-infocase="case_id">5-0000000000000</span>]</div>
-            <div class="_emailtemp-item__content">
-                <div id="email-body-content-top" style="width:100%">
-                    <div id="email-body-content-top-content">
-                        ${en_list_emailtemplatecontent.ec_f_if_advertiser_imports_google_analytics_conversions_for_tracking_and_wants_to_implement_ec}
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="_emailtemp-item" data-type="[EC] [G] If advertiser CMS is not supported for EC Implementation, send this email">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-            <div class="_emailtemp-item__title">Đội giải pháp kỹ thuật -  Những điều kiện cần thiết cho Cuộc hẹn triển khai Chuyển đổi nâng cao [<span data-infocase="case_id">5-0000000000000</span>]</div>
-            <div class="_emailtemp-item__content">
-                <div id="email-body-content-top" style="width:100%">
-                    <div id="email-body-content-top-content">
-                        ${en_list_emailtemplatecontent.ec_g_if_advertiser_cms_is_not_supported_for_ec_implementation_send_this_email}
-                    </div>
-                </div>
-            </div>
-        </div>
         
     </div>`;
 var en_panel_div = `
@@ -1533,7 +873,7 @@ var en_panel_div = `
                         <div class="_emailtemp_search">
                             <span id="_emailtemp_search_input" class="_emailtemp_search_input" contenteditable="true"></span>
                         </div>
-                        ${vi_email_temp}
+                        ${en_email_temp}
                     </div>
                 </div>
                 <div data-panel="list-case">

@@ -40,12 +40,16 @@ function save_options() {
 		
 		chrome.browserAction.setBadgeText({text: 'ID' });
 		
-	}else if (country == "Other") {
+	}else if (country == "English") {
+		
+		chrome.browserAction.setBadgeText({text: 'EN' });
+		
+	}
+  else if (country == "Other") {
 		
 		chrome.browserAction.setBadgeText({text: 'CB' });
 		
 	}
-
     
 
 
@@ -149,6 +153,7 @@ function restore_options() {
 	y = items.mycountry;
 	window.superx = y;
 	console.log(superx);
+  console.log('English - Testing');
     document.getElementById('c_country').innerHTML = superx;
 	chrome.runtime.sendMessage({message: country});
 	});

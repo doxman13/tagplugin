@@ -86,6 +86,7 @@
     
     /* OPTION */
     [data-optionkl="Thailand"] .optionkl__option ,
+    [data-optionkl="English"] .optionkl__option ,
     [data-optionkl="Vietnam"] .optionkl__option {
       font-size: 14px;
       border: 1px solid #ddd;
@@ -95,17 +96,20 @@
     }
     
     [data-optionkl="Thailand"] .optionkl__option label ,
+    [data-optionkl="English"] .optionkl__option label ,
     [data-optionkl="Vietnam"] .optionkl__option label {
       user-select: none;
     }
     
     [data-optionkl="Thailand"] .optionkl__option-row ,
+    [data-optionkl="English"] .optionkl__option-row ,
     [data-optionkl="Vietnam"] .optionkl__option-row {
       display: flex;
       flex-wrap: wrap;
     }
     
     [data-optionkl="Thailand"] .optionkl__option-col ,
+    [data-optionkl="English"] .optionkl__option-col ,
     [data-optionkl="Vietnam"] .optionkl__option-col {
       flex-basis: 0;
       -webkit-box-flex: 1;
@@ -113,26 +117,31 @@
     }
     
     [data-optionkl="Thailand"] .optionkl__option-col:not(:last-child) ,
+    [data-optionkl="English"] .optionkl__option-col:not(:last-child) ,
     [data-optionkl="Vietnam"] .optionkl__option-col:not(:last-child) {
       margin-right: 10px;
     }
     
     [data-optionkl="Thailand"] .optionkl__option-col input[type="text"] ,
+    [data-optionkl="English"] .optionkl__option-col input[type="text"] ,
+
     [data-optionkl="Vietnam"] .optionkl__option-col input[type="text"] {
       width: 100%;
       color: #444;
     }
     
-    [data-optionkl]:not([data-optionkl="Thailand"]):not([data-optionkl="Vietnam"]) .optionkl__option {
+    [data-optionkl]:not([data-optionkl="Thailand"]):not([data-optionkl="English"]):not([data-optionkl="Vietnam"]) .optionkl__option {
         display: none;
     }
     
     [data-optionkl="Thailand"] input[type="checkbox"] ,
+    [data-optionkl="English"] input[type="checkbox"] ,
     [data-optionkl="Vietnam"] input[type="checkbox"] {
         width: auto;
     }
     
     [data-optionkl="Thailand"] .tabs-wrap ,
+    [data-optionkl="English"] .tabs-wrap ,
     [data-optionkl="Vietnam"] .tabs-wrap {
         display: none;
     }
@@ -266,6 +275,7 @@
                  <option value="Japan">Japan</option>
                  <option value="Korea">Korea</option>
                  <option value="Indonesia">Indonesia</option>
+                 <option value="English">English</option>
                  <option value="Other">Other</option>
                 </select>
             </div>

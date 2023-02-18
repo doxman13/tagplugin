@@ -81,6 +81,18 @@ console.log('Value currently is ' + result.mycountry);
 		})(window,document,'script','dataLayer','GTM-TBMND42');
 
 	}
+	else if (result.mycountry == "English") {
+		
+		
+		console.log('Value currently is ' + result.mycountry + 'in IF ELSE') ;
+		var myemail = result.ouremail;
+		var x = document.createElement("p");
+		x.setAttribute("id", "myspanemail");
+		document.body.appendChild(x); 
+		document.getElementById("myspanemail").innerHTML = myemail;
+		
+
+	}
 			  
 		  
 });

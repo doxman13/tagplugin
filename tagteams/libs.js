@@ -1021,6 +1021,7 @@ function readPoolCase() {
             
         if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
         cLog(() => {console.log("_readPoolCase", "Start");});
+        
 
         var _loadurl = function(url_file, frameID, _text, _color) {
             cLog(() => {console.log("_readPoolCase", "url_file", url_file);});
@@ -1085,7 +1086,7 @@ function readPoolCase() {
 
                 var _date_key_st = _storage.split("|-|")[0];
                 _number = _storage.split("|-|")[1];
-                console.log("_Test", parseInt(_date_key.join("")) , parseInt(_date_key_st), parseInt(_date_key.join("")) - parseInt(_date_key_st))
+                cLog(() => {console.log("_Test", parseInt(_date_key.join("")) , parseInt(_date_key_st), parseInt(_date_key.join("")) - parseInt(_date_key_st));})
                 if((parseInt(_date_key.join("")) - parseInt(_date_key_st)) < 30) {
                     if(parseInt(_number) > 0) {
                         _loadui();
@@ -1162,7 +1163,9 @@ function readPoolCase() {
         }
         
 
-        var is_live = false;
+        
+        
+        var is_live = window.result.optionkl__modecase != "Development" ? true : false;
         var untouch_over_10_days = '';
         var email_due_reply_24hrs = '';
 
@@ -1253,7 +1256,9 @@ function load_remote (result, _default_action) {
                         "timesync": _timekey_current						
                     };
                     load_fetch_post_content(vi_api_blog, _body, (response_api) => {
-                        console.log("load_fetch_post_content", response_api);
+                        
+                        cLog(() => {console.log("load_fetch_post_content", response_api);})
+
                         if(response_api.rs) {
                             setChromeStorage(_key, response_api , () => {
                                 if(response_api.typeaction == 'script_sync') {

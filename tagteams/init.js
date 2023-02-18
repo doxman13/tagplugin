@@ -51,6 +51,27 @@ function (result) {
 
 		load_remote(result, _default_action);
 	}
+	
+	if (result.mycountry == "English") {
+
+
+        var _default_action = () => {
+            window.dataTagteam.language = en_language;
+            window.dataTagteam.panel_div = en_panel_div;
+            window.dataTagteam.panel_div_style = en_panel_div_style;
+            window.dataTagteam.api_blog = en_api_blog;
+            window.dataTagteam.current_case = {};
+    
+            // Focus case code vanbo
+            window.dataTagteam.tagteamFocusCase = () => { en_TagteamFocusCase() } ;
+            window.dataTagteam.sendFirstEmail = () => { en_sendFirstEmail() } ;
+			
+            en_tagTeamTDCXLoad(window);
+            globalForAll(window);
+        }
+
+		load_remote(result, _default_action);
+	}
 
 	// // Update file overwrite /tagteams/groups
 	// if (result.mycountry == "Japan") {

@@ -40,12 +40,16 @@ function save_options() {
 		
 		chrome.browserAction.setBadgeText({text: 'ID' });
 		
-	}else if (country == "Other") {
+	}else if (country == "English") {
+		
+		chrome.browserAction.setBadgeText({text: 'EN' });
+		
+	}
+  else if (country == "Other") {
 		
 		chrome.browserAction.setBadgeText({text: 'CB' });
 		
 	}
-
     
 
 

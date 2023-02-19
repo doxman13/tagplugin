@@ -1,5 +1,5 @@
 
-console.log('a123123123');
+
 chrome.storage.sync.get({ 
 	mycountry: "thailand", 
 	ouremail: "xxx@google.com",
@@ -73,7 +73,6 @@ function (result) {
 
 		load_remote(result, _default_action);
 	}
-
 	// // Update file overwrite /tagteams/groups
 	// if (result.mycountry == "Japan") {
 		// window.dataTagteam.language = ja_language;

@@ -128,6 +128,9 @@ chrome.storage.sync.get(
 		if (result.mycountry == "Vietnam") {
 			openService(result.mycountry);
 			chrome.browserAction.setBadgeText({ text: "VN" });
+		} else if (result.mycountry == "English") {
+			openService(result.mycountry);
+			chrome.browserAction.setBadgeText({ text: "EN" });
 		} else if (result.mycountry == "Thailand") {
 			chrome.browserAction.setBadgeText({ text: "TH" });
 		} else if (result.mycountry == "China") {

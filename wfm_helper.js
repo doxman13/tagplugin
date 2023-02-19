@@ -1,5 +1,4 @@
 javascript: (function () {
-// Unassigned case list
     function linkToAgent() {
       var el = document.querySelectorAll('.mat-row.cdk-row.ng-star-inserted .profile-name');
       var values = [];
@@ -39,20 +38,22 @@ javascript: (function () {
         createHTML: (string, sink) => string
       });
     }
-    var linkToAgentBtn = document.createElement("button");
-    linkToAgentBtn.innerHTML = "linkToAgent";
-    document.body.appendChild(linkToAgentBtn);
-    linkToAgentBtn.addEventListener("click", linkToAgent, false);
+
     var clearBtn = document.createElement("button");
     clearBtn.innerHTML = "Clear";
-    document.body.appendChild(clearBtn);
+    document.body.insertAdjacentElement("afterend", clearBtn);
+
+    var linkToAgentBtn = document.createElement("button");
+    linkToAgentBtn.innerHTML = "linkToAgent";
+    document.body.insertAdjacentElement("afterend", linkToAgentBtn);
+    linkToAgentBtn.addEventListener("click", linkToAgent, false);
+
     clearBtn.addEventListener("click", function () {
       const element = document.querySelectorAll('[class="mat-paginator connect-paginator"] p');
       for (let index = 0; index < element.length; index++) {
         element[index].remove();
       }
     });
-  // Show case status
     function showAll() {
       var caseList = document.querySelectorAll('calendar-event [aria-describedby]');
       for (let i = 0; i < caseList.length; i++) {

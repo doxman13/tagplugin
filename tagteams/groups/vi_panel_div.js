@@ -276,7 +276,10 @@
             <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
               <tbody>
                 <tr>
-                  <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;"><span class="replaced">Linh Vo <br> Đội giải pháp kỹ thuật <br>  TDCX đại diện của Google</span></td>
+                  <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
+                  <span data-infosetting="your-name">YOUR-NAME</span><br>
+                  <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                  </td>
                 </tr>
                 <tr>
                   <td align="left" style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 2px;">Giải pháp kỹ thuật của Google</td>

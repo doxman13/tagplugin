@@ -858,7 +858,7 @@ function loadInputCase(_panel, _datatemp, _isvalidate = true) {
         
         var _linkgooglemeet_section = _panel.querySelector('[data-infocase="linkgooglemeet_section"]');
         if(_linkgooglemeet_section) {
-            _linkgooglemeet_section.innerHTML = `Truy cập link google cuộc họp <a href="${_object.customer_gmeet}" >tại đây</a> Hoặc qua: <a href="${_object.customer_gmeet}" >${_object.customer_gmeet}</a>`;
+            _linkgooglemeet_section.innerHTML = `Please click here to join the meeting: <span data-highlight="need_recheck"><a href="${_object.customer_gmeet}" >${_object.customer_gmeet}</a></span>`;
         }
     } else {
         getChromeStorage("cdtx_listmeetlink", (response) => {
@@ -869,7 +869,7 @@ function loadInputCase(_panel, _datatemp, _isvalidate = true) {
 
                 var _linkgooglemeet_section = _panel.querySelector('[data-infocase="linkgooglemeet_section"]');
                 if(_linkgooglemeet_section) {
-                    _linkgooglemeet_section.innerHTML = `Truy cập link google cuộc họp <a href="${_object.customer_gmeet}" >tại đây</a> Hoặc qua: <a href="${_object.customer_gmeet}" >${_object.customer_gmeet}</a>`;
+                    _linkgooglemeet_section.innerHTML = `Please click here to join the meeting: <span data-highlight="need_recheck"><a href="${_object.customer_gmeet}" >${_object.customer_gmeet}</a></span>`;
                 }
             }
         });

@@ -145,6 +145,9 @@ chrome.storage.sync.get(
 		} else if (result.mycountry == "Indonesia") {
 			openService(result.mycountry);
 			chrome.browserAction.setBadgeText({ text: "ID" });
+		} else if (result.mycountry == "Other") {
+			openService(result.mycountry);
+			chrome.browserAction.setBadgeText({ text: "CB" });
 		}
 	}
 );

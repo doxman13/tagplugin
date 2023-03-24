@@ -1,4 +1,4 @@
-function ja_tagTeamTDCXLoad() {
+function other_tagTeamTDCXLoad() {
     document.documentElement.setAttribute("data-hostname", window.location.hostname);
     
     // Libs
@@ -31,6 +31,26 @@ function ja_tagTeamTDCXLoad() {
         _global_status.test = true;
     }
     
+    // ?rmkey
+    if(window.location.search.includes("rmkey")) {
+        var _key = window.location.search.split("=")[1];
+        removeChromeStorage(_key, () => {
+
+            const url = new URL(window.location);
+            url.searchParams.delete('rmkey');
+            window.history.pushState({}, '', url);
+
+            Toastify({
+                text: `Remove ${_key} success`,
+                duration: 3000,
+                callback: function(){
+                    this.remove();
+                }
+            }).showToast();
+
+        });    
+    }
+    
     chrome.storage.sync.get({ 
         mycountry: 'Thailand',
         ouremail: 'xxx@google.com', 
@@ -40,13 +60,15 @@ function ja_tagTeamTDCXLoad() {
         optionkl__inputyourshortname: "Your shortname",
         optionkl__inputyourname: "Your name",
         optionkl__disable_dialog: false,
-        optionkl__disable_focuscase: false
+        optionkl__disable_focuscase: false,
+        optionkl__disable_autofixemail: false,
     }, function (result) {
         window.tagteamoption.optionkl__modecase = result.optionkl__modecase;
         window.tagteamoption.optionkl__inputyourshortname = result.optionkl__inputyourshortname;
         window.tagteamoption.optionkl__inputyourname = result.optionkl__inputyourname;
         window.tagteamoption.optionkl__disable_dialog = result.optionkl__disable_dialog;
         window.tagteamoption.optionkl__disable_focuscase = result.optionkl__disable_focuscase;
+        window.tagteamoption.optionkl__disable_autofixemail = result.optionkl__disable_autofixemail;
     });
 
     // ============
@@ -88,8 +110,8 @@ function ja_tagTeamTDCXLoad() {
                 }
                 
                 // Check email 
-                cLog(() => {console.log("checkInputEmailInbox 1"); });
-                checkInputEmailInbox();
+                cLog(() => {console.log("checkInputEmailInboxAndFix 1"); });
+                checkInputEmailInboxAndFix();
             }
         }
 
@@ -215,6 +237,13 @@ function ja_tagTeamTDCXLoad() {
         wait4Elem("cuf-form-field").then(function () {
             is_ready(n_time_dkneed_compare++);
             cLog(() => {console.info(n_time_dkneed_compare , '=' , n_time_dkneed, '--- cuf-form-field - bassic')});
+        });
+
+        // has caseview
+        n_time_dkneed++;
+        wait4Elem(".case-log-container.active-case-log-container case-message-view").then(function () {
+            is_ready(n_time_dkneed_compare++);
+            cLog(() => {console.info(n_time_dkneed_compare , '=' , n_time_dkneed, '--- case-message-view - bassic')});
         });
 
         
@@ -413,7 +442,7 @@ function ja_tagTeamTDCXLoad() {
 // ACTION
 // ===
     var load_script_action = () => {
-        panel_div.querySelectorAll(`[data-btnaction]`).forEach(function(elm) {
+        document.querySelectorAll(`[data-btnaction]`).forEach(function(elm) {
             elm.addEventListener('click', function(e){
                 var _action = this.getAttribute("data-btnaction");
                 panel_div.setAttribute("data-btnaction_status", _action);
@@ -423,7 +452,8 @@ function ja_tagTeamTDCXLoad() {
                     // 1. openmain
                         panel_div.classList.remove("hide_main");
                         document.documentElement.classList.remove("_hide_main");
-
+                        panel_div.querySelector('[data-panel="openmain"]').classList.add("active");
+                        
                     // 2. openmain
                         setChromeStorage('cdtx_hidepanel-' + location.hostname, true , () => {
                             // Empty
@@ -447,18 +477,25 @@ function ja_tagTeamTDCXLoad() {
                 }
                 
                 // emailtemplate
-                if(_action === 'openemailtemplate') {
-                    // 2. Click Step2step
-                        document.querySelector('[data-btnaction="openmain"]').click();
-                        document.querySelector('[data-btnaction="email-template"]').click();
+                if(_action === 'openemailtemplate' ||
+                    _action === 'hide_panel-emailtemplate') {
+                    // 2. Click Step2step _panel_emailtemplate
+                    
+                        toggleClass("active", document.querySelector('._panel_emailtemplate'));
+
+                        // document.querySelector('[data-btnaction="openmain"]').click();
+                        // document.querySelector('[data-btnaction="email-template"]').click();
                         
                 }
+
                 
                 // emailtemplate
                 if(_action === 'crawl_case') {
                     console.log("crawl_case")
                     // 2. Click Step2step
-                    unmark_all_and_crawl();
+                    unmark_all_and_crawl(() => {
+                        cLog(() => {console.log('crawl_case')});
+                    });
                         
                 }
                 
@@ -529,7 +566,7 @@ function ja_tagTeamTDCXLoad() {
                 if(_action === 'opensetting') {
                     // 2. Save
                         setChromeStorage('cdtx_opensetting-' + location.hostname, toggleClass("hide_opensetting", panel_div) , () => {
-                            // Empty
+                            toggleClass("active", panel_div.querySelector('[data-panel="opensetting"]'));
                         });
                 }
                 
@@ -584,6 +621,9 @@ function ja_tagTeamTDCXLoad() {
                         panel_div.classList.add("hide_main");
                         document.documentElement.classList.add("_hide_main");
                     
+                        document.documentElement.classList.remove("email_template");
+                        document.documentElement.classList.remove("mainpanel_template");
+                        
                     // 2. Save
                         setChromeStorage('cdtx_hidepanel-' + location.hostname, false , () => {
                             // Empty
@@ -610,11 +650,22 @@ function ja_tagTeamTDCXLoad() {
 
 
                 if(_action === 'close_panel') {
-                    this.closest("[data-panel]").classList.remove("active");
-                    if(this.closest('[data-panel="list-case"]')) {
-                        if(panel_div.classList.contains("list-case__active")) {
-                            panel_div.classList.remove("list-case__active");
+                    
+                    document.documentElement.classList.remove("email_template");
+                    document.documentElement.classList.remove("mainpanel_template");
+                    
+                    
+                    if(panel_div.querySelector('[data-panel="main"]').classList.contains("active")) {
+                        this.closest("[data-panel]").classList.remove("active");
+                        if(this.closest('[data-panel="list-case"]')) {
+                            if(panel_div.classList.contains("list-case__active")) {
+                                panel_div.classList.remove("list-case__active");
+                            }
                         }
+                    } else {
+                        toggleClass("hide_main", panel_div)
+                        toggleClass("_hide_main", document.documentElement)
+                        toggleClass("active", panel_div.querySelector('[data-panel="main"]'));
                     }
                 }
 
@@ -655,7 +706,7 @@ function ja_tagTeamTDCXLoad() {
 
 // Load Email Template 
     function loadEmailTemplateAction(){                
-        panel_div.querySelectorAll("._panel_btn--addtemplate").forEach(function(elm) {
+        document.querySelectorAll("._panel_btn--addtemplate").forEach(function(elm) {
             elm.addEventListener("click", function() {
                 cLog(() => {
                     console.log(1, "Here");
@@ -669,8 +720,8 @@ function ja_tagTeamTDCXLoad() {
                     
                     // Wait and insert
                     wait4Elem('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"] #email-body-content-top').then(function (elm) {
-                        cLog(() => {console.log("checkInputEmailInbox 2"); });
-                        checkInputEmailInbox();
+                        cLog(() => {console.log("checkInputEmailInboxAndFix 2"); });
+                        checkInputEmailInboxAndFix();
                         
                         var _card_istop = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top');
 
@@ -710,8 +761,10 @@ function ja_tagTeamTDCXLoad() {
                                     document.querySelector('[debug-id="dock-item-issue"]').click();
                                 }
                                 
-                                _card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled):not(._active)').click();
-                                _card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled)').classList.add('_active');
+                                if(_card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled)')) {
+                                    _card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled):not(._active)').click();
+                                    _card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled)').classList.add('_active');
+                                }
                             }
 
                         // Open document doc list
@@ -729,8 +782,6 @@ function ja_tagTeamTDCXLoad() {
                     document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
                     document.querySelector("material-fab.themeable.action-2.compose").addEventListener("click", () => {
                         var n_card = document.querySelectorAll("card[casesanimate].write-card").length || 0;
-
-                        var n_time = 0;
                         var myTimeCheck = setInterval(() => {
                             var n_card_2 = document.querySelectorAll("card[casesanimate].write-card").length || 0;
                             if(n_card_2 > n_card) {
@@ -740,18 +791,6 @@ function ja_tagTeamTDCXLoad() {
                                 // Close dial
                                 document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
 
-                            }
-                            
-                            if(n_time > 11) {
-                                clearInterval(myTimeCheck);
-                                
-                                Toastify({
-                                    text: 'Không tìm thấy được vùng thay thế',
-                                    duration: 3000,
-                                    callback: function(){
-                                        this.remove();
-                                    }
-                                }).showToast();
                             }
                         }, 1000)
                         
@@ -765,22 +804,34 @@ function ja_tagTeamTDCXLoad() {
             });
         });
         
-        panel_div.querySelector('#_emailtemp_search_input').addEventListener("keyup", (e) => {
-            var _search = panel_div.querySelector('#_emailtemp_search_input').innerText.toLowerCase();
-            panel_div.querySelectorAll('[data-type]').forEach((elm) => {
+        
+        onClickElm('._emailtemp_search_input', 'keyup', function(elm_inputparent, e){
+            var _search = elm_inputparent.innerText.toLowerCase();
+            elm_inputparent.closest('[data-panel="email-template"]').querySelectorAll('[data-type]').forEach((elm) => {
                 // elm
                 elm.style.display = 'none';
-                console.log(elm.getAttribute("data-type").toLowerCase().includes(_search))
+                cLog(()=> {console.log(elm.getAttribute("data-type").toLowerCase().includes(_search))})
                 if(elm.getAttribute("data-type").toLowerCase().includes(_search)) {
                     elm.style.display = '';
                 }
             });
         });
+        // panel_div.querySelector('#_emailtemp_search_input').addEventListener("keyup", (e) => {
+        //     var _search = panel_div.querySelector('#_emailtemp_search_input').innerText.toLowerCase();
+        //     panel_div.querySelectorAll('[data-type]').forEach((elm) => {
+        //         // elm
+        //         elm.style.display = 'none';
+        //         cLog(()=> {console.log(elm.getAttribute("data-type").toLowerCase().includes(_search))})
+        //         if(elm.getAttribute("data-type").toLowerCase().includes(_search)) {
+        //             elm.style.display = '';
+        //         }
+        //     });
+        // });
     }
 
 function activeListCase(caseid){
     panel_div.querySelectorAll('[data-caseid]').forEach((elm)=>{
-        console.log(elm.getAttribute('data-caseid'), caseid);
+        cLog(()=> {console.log(elm.getAttribute('data-caseid'), caseid);});
         if(elm.getAttribute('data-caseid') == caseid) {
             elm.classList.add("active");
         } else {
@@ -884,11 +935,12 @@ function loadInputCase(_panel, _datatemp, _isvalidate = true) {
 
     if(_datatemp.customer_adsid) {
         loadInfoCaseInnerTextElm(_panel, 'customer_adsid_format', reformatAdsId(_datatemp.customer_adsid));
-
-        if(document.querySelector('._panel_shortcut_gearloose_vanbo')) {
-            document.querySelector('._panel_shortcut_gearloose_vanbo').setAttribute("href", 'https://gearloose2.corp.google.com/#/search/merchants?q=awid:' + reformatAdsId(_datatemp.customer_adsid));
-            document.querySelector('._panel_shortcut_gearloose_vanbo').style.display = "";
-        }
+        wait4Elem('._panel_shortcut_gearloose_vanbo').then(function (elm) {
+            if(elm) {
+                elm.setAttribute("href", 'https://gearloose2.corp.google.com/#/search/merchants?q=awid:' + reformatAdsId(_datatemp.customer_adsid));
+                elm.style.display = "";
+            }
+        });
     }
 
     // Remove new line tasks - nowrap
@@ -904,6 +956,7 @@ function loadInputCase(_panel, _datatemp, _isvalidate = true) {
 // loadCaseList
 // ======
 function loadCaseList(elm_caselist){
+    cLog(() => {console.log("loadCaseList")});
     var case_list = dataStatus.case_list;
     elm_caselist.innerHTML = _TrustScript("");
     
@@ -1117,82 +1170,85 @@ function loadCase(elm) {
         
         // Case ID
         var sLoadCase = function(n_time_recall = 0) {
-            var _caseid = document.querySelector(".case-id").innerText;
-            if(location.hash.includes(_caseid) === false) {
-                
-                cLog(() => {console.log("1. case id != hash")})
-                var myTimeLoadCase = setTimeout(() => {
-                    n_time_recall = n_time_recall + 1;
-                    cLog(() => {console.log("1.2 rerun sLoadCase | ntime", n_time_recall)})
-                    sLoadCase(n_time_recall);
-                }, 1500);
-                
-                if(n_time_recall > 10) {
-                    cLog(() => {console.log("1.3 n_time_recall limit Clear case id != hash")})
-                    clearTimeout(myTimeLoadCase);
+            isReadyBasic(() => {
+                var _caseid = document.querySelector(".case-id").innerText;
+                if(location.hash.includes(_caseid) === false) {
+                    
+                    cLog(() => {console.log("1. case id != hash")})
+                    var myTimeLoadCase = setTimeout(() => {
+                        n_time_recall = n_time_recall + 1;
+                        cLog(() => {console.log("1.2 rerun sLoadCase | ntime", n_time_recall)})
+                        sLoadCase(n_time_recall);
+                    }, 1500);
+                    
+                    if(n_time_recall > 10) {
+                        cLog(() => {console.log("1.3 n_time_recall limit Clear case id != hash")})
+                        clearTimeout(myTimeLoadCase);
+                    }
+
+                    return false;
                 }
 
-                return false;
-            }
-
-            
-            
-            var caseload = loadCaseDatabaseByID(_caseid);
-            
-            cLog(() => {console.log("2. case id === hash => OK | ntime", _caseid, caseload, n_time_recall)})
-            
-            
-            if(caseload) {
-                cLog(() => {console.log("1. Has Data ========="); })
-                cLog(() => { console.log('loadInputCase | 3'); })
-                loadInputCase(elm, caseload);
+                
+                
+                var caseload = loadCaseDatabaseByID(_caseid);
+                
+                cLog(() => {console.log("2. case id === hash => OK | ntime", _caseid, caseload, n_time_recall)})
+                
+                
+                if(caseload) {
+                    cLog(() => {console.log("1. Has Data ========="); })
+                    cLog(() => { console.log('loadInputCase | 3'); })
+                    loadInputCase(elm, caseload);
 
 
 
-                // Change status btn
-                panel_div.querySelector('#formCase [action="save"]').innerText = "SAVED";
-                panel_div.querySelector('#formCase [action="save"]').classList.remove("_panel_btn--success");
+                    // Change status btn
+                    panel_div.querySelector('#formCase [action="save"]').innerText = "SAVED";
+                    panel_div.querySelector('#formCase [action="save"]').classList.remove("_panel_btn--success");
 
-            } else {
-                Toastify({
-                    text: 'NEW!!!! This case is new',
-                    duration: 3000,
-                    class: "success",
-                    callback: function(){
-                        this.remove();
-                    }
-                }).showToast();
+                } else {
+                    Toastify({
+                        text: 'NEW!!!! This case is new',
+                        duration: 3000,
+                        class: "success",
+                        callback: function(){
+                            this.remove();
+                        }
+                    }).showToast();
 
-                // is_readycaseconnect(() => {
-                    // unmark_all_and_crawl();
-                    cLog(()=>{console.log('_caseid', _caseid)})
-                    crawl_basic(_caseid);
+                    // is_readycaseconnect(() => {
+                        // unmark_all_and_crawl();
+                        cLog(()=>{console.log('_caseid', _caseid)})
+                        crawl_basic(_caseid);
 
-                //     // Show Input
-                //     if(document.querySelector('[debug-id="target-input"]')) {
-                //         document.querySelector('[debug-id="target-input"]').dispatchEvent(new Event("mouseover"));
-                                        
-                //         wait4Elem('target-item .value').then(function () {                                            
-                //             var ads_id = document.querySelector("target-item .value").innerText;
-                //             if(document.querySelector('._panel_shortcut_gearloose_vanbo')) {
-                //                 document.querySelector('._panel_shortcut_gearloose_vanbo').setAttribute("href", 'https://gearloose2.corp.google.com/#/search/merchants?q=awid:' + reformatAdsId(ads_id));
-                //                 document.querySelector('._panel_shortcut_gearloose_vanbo').style.display = "";
-                //             }
-                //         });
-                //     }
-                // });
-
-
-                // Change status btn
-                panel_div.querySelector('#formCase [action="save"]').innerText = "FIRST SAVE";
-                panel_div.querySelector('#formCase [action="save"]').classList.add("_panel_btn--success");
-            }
+                    //     // Show Input
+                    //     if(document.querySelector('[debug-id="target-input"]')) {
+                    //         document.querySelector('[debug-id="target-input"]').dispatchEvent(new Event("mouseover"));
+                                            
+                    //         wait4Elem('target-item .value').then(function () {                                            
+                    //             var ads_id = document.querySelector("target-item .value").innerText;
+                    //             if(document.querySelector('._panel_shortcut_gearloose_vanbo')) {
+                    //                 document.querySelector('._panel_shortcut_gearloose_vanbo').setAttribute("href", 'https://gearloose2.corp.google.com/#/search/merchants?q=awid:' + reformatAdsId(ads_id));
+                    //                 document.querySelector('._panel_shortcut_gearloose_vanbo').style.display = "";
+                    //             }
+                    //         });
+                    //     }
+                    // });
 
 
-            // Open dial
-            document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
-            // Close dial
-            document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseleave'));
+                    // Change status btn
+                    panel_div.querySelector('#formCase [action="save"]').innerText = "FIRST SAVE";
+                    panel_div.querySelector('#formCase [action="save"]').classList.add("_panel_btn--success");
+                }
+
+
+                // Open dial
+                document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
+                // Close dial
+                document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseleave'));
+
+            });
         };
         
         // s1: load start
@@ -1206,6 +1262,7 @@ function loadCase(elm) {
                 hashchange_once = true;
                 window.addEventListener('hashchange', () => {
                     wait4Elem(".case-id").then(function () {
+                        noteBarAlert("CLEAR");
                         cLog(() => {console.log("hashchange => sLoadCase | ", window.dataTagteam.current_case)});
                         sLoadCase();
                     });
@@ -1346,6 +1403,26 @@ function loadCase(elm) {
 
                                 if(itemelm) {
                                     itemelm.click();
+                                    var is_open = toggleClass("mainpanel_template", document.documentElement);
+
+                                    document.documentElement.classList.remove("email_template");
+
+                                    if(is_open) {
+                                        document.documentElement.classList.remove("_hide_main");
+                                        panel_div.classList.remove("hide_main");
+
+                                        var _panels = panel_div.querySelectorAll(`[data-panel]`);
+                                        _panels.forEach((elm) => {
+                                            elm.classList.remove("active");
+                                        });
+
+                                        var _panel_elm_email = panel_div.querySelector(`[data-panel="main"]`);
+                                        _panel_elm_email.classList.add("active");
+                                    } else {
+                                        document.documentElement.classList.add("_hide_main");
+                                        panel_div.classList.add("hide_main");
+                                    }
+                                    
                                 }
 
                     
@@ -1388,6 +1465,25 @@ function loadCase(elm) {
                                 // Open
                                 if(window.tagteamoption.optionkl__disable_dialog == false) {
                                     document.querySelector('[data-btnaction="openmain"]').click();
+                                    var is_open = toggleClass("mainpanel_template", document.documentElement);
+
+                                    document.documentElement.classList.remove("email_template");
+
+                                    if(is_open) {
+                                        document.documentElement.classList.remove("_hide_main");
+                                        panel_div.classList.remove("hide_main");
+
+                                        var _panels = panel_div.querySelectorAll(`[data-panel]`);
+                                        _panels.forEach((elm) => {
+                                            elm.classList.remove("active");
+                                        });
+
+                                        var _panel_elm_email = panel_div.querySelector(`[data-panel="main"]`);
+                                        _panel_elm_email.classList.add("active");
+                                    } else {
+                                        document.documentElement.classList.add("_hide_main");
+                                        panel_div.classList.add("hide_main");
+                                    }
                                 }
                             }
                         }
@@ -1494,7 +1590,7 @@ var s_crawl_case = (_caseid, callback = function(){}) => {
                 _datatemp.sales_program = dataList[1];
                 
                 // Is GCC
-                if(dataList.join(" ").includes("GCC")){
+                if(dataList.join(" ").toUpperCase().includes("GCC")){
                     _datatemp.am_isgcc = 1;
                     
                     Toastify({
@@ -1714,7 +1810,7 @@ var crawl_basic = (_caseid) => {
             _datatemp.sales_program = dataList[1];
             
             // Is GCC
-            if(dataList.join(" ").includes("GCC")){
+            if(dataList.join(" ").toUpperCase().includes("GCC")){
                 _datatemp.am_isgcc = 1;
                 
                 Toastify({
@@ -2036,15 +2132,15 @@ var set_init_load = () => {
             });
 
         // 7. Show Panel Default 
-            getChromeStorage('cdtx_hidepanel-' + location.hostname, (response) => {
-                if(response.value) {
-                    panel_div.classList.remove("hide_main");
-                    document.documentElement.classList.remove("_hide_main");
-                } else {
-                    panel_div.classList.add("hide_main");
-                    document.documentElement.classList.add("_hide_main");
-                }
-            });
+            // getChromeStorage('cdtx_hidepanel-' + location.hostname, (response) => {
+            //     if(response.value) {
+            //         panel_div.classList.remove("hide_main");
+            //         document.documentElement.classList.remove("_hide_main");
+            //     } else {
+            //         panel_div.classList.add("hide_main");
+            //         document.documentElement.classList.add("_hide_main");
+            //     }
+            // });
 
         // 8. Load current for other case connect
             getChromeStorage('cdtx_casecurrent', (response) => {
@@ -2160,34 +2256,6 @@ var loadpanelcaseconnect = (is_reload = false) => {
             document.body.insertAdjacentHTML("afterEnd", cdtx_paneldivhtml);
             // 2 add shortcut button to connect cases
 
-                if(window.location.hostname === "meet.google.com") {
-                    var _addshortcutbtn_meet = () => {
-                        var _panel_addshortcutbtn = document.querySelector(".dock-container._panel_btnshortcut");
-                        if(!_panel_addshortcutbtn) {
-                            var dock_container = document.body;
-                            if(dock_container) {
-                                var strhtml = `<div class="dock-container _panel_btnshortcut">
-                                    <div class="material-button _panel_shortcut_toggleopenmain_withoutsave"  >
-                                        <div class="content">
-                                            <img src="https://www.svgrepo.com/show/355037/google.svg">
-                                        </div>
-                                    </div>
-                                </div>`;
-                                var dock_container_add = _TrustScript(strhtml);
-                                // // Open
-                                // document.querySelector('[data-btnaction="openmain"]').click();
-                                dock_container.insertAdjacentHTML("afterEnd", dock_container_add);
-                                document.querySelector('._panel_shortcut_toggleopenmain_withoutsave').addEventListener("click", (e) => {
-                                    toggleClass("hide_main", panel_div)
-                                    toggleClass("_hide_main", document.documentElement)
-                                });
-                            }
-                            
-                        }
-                    };
-                    
-                    _addshortcutbtn_meet();
-                }
 
                 if(window.location.hostname === "cases.connect.corp.google.com" ) {
                     cLog(() => {console.log('1. isReadyBasic')});
@@ -2198,49 +2266,8 @@ var loadpanelcaseconnect = (is_reload = false) => {
                             if(!_panel_addshortcutbtn) {
                                 var dock_container = document.querySelector(".dock-container");
                                 if(dock_container) {
-                                    var strhtml = `<div class="dock-container _panel_btnshortcut">
-                                        <div class="material-button _panel_shortcut_toggleopenmain_withoutsave"  >
-                                            <div class="content">
-                                                <img src="https://www.svgrepo.com/show/355037/google.svg">
-                                            </div>
-                                        </div>
-                                        <div class="material-button _panel_shortcut_openemailtemplate"  >
-                                            <div class="content">
-                                                <img src="https://www.svgrepo.com/show/194000/mail.svg">
-                                            </div>
-                                        </div>
-                                        <div class="material-button _panel_shortcut_fisrtemail"  >
-                                            <div class="content">
-                                                <img src="https://www.svgrepo.com/show/67628/email.svg">
-                                            </div>
-                                        </div>
-                                        <a href="#" target="_blank" class="material-button _panel_shortcut_gearloose_vanbo"  
-                                            style="
-                                                background-image: url(https://lh3.googleusercontent.com/proxy/mawyrjPH2gsWpZuGnLpIXCiXkuhJ69RZaP7ypPqMX5QGTtXDUPQncooBaQUc6V0uRI5h1fZABTXr5wgJPU0ptpxjQ1NyDke2y6tEbx5HG6K0H1Q);
-                                                background-size: contain;
-                                                display: none;
-                                            "
-                                        >
-                                            <span class="content"></span>
-                                        </a>
-                                    </div>`;
+
                                     
-                                    var dock_container_add = _TrustScript(strhtml);
-                                    // // Open
-                                    // document.querySelector('[data-btnaction="openmain"]').click();
-                                    dock_container.insertAdjacentHTML("afterEnd", dock_container_add);
-                                    document.querySelector('._panel_shortcut_toggleopenmain_withoutsave').addEventListener("click", (e) => {
-                                        toggleClass("hide_main", panel_div)
-                                        toggleClass("_hide_main", document.documentElement)
-                                    });
-
-                                    document.querySelector('._panel_shortcut_openemailtemplate').addEventListener("click", (e) => {
-                                        document.querySelector('[data-btnaction="openemailtemplate"]').click();
-                                    });
-
-                                    document.querySelector('._panel_shortcut_fisrtemail').addEventListener("click", (e) => {
-                                        document.querySelector('[data-btnaction="firstemail"]').click();
-                                    });
                                 }
                                 
                             }
@@ -2263,48 +2290,124 @@ var loadpanelcaseconnect = (is_reload = false) => {
 
 
                         // 2. CR Button Email Template
-                            onClickElm('[debug-id="canned_response_button"]', 'click', function(elm){
-                                var _isGCC = window.dataTagteam.current_case.am_isgcc ? true : false;
-                                vi_prepareForEmail(_isGCC);
+                            onClickElm('[debug-id="canned_response_button"]', 'click', function(elm, e){
+                                // var _isGCC = window.dataTagteam.current_case.am_isgcc ? true : false;
+                                // other_prepareForEmail(_isGCC);
 
     
-                                wait4Elem('material-dialog footer').then(dialog => {
-                                    if(!document.querySelector('#cr-list')) {vi_prepareCR()};
-                                });
+                                // wait4Elem('material-dialog footer').then(dialog => {
+                                //     if(!document.querySelector('#cr-list')) {other_prepareCR()};
+                                // });
                             
                                 // Check
-                                cLog(() => {console.log("checkInputEmailInbox 3"); });
-                                checkInputEmailInbox();
+                                cLog(() => {console.log("checkInputEmailInboxAndFix 3"); });
+                                checkInputEmailInboxAndFix();
+                            });
+
+                        // 2. toggleShow content
+
+                            var _shortcutlink_actsave = (elm) => {
+                                var _parent = elm.closest('.panel_addshortcutlink'),
+                                _url = _parent.querySelector('.panel_addshortcutlink_gr-url'),
+                                _text = _parent.querySelector('.panel_addshortcutlink_gr-text');
+
+                                if(_text.innerText.trim() === '' || _url.innerText.trim() === '') {
+                                    cLog(() => { console.log('panel_addshortcutlink - URL or text this empty value') });
+                                    return false;
+                                }
+
+                                if(/^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(_url.innerText.trim()) != true) {
+                                    cLog(() => { console.log('panel_addshortcutlink - URL wrong ' + _url.innerText.trim()) });
+                                    return false;
+                                }
+                                
+                                var _htmltrust = _TrustScript(`<span class="panel_addshortcutlink_gr-grbtn"><a href="${_url.innerText.trim()}" data-keytext="${_text.innerText.trim()}" data-link="${_url.innerText.trim()}" target="_blank">${_text.innerText.trim()}</a><span class="panel_addshortcutlink_gr-removebtn">X</span></span>`);
+                                _parent.querySelector('.panel_addshortcutlink_gr-list').insertAdjacentHTML("beforeEnd", _htmltrust);
+                                
+                                // Reset
+                                _url.innerText = '';
+                                _text.innerText = '';
+                                // Close
+                                var isopen = toggleClass("content_open", elm.closest(".panel_addshortcutlink"));
+
+                                // Save localstorage
+                                
+                                var _html_linkelm = _parent.querySelector('.panel_addshortcutlink_gr-list');
+                                var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+                                if(_case_idelm) {
+                                    setChromeStorage('cdtx_shortcutlink_caseid_' + _case_idelm.innerText , _html_linkelm.innerHTML, () => {
+                                        cLog(() => { console.log('DONE - ' + _html_linkelm.innerHTML) });
+                                    });
+                                }
+                            }
+
+                            onClickElm('.panel_addshortcutlink_toggle', 'click', function(elm, e){
+                                var isopen = toggleClass("content_open", elm.closest(".panel_addshortcutlink"));
+                            });
+                            
+                            onClickElm('.panel_addshortcutlink [contenteditable]', 'keypress', function(elm, e){
+                                if (e.which === 13) {
+                                    e.preventDefault();
+                                    _shortcutlink_actsave(elm);
+                                }
+
+                            });
+                            
+                            onClickElm('.panel_addshortcutlink [contenteditable]', 'paste', function(elm, e){
+                                e.preventDefault();
+                                var text = e.clipboardData.getData("text/plain");
+                                document.execCommand("insertHTML", false, text);
+                            });
+                            
+                            onClickElm('.panel_addshortcutlink .panel_addshortcutlink_gr-removebtn', 'click', function(elm, e) {
+                                var _parent = elm.closest('.panel_addshortcutlink');
+
+                                if (confirm("You sure remove?")) {
+                                    elm.closest('.panel_addshortcutlink_gr-grbtn').remove();
+    
+                                    // Remove data
+                                    var _html_linkelm = _parent.querySelector('.panel_addshortcutlink_gr-list');
+                                    var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+                                    if(_case_idelm) {
+                                        setChromeStorage('cdtx_shortcutlink_caseid_' + _case_idelm.innerText , _html_linkelm.innerHTML, () => {
+                                            cLog(() => { console.log('panel_addshortcutlink update data -  DONE - ' + _html_linkelm.innerHTML) });
+                                        });
+                                    }
+                                }
+                                
+                            });
+
+                            onClickElm('.panel_addshortcutlink .panel_addshortcutlink_save', 'click', function(elm, e){
+                                _shortcutlink_actsave(elm);
                             });
 
                         // 3. Show  by dock
-                            onClickElm(`.dock-container [debug-id]:not([debug-id="dock-item-home"])`, `click`, (elm, e) => {
-                                // allow
-                                if(window.tagteamoption.optionkl__disable_dialog === false) {
-                                    // Detech human click by XY
-                                    if(e.offsetX > 0 && e.offsetY > 0) {
-                                        panel_div.classList.remove("hide_main");
-                                        document.documentElement.classList.remove("_hide_main");
-                                    }
-                                }
-                            });
+                            // onClickElm(`.dock-container [debug-id]:not([debug-id="dock-item-home"])`, `click`, (elm, e) => {
+                            //     // allow
+                            //     if(window.tagteamoption.optionkl__disable_dialog === false) {
+                            //         // Detech human click by XY
+                            //         if(e.offsetX > 0 && e.offsetY > 0) {
+                            //             panel_div.classList.remove("hide_main");
+                            //             document.documentElement.classList.remove("_hide_main");
+                            //         }
+                            //     }
+                            // });
 
-                            onClickElm(`.dock-container [debug-id="dock-item-home"]`, `click`, (elm, e) => {
-                                // allow
-                                if(window.tagteamoption.optionkl__disable_dialog === false) {
-                                    // Detech human click by XY
-                                    if(e.offsetX > 0 && e.offsetY > 0) {
-                                        panel_div.classList.add("hide_main");
-                                        document.documentElement.classList.add("_hide_main");
-                                    }
-                                }
-                            });
+                            // onClickElm(`.dock-container [debug-id="dock-item-home"]`, `click`, (elm, e) => {
+                            //     // allow
+                            //     if(window.tagteamoption.optionkl__disable_dialog === false) {
+                            //         // Detech human click by XY
+                            //         if(e.offsetX > 0 && e.offsetY > 0) {
+                            //             panel_div.classList.add("hide_main");
+                            //             document.documentElement.classList.add("_hide_main");
+                            //         }
+                            //     }
+                            // });
 
                             onClickElm(`#cr-list li`, `click`, (elm, e) => {
-                                vi_clearAndPrepareCRTemplate();
+                                other_clearAndPrepareCRTemplate();
                             });
 
-                            
 
                         // Action noted card
                             onClickElm(`noted span`, `click`, (elm, e) => {
@@ -2312,12 +2415,28 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                 elm.remove();
                             });
 
-                        // Remove note
-                            
-                            onClickElm(`#cr-list li`, `click`, (elm, e) => {
-                                vi_clearAndPrepareCRTemplate();
+                        // Action _chk_email_agains
+                            onClickElm(`._chk_email_agains`, `click`, (elm, e) => {
+                                // allow
+                                elm.classList.remove("_chk_email_agains");
                             });
 
+                        // Remove Note
+                            onClickElm(`[card-type] [data-notetitle]`, `click`, (elm, e) => {
+                                // allow
+                                elm.removeAttribute("data-notetitle");
+                                elm.setAttribute("data-notetitlestatus", "ischange");
+                            });
+                            onClickElm(`[card-type] [data-highlight]`, `click`, (elm, e) => {
+                                // allow
+                                elm.removeAttribute("data-highlight");
+                            });
+                            
+                        // Script
+                            onClickElm(`._panel__script--elm`, `click`, (elm, e) => {
+                                // allow
+                                toggleClass("hide", elm)
+                            });
 
 
                             
@@ -2333,8 +2452,8 @@ var loadpanelcaseconnect = (is_reload = false) => {
                         //         var callback = function(mutationList, observer) {
                         //             var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"]`);
                         //             if(_istopelm) {
-                        //                 cLog(() => {console.log("checkInputEmailInbox 3"); });
-                        //                 checkInputEmailInbox();  
+                        //                 cLog(() => {console.log("checkInputEmailInboxAndFix 3"); });
+                        //                 checkInputEmailInboxAndFix();  
                         //             }
                         //         };
 
@@ -2349,12 +2468,12 @@ var loadpanelcaseconnect = (is_reload = false) => {
 
                     });
                 }
-
             
             // Return
             return true;
         }
 
+                
 
         // add shortcut button to connect cases
         // if(
@@ -2409,6 +2528,92 @@ function autoLoadCode(keyaction) {
     });
 }
 
+// Add more short link 
+function panel_addshortcutlink() {
+    try {
+        
+		// Select the node that will be observed for mutations
+		var targetNode = document.body;
+
+		// Options for the observer (which mutations to observe)
+		var config = { attributes: true, childList: true, subtree: true };
+
+		// Callback function to execute when mutations are observed
+		var callback = function(mutationList, observer) {
+			// on-call, precall button 
+			var _istopelm = document.querySelector(`csl-customer-information .body`);
+			if(_istopelm) {
+				if (_istopelm.querySelector("#panel_addshortcutlink") === null) {
+                    
+                    var panel_addshortcutlink_html = _TrustScript(`<div id="panel_addshortcutlink" class="panel_addshortcutlink">
+                        <div class="panel_addshortcutlink_row">
+                            <div class="panel_addshortcutlink_gr-row panel_addshortcutlink_gr-list"></div>
+                        </div>
+                        <span class="panel_addshortcutlink_btn panel_addshortcutlink_toggle">+ Add shortlink</span>
+                        <div class="panel_addshortcutlink_row">
+                            <div class="panel_addshortcutlink_gr-row panel_addshortcutlink_gr-content" >
+                                <span class="panel_addshortcutlink_gr-url" contenteditable="true">Url</span>
+                                <span class="panel_addshortcutlink_gr-text" contenteditable="true">Name</span>
+                                <span class="panel_addshortcutlink_btn panel_addshortcutlink_save">Save</span>
+                                <span class="panel_addshortcutlink_btn panel_addshortcutlink_toggle">Close</span>
+                            </div>
+                        </div>
+                    </div>`);
+                    _istopelm.insertAdjacentHTML("beforeEnd", panel_addshortcutlink_html);
+
+                    
+                    
+                    // var _html_linkelm = document.querySelector('#panel_addshortcutlink .panel_addshortcutlink_gr-list');
+                    // var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+                    // if(_case_idelm) {
+                        
+                    //     getChromeStorage('cdtx_shortcutlink_caseid_' + _case_idelm.innerText, (response) => {
+                    //         var _datatemp = response.value || false;
+                    //         if(_datatemp) {
+                    //             _html_linkelm.innerHTML = _datatemp;
+                    //             cLog(() => { console.log('panel_addshortcutlink -  DONE - ' + _datatemp) });
+                    //         }
+                    //     });
+                    // }
+
+
+				}
+				
+                var _html_linkelm = document.querySelector('#panel_addshortcutlink .panel_addshortcutlink_gr-list');
+                var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+                if(_case_idelm) {
+                    if(_case_idelm.innerText != window._temp_caseid) {
+                        getChromeStorage('cdtx_shortcutlink_caseid_' + _case_idelm.innerText, (response) => {
+                            var _datatemp = response.value || false;
+                            if(_datatemp) {
+                                if(_html_linkelm) {
+                                    _html_linkelm.innerHTML = _datatemp;
+                                    cLog(() => { console.log('panel_addshortcutlink -  DONE - ' + _datatemp) });    
+                                }
+                            }
+                        });
+                        
+                        window._temp_caseid = _case_idelm.innerText
+                    }
+                }
+                
+                
+                     
+                
+                
+			}
+		};
+
+		// Create an observer instance linked to the callback function
+		var observer = new MutationObserver(callback);
+
+		// Start observing the target node for configured mutations
+		observer.observe(targetNode, config);
+    } catch (error) {
+        
+    }
+}
+
 function loadInit() {
     // 0.0
     // Load style    
@@ -2426,9 +2631,7 @@ function loadInit() {
         }
     
     // 0.1 Load panel
-        if(window.tagteamoption.optionkl__disable_dialog == false) {
-            loadpanelcaseconnect();
-        }
+        loadpanelcaseconnect();
     
     // 0.1 Load focus case
         if(window.tagteamoption.optionkl__disable_focuscase == false) {
@@ -2437,18 +2640,20 @@ function loadInit() {
                     autoLoadCode('auto_loadcode_vanbo');
                 });
                 
-                var hashchange_oncevanbo = false;
-                if(hashchange_oncevanbo === false) {
-                    hashchange_oncevanbo = true;
-                    window.addEventListener('hashchange', () => { 
-                        // Load code van bo
-                        isReadyBasic(() => {
-                            autoLoadCode('auto_loadcode_vanbo');
-                        });
-                    }, false);
-                }
+                // var hashchange_oncevanbo = false;
+                // if(hashchange_oncevanbo === false) {
+                //     hashchange_oncevanbo = true;
+                //     window.addEventListener('hashchange', () => { 
+                //         // Load code van bo
+                //         isReadyBasic(() => {
+                //             autoLoadCode('auto_loadcode_vanbo');
+                //         });
+                //     }, false);
+                // }
             }
         }
+    // 0.2
+    panel_addshortcutlink();
     
 }    
 
@@ -2497,6 +2702,9 @@ getChromeStorage('cdtx_settings', (response) => {
             backdoor_manage_keystorage();
             break;
             
+    }
+    if(_global_status.test) {
+        backdoor_manage_keystorage();
     }
     // Get Case List
     // 1. load all

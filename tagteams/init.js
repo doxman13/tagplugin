@@ -10,6 +10,21 @@ chrome.storage.sync.get({
 function (result) {
 
 	window.result = result;
+	if (result.mycountry == "Other") {
+        window.dataTagteam.language = other_language;
+        window.dataTagteam.panel_div = other_panel_div;
+        window.dataTagteam.panel_div_style = other_panel_div_style;
+        window.dataTagteam.api_blog = other_api_blog;
+        window.dataTagteam.current_case = {};
+
+        // Focus case code vanbo
+        window.dataTagteam.tagteamFocusCase = () => { other_TagteamFocusCase() } ;
+        window.dataTagteam.sendFirstEmail = () => { other_sendFirstEmail() } ;
+        
+        other_tagTeamTDCXLoad(window);
+        globalForAll(window);
+    }
+    
 	if (result.mycountry == "Vietnam") {
 
 
@@ -73,32 +88,7 @@ function (result) {
 
 		load_remote(result, _default_action);
 	}
-	// // Update file overwrite /tagteams/groups
-	// if (result.mycountry == "Japan") {
-		// window.dataTagteam.language = ja_language;
-		// window.dataTagteam.panel_div = ja_panel_div;
-		// window.dataTagteam.api_blog = ja_api_blog;
 
-		// // Focus case code vanbo
-		// window.dataTagteam.tagteamFocusCase = () => { ja_TagteamFocusCase() } ;
-		// window.dataTagteam.sendFirstEmail = () => { ja_sendFirstEmail() } ;
-		
-		// ja_tagTeamTDCXLoad();
-	// }
-
-
-	// // Update file overwrite /tagteams/groups
-	// if (result.mycountry == "Thailan") {
-		// window.dataTagteam.language = thailan_language;
-		// window.dataTagteam.panel_div = thailan_panel_div;
-		// window.dataTagteam.api_blog = thailan_api_blog;
-
-		// // Focus case code vanbo
-		// window.dataTagteam.tagteamFocusCase = () => { thailan_TagteamFocusCase() } ;
-		// window.dataTagteam.sendFirstEmail = () => { thailan_sendFirstEmail() } ;
-		
-		// thailan_tagTeamTDCXLoad();
-	// }
 	
 }
 );

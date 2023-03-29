@@ -89,6 +89,6 @@ function (result) {
 		load_remote(result, _default_action);
 	}
 
-	
+	// JP
 }
 );

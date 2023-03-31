@@ -110,6 +110,9 @@
 				"tagteams/groups/en_panel_div.js",
 				"tagteams/groups/en_sub.js",
 				"tagteams/groups/en_content_scripts.js",
+				"tagteams/groups/jp_panel_div.js",
+				"tagteams/groups/jp_sub.js",
+				"tagteams/groups/jp_content_scripts.js",
 				"tagteams/init.js"
 			]
 		}

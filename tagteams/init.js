@@ -89,6 +89,26 @@ function (result) {
 		load_remote(result, _default_action);
 	}
 
-	
+	// JP
+    if (result.mycountry == "Japan") {
+
+
+        var _default_action = () => {
+            window.dataTagteam.language = jp_language;
+            window.dataTagteam.panel_div = jp_panel_div;
+            window.dataTagteam.panel_div_style = jp_panel_div_style;
+            window.dataTagteam.api_blog = jp_api_blog;
+            window.dataTagteam.current_case = {};
+    
+            // Focus case code vanbo
+            window.dataTagteam.tagteamFocusCase = () => { jp_TagteamFocusCase() } ;
+            window.dataTagteam.sendFirstEmail = () => { jp_sendFirstEmail() } ;
+			
+            jp_tagTeamTDCXLoad(window);
+            globalForAll(window);
+        }
+
+		load_remote(result, _default_action);
+	}
 }
 );

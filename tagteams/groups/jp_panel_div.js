@@ -64,9 +64,9 @@ var jp_list_emailtemplatecontent = {
                         href="https://support.google.com/google-ads/answer/11605860?hl=ja" target="_blank">こちらの To Do
                         リスト</a>のチェックリストも完了しておいてください。</p>
                     <p dir="auto">お時間になりましたら、下記のリンクをクリックし、「参加をリクエスト」してください。（お時間になってもMeetに参加されないようであれば、お電話差し上げます。）</p>
-                    <p dir="auto" data-infocase_link="customer_gmeet" data-highlight="need_recheck">
+                    <a href=# dir="auto" data-infocase_link="customer_gmeet" data-highlight="need_recheck">
                       ミーティングのリンクをここに入れてください
-                    </p>
+                    </a>
                     <p dir="auto">できれば Chrome で開いていただき、カメラは OFF （音声のみ）でお願いいたします。お手元に、該当 Google
                       広告アカウントの管理画面と、対象のウェブサイトの編集画面（またはタグマネジャーの管理画面） をご用意下さい。</p>
                     <p dir="auto">ご予約日前に質問がある場合、または参加者を追加したい場合は、このメールに返信するか、Google の営業担当者に連絡してお知らせください。</p>
@@ -80,6 +80,38 @@ var jp_list_emailtemplatecontent = {
       </tbody>
     </table>
     </p>
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+      <tbody>
+        <tr>
+          <td align="left" style="padding: 0px 40px 50px 30px;" valign="top">
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+              <tbody>
+                <tr>
+                  <td>
+                    <p dir="ltr"><img
+                        src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ"
+                        width="59" height="59"></p>
+                  </td>
+                  <td>
+                    <div dir="ltr" align="left">
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td colspan="2">
+                              <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
       <tbody>
         <tr>
@@ -139,29 +171,30 @@ var jp_list_emailtemplatecontent = {
           <tr>
               <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
                   <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                      <tbody style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
+                      <tbody
+                          style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
                           <tr>
-                              <td align="left"
-                                  style="padding-bottom: 18px;">
-                                  <span class="replaced" data-infocase="customer_name" data-highlight="need_recheck">Customer name</span> 様
+                              <td align="left" style="padding-bottom: 18px;">
+                                  <span class="replaced" data-infocase="customer_name"
+                                      data-highlight="need_recheck">Customer name</span> 様
                               </td>
                           </tr>
                           <tr>
-                              <td align="left"
-                                  style="padding-bottom: 18px;">
-                                  <strong><span data-highlight="need_recheck" data-infocase="tasks_nowrap" class="replaced">analytics_troubleshooting</span></strong>
+                              <td align="left" style="padding-bottom: 18px;">
+                                  <strong><span data-highlight="need_recheck" data-infocase="tasks_nowrap"
+                                          class="replaced">analytics_troubleshooting</span></strong>
                                   の実装が完了しましたので、お知らせいたします。
                               </td>
                           </tr>
                           <tr>
-                              <td align="left"
-                                  style="padding-bottom: 18px;">
-                                  お客様のキャンペーンは、確認済みのインプレッションに基づいて想定どおりに機能しているため、ケース 
-                                  <span data-infocase="case_id" data-highlight="need_recheck">0-00000000000000</span> を終了いたしました。</td>
+                              <td align="left" style="padding-bottom: 18px;">
+                                  お客様のキャンペーンは、確認済みのインプレッションに基づいて想定どおりに機能しているため、ケース
+                                  <span data-infocase="case_id" data-highlight="need_recheck">0-00000000000000</span>
+                                  を終了いたしました。
+                              </td>
                           </tr>
                           <tr>
-                              <td align="left"
-                                  style="padding-bottom: 18px;">
+                              <td align="left" style="padding-bottom: 18px;">
                                   ご不明な点がございましたら、引き続きサポートさせていただきますので、担当の Google アカウント マネージャーにご連絡のうえ、電話相談をご予約ください。</td>
                           </tr>
                           <tr>
@@ -210,9 +243,12 @@ var jp_list_emailtemplatecontent = {
                                       <table>
                                           <tbody>
                                               <tr>
-                                                  <td colspan="2"> <span class="replaced" style="font-size:13px;"
-                                                          dir="auto" data-infosetting="your-name"> Name
-                                                          <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）</span> </td>
+                                                  <td colspan="2">
+                                                      <span class="replaced" style="font-size:13px;" dir="auto"
+                                                          data-infosetting="your-name"> Name
+                                                      </span>
+                                                      <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
+                                                  </td>
                                               </tr>
                                           </tbody>
                                       </table>
@@ -255,7 +291,8 @@ var jp_list_emailtemplatecontent = {
                         </tr>
                         <tr>
                             <td align="left" style="padding-bottom: 18px;">
-                                <strong><span data-infocase="tasks_nowrap" data-highlight="need_recheck" class="replaced">Case Type</span></strong>
+                                <strong><span data-infocase="tasks_nowrap" data-highlight="need_recheck"
+                                        class="replaced">Case Type</span></strong>
                                 の実装が完了しましたので、お知らせいたします。ただし、1 つ以上のコンバージョン アクションのトラッキング
                                 ステータスに「最近のコンバージョンはありません」と表示されています。
                             </td>
@@ -283,24 +320,7 @@ var jp_list_emailtemplatecontent = {
     </tbody>
 </table>
 </p>
-<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-    <tbody>
-        <tr>
-            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                    <tbody>
-                        <tr>
-                            <td align="left"
-                                style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
-                                Case # <span data-infocase="case_id">0-00000000000000</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-    </tbody>
 
-</table>
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
     <tbody>
         <tr>
@@ -318,9 +338,12 @@ var jp_list_emailtemplatecontent = {
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td colspan="2"> <span class="replaced" style="font-size:13px;"
-                                                        dir="auto" data-infosetting="your-name"> Name
-                                                        <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）</span> </td>
+                                                <td colspan="2">
+                                                    <span class="replaced" style="font-size:13px;" dir="auto"
+                                                        data-infosetting="your-name"> Name
+                                                    </span>
+                                                    <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -332,6 +355,24 @@ var jp_list_emailtemplatecontent = {
             </td>
         </tr>
     </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                        <tr>
+                            <td align="left"
+                                style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
+                                Case # <span data-infocase="case_id">0-00000000000000</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+
 </table>
 </div>`,
 'in_not_reachable': `<div id="email-body-content-top" style="width:100%">
@@ -357,7 +398,8 @@ var jp_list_emailtemplatecontent = {
                             style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
                             <tr>
                                 <td align="left" style="padding-bottom: 18px;">
-                                    <span class="replaced" data-infocase="customer_name" data-highlight="need_recheck">
+                                    <span class="replaced" data-infocase="customer_name"
+                                        data-highlight="need_recheck">
                                         Name
                                     </span>様、
                                 </td>
@@ -365,8 +407,10 @@ var jp_list_emailtemplatecontent = {
 
                             <tr>
                                 <td align="left" style="padding-bottom: 18px;">
-                                    <span data-infocase="customer_website" data-highlight="need_recheck">customer_website.com</span> のケース 
-                                    <span data-infocase="case_id" data-highlight="need_recheck">0-00000000000000</span>
+                                    <span data-infocase="customer_website"
+                                        data-highlight="need_recheck">customer_website.com</span> のケース
+                                    <span data-infocase="case_id"
+                                        data-highlight="need_recheck">0-00000000000000</span>
                                     についてご連絡いたします。実装を行うにあたり、お客様からのご回答をお待ちしておりましたが、ご回答がありませんでしたので、恐れ入りますが本ケースを終了させていただきます。
                                 </td>
                             </tr>
@@ -408,9 +452,12 @@ var jp_list_emailtemplatecontent = {
                                         <table>
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="2"> <span class="replaced" style="font-size:13px;"
-                                                            dir="auto" data-infosetting="your-name"> Name
-                                                            <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）</span> </td>
+                                                    <td colspan="2">
+                                                        <span class="replaced" style="font-size:13px;" dir="auto"
+                                                            data-infosetting="your-name"> Name
+                                                        </span>
+                                                        <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -613,8 +660,13 @@ var jp_list_emailtemplatecontent = {
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
   <tbody>
     <tr>
-      <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">予約の確認</td>
-      <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png" style="display: block;min-width:100px;" width="100"></td>
+      <td align="left" height="150"
+        style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;"
+        valign="middle" width="100%">予約の確認</td>
+      <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt=""
+          border="0"
+          src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png"
+          style="display: block;min-width:100px;" width="100"></td>
     </tr>
   </tbody>
 </table>
@@ -622,7 +674,8 @@ var jp_list_emailtemplatecontent = {
   <tbody>
     <tr>
       <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
+        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"
+          style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
           <tbody>
             <tr>
               <td align="left" style=" padding-bottom: 18px;">
@@ -636,9 +689,11 @@ var jp_list_emailtemplatecontent = {
 
                 Google テクニカルソリューションチームとご予約いただき、誠にありがとうございます。
                 Google 広告アカウント担当者より依頼を受け、
-                ケース<strong><span class="replaced" data-infocase="case_id" data-highlight="need_recheck"> Case ID</span></strong>
+                ケース<strong><span class="replaced" data-infocase="case_id" data-highlight="need_recheck"> Case
+                    ID</span></strong>
                 にて
-                    <strong><span class="replaced" data-infocase="tasks_nowrap" data-highlight="need_recheck">TASKS</span></strong>についてサポート致します。
+                <strong><span class="replaced" data-infocase="tasks_nowrap"
+                    data-highlight="need_recheck">TASKS</span></strong>についてサポート致します。
               </td>
             </tr>
             <tr>
@@ -675,24 +730,25 @@ var jp_list_emailtemplatecontent = {
               </td>
             </tr>
             <tr>
-              <td align="left" >
+              <td align="left">
                 <div style="padding: 50px 30px 50px 30px;  background-color:#e6f4ea;">
                   <strong>ご予約日時:
-                      <span data-highlight="need_recheck" data-infocase="local_format_meeting_time"> 
-                          Appointment Date, Time, and Timezone
-                      </span> 
+                    <span data-highlight="need_recheck" data-infocase="local_format_meeting_time">
+                      Appointment Date, Time, and Timezone
+                    </span>
                   </strong><br>
                   <strong>ご提供いただいた電話番号:
-                      <span data-highlight="need_recheck" data-infocase="customer_contact"> 
-                          Phone No
-                      </span>
+                    <span data-highlight="need_recheck" data-infocase="customer_contact">
+                      Phone No
+                    </span>
                   </strong>
                 </div>
               </td>
             </tr>
             <tr>
-              <td align="left" >
-                <p>メールボックスをご確認いただき、本サポートのためのカレンダーの招待状に記載されている手順を踏み、サポートへの参加確定を行ってください。<br>また事前準備として、<a href="https://support.google.com/google-ads/answer/11605860?hl=ja">こちらの To
+              <td align="left">
+                <p>メールボックスをご確認いただき、本サポートのためのカレンダーの招待状に記載されている手順を踏み、サポートへの参加確定を行ってください。<br>また事前準備として、<a
+                    href="https://support.google.com/google-ads/answer/11605860?hl=ja">こちらの To
                     Do リスト</a>のチェックリストも完了していただけると幸いです。</p>
 
                 <p>ご予約日前に質問がある場合、または参加者を追加されたい場合は、このメールにご返信くださいませ。</p>
@@ -713,7 +769,8 @@ var jp_list_emailtemplatecontent = {
         <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
           <tbody>
             <tr>
-              <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
+              <td align="left"
+                style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
                 Case # <span data-infocase="case_id">0-00000000000000</span></td>
             </tr>
           </tbody>
@@ -731,7 +788,9 @@ var jp_list_emailtemplatecontent = {
           <tbody>
             <tr>
               <td>
-                <p dir="ltr"><img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" width="59" height="59"></p>
+                <p dir="ltr"><img
+                    src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ"
+                    width="59" height="59"></p>
               </td>
               <td>
                 <div dir="ltr" align="left">
@@ -739,9 +798,8 @@ var jp_list_emailtemplatecontent = {
                     <tbody>
                       <tr>
                         <td colspan="2">
-                          <span class="replaced" style="font-size:13px;" dir="auto" data-infosetting="your-name"> Name
-                          </span>
                           <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -754,13 +812,57 @@ var jp_list_emailtemplatecontent = {
     </tr>
   </tbody>
 </table>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+  <tbody>
+    <tr>
+      <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+          <tbody>
+            <tr>
+              <td align="left"
+                style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
+                Case # <span data-infocase="case_id">0-00000000000000</span></td>
+            </tr>
+
+            <td align="left"
+              style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
+              <p><span style="font-size:10px"><span style="font-family:Roboto,sans-serif"><span
+                      style="color:#000000"><span style="background-color:#ffffff"><em><strong>利用規約: </strong>
+                          お客様はこのメールに返信した時点で、ウェブサイト、キャンペーン、およびアナリティクス アカウントでの関連するコードのインストールを、必要に応じてテクニカル
+                          スペシャリストに委託することに同意したものと見なされます。お客様は、今後 Google
+                          が提案および導入する変更が、すべてお客様の意思と責任のもとで行われることを認識し、これに同意するものとします。Google
+                          では、変更により生じる影響についていかなる保証もいたしません。また、かかる変更によってどのような影響が生じた場合も Google
+                          は責任を負わないものとし、お客様がその全責任を負うものとします。こうした影響には Google
+                          広告キャンペーンに関連する費用の増加が含まれますが、これに限定されません。また、ウェブサイトが引き続き意図したとおり機能することの検証はお客様が行うものとします。&nbsp;</em></span></span></span></span>
+              </p>
+
+              <p><span style="font-size:10px"><span style="font-family:Roboto,sans-serif"><span
+                      style="color:#000000"><span style="background-color:#ffffff"><em><strong>注意事項: </strong>
+                          不測の事態に備え、設定変更が実施される前にウェブサイト全体のバックアップを取っておくことをおすすめします。サイトの認証情報については、Google
+                          の担当者をはじめ誰とも共有しないようにしてください。また、Google
+                          でお客様のリクエストを処理している最中に、お客様側でウェブサイトやアカウントに変更を加えられますと、変更や設定内容が一部失われる恐れがあります。ご依頼の変更作業が Google
+                          側で完了するまで、ウェブサイトとアカウントには変更を加えないようお願いいたします。</em></span></span></span></span></p>
+
+            </td>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+
+</table>
 </div>`,
 'dfa_first_email_not_as_requested': `<div id="email-body-content-top-content" dir="auto">
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
   <tbody>
     <tr>
-      <td align="left" height="150" style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;" valign="middle" width="100%">予約の確認</td>
-      <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt="" border="0" src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png" style="display: block;min-width:100px;" width="100"></td>
+      <td align="left" height="150"
+        style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;"
+        valign="middle" width="100%">予約の確認</td>
+      <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt=""
+          border="0"
+          src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png"
+          style="display: block;min-width:100px;" width="100"></td>
     </tr>
   </tbody>
 </table>
@@ -768,11 +870,13 @@ var jp_list_emailtemplatecontent = {
   <tbody>
     <tr>
       <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
+        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"
+          style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
           <tbody>
             <tr>
               <td align="left" style=" padding-bottom: 18px;">
-                <span class="replaced" data-infocase="customer_name" data-highlight="need_recheck">CUSTOMER NAME</span>様、
+                <span class="replaced" data-infocase="customer_name" data-highlight="need_recheck">CUSTOMER
+                  NAME</span>様、
               </td>
             </tr>
             <tr>
@@ -780,9 +884,11 @@ var jp_list_emailtemplatecontent = {
 
                 Google テクニカルソリューションチームとご予約いただき、誠にありがとうございます。
                 Google 広告アカウント担当者より依頼を受け、
-                ケース<strong><span class="replaced" data-infocase="case_id" data-highlight="need_recheck"> Case ID</span></strong>
+                ケース<strong><span class="replaced" data-infocase="case_id" data-highlight="need_recheck"> Case
+                    ID</span></strong>
                 にて
-                    <strong><span class="replaced" data-infocase="tasks_nowrap" data-highlight="need_recheck">TASKS</span></strong>についてサポート致します。
+                <strong><span class="replaced" data-infocase="tasks_nowrap"
+                    data-highlight="need_recheck">TASKS</span></strong>についてサポート致します。
               </td>
             </tr>
             <tr>
@@ -821,29 +927,30 @@ var jp_list_emailtemplatecontent = {
             <tr>
               <td align="left" style="padding-bottom: 18px;">
                 <div style="padding: 50px 30px 50px 30px;  background-color:#e6f4ea;">
-                    <strong>ご予約日時:
-                        <span data-highlight="need_recheck" data-infocase="local_format_meeting_time"> 
-                            Appointment Date, Time, and Timezone
-                        </span> 
-                    </strong><br>
-                    <strong>ご提供いただいた電話番号:
-                        <span data-highlight="need_recheck" data-infocase="customer_contact"> 
-                            Phone No
-                        </span>
-                    </strong>
+                  <strong>ご予約日時:
+                    <span data-highlight="need_recheck" data-infocase="local_format_meeting_time">
+                      Appointment Date, Time, and Timezone
+                    </span>
+                  </strong><br>
+                  <strong>ご提供いただいた電話番号:
+                    <span data-highlight="need_recheck" data-infocase="customer_contact">
+                      Phone No
+                    </span>
+                  </strong>
                 </div>
               </td>
             </tr>
             <tr>
-                <td align="left" >
+              <td align="left">
                 <strong style="font-size: 15px;">
-                    大変恐れ入りますが、ご提供いただいた3つのご希望日程で予定がお取りできませんでした。お客様がご希望の日程の近くで、最初の対応可能な日程に予約させていただきました。
+                  大変恐れ入りますが、ご提供いただいた3つのご希望日程で予定がお取りできませんでした。お客様がご希望の日程の近くで、最初の対応可能な日程に予約させていただきました。
                 </strong>
-                </td>
-              </tr>
+              </td>
+            </tr>
             <tr>
-              <td align="left" >
-                <p>メールボックスをご確認いただき、本サポートのためのカレンダーの招待状に記載されている手順を踏み、サポートへの参加確定を行ってください。<br>また事前準備として、<a href="https://support.google.com/google-ads/answer/11605860?hl=ja">こちらの To
+              <td align="left">
+                <p>メールボックスをご確認いただき、本サポートのためのカレンダーの招待状に記載されている手順を踏み、サポートへの参加確定を行ってください。<br>また事前準備として、<a
+                    href="https://support.google.com/google-ads/answer/11605860?hl=ja">こちらの To
                     Do リスト</a>のチェックリストも完了していただけると幸いです。</p>
 
                 <p>ご予約日前に質問がある場合、または参加者を追加されたい場合は、このメールにご返信くださいませ。</p>
@@ -864,7 +971,8 @@ var jp_list_emailtemplatecontent = {
         <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
           <tbody>
             <tr>
-              <td align="left" style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
+              <td align="left"
+                style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
                 Case # <span data-infocase="case_id">0-00000000000000</span></td>
             </tr>
           </tbody>
@@ -873,38 +981,77 @@ var jp_list_emailtemplatecontent = {
     </tr>
   </tbody>
 
-</table>
-<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-  <tbody>
-    <tr>
-      <td align="left" style="padding: 0px 40px 50px 30px;" valign="top">
-        <table border="0" cellpadding="0" cellspacing="0" role="presentation">
-          <tbody>
-            <tr>
-              <td>
-                <p dir="ltr"><img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" width="59" height="59"></p>
+  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+      <tr>
+        <td align="left" style="padding: 0px 40px 50px 30px;" valign="top">
+          <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <p dir="ltr"><img
+                      src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ"
+                      width="59" height="59"></p>
+                </td>
+                <td>
+                  <div dir="ltr" align="left">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td colspan="2">
+                            <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+      <tr>
+        <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+          <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+            <tbody>
+              <tr>
+                <td align="left"
+                  style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
+                  Case # <span data-infocase="case_id">0-00000000000000</span></td>
+              </tr>
+
+              <td align="left"
+                style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
+                <p><span style="font-size:10px"><span style="font-family:Roboto,sans-serif"><span
+                        style="color:#000000"><span style="background-color:#ffffff"><em><strong>利用規約: </strong>
+                            お客様はこのメールに返信した時点で、ウェブサイト、キャンペーン、およびアナリティクス アカウントでの関連するコードのインストールを、必要に応じてテクニカル
+                            スペシャリストに委託することに同意したものと見なされます。お客様は、今後 Google
+                            が提案および導入する変更が、すべてお客様の意思と責任のもとで行われることを認識し、これに同意するものとします。Google
+                            では、変更により生じる影響についていかなる保証もいたしません。また、かかる変更によってどのような影響が生じた場合も Google
+                            は責任を負わないものとし、お客様がその全責任を負うものとします。こうした影響には Google
+                            広告キャンペーンに関連する費用の増加が含まれますが、これに限定されません。また、ウェブサイトが引き続き意図したとおり機能することの検証はお客様が行うものとします。&nbsp;</em></span></span></span></span>
+                </p>
+
+                <p><span style="font-size:10px"><span style="font-family:Roboto,sans-serif"><span
+                        style="color:#000000"><span style="background-color:#ffffff"><em><strong>注意事項: </strong>
+                            不測の事態に備え、設定変更が実施される前にウェブサイト全体のバックアップを取っておくことをおすすめします。サイトの認証情報については、Google
+                            の担当者をはじめ誰とも共有しないようにしてください。また、Google
+                            でお客様のリクエストを処理している最中に、お客様側でウェブサイトやアカウントに変更を加えられますと、変更や設定内容が一部失われる恐れがあります。ご依頼の変更作業が Google
+                            側で完了するまで、ウェブサイトとアカウントには変更を加えないようお願いいたします。</em></span></span></span></span></p>
+
               </td>
-              <td>
-                <div dir="ltr" align="left">
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td colspan="2">
-                          <span class="replaced" style="font-size:13px;" dir="auto" data-infosetting="your-name"> Name
-                          </span>
-                          <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
-</table>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
 </div>`,
 'dfa_so_verified': `<div id="email-body-content-top-content" dir="auto">
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
@@ -935,8 +1082,9 @@ var jp_list_emailtemplatecontent = {
                         </tr>
                         <tr>
                             <td align="left" style=" padding-bottom: 18px;">
-                                ケース 
-                                <strong><span class="replaced" data-infocase="tasks_nowrap" data-highlight="need_recheck">Case Type</span></strong>
+                                ケース
+                                <strong><span class="replaced" data-infocase="tasks_nowrap"
+                                        data-highlight="need_recheck">Case Type</span></strong>
                                 に関して、実装が完了しましたので、お知らせいたします。
                                 <br>
                                 GA4上で設定いただいたデータの取得が確認できましたので、GA4プロパティー作成及び設定が問題なく機能しております。
@@ -944,7 +1092,8 @@ var jp_list_emailtemplatecontent = {
                         </tr>
                         <tr>
                             <td align="left" style="padding-bottom: 18px;">
-                                上記を踏まえ、ケース<strong><span class="replaced" data-infocase="tasks_nowrap" data-highlight="need_recheck">Case Type</span></strong>は終了とさせていただきます。
+                                上記を踏まえ、ケース<strong><span class="replaced" data-infocase="tasks_nowrap"
+                                        data-highlight="need_recheck">Case Type</span></strong>は終了とさせていただきます。
                                 <br>
                                 ご質問やご懸念等がありましたら当チームが喜んでサポートさせていただきますので、
                                 アカウントマネージャー経由か、グーグル広告ヘルプフォーム経由でお問い合わせくださいませ。
@@ -955,13 +1104,19 @@ var jp_list_emailtemplatecontent = {
                                 GA4の主な機能やUAとの違いなどに関するグーグルヘルプの記事を下記にご共有いたします。<br>
                                 <ul>
                                     <li>
-                                        <p><a href="https://support.google.com/analytics/answer/10089681?hl=ja">GA4の主な機能紹介</a></p>
+                                        <p><a
+                                                href="https://support.google.com/analytics/answer/10089681?hl=ja">GA4の主な機能紹介</a>
+                                        </p>
                                     </li>
                                     <li>
-                                        <p><a href="https://support.google.com/analytics/answer/11583528?hl=ja">ユニバーサルアナリティクスのサポート終了に関して</a></p>
+                                        <p><a
+                                                href="https://support.google.com/analytics/answer/11583528?hl=ja">ユニバーサルアナリティクスのサポート終了に関して</a>
+                                        </p>
                                     </li>
                                     <li>
-                                        <p><a href="https://support.google.com/analytics/answer/11986666?hl=ja">GA4とUAの指標の違い</a></p>
+                                        <p><a
+                                                href="https://support.google.com/analytics/answer/11986666?hl=ja">GA4とUAの指標の違い</a>
+                                        </p>
                                     </li>
                                 </ul>
                             </td>
@@ -987,7 +1142,8 @@ var jp_list_emailtemplatecontent = {
                         <tr>
                             <td align="left"
                                 style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
-                                Case # <span data-infocase="case_id">0-00000000000000</span></td>
+                                Case # <span data-infocase="case_id">0-00000000000000</span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -1018,6 +1174,7 @@ var jp_list_emailtemplatecontent = {
                                                         data-infosetting="your-name"> Name
                                                     </span>
                                                     <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1083,7 +1240,7 @@ var jp_email_temp = `
                 </div>
             </div>
         </div>
-        <div class="_emailtemp-item" data-type="SO - Verified">
+        <div class="_emailtemp-item" data-type="SO - Verified No Recent Conversion">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
             <div class="_emailtemp-item__title">テクニカルソリューションチーム - サポート完了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">

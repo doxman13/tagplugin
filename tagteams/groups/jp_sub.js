@@ -1086,7 +1086,7 @@ var jp_TagteamFocusCase = () => {
 
             icons.forEach((item, index) => {
                 item.addEventListener("mouseover", (e) => {
-                    focus(e.target, index);
+                    // focus(e.target, index);
                 });
                 item.addEventListener("mouseleave", (e) => {
                     icons.forEach((item) => {

@@ -77,10 +77,10 @@ function jp_tagTeamTDCXLoad() {
                 });
                 
                 if(is_precall === false) {
-                    noteBarAlert('Missing Note precall', _datatemp.case_id);
+                    noteBarAlert('Please add Precall Note', _datatemp.case_id);
                     
                     Toastify({
-                        text: 'Missing Note precall',
+                        text: 'Please add Precall Note',
                         duration: 6000,
                         class: "error",
                         callback: function(){
@@ -2325,8 +2325,8 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                         >
                                             <span class="content"></span>
                                         </a>
-                                        <a href="http://go/teamVN" target="_blank" class="material-button _panel_shortcut_go_teamvietnam" data-textview="Hôm nay bạn chưa ghé go/TeamVN thì phải?"  >
-                                            <img src="${window.dataTagteam.assets_url_img}/pepe-4chan.gif">
+                                        <a href="http://go/tagJP" target="_blank" class="material-button _panel_shortcut_go_teamvietnam" data-textview=""  >
+                                            <img src="${window.dataTagteam.assets_url_img}/jpteam/go_JPdashboard.png">
                                             <span class="content"></span>
                                         </a>
                                     </div>`;
@@ -2401,7 +2401,8 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                         // sessionStorage.setItem("goTeamVNToDay", _timekey_current);
                                         setChromeStorage('goTeamVNToDay', _timekey_current);
 
-                                        e.target.remove();
+                                        //Not remove for JP dash board
+                                        //e.target.remove();
                                     });
 
                                     

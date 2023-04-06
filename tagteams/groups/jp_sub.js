@@ -1086,7 +1086,7 @@ var jp_TagteamFocusCase = () => {
 
             icons.forEach((item, index) => {
                 item.addEventListener("mouseover", (e) => {
-                    // focus(e.target, index);
+                    focus(e.target, index);
                 });
                 item.addEventListener("mouseleave", (e) => {
                     icons.forEach((item) => {
@@ -1707,7 +1707,7 @@ var jp_TagteamFocusCase = () => {
         }
 
         function adsICS() {
-            var adsUrl = 'https://adwords.corp.google.com/aw/go?cid=' + cid;
+            var adsUrl = 'https://adwords.corp.google.com/aw/conversions?ocid=' + cid;
             window.open(adsUrl, '_blank').focus();
         }
 

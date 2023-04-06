@@ -732,12 +732,12 @@ var jp_list_emailtemplatecontent = {
             <tr>
               <td align="left">
                 <div style="padding: 50px 30px 50px 30px;  background-color:#e6f4ea;">
-                  <strong>ご予約日時:
-                    <span data-highlight="need_recheck" data-infocase="local_format_meeting_time">
-                      Appointment Date, Time, and Timezone
+                  <strong data-highlight="need_recheck">ご予約日時:
+                    <span data-highlight="need_recheck">
+                    ここに予約日時
                     </span>
                   </strong><br>
-                  <strong>ご提供いただいた電話番号:
+                  <strong data-highlight="need_recheck">ご提供いただいた電話番号:
                     <span data-highlight="need_recheck" data-infocase="customer_contact">
                       Phone No
                     </span>
@@ -928,8 +928,8 @@ var jp_list_emailtemplatecontent = {
               <td align="left" style="padding-bottom: 18px;">
                 <div style="padding: 50px 30px 50px 30px;  background-color:#e6f4ea;">
                   <strong>ご予約日時:
-                    <span data-highlight="need_recheck" data-infocase="local_format_meeting_time">
-                      Appointment Date, Time, and Timezone
+                    <span data-highlight="need_recheck">
+                    ここに予約日時
                     </span>
                   </strong><br>
                   <strong>ご提供いただいた電話番号:
@@ -1188,7 +1188,784 @@ var jp_list_emailtemplatecontent = {
     </tbody>
 </table>
 </div>`,
-'in_other': ` `,
+'only_sign': `<div id="email-body-content-top-content" dir="auto">
+  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+      <tbody>
+          <tr>
+              <td align="left" height="150"
+                  style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;"
+                  valign="middle" width="100%" data-highlight="need_recheck">変更してください</td>
+              <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt=""
+                      border="0"
+                      src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png"
+                      style="display: block;min-width:100px;" width="100"></td>
+          </tr>
+      </tbody>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+      <tbody>
+          <tr>
+              <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"
+                      style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
+                      <tbody>
+                          <tr>
+                              <td align="left" style=" padding-bottom: 18px;">
+                                  <span data-infocase="customer_name" data-highlight="need_recheck">CUSTOMER
+                                      NAME</span>様、
+                              </td>
+                          </tr>
+                          <tr data-highlight="need_recheck">
+                              <td align="left" style=" padding-bottom: 18px;">
+                                  内容をここに
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+      <tbody>
+          <tr>
+              <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                      <tbody>
+                          <tr>
+                              <td align="left"
+                                  style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
+                                  Case # <span data-infocase="case_id">0-00000000000000</span></td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+      <tbody>
+          <tr>
+              <td align="left" style="padding: 0px 40px 50px 30px;" valign="top">
+                  <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+                      <tbody>
+                          <tr>
+                              <td>
+                                  <p dir="ltr"><img
+                                          src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ"
+                                          width="59" height="59"></p>
+                              </td>
+                              <td>
+                                  <div dir="ltr" align="left">
+                                      <table>
+                                          <tbody>
+                                              <tr>
+                                                  <td colspan="2">
+                                                      <span class="replaced" style="font-size:13px;" dir="auto"
+                                                          data-infosetting="your-name"> Name
+                                                      </span>
+                                                      <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>`,
+'in_consult': `<div id="email-body-content-top-content" dir="auto">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td align="left" height="150"
+                style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;"
+                valign="middle" width="100%">ご対応後、ご返信ください</td>
+            <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt=""
+                    border="0"
+                    src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png"
+                    style="display: block;min-width:100px;" width="100"></td>
+        </tr>
+    </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"
+                    style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
+                    <tbody>
+                        <tr>
+                            <td align="left" style=" padding-bottom: 18px;">
+                                <span data-infocase="customer_name" data-highlight="need_recheck">CUSTOMER
+                                    NAME</span>様、
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" style=" padding-bottom: 18px;">
+                                <p>
+                                    お世話になっております。Google パートナー事業者テクニカルソリューションチームの<span class="replaced"
+                                        data-infosetting="your-name" data-highlight="need_recheck">Name</span>
+                                    です。
+                                </p>
+                                <p>
+                                    先程は MEET へご参加いただき、ありがとうございます。
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" style="padding-bottom: 18px;">
+                                ケース <span data-infocase="case_id" data-highlight="need_recheck">0-00000000000000</span>
+                                に関して、以下のご対応が完了後、もしくはご不明点がございましたら、このメールにご返信ください。
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" style="padding-bottom: 18px;">
+                                <ul>
+                                    <li>
+                                        <p></p>
+                                    </li>
+                                    <li>
+                                        <p></p>
+                                    </li>
+                                    <li>
+                                        <p></p>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">
+                                お手数おかけいたしますが、どうぞよろしくお願いいたします。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                        <tr>
+                            <td align="left"
+                                style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
+                                Case # <span data-infocase="case_id">0-00000000000000</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td align="left" style="padding: 0px 40px 50px 30px;" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p dir="ltr"><img
+                                        src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ"
+                                        width="59" height="59"></p>
+                            </td>
+                            <td>
+                                <div dir="ltr" align="left">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <span class="replaced" style="font-size:13px;" dir="auto"
+                                                        data-infosetting="your-name"> Name
+                                                    </span>
+                                                    <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div> `,
+'awaiting_input': ` <div id="email-body-content-top-content" dir="auto">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td align="left" height="150"
+                style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;"
+                valign="middle" width="100%">実装を完了するために、追加の情報が必要です</td>
+            <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt=""
+                    border="0"
+                    src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png"
+                    style="display: block;min-width:100px;" width="100"></td>
+        </tr>
+    </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"
+                    style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
+                    <tbody>
+                        <tr>
+                            <td align="left" style=" padding-bottom: 18px;">
+                                <span data-infocase="customer_name" data-highlight="need_recheck">CUSTOMER
+                                    NAME</span>様、
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" style=" padding-bottom: 18px;">
+                                お世話になっております。Google パートナー事業者テクニカルソリューションチームの<span class="replaced"
+                                    data-infosetting="your-name">NAME</span>
+                                です。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" style="padding-bottom: 18px;">
+                                お問い合わせいただきました、ケース <span data-infocase="case_id">0-00000000000000</span>
+                                について、お手続きを進めるにあたりお客様のご入力が必要な点がございますことをご連絡いたします。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" style="padding-bottom: 18px;">
+                                <p><strong>必要なお手続き:</strong></p>
+                                <p>
+                                <ol>
+                                    <li>
+                                        <p></p>
+                                    </li>
+                                    <li>
+                                        <p></p>
+                                    </li>
+                                    <li>
+                                        <p></p>
+                                    </li>
+                                </ol>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">
+                                <span data-infocase="customer_website" data-highlight="need_recheck">WEBSITE URL</span> の <span
+                                    data-infocase="tasks_nowrap" data-highlight="need_recheck">TASK</span>
+                                の実装を完了できるよう、このメールに返信する形で、なるべくお早めにご連絡ください。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">
+                                <strong>数日以内にご連絡いただけなかった場合、本ケースはクローズとなりますのでご了承ください。</strong>
+                                <br>引き続きよろしくお願いいたします。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                        <tr>
+                            <td align="left"
+                                style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
+                                Case # <span data-infocase="case_id">0-00000000000000</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td align="left" style="padding: 0px 40px 50px 30px;" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p dir="ltr"><img
+                                        src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ"
+                                        width="59" height="59"></p>
+                            </td>
+                            <td>
+                                <div dir="ltr" align="left">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <span class="replaced" style="font-size:13px;" dir="auto"
+                                                        data-infosetting="your-name"> Name
+                                                    </span>
+                                                    <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>`,
+'attempted_contact': ` <div id="email-body-content-top-content" dir="auto">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td align="left" height="150"
+                style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;"
+                valign="middle" width="100%">お問い合わせいただいたケースに関して、本日お電話を差し上げました</td>
+            <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img alt=""
+                    border="0"
+                    src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/AS_Work_in_Progress_Offline_Support_ts_as_wip_offtfr.png"
+                    style="display: block;min-width:100px;" width="100"></td>
+        </tr>
+    </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"
+                    style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
+                    <tbody>
+                        <tr>
+                            <td align="left" style=" padding-bottom: 18px;">
+                                <span data-infocase="customer_name" data-highlight="need_recheck">CUSTOMER
+                                    NAME</span>様、
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" style=" padding-bottom: 18px;">
+                                <p>
+                                    お世話になっております。Google パートナー事業者テクニカルソリューションチームの<span class="replaced"
+                                        data-infosetting="your-name" data-highlight="need_recheck">NAME</span>
+                                    です。
+                                </p>
+                                <p>
+                                    本日、ケース <span data-infocase="case_id"
+                                        data-highlight="need_recheck">0-00000000000000</span> のご予約時間にテクニカル
+                                    ソリューション チームよりお電話を差し上げましたが、ご不在のようでした。
+                                </p>
+                                <p>
+                                    <strong>
+                                        明日または次の営業日の <span data-highlight="need_recheck">{エージェントが記入「午前 9 時および午後 12 時
+                                            + タイムゾーン」など}</span>
+                                        にもう一度お電話を差し上げ、それでもご連絡がつかない場合は、このケースを終了させていただきます。
+                                    </strong>
+                                </p>
+                                <p>
+                                    このご予約の継続をご希望の場合は、ご都合の良い日時を３候補ほどこのメールにご返信いただけますと幸いです。
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">
+                                何卒よろしくお願い申し上げます。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                        <tr>
+                            <td align="left"
+                                style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
+                                Case # <span data-infocase="case_id">0-00000000000000</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td align="left" style="padding: 0px 40px 50px 30px;" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p dir="ltr"><img
+                                        src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ"
+                                        width="59" height="59"></p>
+                            </td>
+                            <td>
+                                <div dir="ltr" align="left">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <span class="replaced" style="font-size:13px;" dir="auto"
+                                                        data-infosetting="your-name"> Name
+                                                    </span>
+                                                    <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>`,
+'in_other': `<div id="email-body-content-top" style="width:100%">
+<div id="email-body-content-top-content">
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+            <tr>
+                <td align="left" height="150"
+                    style="font-size: 28px; line-height: 36px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding: 30px 0px 30px 30px;"
+                    valign="middle" width="100%">ご回答がありませんでしたので、お客様のケースを終了させていただきました</td>
+                <td align="right" height="150" style="padding: 0 30px 0 10px;" valign="middle" width="130"><img
+                        alt="" border="0"
+                        src="https://storage.googleapis.com/fwm-emea-client-emails/google/14406_Gtech_Solutions/IN_Not_Reachable_ts_in_nrch.png"
+                        style="display: block;min-width:100px;" width="100"></td>
+            </tr>
+        </tbody>
+    </table>&nbsp;<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+            <tr>
+                <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody
+                            style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);">
+                            <tr>
+                                <td align="left" style="padding-bottom: 18px;">
+                                    <span class="replaced" data-infocase="customer_name"
+                                        data-highlight="need_recheck">
+                                        Name
+                                    </span>様、
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="left"
+                                    style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;"
+                                    valign="top" width="100%">このたび、<span data-infocase="customer_website"
+                                        data-highlight="need_recheck">customer_website.com</span> のケース <span
+                                        data-infocase="case_id"
+                                        data-highlight="need_recheck">0-00000000000000</span>
+                                    は、次の理由により終了となります。</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding:0 0 18px 8px;" valign="top">
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                        width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left"
+                                                    style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-right: 6px;"
+                                                    valign="top" width="10">•</td>
+                                                <td align="left"
+                                                    style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                    valign="top" width="100%"><span class="field">{エージェントが更新}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left"
+                                                    style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-right: 6px;"
+                                                    valign="top" width="10">•</td>
+                                                <td align="left"
+                                                    style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                    valign="top" width="100%"><span class="field">{エージェントが更新}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left"
+                                                    style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-right: 6px;"
+                                                    valign="top" width="10">•</td>
+                                                <td align="left"
+                                                    style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                    valign="top" width="100%"><span class="field">{エージェントが更新}</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" style="padding-bottom: 18px;">
+                                    引き続き本件の実装サポートを希望される場合は、<a href="https://support.google.com/google-ads/gethelp"
+                                        style="color: rgb(26, 115, 232); text-decoration-line: none;"
+                                        target="_BLANK" class="ignore-globals">Google ヘルプセンター</a>をご覧いただくか、担当の Google
+                                    アカウント マネージャーへお気軽にご連絡ください。<br>担当チームがサポートいたします。</td>
+                            </tr>
+                            <tr>
+                                <td align="left">
+                                    今後ともよろしくお願いいたします。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+            <tr>
+                <td align="left" style="padding: 0px 40px 50px 30px;" valign="top">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p dir="ltr"><img
+                                            src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ"
+                                            width="59" height="59"></p>
+                                </td>
+                                <td>
+                                    <div dir="ltr" align="left">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <span class="replaced" style="font-size:13px;" dir="auto"
+                                                            data-infosetting="your-name"> Name
+                                                        </span>
+                                                        <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+            <tr>
+                <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody>
+                            <tr>
+                                <td align="left"
+                                    style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
+                                    Case # <span class="replaced">2-3534000034359</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <tbody>
+            <tr>
+                <td align="center" style="padding: 0 30px 30px;" valign="top">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                        <tbody>
+                            <tr>
+                                <td align="left" style="background: #f8f9f9;padding: 30px 30px;">
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                        width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left"
+                                                    style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;"
+                                                    valign="middle">ショッピング
+                                                    フィードとタグの実装の詳細について、こちらに各種リソースへのリンクをご用意しましたので、今後の実装にお役立てください。</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                        width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left"
+                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: #3c4043; font-weight: 700;"
+                                                    valign="middle">タグ関連</td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" valign="top">
+                                                    <table border="0" cellpadding="0" cellspacing="0"
+                                                        role="presentation" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle">•</td>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle"><a
+                                                                        href="https://developers.google.com/gtagjs"
+                                                                        style="color: rgb(26, 115, 232); text-decoration-line: none;"
+                                                                        target="_BLANK"
+                                                                        class="ignore-globals">タグ実装サポート</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle">•</td>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle"><a
+                                                                        href="https://www.youtube.com/user/learnwithgoogle/playlists"
+                                                                        style="color: rgb(26, 115, 232); text-decoration-line: none;"
+                                                                        target="_BLANK"
+                                                                        class="ignore-globals">Google 広告</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle">•</td>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle"><a
+                                                                        href="https://www.youtube.com/user/googleanalytics"
+                                                                        style="color: rgb(26, 115, 232); text-decoration-line: none;"
+                                                                        target="_BLANK"
+                                                                        class="ignore-globals">Google アナリティクス</a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                        width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left"
+                                                    style="padding-top: 18px;font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: #3c4043; font-weight: 700;"
+                                                    valign="middle">ショッピング関連</td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" valign="top">
+                                                    <table border="0" cellpadding="0" cellspacing="0"
+                                                        role="presentation" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle">•</td>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle"><a
+                                                                        href="https://www.google.com/retail/"
+                                                                        style="color: rgb(26, 115, 232); text-decoration-line: none;"
+                                                                        target="_BLANK"
+                                                                        class="ignore-globals">Google for Retail
+                                                                    </a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle">•</td>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle"><a
+                                                                        href="https://www.google.com/retail/solutions/merchant-center/"
+                                                                        style="color: rgb(26, 115, 232); text-decoration-line: none;"
+                                                                        target="_BLANK"
+                                                                        class="ignore-globals">Google Merchant
+                                                                        Center</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle">•</td>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle"><a
+                                                                        href="https://support.google.com/merchants/answer/188924?hl=en"
+                                                                        style="color: rgb(26, 115, 232); text-decoration-line: none;"
+                                                                        target="_BLANK"
+                                                                        class="ignore-globals">アカウントとフィードの設定</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle">•</td>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle"><a
+                                                                        href="https://support.google.com/merchants/topic/7294606?hl=en&amp;ref_topic=7294771"
+                                                                        style="color: rgb(26, 115, 232); text-decoration-line: none;"
+                                                                        target="_BLANK"
+                                                                        class="ignore-globals">フィードの最適化</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle">•</td>
+                                                                <td align="left"
+                                                                    style="font-size: 16px; line-height: 30px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67);"
+                                                                    valign="middle"><a
+                                                                        href="https://support.google.com/merchants/answer/9199328?hl=en"
+                                                                        style="color: rgb(26, 115, 232); text-decoration-line: none;"
+                                                                        target="_BLANK"
+                                                                        class="ignore-globals">Google 掲載</a></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div> `,
 };
 
 var jp_panel_div_style = `<style>
@@ -1198,29 +1975,29 @@ var jp_email_temp = `
     <div class="_emailtemp">
         <div class="_emailtemp-item" data-type="First email">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
-            <div class="_emailtemp-item__title">テクニカルソリューションチームより - 予約の確認:<span data-infocase="local_format_meeting_time">Date </span> - [<span data-infocase="case_id">5-0987654321</span>]</div>
+            <div class="_emailtemp-item__title">テクニカルソリューションチームより - 予約の確認 [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
                     <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
-                        ${jp_list_emailtemplatecontent.first_email}
+                    ${jp_list_emailtemplatecontent.first_email}
                     </div>
                 </div>
             </div>
         </div>
-        <div class="_emailtemp-item" data-type="DFA First email [Date as requested]">
+        <div class="_emailtemp-item" data-type="[DFA] First email [Date as requested]">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
-            <div class="_emailtemp-item__title">テクニカルソリューションチームより - 予約の確認:<span data-infocase="local_format_meeting_time">Date </span> - [<span data-infocase="case_id">5-0987654321</span>]</div>
+            <div class="_emailtemp-item__title">テクニカルソリューションチームより - 予約の確認 [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
                     <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
-                        ${jp_list_emailtemplatecontent.dfa_first_email_as_requested}
+                    ${jp_list_emailtemplatecontent.dfa_first_email_as_requested}
                     </div>
                 </div>
             </div>
         </div>
-        <div class="_emailtemp-item" data-type="DFA First email [Date NOT as requested]">
+        <div class="_emailtemp-item" data-type="[DFA] First email [Date NOT as requested]">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
-            <div class="_emailtemp-item__title">テクニカルソリューションチームより - 予約の確認:<span data-infocase="local_format_meeting_time">Date </span> - [<span data-infocase="case_id">5-0987654321</span>]</div>
+            <div class="_emailtemp-item__title">テクニカルソリューションチームより - 予約の確認 </span> - [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
                     <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
@@ -1229,9 +2006,46 @@ var jp_email_temp = `
                 </div>
             </div>
         </div>
+
+        <div class="_emailtemp-item" data-type="NI - Awaiting Inputs">
+            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
+            <div class="_emailtemp-item__title">テクニカルソリューションより -  [<span data-infocase="case_id">5-0987654321</span>]</div>
+            <div class="_emailtemp-item__content">
+                <div id="email-body-content-top" style="width:100%" dir="auto">
+                    <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
+                        ${jp_list_emailtemplatecontent.in_consult}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="_emailtemp-item" data-type="NI - Awaiting Inputs">
+            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
+            <div class="_emailtemp-item__title">テクニカルソリューションより -  [<span data-infocase="case_id">5-0987654321</span>]</div>
+            <div class="_emailtemp-item__content">
+                <div id="email-body-content-top" style="width:100%" dir="auto">
+                    <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
+                        ${jp_list_emailtemplatecontent.awaiting_input}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="_emailtemp-item" data-type="NI - Attempted Contact">
+            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
+            <div class="_emailtemp-item__title">テクニカルソリューションより - ご対応後、ご返信ください [<span data-infocase="case_id">5-0987654321</span>]</div>
+            <div class="_emailtemp-item__content">
+                <div id="email-body-content-top" style="width:100%" dir="auto">
+                    <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
+                        ${jp_list_emailtemplatecontent.attempted_contact}
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="_emailtemp-item" data-type="SO - Verified">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
-            <div class="_emailtemp-item__title">テクニカルソリューションチーム - サポート完了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
+            <div class="_emailtemp-item__title">テクニカルソリューションチームより - サポート完了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
                     <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
@@ -1242,7 +2056,7 @@ var jp_email_temp = `
         </div>
         <div class="_emailtemp-item" data-type="SO - Verified No Recent Conversion">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
-            <div class="_emailtemp-item__title">テクニカルソリューションチーム - サポート完了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
+            <div class="_emailtemp-item__title">テクニカルソリューションチームより - サポート完了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
                     <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
@@ -1252,9 +2066,9 @@ var jp_email_temp = `
             </div>
         </div>
 
-        <div class="_emailtemp-item" data-type="SO - Verification not needed">
+        <div class="_emailtemp-item" data-type="[DFA] SO - Verified">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
-            <div class="_emailtemp-item__title">テクニカルソリューションチーム - サポート完了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
+            <div class="_emailtemp-item__title">テクニカルソリューションチームより - サポート完了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
                     <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
@@ -1265,7 +2079,7 @@ var jp_email_temp = `
         </div>
         <div class="_emailtemp-item" data-type="IN - Not reachable">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
-            <div class="_emailtemp-item__title">テクニカルソリューションチーム - サポート終了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
+            <div class="_emailtemp-item__title">テクニカルソリューションチームより - サポート終了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
                     <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
@@ -1274,18 +2088,29 @@ var jp_email_temp = `
                 </div>
             </div>
         </div>
-        
-        <div class="_emailtemp-item" data-type="IN - other">
+            <div class="_emailtemp-item" data-type="IN - other">
+                <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
+                <div class="_emailtemp-item__title">テクニカルソリューションチームより - サポート終了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
+                <div class="_emailtemp-item__content">
+                    <div id="email-body-content-top" style="width:100%" dir="auto">
+                        <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
+                            ${jp_list_emailtemplatecontent.in_other}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="_emailtemp-item" data-type="Use your template">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
-            <div class="_emailtemp-item__title">テクニカルソリューションチーム - サポート終了のご連絡 [<span data-infocase="case_id">5-6594000033737</span>]</div>
+            <div class="_emailtemp-item__title">テクニカルソリューションチームより -  [<span data-infocase="case_id">5-6594000033737</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%">
                     <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
-                        ${jp_list_emailtemplatecontent.in_other}
+                        ${jp_list_emailtemplatecontent.only_sign}
                     </div>
                 </div>
             </div>
         </div>
+    
 
         
     </div>`;

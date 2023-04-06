@@ -2325,7 +2325,7 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                         >
                                             <span class="content"></span>
                                         </a>
-                                        <a href="http://go/tagJP" target="_blank" class="material-button _panel_shortcut_go_teamvietnam" data-textview=""  >
+                                        <a href="http://go/tagJP" target="_blank"   >
                                             <img src="${window.dataTagteam.assets_url_img}/jpteam/go_JPdashboard.png">
                                             <span class="content"></span>
                                         </a>

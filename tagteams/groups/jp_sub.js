@@ -1647,10 +1647,9 @@ var jp_TagteamFocusCase = () => {
                         caseSumary = elm.value.slice(0, updatedAtIdx);
                     } else caseSumary = elm.value;
                 })
-                //To remove animation on dock. Comment this
-                // if (!document.querySelector('.dock-float')) {
-                //     renderDock()
-                // }
+                if (!document.querySelector('.dock-float')) {
+                    renderDock()
+                }
             }
         };
         execFocusCase();

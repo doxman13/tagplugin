@@ -732,14 +732,14 @@ var jp_list_emailtemplatecontent = {
             <tr>
               <td align="left">
                 <div style="padding: 50px 30px 50px 30px;  background-color:#e6f4ea;">
-                  <strong data-highlight="need_recheck">ご予約日時:
+                  <strong">ご予約日時:
                     <span data-highlight="need_recheck">
                       予約日の入力が必要です。
                     </span>
                   </strong><br>
-                  <strong data-highlight="need_recheck">ご提供いただいた電話番号:
-                    <span data-highlight="need_recheck" data-infocase="customer_contact">
-                      Phone No
+                  <strong ">ご提供いただいた電話番号:
+                    <span data-highlight="need_recheck"">
+                        電話番号の入力が必要です。
                     </span>
                   </strong>
                 </div>
@@ -941,9 +941,9 @@ var jp_list_emailtemplatecontent = {
                       予約日時の入力が必要です
                     </span>
                   </strong><br>
-                  <strong data-highlight="need_recheck">ご提供いただいた電話番号:
-                    <span data-highlight="need_recheck" data-infocase="customer_contact">
-                      Phone No
+                  <strong>ご提供いただいた電話番号:
+                    <span data-highlight="need_recheck" >
+                        電話番号の入力が必要です
                     </span>
                   </strong>
                 </div>

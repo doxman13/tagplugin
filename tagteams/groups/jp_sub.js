@@ -74,28 +74,28 @@ var jp_heading_searchandreplace = `
 `;
 
 var jp_hotkey_email = {
-    'ts as new':'Good news, the Technical Solutions Team has received your case',
-    'ts as wip offtfr':'Good news, the Technical Solutions Team has received your case',
-    'ts as wip offs':"Technical Solutions Team - Here's the latest update regarding your case",
-    'ts as resched1':'Technical Solutions Team - Your appointment has been successfully rescheduled',
-    'ts as reschedok':'Technical Solutions Team - Your appointment has been rescheduled',
-    'ts so verif':'Congratulations, your case has been successfully implemented',
-    'ts so verif nrc':'Congratulations, your case has been successfully implemented',
-    'ts so unv':'Congratulations on implementing your case',
-    'ts so vnn':'Congratulations, your case has been successfully implemented',
-    'ts ni ai':'Technical Solutions Team - Your case status has been updated',
-    'ts ni ic':'Technical Solutions Team - Your case is in consultation',
-    'ts ni av':'Technical Solutions Team - Your case status has been updated',
-    'ts ni ac':'Technical Solutions Team - We tried to reach you today regarding your case',
-    'ts ni oth':'Technical Solutions Team - Your case will be closed',
-    'ts in inf':'Technical Solutions Team - Your case cannot be completed due to technical issues',
-    'ts in nrch':'Technical Solutions Team - Your case has been closed due to inactivity',
-    'ts in ni':'Technical Solutions Team - Your case has been closed',
-    'ts in nrdy':'Technical Solutions Team - Your case is not ready for implementation',
-    'ts in oost':'Technical Solutions Team - Your case has been rerouted to the correct support team',
-    'ts in oosu':'Technical Solutions Team - We are working to reroute your case to the correct support team',
-    'ts in oos seller':'TTechnical Solutions Team - Your request is out of scope for the Technical Solutions Team',
-    'ts in oth':'Technical Solutions Team - Your case will be closed',
+    'ts as new':'テクニカルソリューションチームより - 予約の確認',
+    'ts as wip offtfr':'テクニカルソリューションチームより - 予約の確認',
+    'ts as wip offs':"テクニカルソリューションチームより - ",
+    'ts as resched1':'テクニカルソリューションチームより - ',
+    'ts as reschedok':'テクニカルソリューションチームより - ',
+    'ts so verif':'テクニカルソリューションチームより - サポート完了のご連絡',
+    'ts so verif nrc':'テクニカルソリューションチームより - サポート完了のご連絡',
+    'ts so unv':'テクニカルソリューションチームより - サポート完了のご連絡',
+    'ts so vnn':'テクニカルソリューションチームより - サポート完了のご連絡',
+    'ts ni ai':'テクニカルソリューションチームより - ',
+    'ts ni ic':'テクニカルソリューションチームより - ',
+    'ts ni av':'テクニカルソリューションチームより - ',
+    'ts ni ac':'テクニカルソリューションチームより - ',
+    'ts ni oth':'テクニカルソリューションチームより - ',
+    'ts in inf':'テクニカルソリューションチームより - サポート終了のご連絡',
+    'ts in nrch':'テクニカルソリューションチームより - サポート終了のご連絡',
+    'ts in ni':'テクニカルソリューションチームより - サポート終了のご連絡',
+    'ts in nrdy':'テクニカルソリューションチームより - サポート終了のご連絡',
+    'ts in oost':'テクニカルソリューションチームより - サポート終了のご連絡',
+    'ts in oosu':'テクニカルソリューションチームより - ',
+    'ts in oos seller':'テクニカルソリューションチームより - ',
+    'ts in oth':'テクニカルソリューションチームより -サポート終了のご連絡',
 };
 
 var jp_searchandremove = [
@@ -1707,7 +1707,7 @@ var jp_TagteamFocusCase = () => {
         }
 
         function adsICS() {
-            var adsUrl = 'https://adwords.corp.google.com/aw/go?cid=' + cid;
+            var adsUrl = 'https://adwords.corp.google.com/aw/conversions?ocid=' + cid;
             window.open(adsUrl, '_blank').focus();
         }
 

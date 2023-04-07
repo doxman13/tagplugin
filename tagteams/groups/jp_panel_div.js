@@ -734,7 +734,7 @@ var jp_list_emailtemplatecontent = {
                 <div style="padding: 50px 30px 50px 30px;  background-color:#e6f4ea;">
                   <strong data-highlight="need_recheck">ご予約日時:
                     <span data-highlight="need_recheck">
-                    ここに予約日時
+                      予約日の入力が必要です。
                     </span>
                   </strong><br>
                   <strong data-highlight="need_recheck">ご提供いただいた電話番号:
@@ -749,8 +749,17 @@ var jp_list_emailtemplatecontent = {
               <td align="left">
                 <p>メールボックスをご確認いただき、本サポートのためのカレンダーの招待状に記載されている手順を踏み、サポートへの参加確定を行ってください。<br>また事前準備として、<a
                     href="https://support.google.com/google-ads/answer/11605860?hl=ja">こちらの To
-                    Do リスト</a>のチェックリストも完了していただけると幸いです。</p>
-
+                    Do リスト</a>のチェックリストも完了していただけると幸いです。
+                </p>
+                <p>
+                  当日のサポートですが、お客様の作業状況を把握するためGoogleミート（Web会議ツール）を使用し、 お客様のPC画面を共有していただきながらご案内させていただきます。<br>
+                  お時間になりましたら、下記GoogleミートのURLをクリックしご参加ください。<br>
+                  <p><a href="https://meet.google.com" dir="auto" data-infocase_link="customer_gmeet" data-highlight="need_recheck">
+                    ミーティングのリンクをここに入れてください
+                  </a><br></p>
+                  できれば Chrome で開いていただき、カメラはオフ、音声のみでお願いいたします。<br> 
+                  お手元に、該当Googleアナリティクスの管理画面と対象のウェブサイトの編集画面（またはタグマネジャーの画面）をご用意下さい。
+                </p>
                 <p>ご予約日前に質問がある場合、または参加者を追加されたい場合は、このメールにご返信くださいませ。</p>
 
                 <p>それでは、サポート当日は何卒よろしくお願いいたします。</p>
@@ -927,12 +936,12 @@ var jp_list_emailtemplatecontent = {
             <tr>
               <td align="left" style="padding-bottom: 18px;">
                 <div style="padding: 50px 30px 50px 30px;  background-color:#e6f4ea;">
-                  <strong>ご予約日時:
-                    <span data-highlight="need_recheck">
-                    ここに予約日時
+                  <strong >ご予約日時:
+                    <span data-highlight="need_recheck" >
+                      予約日時の入力が必要です
                     </span>
                   </strong><br>
-                  <strong>ご提供いただいた電話番号:
+                  <strong data-highlight="need_recheck">ご提供いただいた電話番号:
                     <span data-highlight="need_recheck" data-infocase="customer_contact">
                       Phone No
                     </span>
@@ -951,8 +960,17 @@ var jp_list_emailtemplatecontent = {
               <td align="left">
                 <p>メールボックスをご確認いただき、本サポートのためのカレンダーの招待状に記載されている手順を踏み、サポートへの参加確定を行ってください。<br>また事前準備として、<a
                     href="https://support.google.com/google-ads/answer/11605860?hl=ja">こちらの To
-                    Do リスト</a>のチェックリストも完了していただけると幸いです。</p>
-
+                    Do リスト</a>のチェックリストも完了していただけると幸いです。
+                </p>
+                <p>
+                  当日のサポートですが、お客様の作業状況を把握するためGoogleミート（Web会議ツール）を使用し、 お客様のPC画面を共有していただきながらご案内させていただきます。<br>
+                  お時間になりましたら、下記GoogleミートのURLをクリックしご参加ください。<br>
+                  <p><a href="https://meet.google.com" dir="auto" data-infocase_link="customer_gmeet" data-highlight="need_recheck">
+                    ミーティングのリンクをここに入れてください
+                  </a><br></p>
+                  できれば Chrome で開いていただき、カメラはオフ、音声のみでお願いいたします。<br> 
+                  お手元に、該当Googleアナリティクスの管理画面と対象のウェブサイトの編集画面（またはタグマネジャーの画面）をご用意下さい。
+                </p>
                 <p>ご予約日前に質問がある場合、または参加者を追加されたい場合は、このメールにご返信くださいませ。</p>
 
                 <p>それでは、サポート当日は何卒よろしくお願いいたします。</p>
@@ -1979,24 +1997,24 @@ var jp_email_temp = `
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
                     <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
-                    ${jp_list_emailtemplatecontent.first_email}
+                        ${jp_list_emailtemplatecontent.first_email}
                     </div>
                 </div>
             </div>
         </div>
         <div class="_emailtemp-item" data-type="[DFA] First email [Date as requested]">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
+        <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
             <div class="_emailtemp-item__title">テクニカルソリューションチームより - 予約の確認 [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
                     <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
-                    ${jp_list_emailtemplatecontent.dfa_first_email_as_requested}
+                        ${jp_list_emailtemplatecontent.dfa_first_email_as_requested}
                     </div>
                 </div>
             </div>
         </div>
         <div class="_emailtemp-item" data-type="[DFA] First email [Date NOT as requested]">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
+            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
             <div class="_emailtemp-item__title">テクニカルソリューションチームより - 予約の確認 </span> - [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
@@ -2008,7 +2026,7 @@ var jp_email_temp = `
         </div>
 
         <div class="_emailtemp-item" data-type="NI - Awaiting Inputs">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
+            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
             <div class="_emailtemp-item__title">テクニカルソリューションより -  [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
@@ -2020,7 +2038,7 @@ var jp_email_temp = `
         </div>
 
         <div class="_emailtemp-item" data-type="NI - Awaiting Inputs">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
+            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
             <div class="_emailtemp-item__title">テクニカルソリューションより -  [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
@@ -2032,7 +2050,7 @@ var jp_email_temp = `
         </div>
         
         <div class="_emailtemp-item" data-type="NI - Attempted Contact">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
+            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
             <div class="_emailtemp-item__title">テクニカルソリューションより - ご対応後、ご返信ください [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
@@ -2044,7 +2062,7 @@ var jp_email_temp = `
         </div>
 
         <div class="_emailtemp-item" data-type="SO - Verified">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
+            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
             <div class="_emailtemp-item__title">テクニカルソリューションチームより - サポート完了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
@@ -2055,7 +2073,7 @@ var jp_email_temp = `
             </div>
         </div>
         <div class="_emailtemp-item" data-type="SO - Verified No Recent Conversion">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
+            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
             <div class="_emailtemp-item__title">テクニカルソリューションチームより - サポート完了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
@@ -2067,7 +2085,7 @@ var jp_email_temp = `
         </div>
 
         <div class="_emailtemp-item" data-type="[DFA] SO - Verified">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
+            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
             <div class="_emailtemp-item__title">テクニカルソリューションチームより - サポート完了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
@@ -2078,7 +2096,7 @@ var jp_email_temp = `
             </div>
         </div>
         <div class="_emailtemp-item" data-type="IN - Not reachable">
-            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
+            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
             <div class="_emailtemp-item__title">テクニカルソリューションチームより - サポート終了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">
                 <div id="email-body-content-top" style="width:100%" dir="auto">
@@ -2088,17 +2106,18 @@ var jp_email_temp = `
                 </div>
             </div>
         </div>
-            <div class="_emailtemp-item" data-type="IN - other">
-                <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-btnaction="emailtemp__insert1stemail">Insert</span>
-                <div class="_emailtemp-item__title">テクニカルソリューションチームより - サポート終了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
-                <div class="_emailtemp-item__content">
-                    <div id="email-body-content-top" style="width:100%" dir="auto">
-                        <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
-                            ${jp_list_emailtemplatecontent.in_other}
-                        </div>
+        <div class="_emailtemp-item" data-type="IN - other">
+            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
+            <div class="_emailtemp-item__title">テクニカルソリューションチームより - サポート終了のご連絡 [<span data-infocase="case_id">5-0987654321</span>]</div>
+            <div class="_emailtemp-item__content">
+                <div id="email-body-content-top" style="width:100%" dir="auto">
+                    <div id="email-body-content-top-content" style="font:normal 13px/17px Roboto,sans-serif;display:block" dir="auto">
+                        ${jp_list_emailtemplatecontent.in_other}
                     </div>
                 </div>
             </div>
+        </div>
+            
         <div class="_emailtemp-item" data-type="Use your template">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
             <div class="_emailtemp-item__title">テクニカルソリューションチームより -  [<span data-infocase="case_id">5-6594000033737</span>]</div>
@@ -2110,10 +2129,8 @@ var jp_email_temp = `
                 </div>
             </div>
         </div>
-    
-
-        
-    </div>`;
+    </div>
+    `;
 var jp_panel_div = `
     <div id="_panel_div" class="_panel active minisize hide_toolbar hide_opentiptutorial hide_opensetting hide_emailtemplate hide_firstemail hide_main" >
         

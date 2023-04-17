@@ -751,8 +751,13 @@ function global_case() {
                             _sub_i_ul_itemli.innerText = _sub_i_ul_itemli.getAttribute('data-key');
     
                             _sub_i_ul_itemli.addEventListener('click', (e) => {
-                                console.log(elm.innerText, e.target.innerText)
                                 elm.innerText = e.target.innerText;
+                                var __caseidelm = document.querySelector('[debug-id="case-id"] .case-id');
+                                if(__caseidelm) {
+                                    updateFieldCase2Storage('qlus_status', elm.innerText, __caseidelm.innerText , () => {
+                                        cLog(() => { console.log('cdtx', 'qlus_status', innerText) })
+                                    });
+                                }
                                 _sub_i_ul_elm.remove();
                             })
     

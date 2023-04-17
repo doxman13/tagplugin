@@ -54,19 +54,21 @@ var jp_list_emailtemplatecontent = {
                 <tr>
                   <td align="left"
                     style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
-                    <p>Google テクニカルソリューションチームにご予約いただき誠にありがとうございます。Google 広告アカウント担当者より依頼を受け、<span
-                        data-infocase="customer_website" data-highlight="need_recheck">customer_website.com</span>のケース
-                      ID<span data-infocase="case_id" data-highlight="need_recheck">0-00000000000000</span>
+                    <p>Google テクニカルソリューションチームにご予約いただき誠にありがとうございます。Google 広告アカウント担当者より依頼を受け、 <span
+                        data-infocase="customer_website" data-highlight="need_recheck">customer_website.com</span> のケース
+                      ID:<span data-infocase="case_id" data-highlight="need_recheck">0-00000000000000</span>
                       についてサポートいたします。
   
                       &nbsp;</p>
                     <p dir="auto">Eメールで、本サポートのためのカレンダーの招待状をお送りしております。その指示に従い、出席をご確認ください。また事前準備として、&nbsp;<a
                         href="https://support.google.com/google-ads/answer/11605860?hl=ja" target="_blank">こちらの To Do
-                        リスト</a>のチェックリストも完了しておいてください。</p>
+                        リスト</a>のチェックリストも完了していただけると幸いです。</p>
                     <p dir="auto">お時間になりましたら、下記のリンクをクリックし、「参加をリクエスト」してください。（お時間になってもMeetに参加されないようであれば、お電話差し上げます。）</p>
-                    <a href=# dir="auto" data-infocase_link="customer_gmeet" data-highlight="need_recheck">
+                    <p>
+                    <a href=# dir="auto" data-infocase_link="customer_gmeet" data-infocase="customer_gmeet" data-highlight="need_recheck">
                       ミーティングのリンクをここに入れてください
                     </a>
+                    </p>
                     <p dir="auto">できれば Chrome で開いていただき、カメラは OFF （音声のみ）でお願いいたします。お手元に、該当 Google
                       広告アカウントの管理画面と、対象のウェブサイトの編集画面（またはタグマネジャーの管理画面） をご用意下さい。</p>
                     <p dir="auto">ご予約日前に質問がある場合、または参加者を追加したい場合は、このメールに返信するか、Google の営業担当者に連絡してお知らせください。</p>
@@ -698,7 +700,7 @@ var jp_list_emailtemplatecontent = {
             </tr>
             <tr>
               <td align="left" style="padding-bottom: 18px;">
-                今回のご予約では、GA4（グーグルアナリティクス4）の初期設定および、現在ユニバーサルアナリティクスで設定されているイベント、コンバージョン、オーディエンス設定のご案内をさせていただきます。
+                今回のご予約では、GA4（Google アナリティクス 4）の初期設定および、現在ユニバーサル アナリティクスで設定されているイベント、コンバージョン、オーディエンス設定のご案内をさせていただきます。
                 サポート内容の概要は下記をご確認ください。
               </td>
             </tr>
@@ -706,13 +708,13 @@ var jp_list_emailtemplatecontent = {
               <td align="left" style="padding-bottom: 18px;">
                 <ul>
                   <li>
-                    <p>GA4プロパティーの作成 / 移行</p>
+                    <p>GA4 プロパティの作成 / 移行</p>
                   </li>
                   <li>
-                    <p>ウェブサイトへのGA4設定タグの設置（直接タグ設置、またはタグマネージャー経由）</p>
+                    <p>ウェブサイトへの GA4 設定タグの設置（直接タグ設置、またはタグ マネージャー経由）</p>
                   </li>
                   <li>
-                    <p>GA4とグーグル広告の連携</p>
+                    <p>GA4 と Google 広告の連携</p>
                   </li>
                   <li>
                     <p>コンバージョンの作成 / 移行（最大5つ）</p>
@@ -721,10 +723,10 @@ var jp_list_emailtemplatecontent = {
                     <p>オーディエンスの作成 / 移行（最大5つ）</p>
                   </li>
                   <li>
-                    <p>GA4 Eコマースの実装（必要に応じて）</p>
+                    <p>GA4 e コマースの実装（必要に応じて）</p>
                   </li>
                   <li>
-                    <p>GA4で設定したコンバージョンをグーグル広告へインポート</p>
+                    <p>GA4 で設定したコンバージョンを Google 広告へインポート</p>
                   </li>
                 </ul>
               </td>
@@ -732,13 +734,13 @@ var jp_list_emailtemplatecontent = {
             <tr>
               <td align="left">
                 <div style="padding: 50px 30px 50px 30px;  background-color:#e6f4ea;">
-                  <strong">ご予約日時:
-                    <span data-highlight="need_recheck">
+                  <strong　style="background-color:#e6f4ea;">ご予約日時:
+                    <span data-highlight="need_recheck" style="background-color:#e6f4ea;">
                       予約日の入力が必要です。
                     </span>
                   </strong><br>
-                  <strong ">ご提供いただいた電話番号:
-                    <span data-highlight="need_recheck"">
+                  <strong style="background-color:#e6f4ea;">ご提供いただいた電話番号:
+                    <span data-highlight="need_recheck" style="background-color:#e6f4ea;">
                         電話番号の入力が必要です。
                     </span>
                   </strong>
@@ -752,13 +754,15 @@ var jp_list_emailtemplatecontent = {
                     Do リスト</a>のチェックリストも完了していただけると幸いです。
                 </p>
                 <p>
-                  当日のサポートですが、お客様の作業状況を把握するためGoogleミート（Web会議ツール）を使用し、 お客様のPC画面を共有していただきながらご案内させていただきます。<br>
-                  お時間になりましたら、下記GoogleミートのURLをクリックしご参加ください。<br>
-                  <p><a href="https://meet.google.com" dir="auto" data-infocase_link="customer_gmeet" data-highlight="need_recheck">
-                    ミーティングのリンクをここに入れてください
-                  </a><br></p>
+                  当日のサポートですが、お客様の作業状況を把握するため Google Meet（ウェブ会議ツール）を使用し、 お客様の PC 画面を共有していただきながらご案内させていただきます。<br>
+                  お時間になりましたら、下記 Google Meet の URL をクリックしご参加ください。<br>
+                  <p>
+                  <a href=# dir="auto"  data-highlight="need_recheck">
+                      ミーティングのリンクをここに入れてください
+                    </a>
+                  </p>  
                   できれば Chrome で開いていただき、カメラはオフ、音声のみでお願いいたします。<br> 
-                  お手元に、該当Googleアナリティクスの管理画面と対象のウェブサイトの編集画面（またはタグマネジャーの画面）をご用意下さい。
+                  お手元に、該当 Google アナリティクスの管理画面と対象のウェブサイトの編集画面（またはタグ マネジャーの画面）をご用意下さい。
                 </p>
                 <p>ご予約日前に質問がある場合、または参加者を追加されたい場合は、このメールにご返信くださいませ。</p>
 
@@ -771,22 +775,6 @@ var jp_list_emailtemplatecontent = {
     </tr>
   </tbody>
 </table>
-<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-  <tbody>
-    <tr>
-      <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-          <tbody>
-            <tr>
-              <td align="left"
-                style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
-                Case # <span data-infocase="case_id">0-00000000000000</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
 
 </table>
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
@@ -902,7 +890,7 @@ var jp_list_emailtemplatecontent = {
             </tr>
             <tr>
               <td align="left" style="padding-bottom: 18px;">
-                今回のご予約では、GA4（グーグルアナリティクス4）の初期設定および、現在ユニバーサルアナリティクスで設定されているイベント、コンバージョン、オーディエンス設定のご案内をさせていただきます。
+                今回のご予約では、GA4（Google アナリティクス 4）の初期設定および、現在ユニバーサル アナリティクスで設定されているイベント、コンバージョン、オーディエンス設定のご案内をさせていただきます。
                 サポート内容の概要は下記をご確認ください。
               </td>
             </tr>
@@ -910,13 +898,13 @@ var jp_list_emailtemplatecontent = {
               <td align="left" style="padding-bottom: 18px;">
                 <ul>
                   <li>
-                    <p>GA4プロパティーの作成 / 移行</p>
+                    <p>GA4 プロパティの作成 / 移行</p>
                   </li>
                   <li>
-                    <p>ウェブサイトへのGA4設定タグの設置（直接タグ設置、またはタグマネージャー経由）</p>
+                    <p>ウェブサイトへの GA4 設定タグの設置（直接タグ設置、またはタグ マネージャー経由）</p>
                   </li>
                   <li>
-                    <p>GA4とグーグル広告の連携</p>
+                    <p>GA4 と Google 広告の連携</p>
                   </li>
                   <li>
                     <p>コンバージョンの作成 / 移行（最大5つ）</p>
@@ -925,10 +913,10 @@ var jp_list_emailtemplatecontent = {
                     <p>オーディエンスの作成 / 移行（最大5つ）</p>
                   </li>
                   <li>
-                    <p>GA4 Eコマースの実装（必要に応じて）</p>
+                    <p>GA4 e コマースの実装（必要に応じて）</p>
                   </li>
                   <li>
-                    <p>GA4で設定したコンバージョンをグーグル広告へインポート</p>
+                    <p>GA4 で設定したコンバージョンを Google 広告へインポート</p>
                   </li>
                 </ul>
               </td>
@@ -936,13 +924,13 @@ var jp_list_emailtemplatecontent = {
             <tr>
               <td align="left" style="padding-bottom: 18px;">
                 <div style="padding: 50px 30px 50px 30px;  background-color:#e6f4ea;">
-                  <strong >ご予約日時:
-                    <span data-highlight="need_recheck" >
+                  <strong style="background-color:#e6f4ea;">ご予約日時:
+                    <span data-highlight="need_recheck" style="background-color:#e6f4ea;">
                       予約日時の入力が必要です
                     </span>
                   </strong><br>
-                  <strong>ご提供いただいた電話番号:
-                    <span data-highlight="need_recheck" >
+                  <strong style="background-color:#e6f4ea;">ご提供いただいた電話番号:
+                    <span data-highlight="need_recheck" style="background-color:#e6f4ea;">
                         電話番号の入力が必要です
                     </span>
                   </strong>
@@ -963,13 +951,15 @@ var jp_list_emailtemplatecontent = {
                     Do リスト</a>のチェックリストも完了していただけると幸いです。
                 </p>
                 <p>
-                  当日のサポートですが、お客様の作業状況を把握するためGoogleミート（Web会議ツール）を使用し、 お客様のPC画面を共有していただきながらご案内させていただきます。<br>
-                  お時間になりましたら、下記GoogleミートのURLをクリックしご参加ください。<br>
-                  <p><a href="https://meet.google.com" dir="auto" data-infocase_link="customer_gmeet" data-highlight="need_recheck">
-                    ミーティングのリンクをここに入れてください
-                  </a><br></p>
+                  当日のサポートですが、お客様の作業状況を把握するため Google Meet（ウェブ会議ツール）を使用し、 お客様の PC 画面を共有していただきながらご案内させていただきます。<br>
+                  お時間になりましたら、下記 Google Meet の URL をクリックしご参加ください。<br>
+                  <p>
+                  <a href=# dir="auto" data-highlight="need_recheck">
+                      ミーティングのリンクをここに入れてください
+                    </a>
+                    </p>
                   できれば Chrome で開いていただき、カメラはオフ、音声のみでお願いいたします。<br> 
-                  お手元に、該当Googleアナリティクスの管理画面と対象のウェブサイトの編集画面（またはタグマネジャーの画面）をご用意下さい。
+                  お手元に、該当 Google アナリティクスの管理画面と対象のウェブサイトの編集画面（またはタグ マネジャーの画面）をご用意下さい。
                 </p>
                 <p>ご予約日前に質問がある場合、または参加者を追加されたい場合は、このメールにご返信くださいませ。</p>
 
@@ -982,22 +972,6 @@ var jp_list_emailtemplatecontent = {
     </tr>
   </tbody>
 </table>
-<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-  <tbody>
-    <tr>
-      <td align="center" style="padding: 0px 40px 30px 30px;" valign="top">
-        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-          <tbody>
-            <tr>
-              <td align="left"
-                style="font-size:16px;line-height:24px;font-family: Roboto, Arial, sans-serif;color:#3C4043;font-weight: 700;padding: 0;">
-                Case # <span data-infocase="case_id">0-00000000000000</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
 
   <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
     <tbody>
@@ -1114,12 +1088,12 @@ var jp_list_emailtemplatecontent = {
                                         data-highlight="need_recheck">Case Type</span></strong>は終了とさせていただきます。
                                 <br>
                                 ご質問やご懸念等がありましたら当チームが喜んでサポートさせていただきますので、
-                                アカウントマネージャー経由か、グーグル広告ヘルプフォーム経由でお問い合わせくださいませ。
+                                アカウントマネージャー経由か、Google広告ヘルプフォーム経由でお問い合わせくださいませ。
                             </td>
                         </tr>
                         <tr>
                             <td align="left" style="padding-bottom: 18px;">
-                                GA4の主な機能やUAとの違いなどに関するグーグルヘルプの記事を下記にご共有いたします。<br>
+                                GA4の主な機能やUAとの違いなどに関するGoogleヘルプの記事を下記にご共有いたします。<br>
                                 <ul>
                                     <li>
                                         <p><a
@@ -1128,7 +1102,7 @@ var jp_list_emailtemplatecontent = {
                                     </li>
                                     <li>
                                         <p><a
-                                                href="https://support.google.com/analytics/answer/11583528?hl=ja">ユニバーサルアナリティクスのサポート終了に関して</a>
+                                                href="https://support.google.com/analytics/answer/11583528?hl=ja">ユニバーサル アナリティクスのサポート終了に関して</a>
                                         </p>
                                     </li>
                                     <li>
@@ -1141,7 +1115,7 @@ var jp_list_emailtemplatecontent = {
                         </tr>
                         <tr>
                             <td align="left">
-                                グーグル広告をご利用いただき、誠にありがとうございます。<br>
+                                Google広告をご利用いただき、誠にありがとうございます。<br>
                                 今後とも何卒よろしくお願いいたします。
                             </td>
                         </tr>
@@ -2025,7 +1999,7 @@ var jp_email_temp = `
             </div>
         </div>
 
-        <div class="_emailtemp-item" data-type="NI - Awaiting Inputs">
+        <div class="_emailtemp-item" data-type="NI - In Consult">
             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate">Insert</span>
             <div class="_emailtemp-item__title">テクニカルソリューションより -  [<span data-infocase="case_id">5-0987654321</span>]</div>
             <div class="_emailtemp-item__content">

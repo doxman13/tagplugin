@@ -185,60 +185,60 @@ if (window.location.hostname === "cases.connect.corp.google.com" && window.locat
 		}
 
 
-		// Select the node that will be observed for mutations
-		var targetNode = document.body;
+		// // Select the node that will be observed for mutations
+		// var targetNode = document.body;
 
-		// Options for the observer (which mutations to observe)
-		var config = { attributes: true, childList: true, subtree: true };
+		// // Options for the observer (which mutations to observe)
+		// var config = { attributes: true, childList: true, subtree: true };
 
-		// Callback function to execute when mutations are observed
-		var callback = function(mutationList, observer) {
-			// on-call, precall button 
-			var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top`);
-			if(_istopelm) {
-				if (_istopelm.querySelector("#pre-call") === null && _istopelm.querySelector("#on-call") === null) {
-					createDomWithText("Precall", `<ul dir="auto"><li>Emails or feedback from Advertiser/Seller (including seller request to join the call)[C]&nbsp;</li><li>Call being made in business hours[C]</li><li>Program ,task type (including special instructions),advertiser need and readiness [C]</li><li>Related cases [C]</li><li>CMS being used  [C]</li><li>Gtag/GTM/GA already exists  [C] (NA applicable only for Shopping or OCT cases)</li></ul><span class="_document_attachurl_i"></span>`, "pre-call");
-					createDomWithText("OnCall", `<b>Sub-status:&nbsp;<span class="_sub_i"></span></b>&nbsp; <p dir="auto"><b>Sub-status Reason:</b>&nbsp;</p><p dir="auto"><b>Speakeasy ID:&nbsp;</b></p><p dir="auto"><b>On Call Comments:</b>&nbsp;</p><p dir="auto"><b>Tags Implemented:</b>&nbsp;<span class="_task_i"></span></p><p dir="auto"><b>Screenshots:&nbsp;</b></p><p dir="auto"><b>Multiple CIDs:&nbsp;</b></p><p dir="auto"><b>On Call Screenshot:</b>&nbsp;</p>`, "on-call");
+		// // Callback function to execute when mutations are observed
+		// var callback = function(mutationList, observer) {
+		// 	// on-call, precall button 
+		// 	var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top`);
+		// 	if(_istopelm) {
+		// 		if (_istopelm.querySelector("#pre-call") === null && _istopelm.querySelector("#on-call") === null) {
+		// 			createDomWithText("Precall", `<ul dir="auto"><li>Emails or feedback from Advertiser/Seller (including seller request to join the call)[C]&nbsp;</li><li>Call being made in business hours[C]</li><li>Program ,task type (including special instructions),advertiser need and readiness [C]</li><li>Related cases [C]</li><li>CMS being used  [C]</li><li>Gtag/GTM/GA already exists  [C] (NA applicable only for Shopping or OCT cases)</li></ul><span class="_document_attachurl_i"></span>`, "pre-call");
+		// 			createDomWithText("OnCall", `<b>Sub-status:&nbsp;<span class="_sub_i"></span></b>&nbsp; <p dir="auto"><b>Sub-status Reason:</b>&nbsp;</p><p dir="auto"><b>Speakeasy ID:&nbsp;</b></p><p dir="auto"><b>On Call Comments:</b>&nbsp;</p><p dir="auto"><b>Tags Implemented:</b>&nbsp;<span class="_task_i"></span></p><p dir="auto"><b>Screenshots:&nbsp;</b></p><p dir="auto"><b>Multiple CIDs:&nbsp;</b></p><p dir="auto"><b>On Call Screenshot:</b>&nbsp;</p>`, "on-call");
 
 
-				}
-			}
+		// 		}
+		// 	}
 			
-			// findCalendarBtn button go to calendar
-			var _elmHomeTitle = document.querySelector('#read-card-tab-panel-home .section.header.home:not([style*="display:none"]):not([style*="display: none"])');
-			if(_elmHomeTitle) {
-				if (_elmHomeTitle.querySelector("#findCalendarBtn") === null) {
-					if(document.querySelector('[debug-id="case-id"]')) {
-						var _caseId = document.querySelector('[debug-id="case-id"]').innerText;
-						var _findCalendarBtnHtmlStr = `<a href="https://calendar.google.com/calendar/u/0/r/search?q=${_caseId}" id="findCalendarBtn" target="_blank"
-						style="
-						border: 1px solid #bbb7b7;
-						line-height: 0;
-						padding: 11px;
-						border-radius: 4px;
-						color: #444;
-						font-weight: 700;
-						text-shadow: 1px 1px 2px #fff;
-						background-color: #eee;
-						margin-right: 6px;
-						cursor: pointer;
-						font-size: 12px;
-						text-decoration: none;"
+		// 	// findCalendarBtn button go to calendar
+		// 	var _elmHomeTitle = document.querySelector('#read-card-tab-panel-home .section.header.home:not([style*="display:none"]):not([style*="display: none"])');
+		// 	if(_elmHomeTitle) {
+		// 		if (_elmHomeTitle.querySelector("#findCalendarBtn") === null) {
+		// 			if(document.querySelector('[debug-id="case-id"]')) {
+		// 				var _caseId = document.querySelector('[debug-id="case-id"]').innerText;
+		// 				var _findCalendarBtnHtmlStr = `<a href="https://calendar.google.com/calendar/u/0/r/search?q=${_caseId}" id="findCalendarBtn" target="_blank"
+		// 				style="
+		// 				border: 1px solid #bbb7b7;
+		// 				line-height: 0;
+		// 				padding: 11px;
+		// 				border-radius: 4px;
+		// 				color: #444;
+		// 				font-weight: 700;
+		// 				text-shadow: 1px 1px 2px #fff;
+		// 				background-color: #eee;
+		// 				margin-right: 6px;
+		// 				cursor: pointer;
+		// 				font-size: 12px;
+		// 				text-decoration: none;"
 						
-						>Go to Calendar</a>`;
-						if(_elmHomeTitle) {
-							_elmHomeTitle.insertAdjacentHTML("beforeEnd", _findCalendarBtnHtmlStr);
-						}
-					}
-				}
-			}
-		};
+		// 				>Go to Calendar</a>`;
+		// 				if(_elmHomeTitle) {
+		// 					_elmHomeTitle.insertAdjacentHTML("beforeEnd", _findCalendarBtnHtmlStr);
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// };
 
-		// Create an observer instance linked to the callback function
-		var observer = new MutationObserver(callback);
+		// // Create an observer instance linked to the callback function
+		// var observer = new MutationObserver(callback);
 
-		// Start observing the target node for configured mutations
-		observer.observe(targetNode, config);
+		// // Start observing the target node for configured mutations
+		// observer.observe(targetNode, config);
 
 
 		

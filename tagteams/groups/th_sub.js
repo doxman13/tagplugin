@@ -102,7 +102,7 @@ var th_searchandremove = [
     'ทีมโซลูชันทางเทคนิค Google',
 ];
 
-var th_api_blog = 'https://cdtx.lyl.vn/wordpress/wp-json/tagteam/blogs';
+var th_api_blog = 'https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/api.php';
 
 
 

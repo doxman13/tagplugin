@@ -102,7 +102,7 @@ var en_searchandremove = [
     'Technical Solutions Team',
 ];
 
-var en_api_blog = 'https://cdtx.lyl.vn/wordpress/wp-json/tagteam/blogs';
+var en_api_blog = 'https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/api.php';
 
 
 

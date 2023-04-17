@@ -123,7 +123,7 @@ function restore_options() {
   chrome.storage.sync.get({
     mycountry: 'Thailand',
     ouremail: 'xxx@google.com', 
-    myInjector: 'gtm-xxx',
+    myInjector: '',
     gtmToDo: 'notStart',
     optionkl__modecase: "",
     optionkl__inputyourshortname: "",

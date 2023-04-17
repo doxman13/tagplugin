@@ -81,8 +81,8 @@ function th_tagTeamTDCXLoad() {
 
             // For cases connect
             if(window.location.hostname === "cases.connect.corp.google.com" && window.location.href.indexOf("#/case/") > - 1) {
-                if(_datatemp.am_isgcc) {
-                    noteBarAlert('Is GCC', _datatemp.case_id);
+                if(_datatemp.am_isgcc_external) {
+                    noteBarAlert('Is GCC / External', _datatemp.case_id);
                     var elminputbcc = document.querySelector("email-address-input.bcc");
                     if(elminputbcc) {
                         elminputbcc.classList.add("isgcc");
@@ -119,7 +119,7 @@ function th_tagTeamTDCXLoad() {
         function notedByCase(_datatemp = {}) {
             var lst_notification = '';
             
-            if(_datatemp.am_isgcc) {
+            if(_datatemp.am_isgcc_external) {
                 lst_notification +=`<p class="_panel__notification_alert">Is GCC?</p>`;
                 var elminputbcc = document.querySelector("email-address-input.bcc");
                 if(elminputbcc) {
@@ -704,134 +704,10 @@ function th_tagTeamTDCXLoad() {
         });
     }
 
-// Load Email Template 
-    function loadEmailTemplateAction(){                
-        document.querySelectorAll("._panel_btn--addtemplate").forEach(function(elm) {
-            elm.addEventListener("click", function() {
-                cLog(() => {
-                    console.log(1, "Here");
-                })
-                
-                // 0. ready
-                var _insertmailbox = (_this) => {
-                
-                    var template_title = _this.closest("._emailtemp-item").querySelector("._emailtemp-item__title");
-                    var template_body = _this.closest("._emailtemp-item").querySelector("#email-body-content-top-content");
-                    
-                    // Wait and insert
-                    wait4Elem('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"] #email-body-content-top').then(function (elm) {
-                        cLog(() => {console.log("checkInputEmailInboxAndFix 2"); });
-                        checkInputEmailInboxAndFix();
-                        
-                        var _card_istop = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top');
-
-                        
-                        var subject = _card_istop.querySelector("input.subject");
-                        var body_content = _card_istop.querySelector("#email-body-content");
-                        var body_content_top = _card_istop.querySelector("#email-body-content-top");
-                        var body_content_top_content = _card_istop.querySelector("#email-body-content-top-content");
-
-                        body_content.style.padding = '0px';
-                        body_content.style.width = '100%';
-                        // Insert value
-                        subject.value = template_title.innerText;
-                        body_content_top.innerHTML = template_body.innerHTML;
-                        
-                        // action save status
-                            subject.dispatchEvent(new Event('input'));
-                            body_content_top.dispatchEvent(new Event('input'));
-                            body_content_top_content.dispatchEvent(new Event('input'));
-                            _card_istop.querySelector('[debug-id="add_highlight"]').click();
-                        
-                        // Click offer
-                            if(
-                                _this.closest("._emailtemp-item").getAttribute("data-type").includes("SO - ")
-                            ) {
-                            
-                                if(_card_istop.querySelector('[debug-id="solution_offered_checkbox"].disabled')) {                                        
-                                    Toastify({
-                                        text: 'Please update Tracking Issue Time',
-                                        duration: 3000,
-                                        class: "warning",
-                                        callback: function(){
-                                            this.remove();
-                                        }
-                                    }).showToast();
-
-                                    document.querySelector('[debug-id="dock-item-issue"]').click();
-                                }
-                                
-                                if(_card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled)')) {
-                                    _card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled):not(._active)').click();
-                                    _card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled)').classList.add('_active');
-                                }
-                            }
-
-                        // Open document doc list
-                            document.querySelector('compose-card-content-wrapper').click();
-                            document.querySelector('compose-card-content-wrapper').focus();
-                            
-                    });
-                    
-                }
-
-                // 1.1 Open dial
-                if(document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"] #email-body-content-top')) {
-                    _insertmailbox(this);
-                } else {
-                    document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
-                    document.querySelector("material-fab.themeable.action-2.compose").addEventListener("click", () => {
-                        var n_card = document.querySelectorAll("card[casesanimate].write-card").length || 0;
-                        var myTimeCheck = setInterval(() => {
-                            var n_card_2 = document.querySelectorAll("card[casesanimate].write-card").length || 0;
-                            if(n_card_2 > n_card) {
-                                clearInterval(myTimeCheck);
-                                _insertmailbox(this);
-
-                                // Close dial
-                                document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
-
-                            }
-                        }, 1000)
-                        
-                    });
-                    
-                    // 1.2
-                    document.querySelector("material-fab.themeable.action-2.compose").click();
-                    
-                }
-
-            });
-        });
-        
-        onClickElm('._emailtemp_search_input', 'keyup', function(elm_inputparent, e){
-            var _search = elm_inputparent.innerText.toLowerCase();
-            elm_inputparent.closest('[data-panel="email-template"]').querySelectorAll('[data-type]').forEach((elm) => {
-                // elm
-                elm.style.display = 'none';
-                cLog(()=> {console.log(elm.getAttribute("data-type").toLowerCase().includes(_search))})
-                if(elm.getAttribute("data-type").toLowerCase().includes(_search)) {
-                    elm.style.display = '';
-                }
-            });
-
-        });
-        // panel_div.querySelector('#_emailtemp_search_input').addEventListener("keyup", (e) => {
-        //     var _search = panel_div.querySelector('#_emailtemp_search_input').innerText.toLowerCase();
-        //     panel_div.querySelectorAll('[data-type]').forEach((elm) => {
-        //         // elm
-        //         elm.style.display = 'none';
-        //         cLog(()=> {console.log(elm.getAttribute("data-type").toLowerCase().includes(_search))})
-        //         if(elm.getAttribute("data-type").toLowerCase().includes(_search)) {
-        //             elm.style.display = '';
-        //         }
-        //     });
-        // });
-    }
 
 function activeListCase(caseid){
     panel_div.querySelectorAll('[data-caseid]').forEach((elm)=>{
-        cLog(()=> {console.log(elm.getAttribute('data-caseid'), caseid);});
+        
         if(elm.getAttribute('data-caseid') == caseid) {
             elm.classList.add("active");
         } else {
@@ -916,11 +792,11 @@ function loadInputCase(_panel, _datatemp, _isvalidate = true) {
     _panel.querySelector('[data-infocase="customer_website"]').setAttribute("href", _datatemp.customer_website);
 
 
-    loadInfoCaseInnerTextElm(_panel, 'am_isgcc', '---');
+    loadInfoCaseInnerTextElm(_panel, 'am_isgcc_external', '---');
     _panel.querySelector(`[data-panel="script-reading"]`).setAttribute('data-isgcc', '0');
-    if(_datatemp.am_isgcc) {
-        loadInfoCaseInnerTextElm(_panel, 'am_isgcc', 'GCC');
-        _panel.querySelector('[name="am_isgcc"]').checked = true;
+    if(_datatemp.am_isgcc_external) {
+        loadInfoCaseInnerTextElm(_panel, 'am_isgcc_external', 'GCC');
+        _panel.querySelector('[name="am_isgcc_external"]').checked = true;
         _panel.querySelector(`[data-panel="script-reading"]`).setAttribute('data-isgcc', '1');
     }
 
@@ -1273,227 +1149,6 @@ function loadCase(elm) {
         return true;
     }
 
-    if(window.location.href.includes("calendar.google.com")) {
-        // Set auto by checkbox
-        document.addEventListener("readystatechange", (event) => {
-            if(document.readyState === "complete") {
-                var is_updatelist_link = () => {
-                    getChromeStorage("cdtx_listmeetlink", (response) => {
-                        var casesmeet = response.value || {};
-                        document.querySelectorAll('[jslog][data-eventid]').forEach(function(elm){
-                            var jslog = elm.getAttribute('jslog');
-                            var caseid = elm.innerText.match(/\d-\d+/g);
-                            if(jslog){
-                                var meetid = jslog.match(/\w{3}-\w{4}-\w{3}/g);
-                            }
-
-                            if(caseid && meetid){
-                                casesmeet[caseid[0]] = "https://meet.google.com/" + meetid[0]
-                            }
-                        });
-                        
-                        setChromeStorage("cdtx_listmeetlink", casesmeet, () => {
-                            
-                            cLog(() => {
-                                console.log("Has update meet link!");
-                            })
-                        });
-                    });
-                }
-
-                is_updatelist_link();
-
-                // reUpdate 20mins
-                setInterval(() => {
-                    is_updatelist_link();
-                }, 1000 * 60 * 20);
-
-
-
-                
-                var _reupdate_data = function(){
-                    if(panel_div.getAttribute("data-caseid") && panel_div.classList.contains("_hascasedata") === false) {
-
-                        loadDataStatusCaseList(() => {
-                            var _datatemp = loadCaseDatabaseByID(panel_div.getAttribute("data-caseid"));
-                            if(_datatemp) {
-                                loadCaseList(panel_div.querySelector('._panel__caselist'));
-                                loadInputCase(elm, _datatemp);
-                                panel_div.classList.add("_hascasedata");
-                            }
-                        });
-                    }
-                }
-                
-                setInterval(() => {
-                    _reupdate_data();
-                }, 1000 * 4);
-            }
-
-        });
-            
-        var _isauto = true;
-
-        
-        if(_isauto) {
-            var _dialogParent = document.querySelector("#yDmH0d"),
-            _onceChange = '',
-            _elmHeading = _dialogParent.querySelector("#rAECCd");
-            if(_elmHeading) {
-                var _string = _elmHeading.innerText;
-                var _caseid = getOnlyCaseId(_string);
-                if(_caseid) {
-                    var _datatemp = loadCaseDatabaseByID(_caseid);
-                    cLog(() => { console.log('loadInputCase | 4'); })
-                    loadInputCase(elm, _datatemp);
-                    elm.querySelector('[data-infocase="case_id"]').innerText = _caseid;
-
-                    // Open
-                    if(window.tagteamoption.optionkl__disable_dialog == false) {
-                        document.querySelector('[data-btnaction="openmain"]').click();
-                    }
-                    
-                    // var alinkelm = _dialogParent.querySelector('[href*="meet.google.com"]');
-                    // if(alinkelm) {
-                    //     var _link = alinkelm.getAttribute("href").split("?")[0];
-
-                    //     var _cusmeet = elm.querySelector('[data-infocase_link="customer_gmeet"]');
-                    //     var _cusmeet_input = elm.querySelector('[name="customer_gmeet"]');
-                    //     // if(_cusmeet_input.value.length < 1) {
-                    //         _cusmeet.setAttribute("href", _link);
-                            
-                    //         if(_cusmeet) {
-                    //             _cusmeet_input.value = _link;
-                    //         }
-                    //     // }
-                        
-                    // }
-                } 
-            }
-
-            _dialogParent.addEventListener('DOMSubtreeModified', (e) => {
-                _elmHeading = _dialogParent.querySelector("#rAECCd");
-
-
-                // STEP 2: Empty
-                if(_elmHeading) {
-                    var _string = _elmHeading.innerText;
-                    var _caseid = getOnlyCaseId(_string);
-                    if(_caseid) {
-                        // Open
-                        if(window.tagteamoption.optionkl__disable_dialog == false) {
-                            document.querySelector('[data-btnaction="openmain"]').click();
-                        }
-
-                        if(_onceChange !== _caseid) {
-                            _onceChange = _caseid;
-                            var _datatemp = loadCaseDatabaseByID(_caseid);
-                            
-                            // set status
-                            panel_div.setAttribute("data-caseid", _caseid);
-                            if(_datatemp) {
-                                panel_div.classList.add("_hascasedata");
-                            } else {
-                                panel_div.classList.remove("_hascasedata");
-                            }
-
-                            if(_datatemp) {
-                                var itemelm = panel_div.querySelector(`._panel__caselist [data-caseid="${_caseid}"]`);
-
-                                if(itemelm) {
-                                    itemelm.click();
-                                    var is_open = toggleClass("mainpanel_template", document.documentElement);
-
-                                    document.documentElement.classList.remove("email_template");
-
-                                    if(is_open) {
-                                        document.documentElement.classList.remove("_hide_main");
-                                        panel_div.classList.remove("hide_main");
-
-                                        var _panels = panel_div.querySelectorAll(`[data-panel]`);
-                                        _panels.forEach((elm) => {
-                                            elm.classList.remove("active");
-                                        });
-
-                                        var _panel_elm_email = panel_div.querySelector(`[data-panel="main"]`);
-                                        _panel_elm_email.classList.add("active");
-                                    } else {
-                                        document.documentElement.classList.add("_hide_main");
-                                        panel_div.classList.add("hide_main");
-                                    }
-                                    
-                                }
-
-                    
-                                // 2.1 formchanger
-                                setTimeout(() => {
-                                    // Save google meet link
-                                    var alinkelm = _dialogParent.querySelector('[href*="meet.google.com"]');
-                                    if(alinkelm) {
-                                        var _link = alinkelm.getAttribute("href").split("?")[0];
-                                        
-                                        var _cusmeet = elm.querySelector('[data-infocase_link="customer_gmeet"]');
-                                        var _cusmeet_input = elm.querySelector('[name="customer_gmeet"]');
-                                        // if(_cusmeet_input.value.length < 1) {
-                                            _cusmeet_input.value = _link;
-                                            if(_cusmeet) {
-                                                _cusmeet.setAttribute("href", _link);
-                                            }
-
-                                            // Action save
-                                            elm.querySelector('[action="save"]').click();
-                                        // }
-                                        
-                                    }
-                                }, 1000);
-                            } else {
-                                clearInput();
-
-                                elm.querySelector('[data-infocase="case_id"]').innerText = _caseid;
-                                elm.querySelector('[data-infocase_link="case_id"]').setAttribute("href", "https://cases.connect.corp.google.com/#/case/" + _caseid);
-
-                                Toastify({
-                                    text: 'NEW!!!! This case is new',
-                                    duration: 3000,
-                                    class: "warning",
-                                    callback: function(){
-                                        this.remove();
-                                    }
-                                }).showToast();
-
-                                // Open
-                                if(window.tagteamoption.optionkl__disable_dialog == false) {
-                                    document.querySelector('[data-btnaction="openmain"]').click();
-                                    var is_open = toggleClass("mainpanel_template", document.documentElement);
-
-                                    document.documentElement.classList.remove("email_template");
-
-                                    if(is_open) {
-                                        document.documentElement.classList.remove("_hide_main");
-                                        panel_div.classList.remove("hide_main");
-
-                                        var _panels = panel_div.querySelectorAll(`[data-panel]`);
-                                        _panels.forEach((elm) => {
-                                            elm.classList.remove("active");
-                                        });
-
-                                        var _panel_elm_email = panel_div.querySelector(`[data-panel="main"]`);
-                                        _panel_elm_email.classList.add("active");
-                                    } else {
-                                        document.documentElement.classList.add("_hide_main");
-                                        panel_div.classList.add("hide_main");
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Exit
-        return true;
-    }
 
     if(dataStatus.case_current) {        
         cLog(() => {
@@ -1515,20 +1170,34 @@ var s_crawl_case = (_caseid, callback = function(){}) => {
     var dataList = [];
     var dataListTemp = [];
     var customer_adsid = "EMPTY!!!";
+    
+    // internal // external  || interaction_type
+    _datatemp.interaction_type = "internal";
     document.querySelectorAll("configurable-signals home-data-item").forEach(function(elm){
         dataList = elm.innerText.split("\n");
         if(dataList[0] === window.dataTagteam.language.google_ads_external_customer_id) {
             _datatemp.customer_adsid = dataList[1];
         }
+        
+        if(dataList[1].toLowerCase().includes('external')) {
+            _datatemp.interaction_type = dataList[1].toLowerCase();
+            _datatemp.am_isgcc_external = 1;
+        }
     });
 
-    
     // appointment_time
         var appointment_time = '';
         document.querySelectorAll("card.read-card:not(.hidden) cuf-form-field").forEach(function(elm){
-            var dataList = elm.innerText.split("\n");
+            dataList = elm.innerText.trim().split("\n");
+            dataList = dataList.filter(function (el) {return el != "";});
+            
             if(dataList[0] === "Appointment Time") {
                 appointment_time += " " + dataList[1] ;
+            }
+
+            if(dataList[0].toLowerCase().includes('universal analytics')) {
+                _datatemp.interaction_type = 'external';
+                _datatemp.am_isgcc_external = 1;
             }
         });
 
@@ -1590,7 +1259,7 @@ var s_crawl_case = (_caseid, callback = function(){}) => {
                 
                 // Is GCC
                 if(dataList.join(" ").toUpperCase().includes("GCC")){
-                    _datatemp.am_isgcc = 1;
+                    _datatemp.am_isgcc_external = 1;
                     
                     Toastify({
                         text: 'HAVE GCC => EMAIL SEND: <br>TO BCC',
@@ -1731,19 +1400,34 @@ var crawl_basic = (_caseid) => {
     var dataList = [];
     var dataListTemp = [];
     var customer_adsid = "EMPTY!!!";
+    
+    // internal // external  || interaction_type
+    _datatemp.interaction_type = "internal";
     document.querySelectorAll("configurable-signals home-data-item").forEach(function(elm){
-        dataList = elm.innerText.split("\n");
+        dataList = elm.innerText.trim().split("\n");
         if(dataList[0] === window.dataTagteam.language.google_ads_external_customer_id) {
             _datatemp.customer_adsid = dataList[1];
+        }
+        
+        if(dataList[1].toLowerCase().includes('external')) {
+            _datatemp.interaction_type = dataList[1].toLowerCase();
+            _datatemp.am_isgcc_external = 1;
         }
     });
 
     // appointment_time
         var appointment_time = '';
         document.querySelectorAll("card.read-card:not(.hidden) cuf-form-field").forEach(function(elm){
-            var dataList = elm.innerText.split("\n");
+            dataList = elm.innerText.trim().split("\n");
+            dataList = dataList.filter(function (el) {return el != "";});
+
             if(dataList[0] === "Appointment Time") {
                 appointment_time += " " + dataList[1] ;
+            }
+
+            if(dataList[0].toLowerCase().includes('universal analytics')) {
+                _datatemp.interaction_type = 'external';
+                _datatemp.am_isgcc_external = 1;
             }
         });
 
@@ -1810,7 +1494,7 @@ var crawl_basic = (_caseid) => {
             
             // Is GCC
             if(dataList.join(" ").toUpperCase().includes("GCC")){
-                _datatemp.am_isgcc = 1;
+                _datatemp.am_isgcc_external = 1;
                 
                 Toastify({
                     text: 'HAVE GCC => EMAIL SEND: <br>TO BCC',
@@ -2102,8 +1786,6 @@ var set_init_load = () => {
         // 3. load case list
             loadCaseList(panel_div.querySelector('._panel__caselist'));
 
-        // 4. Email template
-            loadEmailTemplateAction();
         
         // 5. load Script Action 
             load_script_action();
@@ -2186,26 +1868,6 @@ var set_init_load = () => {
                             });
                         }
                     });
-
-                    if(location.hostname === 'meet.google.com') {
-                        getChromeStorage('cdtx_casecurrent', (response) => {
-                            if(dataStatus.cdtx_casecurrent !== response.value) {
-                                var itemelm = panel_div.querySelector(`._panel__caselist [data-caseid="${response.value}"]`);
-                                if(itemelm) {
-                                    itemelm.click();
-                                    dataStatus.cdtx_casecurrent = response.value;
-                                    
-                                    Toastify({
-                                        text: 'Has Sync',
-                                        duration: 1500,
-                                        callback: function(){
-                                            this.remove();
-                                        }
-                                    }).showToast();
-                                }
-                            }
-                        });
-                    }
                     
                 } catch (error) {
                     Toastify({
@@ -2245,8 +1907,6 @@ var loadpanelcaseconnect = (is_reload = false) => {
 
     var _pos_append_html = function (cdtx_paneldivhtml) {
         if(
-            window.location.hostname === "meet.google.com" ||
-            window.location.hostname === "calendar.google.com" ||
             window.location.hostname === "cases.connect.corp.google.com" && window.location.href.indexOf("#/case/") > - 1 || 
             _global_status.test
         ) {
@@ -2255,19 +1915,43 @@ var loadpanelcaseconnect = (is_reload = false) => {
             document.body.insertAdjacentHTML("afterEnd", cdtx_paneldivhtml);
             // 2 add shortcut button to connect cases
 
-                if(window.location.hostname === "meet.google.com") {
-                    var _addshortcutbtn_meet = () => {
+
+            if(window.location.hostname === "cases.connect.corp.google.com" ) {
+                cLog(() => {console.log('1. isReadyBasic')});
+
+                isReadyBasic(() => {
+                    var _addshortcutbtn = () => {
                         var _panel_addshortcutbtn = document.querySelector(".dock-container._panel_btnshortcut");
                         if(!_panel_addshortcutbtn) {
-                            var dock_container = document.body;
+                            var dock_container = document.querySelector(".dock-container");
                             if(dock_container) {
-                                var strhtml = `<div class="dock-container _panel_btnshortcut">
-                                    <div class="material-button _panel_shortcut_toggleopenmain_withoutsave"  >
+                                var strhtml = `<div class="dock-container _panel_btnshortcut">`;
+
+                                if(window.tagteamoption.optionkl__disable_dialog === false) {
+                                    strhtml += `<div class="material-button _panel_shortcut_toggleopenmain_withoutsave"  >
+                                            <div class="content">
+                                                <img src="${window.dataTagteam.assets_url_img}/355037/google.svg">
+                                            </div>
+                                        </div>`;
+                                }
+
+                                strhtml += `
+                                    <div class="material-button _panel_shortcut_openemailtemplate"  >
                                         <div class="content">
-                                            <img src="https://www.svgrepo.com/show/355037/google.svg">
+                                            <img src="${window.dataTagteam.assets_url_img}/194000/mail.svg">
                                         </div>
                                     </div>
+                                    <div class="material-button _panel_shortcut_fisrtemail"  >
+                                        <div class="content">
+                                            <img src="${window.dataTagteam.assets_url_img}/67628/email.svg">
+                                        </div>
+                                    </div>
+                                    <a href="http://go/thms" target="_blank" class="material-button _panel_shortcut_go_teamvietnam notview_today"  >
+                                        <img src="${window.dataTagteam.assets_url_img}/311132/reading-list.svg">
+                                        <span class="content"></span>
+                                    </a>
                                 </div>`;
+                                
                                 var dock_container_add = _TrustScript(strhtml);
                                 // // Open
                                 // document.querySelector('[data-btnaction="openmain"]').click();
@@ -2295,329 +1979,247 @@ var loadpanelcaseconnect = (is_reload = false) => {
                                         }
                                     });
                                 }
+
+                                document.querySelector('._panel_shortcut_openemailtemplate').addEventListener("click", (e) => {
+                                    var is_open = toggleClass("email_template", document.documentElement);
+
+                                    document.documentElement.classList.remove("mainpanel_template");
+
+                                    if(is_open) {
+                                        document.documentElement.classList.remove("_hide_main");
+                                        panel_div.classList.remove("hide_main");
+
+                                        var _panels = panel_div.querySelectorAll(`[data-panel]`);
+                                        _panels.forEach((elm) => {
+                                            elm.classList.remove("active");
+                                        });
+
+                                        var _panel_elm_email = panel_div.querySelector(`[data-panel="email-template"]`);
+                                        _panel_elm_email.classList.add("active");
+                                    } else {
+                                        document.documentElement.classList.add("_hide_main");
+                                        panel_div.classList.add("hide_main");
+                                    }
+                                    
+                                });
+
+                                document.querySelector('._panel_shortcut_fisrtemail').addEventListener("click", (e) => {
+                                    document.querySelector('[data-btnaction="firstemail"]').click();
+                                });
+
+
+                                /*
+                                var _timekey_current = new Date().getDate();
+                                if(sessionStorage.getItem("goTeamVNToDay") != _timekey_current) {
+                                    document.querySelector('._panel_shortcut_go_teamvietnam').classList.add('notview_today');
+                                }
+
+                                document.querySelector('._panel_shortcut_go_teamvietnam').addEventListener("click", (e) => {
+                                    sessionStorage.setItem("goTeamVNToDay", _timekey_current);
+                                    e.target.remove();
+                                });*/
+
+                                
                             }
                             
                         }
                     };
 
-                    if(window.tagteamoption.optionkl__disable_dialog === false) {
-                        _addshortcutbtn_meet();
-                    }
-                }
-
-                if(window.location.hostname === "cases.connect.corp.google.com" ) {
-                    cLog(() => {console.log('1. isReadyBasic')});
-
-                    isReadyBasic(() => {
-                        var _addshortcutbtn = () => {
-                            var _panel_addshortcutbtn = document.querySelector(".dock-container._panel_btnshortcut");
-                            if(!_panel_addshortcutbtn) {
-                                var dock_container = document.querySelector(".dock-container");
-                                if(dock_container) {
-                                    var strhtml = `<div class="dock-container _panel_btnshortcut">`;
-
-                                    if(window.tagteamoption.optionkl__disable_dialog === false) {
-                                        strhtml += `<div class="material-button _panel_shortcut_toggleopenmain_withoutsave"  >
-                                                <div class="content">
-                                                    <img src="${window.dataTagteam.assets_url_img}/355037/google.svg">
-                                                </div>
-                                            </div>`;
-                                    }
-
-                                    strhtml += `
-                                        <div class="material-button _panel_shortcut_openemailtemplate"  >
-                                            <div class="content">
-                                                <img src="${window.dataTagteam.assets_url_img}/194000/mail.svg">
-                                            </div>
-                                        </div>
-                                        <div class="material-button _panel_shortcut_fisrtemail"  >
-                                            <div class="content">
-                                                <img src="${window.dataTagteam.assets_url_img}/67628/email.svg">
-                                            </div>
-                                        </div>
-                                        <a href="#" target="_blank" class="material-button _panel_shortcut_gearloose_vanbo"  
-                                            style="
-                                                background-image: url(https://lh3.googleusercontent.com/proxy/mawyrjPH2gsWpZuGnLpIXCiXkuhJ69RZaP7ypPqMX5QGTtXDUPQncooBaQUc6V0uRI5h1fZABTXr5wgJPU0ptpxjQ1NyDke2y6tEbx5HG6K0H1Q);
-                                                background-size: contain;
-                                                display: none;
-                                            "
-                                        >
-                                            <span class="content"></span>
-                                        </a>
-                                        <a href="http://go/thms" target="_blank" class="material-button _panel_shortcut_go_teamvietnam notview_today"  >
-                                            <img src="${window.dataTagteam.assets_url_img}/311132/reading-list.svg">
-                                            <span class="content"></span>
-                                        </a>
-                                    </div>`;
-                                    
-                                    var dock_container_add = _TrustScript(strhtml);
-                                    // // Open
-                                    // document.querySelector('[data-btnaction="openmain"]').click();
-                                    dock_container.insertAdjacentHTML("afterEnd", dock_container_add);
-                                    if(document.querySelector('._panel_shortcut_toggleopenmain_withoutsave')) {
-                                        document.querySelector('._panel_shortcut_toggleopenmain_withoutsave').addEventListener("click", (e) => {
-                                            var is_open = toggleClass("mainpanel_template", document.documentElement);
-
-                                            document.documentElement.classList.remove("email_template");
-
-                                            if(is_open) {
-                                                document.documentElement.classList.remove("_hide_main");
-                                                panel_div.classList.remove("hide_main");
-    
-                                                var _panels = panel_div.querySelectorAll(`[data-panel]`);
-                                                _panels.forEach((elm) => {
-                                                    elm.classList.remove("active");
-                                                });
-    
-                                                var _panel_elm_email = panel_div.querySelector(`[data-panel="main"]`);
-                                                _panel_elm_email.classList.add("active");
-                                            } else {
-                                                document.documentElement.classList.add("_hide_main");
-                                                panel_div.classList.add("hide_main");
-                                            }
-                                        });
-                                    }
-
-                                    document.querySelector('._panel_shortcut_openemailtemplate').addEventListener("click", (e) => {
-                                        var is_open = toggleClass("email_template", document.documentElement);
-
-                                        document.documentElement.classList.remove("mainpanel_template");
-
-                                        if(is_open) {
-                                            document.documentElement.classList.remove("_hide_main");
-                                            panel_div.classList.remove("hide_main");
-
-                                            var _panels = panel_div.querySelectorAll(`[data-panel]`);
-                                            _panels.forEach((elm) => {
-                                                elm.classList.remove("active");
-                                            });
-
-                                            var _panel_elm_email = panel_div.querySelector(`[data-panel="email-template"]`);
-                                            _panel_elm_email.classList.add("active");
-                                        } else {
-                                            document.documentElement.classList.add("_hide_main");
-                                            panel_div.classList.add("hide_main");
-                                        }
-                                        
-                                    });
-
-                                    document.querySelector('._panel_shortcut_fisrtemail').addEventListener("click", (e) => {
-                                        document.querySelector('[data-btnaction="firstemail"]').click();
-                                    });
+                    // Start
+                    
 
 
-                                    /*
-                                    var _timekey_current = new Date().getDate();
-                                    if(sessionStorage.getItem("goTeamVNToDay") != _timekey_current) {
-                                        document.querySelector('._panel_shortcut_go_teamvietnam').classList.add('notview_today');
-                                    }
+                    // 0.2 _addshortcutbtn
+                        cLog(() => {console.log('_addshortcutbtn');})
+                        wait4Elem('[debug-id="case-id"] .case-id').then(function () {
+                            _addshortcutbtn();
+                        });
 
-                                    document.querySelector('._panel_shortcut_go_teamvietnam').addEventListener("click", (e) => {
-                                        sessionStorage.setItem("goTeamVNToDay", _timekey_current);
-                                        e.target.remove();
-                                    });*/
+                        // recheck
+                        setInterval(() => {
+                            _addshortcutbtn();
+                        }, 5000);
 
-                                    
-                                }
-                                
-                            }
-                        };
 
-                        // Start
+                    // 2. CR Button Email Template
+                        onClickElm('[debug-id="canned_response_button"]', 'click', function(elm, e){
+                            // var _isGCC = window.dataTagteam.current_case.am_isgcc_external ? true : false;
+                            // th_prepareForEmail(_isGCC);
+
+
+                            // wait4Elem('material-dialog footer').then(dialog => {
+                            //     if(!document.querySelector('#cr-list')) {th_prepareCR()};
+                            // });
                         
+                            // Check
+                            cLog(() => {console.log("checkInputEmailInboxAndFix 3"); });
+                            checkInputEmailInboxAndFix();
+                        });
 
+                    // 2. toggleShow content
 
-                        // 0.2 _addshortcutbtn
-                            cLog(() => {console.log('_addshortcutbtn');})
-                            wait4Elem('[debug-id="case-id"] .case-id').then(function () {
-                                _addshortcutbtn();
-                            });
+                        var _shortcutlink_actsave = (elm) => {
+                            var _parent = elm.closest('.panel_addshortcutlink'),
+                            _url = _parent.querySelector('.panel_addshortcutlink_gr-url'),
+                            _text = _parent.querySelector('.panel_addshortcutlink_gr-text');
 
-                            // recheck
-                            setInterval(() => {
-                                _addshortcutbtn();
-                            }, 5000);
+                            if(_text.innerText.trim() === '' || _url.innerText.trim() === '') {
+                                cLog(() => { console.log('panel_addshortcutlink - URL or text this empty value') });
+                                return false;
+                            }
 
-
-                        // 2. CR Button Email Template
-                            onClickElm('[debug-id="canned_response_button"]', 'click', function(elm, e){
-                                // var _isGCC = window.dataTagteam.current_case.am_isgcc ? true : false;
-                                // th_prepareForEmail(_isGCC);
-
-    
-                                // wait4Elem('material-dialog footer').then(dialog => {
-                                //     if(!document.querySelector('#cr-list')) {th_prepareCR()};
-                                // });
+                            if(/^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(_url.innerText.trim()) != true) {
+                                cLog(() => { console.log('panel_addshortcutlink - URL wrong ' + _url.innerText.trim()) });
+                                return false;
+                            }
                             
-                                // Check
-                                cLog(() => {console.log("checkInputEmailInboxAndFix 3"); });
-                                checkInputEmailInboxAndFix();
-                            });
+                            var _htmltrust = _TrustScript(`<span class="panel_addshortcutlink_gr-grbtn"><a href="${_url.innerText.trim()}" data-keytext="${_text.innerText.trim()}" data-link="${_url.innerText.trim()}" target="_blank">${_text.innerText.trim()}</a><span class="panel_addshortcutlink_gr-removebtn">X</span></span>`);
+                            _parent.querySelector('.panel_addshortcutlink_gr-list').insertAdjacentHTML("beforeEnd", _htmltrust);
+                            
+                            // Reset
+                            _url.innerText = '';
+                            _text.innerText = '';
+                            // Close
+                            var isopen = toggleClass("content_open", elm.closest(".panel_addshortcutlink"));
 
-                        // 2. toggleShow content
+                            // Save localstorage
+                            
+                            var _html_linkelm = _parent.querySelector('.panel_addshortcutlink_gr-list');
+                            var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+                            if(_case_idelm) {
+                                setChromeStorage('cdtx_shortcutlink_caseid_' + _case_idelm.innerText , _html_linkelm.innerHTML, () => {
+                                    cLog(() => { console.log('DONE - ' + _html_linkelm.innerHTML) });
+                                });
+                            }
+                        }
 
-                            var _shortcutlink_actsave = (elm) => {
-                                var _parent = elm.closest('.panel_addshortcutlink'),
-                                _url = _parent.querySelector('.panel_addshortcutlink_gr-url'),
-                                _text = _parent.querySelector('.panel_addshortcutlink_gr-text');
+                        onClickElm('.panel_addshortcutlink_toggle', 'click', function(elm, e){
+                            var isopen = toggleClass("content_open", elm.closest(".panel_addshortcutlink"));
+                        });
+                        
+                        onClickElm('.panel_addshortcutlink [contenteditable]', 'keypress', function(elm, e){
+                            if (e.which === 13) {
+                                e.preventDefault();
+                                _shortcutlink_actsave(elm);
+                            }
 
-                                if(_text.innerText.trim() === '' || _url.innerText.trim() === '') {
-                                    cLog(() => { console.log('panel_addshortcutlink - URL or text this empty value') });
-                                    return false;
-                                }
+                        });
+                        
+                        onClickElm('.panel_addshortcutlink [contenteditable]', 'paste', function(elm, e){
+                            e.preventDefault();
+                            var text = e.clipboardData.getData("text/plain");
+                            document.execCommand("insertHTML", false, text);
+                        });
+                        
+                        onClickElm('.panel_addshortcutlink .panel_addshortcutlink_gr-removebtn', 'click', function(elm, e) {
+                            var _parent = elm.closest('.panel_addshortcutlink');
 
-                                if(/^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(_url.innerText.trim()) != true) {
-                                    cLog(() => { console.log('panel_addshortcutlink - URL wrong ' + _url.innerText.trim()) });
-                                    return false;
-                                }
-                                
-                                var _htmltrust = _TrustScript(`<span class="panel_addshortcutlink_gr-grbtn"><a href="${_url.innerText.trim()}" data-keytext="${_text.innerText.trim()}" data-link="${_url.innerText.trim()}" target="_blank">${_text.innerText.trim()}</a><span class="panel_addshortcutlink_gr-removebtn">X</span></span>`);
-                                _parent.querySelector('.panel_addshortcutlink_gr-list').insertAdjacentHTML("beforeEnd", _htmltrust);
-                                
-                                // Reset
-                                _url.innerText = '';
-                                _text.innerText = '';
-                                // Close
-                                var isopen = toggleClass("content_open", elm.closest(".panel_addshortcutlink"));
+                            if (confirm("You sure remove?")) {
+                                elm.closest('.panel_addshortcutlink_gr-grbtn').remove();
 
-                                // Save localstorage
-                                
+                                // Remove data
                                 var _html_linkelm = _parent.querySelector('.panel_addshortcutlink_gr-list');
                                 var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
                                 if(_case_idelm) {
                                     setChromeStorage('cdtx_shortcutlink_caseid_' + _case_idelm.innerText , _html_linkelm.innerHTML, () => {
-                                        cLog(() => { console.log('DONE - ' + _html_linkelm.innerHTML) });
+                                        cLog(() => { console.log('panel_addshortcutlink update data -  DONE - ' + _html_linkelm.innerHTML) });
                                     });
                                 }
                             }
-
-                            onClickElm('.panel_addshortcutlink_toggle', 'click', function(elm, e){
-                                var isopen = toggleClass("content_open", elm.closest(".panel_addshortcutlink"));
-                            });
                             
-                            onClickElm('.panel_addshortcutlink [contenteditable]', 'keypress', function(elm, e){
-                                if (e.which === 13) {
-                                    e.preventDefault();
-                                    _shortcutlink_actsave(elm);
-                                }
+                        });
 
-                            });
-                            
-                            onClickElm('.panel_addshortcutlink [contenteditable]', 'paste', function(elm, e){
-                                e.preventDefault();
-                                var text = e.clipboardData.getData("text/plain");
-                                document.execCommand("insertHTML", false, text);
-                            });
-                            
-                            onClickElm('.panel_addshortcutlink .panel_addshortcutlink_gr-removebtn', 'click', function(elm, e) {
-                                var _parent = elm.closest('.panel_addshortcutlink');
+                        onClickElm('.panel_addshortcutlink .panel_addshortcutlink_save', 'click', function(elm, e){
+                            _shortcutlink_actsave(elm);
+                        });
 
-                                if (confirm("You sure remove?")) {
-                                    elm.closest('.panel_addshortcutlink_gr-grbtn').remove();
-    
-                                    // Remove data
-                                    var _html_linkelm = _parent.querySelector('.panel_addshortcutlink_gr-list');
-                                    var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
-                                    if(_case_idelm) {
-                                        setChromeStorage('cdtx_shortcutlink_caseid_' + _case_idelm.innerText , _html_linkelm.innerHTML, () => {
-                                            cLog(() => { console.log('panel_addshortcutlink update data -  DONE - ' + _html_linkelm.innerHTML) });
-                                        });
-                                    }
-                                }
-                                
-                            });
-
-                            onClickElm('.panel_addshortcutlink .panel_addshortcutlink_save', 'click', function(elm, e){
-                                _shortcutlink_actsave(elm);
-                            });
-
-                        // 3. Show  by dock
-                            // onClickElm(`.dock-container [debug-id]:not([debug-id="dock-item-home"])`, `click`, (elm, e) => {
-                            //     // allow
-                            //     if(window.tagteamoption.optionkl__disable_dialog === false) {
-                            //         // Detech human click by XY
-                            //         if(e.offsetX > 0 && e.offsetY > 0) {
-                            //             panel_div.classList.remove("hide_main");
-                            //             document.documentElement.classList.remove("_hide_main");
-                            //         }
-                            //     }
-                            // });
-
-                            // onClickElm(`.dock-container [debug-id="dock-item-home"]`, `click`, (elm, e) => {
-                            //     // allow
-                            //     if(window.tagteamoption.optionkl__disable_dialog === false) {
-                            //         // Detech human click by XY
-                            //         if(e.offsetX > 0 && e.offsetY > 0) {
-                            //             panel_div.classList.add("hide_main");
-                            //             document.documentElement.classList.add("_hide_main");
-                            //         }
-                            //     }
-                            // });
-
-                            onClickElm(`#cr-list li`, `click`, (elm, e) => {
-                                th_clearAndPrepareCRTemplate();
-                            });
-
-
-                        // Action noted card
-                            onClickElm(`noted span`, `click`, (elm, e) => {
-                                // allow
-                                elm.remove();
-                            });
-
-                        // Action _chk_email_agains
-                            onClickElm(`._chk_email_agains`, `click`, (elm, e) => {
-                                // allow
-                                elm.classList.remove("_chk_email_agains");
-                            });
-
-                        // Remove Note
-                            onClickElm(`[card-type] [data-notetitle]`, `click`, (elm, e) => {
-                                // allow
-                                elm.removeAttribute("data-notetitle");
-                                elm.setAttribute("data-notetitlestatus", "ischange");
-                            });
-                            onClickElm(`[card-type] [data-highlight]`, `click`, (elm, e) => {
-                                // allow
-                                elm.removeAttribute("data-highlight");
-                            });
-                            
-                        // Script
-                            onClickElm(`._panel__script--elm`, `click`, (elm, e) => {
-                                // allow
-                                toggleClass("hide", elm)
-                            });
-
-
-                            
-                        // // // 13. Realtime forall
-                        //     var _realtime_recheck = () => {
-                        //         // Select the node that will be observed for mutations
-                        //         var targetNode = document.body;
-
-                        //         // Options for the observer (which mutations to observe)
-                        //         var config = { attributes: true, childList: true, subtree: true };
-
-                        //         // Callback function to execute when mutations are observed
-                        //         var callback = function(mutationList, observer) {
-                        //             var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"]`);
-                        //             if(_istopelm) {
-                        //                 cLog(() => {console.log("checkInputEmailInbox 3"); });
-                        //                 checkInputEmailInbox();  
-                        //             }
-                        //         };
-
-                        //         // Create an observer instance linked to the callback function
-                        //         var observer = new c(callback);
-
-                        //         // Start observing the target node for configured mutations
-                        //         observer.observe(targetNode, config);
+                    // 3. Show  by dock
+                        // onClickElm(`.dock-container [debug-id]:not([debug-id="dock-item-home"])`, `click`, (elm, e) => {
+                        //     // allow
+                        //     if(window.tagteamoption.optionkl__disable_dialog === false) {
+                        //         // Detech human click by XY
+                        //         if(e.offsetX > 0 && e.offsetY > 0) {
+                        //             panel_div.classList.remove("hide_main");
+                        //             document.documentElement.classList.remove("_hide_main");
+                        //         }
                         //     }
-                        //     _realtime_recheck();
+                        // });
+
+                        // onClickElm(`.dock-container [debug-id="dock-item-home"]`, `click`, (elm, e) => {
+                        //     // allow
+                        //     if(window.tagteamoption.optionkl__disable_dialog === false) {
+                        //         // Detech human click by XY
+                        //         if(e.offsetX > 0 && e.offsetY > 0) {
+                        //             panel_div.classList.add("hide_main");
+                        //             document.documentElement.classList.add("_hide_main");
+                        //         }
+                        //     }
+                        // });
+
+                        onClickElm(`#cr-list li`, `click`, (elm, e) => {
+                            th_clearAndPrepareCRTemplate();
+                        });
 
 
-                    });
-                }
+                    // Action noted card
+                        onClickElm(`noted span`, `click`, (elm, e) => {
+                            // allow
+                            elm.remove();
+                        });
+
+                    // Action _chk_email_agains
+                        onClickElm(`._chk_email_agains`, `click`, (elm, e) => {
+                            // allow
+                            elm.classList.remove("_chk_email_agains");
+                        });
+
+                    // Remove Note
+                        onClickElm(`[card-type] [data-notetitle]`, `click`, (elm, e) => {
+                            // allow
+                            elm.removeAttribute("data-notetitle");
+                            elm.setAttribute("data-notetitlestatus", "ischange");
+                        });
+                        onClickElm(`[card-type] [data-highlight]`, `click`, (elm, e) => {
+                            // allow
+                            elm.removeAttribute("data-highlight");
+                        });
+                        
+                    // Script
+                        onClickElm(`._panel__script--elm`, `click`, (elm, e) => {
+                            // allow
+                            toggleClass("hide", elm)
+                        });
+
+
+                        
+                    // // // 13. Realtime forall
+                    //     var _realtime_recheck = () => {
+                    //         // Select the node that will be observed for mutations
+                    //         var targetNode = document.body;
+
+                    //         // Options for the observer (which mutations to observe)
+                    //         var config = { attributes: true, childList: true, subtree: true };
+
+                    //         // Callback function to execute when mutations are observed
+                    //         var callback = function(mutationList, observer) {
+                    //             var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"]`);
+                    //             if(_istopelm) {
+                    //                 cLog(() => {console.log("checkInputEmailInbox 3"); });
+                    //                 checkInputEmailInbox();  
+                    //             }
+                    //         };
+
+                    //         // Create an observer instance linked to the callback function
+                    //         var observer = new c(callback);
+
+                    //         // Start observing the target node for configured mutations
+                    //         observer.observe(targetNode, config);
+                    //     }
+                    //     _realtime_recheck();
+
+
+                });
+            }
 
             
             // Return
@@ -2848,49 +2450,7 @@ getChromeStorage('cdtx_settings', (response) => {
             });
             break;
         
-        case "#test_all":
-            backdoor_manage_keystorage();
-            break;
             
-    }
-    if(_global_status.test) {
-        backdoor_manage_keystorage();
-    }
-    // Get Case List
-    // 1. load all
-    function backdoor_manage_keystorage() {
-        wait4Elem(".list_keystorage").then(() => {
-            chrome.storage.local.get(null, function(results) {
-                var li = "";
-                for (let key in results) {
-                    li += `<li>${key} <span data-btnremovekeystorage="${key}">Remove</span></li> `;
-                    console.log(key, results[key]);
-                }
-    
-                panel_div.querySelector("ul.list_keystorage").innerHTML = _TrustScript(li);
-    
-                document.querySelectorAll("ul.list_keystorage [data-btnremovekeystorage]").forEach((elm) => {
-                    elm.addEventListener("click", (e) => {
-                        var key = elm.getAttribute('data-btnremovekeystorage');
-                        
-                        if (confirm("You sure remove: " + key)) {
-                            removeChromeStorage(key, () => {
-                                Toastify({
-                                    text: `Remove ${key} success`,
-                                    duration: 3000,
-                                    callback: function(){
-                                        this.remove();
-                                    }
-                                }).showToast();
-    
-                                elm.closest("li").remove();
-                            });
-                        }
-                    });
-                });
-            });
-        });
-
     }
 
 }

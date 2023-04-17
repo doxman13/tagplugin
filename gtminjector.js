@@ -1,4 +1,4 @@
-chrome.storage.sync.get({myInjector: 'gtm-xxx', gtmToDo: 'notstart'}, function(result) {
+chrome.storage.sync.get({myInjector: '', gtmToDo: 'notstart'}, function(result) {
 console.log('injector id currently is ' + result.myInjector + ' and it will '+ result.gtmToDo);
 
 	if(result.gtmToDo == "start") {

@@ -401,7 +401,6 @@
             </td>
           </tr>
         </tbody></table></div>
-        
                  `,
         'as_reschedule_1': `<div id="email-body-content-top-content" dir="auto">
             <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
@@ -1845,7 +1844,7 @@
                                                 <div class="_panel__form--panel">
                                                     AM: <strong><span data-infocase="am_name">AM_NAME</span></strong> (<span data-infocase="am_email">zzz@ccc.com</span>)
                                                     <br>
-                                                    Đơn vị: <span data-infocase="am_isgcc">ZZZZZ</span> <span data-infocase="sales_program"> Sales program </span>
+                                                    Đơn vị: <span data-infocase="am_isgcc_external">ZZZZZ</span> <span data-infocase="sales_program"> Sales program </span>
                                                     <br>
                                                     Meeting_time: <strong><span data-infocase="local_format_meeting_time">01/01/2022</span></strong>
                                                     <!-- <span data-infocase="meeting_ontime">MEETING_TIME</span> -->
@@ -1872,7 +1871,7 @@
                                                     <input type="text" name="sales_program">
                                                     <label class="_panel__form--label_inputcenter">
                                                         <small>Is GCC? </small>
-                                                        <input type="checkbox" name="am_isgcc">
+                                                        <input type="checkbox" name="am_isgcc_external">
                                                     </label>
                                                 </div>
                                                 <div class="_panel__form--panel" data-panel_title="Tasks">

@@ -101,7 +101,7 @@ var vi_searchandremove = [
     'Giải pháp kỹ thuật của Google',
 ];
 
-var vi_api_blog = 'https://cdtx.lyl.vn/wordpress/wp-json/tagteam/blogs';
+var vi_api_blog = 'https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/api.php';
 
 
 
@@ -1042,6 +1042,12 @@ var vi_TagteamFocusCase = () => {
                             src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/dashboard.png" alt=""
                             style="width: 60%; height: 60%">
                     </li>
+                    <li class="li-14">
+                        <div class="name">Connect Appointment</div>
+                        <img class="ico connect-appointment"
+                            src="https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/tagteam/assets/img/groups/connect-appointment.png" alt=""
+                            style="width: 60%; height: 60%">
+                    </li>
             
                 </div>
             </div>`;
@@ -1099,6 +1105,7 @@ var vi_TagteamFocusCase = () => {
             document.querySelector('.open-gearloose').addEventListener('click', gearloose)
             document.querySelector('.ogt-dashboard').addEventListener('click', ogtDashboard)
             document.querySelector('.ec-dashboard').addEventListener('click', ecDashboard)
+            document.querySelector('.connect-appointment').addEventListener('click', connectAppointment)
         }
 
         var modalHtml = `
@@ -1623,6 +1630,10 @@ var vi_TagteamFocusCase = () => {
 
                 waitForElm('.case-id').then(elem => {
                     caseid = elem.innerText;
+                    waitForElm('#findCalendarBtn').then(btn => {
+                        var url = 'https://calendar.google.com/calendar/u/0/r/search?q='+caseid
+                        btn.setAttribute('href', url);
+                    })
                 })
                 waitForElm('.more-less-button:not(.show-more)').then(elem => {
                     elem.click();
@@ -1724,6 +1735,11 @@ var vi_TagteamFocusCase = () => {
         function ecDashboard() {
             var ecUrl = 'https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:' + cid;
             window.open(ecUrl, '_blank').focus();
+        }
+        function connectAppointment(){
+            var caseid = document.querySelector('.case-id').innerText;
+            var popupwin = window.open('https://appointments.connect.corp.google.com/appointmentDetails?caseId='+caseid,'popUpWindow','height=350,width=400,left=100,top=100,resizable=yes,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no, status=yes');    
+            setTimeout(function() { popupwin.close();}, 5000);
         }
 
         function prepareCR() {

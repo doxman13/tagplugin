@@ -88,7 +88,7 @@
     [data-optionkl="Thailand"] .optionkl__option ,
     [data-optionkl="English"] .optionkl__option ,
     [data-optionkl="Japan"] .optionkl__option ,
-    [data-optionkl="Vietnam"] .optionkl__option {
+    [data-optionkl] .optionkl__option {
       font-size: 14px;
       border: 1px solid #ddd;
       padding: 6px;
@@ -99,14 +99,14 @@
     [data-optionkl="Thailand"] .optionkl__option label ,
     [data-optionkl="English"] .optionkl__option label ,
     [data-optionkl="Japan"] .optionkl__option label ,
-    [data-optionkl="Vietnam"] .optionkl__option label {
+    [data-optionkl] .optionkl__option label {
       user-select: none;
     }
     
     [data-optionkl="Thailand"] .optionkl__option-row ,
     [data-optionkl="English"] .optionkl__option-row ,
     [data-optionkl="Japan"] .optionkl__option-row ,
-    [data-optionkl="Vietnam"] .optionkl__option-row {
+    [data-optionkl] .optionkl__option-row {
       display: flex;
       flex-wrap: wrap;
     }
@@ -114,7 +114,7 @@
     [data-optionkl="Thailand"] .optionkl__option-col ,
     [data-optionkl="English"] .optionkl__option-col ,
     [data-optionkl="Japan"] .optionkl__option-col ,
-    [data-optionkl="Vietnam"] .optionkl__option-col {
+    [data-optionkl] .optionkl__option-col {
       flex-basis: 0;
       -webkit-box-flex: 1;
       flex-grow: 1;
@@ -123,35 +123,26 @@
     [data-optionkl="Thailand"] .optionkl__option-col:not(:last-child) ,
     [data-optionkl="English"] .optionkl__option-col:not(:last-child) ,
     [data-optionkl="Japan"] .optionkl__option-col:not(:last-child) ,
-    [data-optionkl="Vietnam"] .optionkl__option-col:not(:last-child) {
+    [data-optionkl] .optionkl__option-col:not(:last-child) {
       margin-right: 10px;
     }
     
     [data-optionkl="Thailand"] .optionkl__option-col input[type="text"] ,
     [data-optionkl="English"] .optionkl__option-col input[type="text"] ,
     [data-optionkl="Japan"] .optionkl__option-col input[type="text"] ,
-    [data-optionkl="Vietnam"] .optionkl__option-col input[type="text"] {
+    [data-optionkl] .optionkl__option-col input[type="text"] {
       width: 100%;
       color: #444;
     }
     
-    [data-optionkl]:not([data-optionkl="Thailand"]):not([data-optionkl="English"]):not([data-optionkl="Japan"]):not([data-optionkl="Vietnam"]) .optionkl__option {
-        display: none;
-    }
     
     [data-optionkl="Thailand"] input[type="checkbox"] ,
     [data-optionkl="English"] input[type="checkbox"] ,
     [data-optionkl="Japan"] input[type="checkbox"] ,
-    [data-optionkl="Vietnam"] input[type="checkbox"] {
+    [data-optionkl] input[type="checkbox"] {
         width: auto;
     }
     
-    [data-optionkl="Thailand"] .tabs-wrap ,
-    [data-optionkl="English"] .tabs-wrap ,
-    [data-optionkl="Japan"] .tabs-wrap ,
-    [data-optionkl="Vietnam"] .tabs-wrap {
-        display: none;
-    }
 
     /* OPTION */
     
@@ -324,7 +315,7 @@
 
 	        <p>Your email : <input class="col-6" id="youremail" type="text" name="youremail" value="xxx@mail.com"></p>
           <div class="_yourGTM">
-            <p>GTM Injector : <input class="col-4 mr-2" id="yourGTM" type="text" name="yourGTM" value="gtm-xxx"><button id="startGTM" type="button" class="btn btn-outline-success mx-2 col-2"><i class="far fa-save" style="font-size:12px;margin-right:0.5rem"></i><span style="font-size:12px;">Start</span></button><button id="stopGTM" type="button" class="btn btn-outline-danger mx-2 col-2"><i class="far fa-save" style="font-size:12px;margin-right:0.5rem"></i><span style="font-size:12px;">Stop</span></button></p>
+            <p>GTM Injector : <input class="col-4 mr-2" id="yourGTM" type="text" name="yourGTM" value=""><button id="startGTM" type="button" class="btn btn-outline-success mx-2 col-2"><i class="far fa-save" style="font-size:12px;margin-right:0.5rem"></i><span style="font-size:12px;">Start</span></button><button id="stopGTM" type="button" class="btn btn-outline-danger mx-2 col-2"><i class="far fa-save" style="font-size:12px;margin-right:0.5rem"></i><span style="font-size:12px;">Stop</span></button></p>
           </div>
 	       <div id="status"></div>
             <div class="row">

@@ -1,3 +1,4 @@
+
 var other_language = {
     'appointment_time': 'Appointment Time',
     'google_ads_external_customer_id': 'Google Ads External Customer ID',
@@ -48,60 +49,61 @@ var other_key_task_searchandreplace = `
 `;
 
 var other_heading_searchandreplace = `
-    Tin vui! Nhóm giải pháp kỹ thuật đã nhận được yêu cầu của bạn:Tin vui! Nhóm giải pháp kỹ thuật đã nhận được yêu cầu của bạn
-    Tin vui! Nhóm giải pháp kỹ thuật đã nhận được yêu cầu của bạn:Tin vui! Nhóm giải pháp kỹ thuật đã nhận được yêu cầu của bạn
-    Here's the latest update regarding your case:Thông tin cập nhật mới nhất về trường hợp của bạn
-    Your appointment has been successfully rescheduled:Cuộc hẹn của bạn đã được lên lịch lại thành công
-    Cuộc hẹn của bạn đã được lên lịch lại:Cuộc hẹn của bạn đã được lên lịch lại
-    Congratulations, your case has been successfully implemented:Xin chúc mừng, trường hợp của bạn đã được triển khai thành công
-    Your case has been successfully implemented:Trường hợp của bạn đã được triển khai thành công
-    Congratulations on implementing your case:Chúc mừng bạn việc cài đặt đã được triển khai thành công
-    Your case has been successfully implemented:Trường hợp của bạn đã được triển khai thành công
-    More information is needed to complete your implementation:Cần thêm thông tin để hoàn thành việc triển khai của bạn
-    Your case is in consultation:Trường hợp của bạn đang được xem xét
-    Your case status has been updated:Đang chờ dữ liệu hiển thị hoặc chuyển đổi
-    We tried to reach you today regarding your case:Chúng tôi đã cố gắng liên lạc với bạn hôm nay
-    Please provide additional details for your case:Vui lòng cung cấp thêm chi tiết cho trường hợp của bạn
-    Your case cannot be completed due to technical issues:Trường hợp của bạn không thể được hoàn thành do các vấn đề kỹ thuật
-    Your case has been closed due to inactivity:Trường hợp của bạn đã bị đóng do không nhận được phản hồi từ nhà quảng cáo
-    Your case has been closed:Trường hợp của bạn đã được đóng lại
-    Your case is not ready for implementation. Tìm hiểu lý do:Trường hợp của bạn chưa sẵn sàng để triển khai. Tìm hiểu lý do
-    Your case has been rerouted to the correct support team:Trường hợp của bạn đã được chuyển hướng đến nhóm hỗ trợ phù hợp
-    We are working to reroute your case to the correct support team:Chúng tôi đang làm việc để chuyển trường hợp của bạn đến đúng nhóm hỗ trợ
-    Your request is out of scope for the Technical Solutions Team:Yêu cầu của bạn nằm ngoài phạm vi của Nhóm giải pháp kỹ thuật
-    Your case will be closed. Tìm hiểu lý do:Trường hợp của bạn sẽ được đóng lại. Tìm hiểu lý do
+    Good news, the Technical Solutions Team has received your case
+    Good news, the Technical Solutions Team has received your case
+    Here's the latest update regarding your case:Here's the latest update regarding your case
+    Your appointment has been successfully rescheduled:Your appointment has been successfully rescheduled:
+    Your appointment has been successfully rescheduled:Your appointment has been successfully rescheduled
+    Congratulations, your case has been successfully implemented:Congratulations, your case has been successfully implemented
+    Your case has been successfully implemented:Your case has been successfully implemented
+    Congratulations on implementing your case:Congratulations on implementing your case
+    Your case has been successfully implemented:Your case has been successfully implemented
+    More information is needed to complete your implementation:More information is needed to complete your implementation
+    Your case is in consultation:Your case is in consultation
+    Your case status has been updated:Your case status has been updated
+    We tried to reach you today regarding your case:We tried to reach you today regarding your case
+    Please provide additional details for your case:Please provide additional details for your case
+    Your case cannot be completed due to technical issues:Your case cannot be completed due to technical issues
+    Your case has been closed due to inactivity:Your case has been closed due to inactivity
+    Your case has been closed:Your case has been closed
+    Your case is not ready for implementation. Learn more:Your case is not ready for implementation. Learn more
+    Your case has been rerouted to the correct support team:Your case has been rerouted to the correct support team
+    We are working to reroute your case to the correct support team:We are working to reroute your case to the correct support team
+    Your request is out of scope for the Technical Solutions Team:Your request is out of scope for the Technical Solutions Team
+    Your case will be closed. Learn more:Your case will be closed. Learn more
 `;
 
 var other_hotkey_email = {
-    'ts as new':'Đội giải pháp kỹ thuật - Xác nhận lịch hẹn',
-    'ts as wip offtfr':'Đội giải pháp kỹ thuật – Đang triển khai việc cài đặt',
-    'ts as wip offs':'Đội giải pháp kỹ thuật – Đang triển khai việc cài đặt',
-    'ts as resched1':'Đội giải pháp kỹ thuật – Đặt lại lịch hẹn lần 1',
-    'ts as reschedok':'Đội giải pháp kỹ thuật – Đặt lại lịch hẹn lần 2',
-    'ts so verif':'Đội giải pháp kỹ thuật – Đã xác minh lượt hiển thị/lượt chuyển đổi',
-    'ts so verif nrc':'Đội giải pháp kỹ thuật – Xác nhận triển khai thành công',
-    'ts so unv':'Đội giải pháp kỹ thuật – Triển khai Tag đã hoàn tất',
-    'ts so vnn':'Đội giải pháp kỹ thuật – Triển khai thành công',
-    'ts ni ai':'Đội giải pháp kỹ thuật – Chờ thông tin phản hồi từ nhà quảng cáo',
-    'ts ni ic':'Đội giải pháp kỹ thuật – Đang tham khảo Nhóm hỗ trợ nội bộ',
-    'ts ni av':'Đội giải pháp kỹ thuật – Đang chờ Hiển thị/ Chuyển đổi',
-    'ts ni ac':'Đội giải pháp kỹ thuật – Không liên lạc được với nhà quảng cáo',
-    'ts ni oth':'Đội giải pháp kỹ thuật – Chờ thêm thông tin đầu vào',
-    'ts in inf':'Đội giải pháp kỹ thuật – Không thể khả thi về mặt kỹ thuật',
-    'ts in nrch':'Đội giải pháp kỹ thuật – Không nhận được phản hồi từ nhà quảng cáo',
-    'ts in ni':'Đội giải pháp kỹ thuật – Nhà quảng cáo không cần hỗ trợ',
-    'ts in nrdy':'Đội giải pháp kỹ thuật – Nhà quảng cáo chưa sẵn sàng',
-    'ts in oost':'Đội giải pháp kỹ thuật – Chuyển yêu cầu cho đội ngũ thích hợp',
-    'ts in oosu':'Đội giải pháp kỹ thuật – Không thể chuyển tiếp yêu cầu',
-    'ts in oos seller':'Đội giải pháp kỹ thuật – Ngoài phạm vi hỗ trợ ',
-    'ts in oth':'Đội giải pháp kỹ thuật – Trường hợp của bạn đã được đóng',
+    'ts as new':'Good news, the Technical Solutions Team has received your case',
+    'ts as wip offtfr':'Good news, the Technical Solutions Team has received your case',
+    'ts as wip offs':"Technical Solutions Team - Here's the latest update regarding your case",
+    'ts as resched1':'Technical Solutions Team - Your appointment has been successfully rescheduled',
+    'ts as reschedok':'Technical Solutions Team - Your appointment has been rescheduled',
+    'ts so verif':'Congratulations, your case has been successfully implemented',
+    'ts so verif nrc':'Congratulations, your case has been successfully implemented',
+    'ts so unv':'Congratulations on implementing your case',
+    'ts so vnn':'Congratulations, your case has been successfully implemented',
+    'ts ni ai':'Technical Solutions Team - Your case status has been updated',
+    'ts ni ic':'Technical Solutions Team - Your case is in consultation',
+    'ts ni av':'Technical Solutions Team - Your case status has been updated',
+    'ts ni ac':'Technical Solutions Team - We tried to reach you today regarding your case',
+    'ts ni oth':'Technical Solutions Team - Your case will be closed',
+    'ts in inf':'Technical Solutions Team - Your case cannot be completed due to technical issues',
+    'ts in nrch':'Technical Solutions Team - Your case has been closed due to inactivity',
+    'ts in ni':'Technical Solutions Team - Your case has been closed',
+    'ts in nrdy':'Technical Solutions Team - Your case is not ready for implementation',
+    'ts in oost':'Technical Solutions Team - Your case has been rerouted to the correct support team',
+    'ts in oosu':'Technical Solutions Team - We are working to reroute your case to the correct support team',
+    'ts in oos seller':'TTechnical Solutions Team - Your request is out of scope for the Technical Solutions Team',
+    'ts in oth':'Technical Solutions Team - Your case will be closed',
 };
 
 var other_searchandremove = [
-    'Giải pháp kỹ thuật của Google',
+    'Technical Solutions Team',
 ];
 
-var other_api_blog = 'https://cdtx.lyl.vn/wordpress/wp-json/tagteam/blogs';
+var other_api_blog = 'https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/api.php';
+
 
 
 
@@ -116,7 +118,7 @@ var other_checkStyleByTheme = (opt_isdisable) => {
     var _sync_api = (_objectvalue) => {
         var _body = {
             "action": "stylecasebytheme",
-            "language": "vi",
+            "language": "en",
             "timesync": _timekey_current
         };
         load_fetch_post_content(other_api_blog, _body, (response_api) => {
@@ -237,8 +239,8 @@ var other_clearAndPrepareCRTemplate = () => {
 
 
 
-// -- Send 
-var other_sendFirstEmail = () => {
+// -- Send 1st email
+/* var other_sendFirstEmail = () => {
     function waitForElm(selector) {
         return new Promise(resolve => {
             if (document.querySelector(selector)) {
@@ -359,7 +361,7 @@ var other_sendFirstEmail = () => {
         });
         document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new Event('blur'));
     });
-}
+} */
 
 
 
@@ -382,7 +384,7 @@ var other_TagteamFocusCase = () => {
             padding-top: 40px;
         }
         
-        #preview-note #preview-area {
+        #preview-note #preview-area {st
             width: 511px;
             min-height: 543px;
             max-height: none;
@@ -1610,7 +1612,7 @@ var other_TagteamFocusCase = () => {
                         }
 
                         if (field == 'Sales Program') {
-                            isGCC = matchingElement.innerText.toUpperCase().includes('gCC');
+                            isGCC = matchingElement.innerText.toUpperCase().includes('GCC');
                             if(ntime == 0) {
                                 ntime++;
                                 onClickElm('[debug-id="canned_response_button"]', 'click', function(elm){ 
@@ -1715,10 +1717,8 @@ var other_TagteamFocusCase = () => {
         }
 
         function ogtDashboard() {
-            var ogtauditUrl = 'https://dashboards.corp.google.com/view/_a186557f_a4ad_4e9b_b1f0_fc360bc3143e?f=customer_id:in:' + cid;
-            var ogtTechsolURL = 'https://dashboards.corp.google.com/view/_7f750f18_1d9b_4f6e_82b8_70e37c1e992a?f=customer_id:eq:'+cid
-            window.open(ogtauditUrl, '_blank').focus();
-            window.open(ogtTechsolURL, '_blank');
+            var ogtUrl = 'https://dashboards.corp.google.com/view/_7f750f18_1d9b_4f6e_82b8_70e37c1e992a?f=customer_id:eq:' + cid;
+            window.open(ogtUrl, '_blank').focus();
         }
 
         function ecDashboard() {
@@ -1824,8 +1824,8 @@ var other_TagteamFocusCase = () => {
                     waitForElm('.suggestion-list .list-item').then(elm => {
                         elm.click();
                         divLoading.remove();
-                        var _title = other_hotkey_email[key] ? other_hotkey_email[key] : "Đội giải pháp kỹ thuật - Thông báo";
-                        document.querySelector('.is-top .subject').value = `${_title} cho trường hợp [${caseid}]`;
+                        var _title = other_hotkey_email[key] ? other_hotkey_email[key] : "Technical Solutions Team - Update";
+                        document.querySelector('.is-top .subject').value = `${_title} [${caseid}]`;
                         document.querySelector('.is-top .subject').focus();
                         document.querySelector('.is-top .subject').dispatchEvent(new Event('input'));
                         document.execCommand('innerText', false, ' ')
@@ -1855,7 +1855,7 @@ var other_TagteamFocusCase = () => {
                     if (isGCC) {
                         var emailCC = document.evaluate('//span[contains(text(),"CC")]//following-sibling::email-address-input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
                         var emailBCC = document.evaluate('//span[contains(text(),"BCC")]//following-sibling::email-address-input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                        emailBCC.querySelector('input').value = document.querySelector('material-input.action-input.input-email .input').value;
+                        emailBCC.querySelector('input').value = emailCC.querySelector('.value').innerText;
                         emailBCC.querySelector('input').dispatchEvent(new Event('input'));
                         if (emailCC) emailCC.querySelector('.remove').click();
                         waitForElm('focus-trap [debug-id="email"]').then(item => {

@@ -1773,7 +1773,7 @@ function loadKLCall(_keylanguage) {
     if(!document.querySelector('.kl_callchecklist')) {
         
         if(document.body.classList.contains('J0p3ve')) {
-            _contenthtml = `<div class="kl_callchecklist open">${_contenthtml}</div>`;
+            _contenthtml = `<div class="kl_callchecklist">${_contenthtml}</div>`;
 
             _contenthtml = _TrustScript(_contenthtml);
             document.body.insertAdjacentHTML('beforeend', _contenthtml);
@@ -1785,10 +1785,10 @@ function loadKLCall(_keylanguage) {
                 if(response.value) {
                     try {
                         window.loadgooglesheetpublish = response.value;
-                        if(response.value['CallScript'].sheettab) {
+                        if(response.value['CallScript checklist'].sheettab) {
                             // Default EN
                             var _contenthtml2 = '';
-                            response.value['CallScript'].sheettab.forEach((item) => {
+                            response.value['CallScript checklist'].sheettab.forEach((item) => {
                                 if(item['CB']) {
                                     _contenthtml2 += `<li data-btnclk="kl_callchecklist--isdoneclick">${item['CB']}</li>`;
                                     
@@ -1797,7 +1797,7 @@ function loadKLCall(_keylanguage) {
 
                             // Get Overwrite
                             var _contenthtml3 = '';
-                            response.value['CallScript'].sheettab.forEach((item) => {
+                            response.value['CallScript checklist'].sheettab.forEach((item) => {
                                 if(item[_keylanguage]) {
                                     _contenthtml3 += `<li data-btnclk="kl_callchecklist--isdoneclick">${item[_keylanguage]}</li>`;
                                 }

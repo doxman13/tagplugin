@@ -336,7 +336,7 @@ function global_case() {
         if(_istopelm) {
 
             // Không chèn nếu đã có sẵn 2 cái nút cũ    
-            if (_istopelm.querySelector("#on-call") !== null && _istopelm.querySelector("#pre-call") !== null) return false;
+            // if (_istopelm.querySelector("#on-call") !== null && _istopelm.querySelector("#pre-call") !== null) return false;
 
             if (_istopelm.querySelector("#cdtx__precallbtn") === null && _istopelm.querySelector("#cdtx__oncallbtn") === null) {
                 var _arr_btnlist = [];
@@ -717,7 +717,7 @@ function global_case() {
                                 <span class="_sub_i_li" data-key="AS - Acceptable Reschedule" ></span>
                                 <span class="_sub_i_li" data-key="NI - Awaiting Inputs" ></span>
                                 <span class="_sub_i_li" data-key="NI - In Consult" ></span>
-                                <span class="_sub_i_li" data-key="NI - Awaiting Vaspandation" ></span>
+                                <span class="_sub_i_li" data-key="NI - Awaiting Validation" ></span>
                                 <span class="_sub_i_li" data-key="NI - Attempted Contact" ></span>
                                 <span class="_sub_i_li" data-key="NI - Other" ></span>
                                 <span class="_sub_i_li" data-key="SO - Verified" ></span>
@@ -822,78 +822,10 @@ function global_case() {
         })
     }
 
-    function detectConnectcase(){
-        //code vanbo new
-        function convertHour(time) {
-            var hoursMinutes = time.split(/[.:]/);
-            var hours = parseInt(hoursMinutes[0], 10);
-            var minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
-            return hours + minutes / 60;
-        }
-        function detectTime()  {
-            document.querySelectorAll('[id*="tsc"]').forEach(function(item){
-                let date = item.innerText.split(',')[2].trim()
-                let newDate = new Date(date)
-                let today = new Date()
-                if(newDate.getDate() == today.getDate()){
-                    let todayEvent = item.parentElement.querySelector('[role="presentation"]')
-                    todayEvent.querySelectorAll('[jslog]').forEach(function(evt){
-                        let caseTitle = evt.querySelector('.FAxxKc').innerText.match(/\d-\d+/g);
-                        if(caseTitle){
-                            let timeApp = evt.querySelector('.YSbf0c div:nth-child(2)')
-                            if(timeApp){
-                                timeApp = timeApp.innerText
-                            let ampm = timeApp.split(' – ')[1].match(/am|pm/);
-                            let start = timeApp.split(' – ')[0]
-                            start = start.match(/am|pm/) ? start : start + ampm
-                            let newStart = start.match(/\d+:\d+/)
-                            if(newStart) start = convertHour(newStart)
-                            if(start.endsWith('am')){
-                                start = start.split('am')[0]
-                            } else if (start.endsWith('pm')) {
-                                start = start.startsWith('12') ? +start.split('pm')[0] : +start.split('pm')[0]+12
-                            }
-                            cLog(() => { console.log(start) })
-                            let tempDate = new Date()
-                            tempDate.setHours(start-1)
-                            tempDate.setMinutes(55)
-                            tempDate.setSeconds(0)
-                            events[caseTitle] = tempDate
-                            }
-                        }
-                    })
-                    
-                }
-            })
-            if(new Date().getHours() > 19) clearInterval(notifyTime)
-        }
-        function notifyTime(){
-            let time = new Date()
-            cLog(() => { console.log(time) })
-            Object.keys(events).forEach(evt => {
-                let nearEvent = events[evt]
-                let caseid = evt
-                if(nearEvent.getHours() == time.getHours() && nearEvent.getMinutes() == time.getMinutes()){
-                cLog(() => { console.log(caseid+'comming') })
-                    window.open('https://appointments.connect.corp.google.com/appointmentDetails?caseId='+caseid,
-                    'window',
-                    'fullscreen'
-                    );
-                }
-            })
-            if(time.getHours() > 19) clearInterval(notifyTime)
-        }
-        var events = {};
-        detectTime();
-        var countEvent = setInterval(detectTime, 1000*60*15)
-        var notifyEvent = setInterval(notifyTime, 1000*60)
 
-        //end code vanbo
-    }
 
     function autoUpdatelistLinkCalendar() {
         if(location.hostname !== 'calendar.google.com') return;
-        detectConnectcase();
         var is_updatelist_link = () => {
             getChromeStorage("cdtx_listmeetlink", (response) => {
                 var casesmeet = response.value || {};
@@ -1253,7 +1185,7 @@ function global_case() {
                             cLog(() => { console.log("cdtx ---- "); })
                             
                             _contenthtml = `
-                                <span class="_casecalendar_info-50per" data-title="Case ID:"  data-interactiontype="{%interaction_type%}" >
+                                <span class="_casecalendar_info-50per" data-title="Case ID:" data-isgcc="{%am_isgcc_external%}"  data-interactiontype="{%interaction_type%}" >
                                     <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" target="_blank" data-infocase="case_id" ></a>
                                     <br>
                                     <br>
@@ -1263,14 +1195,14 @@ function global_case() {
                                 </span>
                                 
                                 <span class="_casecalendar_info-50per" data-title="Ads ID & Adv name:" >
-                                    <a href="https://adwords.corp.google.com/aw/overview?ocid={%customer_ocid%}" target="_blank" data-infocase="customer_adsid" ></a>
+                                    <a href="https://adwords.corp.google.com/aw/conversions?ocid={%customer_ocid%}" target="_blank" data-infocase="customer_adsid" ></a>
                                     <br>
                                         <span data-infocase="customer_name" ></span>
                                     <br>
                                     <span data-infocase="customer_email" ></span>
                                 </span>
                                 
-                                <span class="_casecalendar_info-50per" data-title="Phone (click to copy): " data-infocase="customer_contact" data-btnclk="copy_innertext" ></span>
+                                <span class="_casecalendar_info-50per is_hascopyer" data-title="Phone (click to copy): " data-infocase="customer_contact" data-btnclk="copy_innertext" ></span>
                                 <span class="_casecalendar_info-50per" data-title="Website:" data-select ><a href="#" target="_blank" data-infocase_link="customer_website" data-infocase="customer_website" ></a></span>
                                 <span class="_casecalendar_info-50per" data-title="Request:" >
                                     <span data-infocase="request_category"></span>
@@ -1279,6 +1211,8 @@ function global_case() {
                                 </span>
                                 <span class="_casecalendar_info-50per" data-title="AM:" data-am="{%team%} {%sales_program%}" >
                                     <span data-infocase="am_name"></span>
+                                    <br>
+                                    <span class="is_hascopyer" data-infocase="am_email" data-btnclk="copy_innertext"></span>
                                     <br>
                                     <span data-infocase="team"></span>
                                     <br>
@@ -1446,14 +1380,14 @@ function global_case() {
                         
                         var _contenthtml_inner = `
                         <span class="_casecalendar_info-50per" data-title="Ads ID & Adv name:" >
-                            <a href="https://adwords.corp.google.com/aw/overview?ocid={%customer_ocid%}" target="_blank" data-infocase="customer_adsid" ></a>
+                            <a href="https://adwords.corp.google.com/aw/conversions?ocid={%customer_ocid%}" target="_blank" data-infocase="customer_adsid" ></a>
                             <br>
                                 <span data-infocase="customer_name" ></span>
                             <br>
                             <span data-infocase="customer_email" ></span>
                             <br>
                         </span>
-                        <span class="_casecalendar_info-50per" data-title="Phone (click to copy): " data-infocase="customer_contact" data-btnclk="copy_innertext" ></span>
+                        <span class="_casecalendar_info-50per is_hascopyer" data-title="Phone (click to copy): " data-infocase="customer_contact" data-btnclk="copy_innertext" ></span>
                         <span class="_casecalendar_info-50per" data-title="Website:" >
                             <a href="#" target="_blank" data-infocase_link="customer_website" data-infocase="customer_website" ></a>
                         </span>
@@ -1464,7 +1398,11 @@ function global_case() {
                         <span class="_casecalendar_info-50per" data-title="AM:" data-am="{%team%}" >
                             <span data-infocase="am_name"></span>
                             <br>
+                            <span class="is_hascopyer" data-infocase="am_email" data-btnclk="copy_innertext"></span>
+                            <br>
                             <span data-infocase="team"></span>
+                            <br>
+                            <span data-infocase="sales_program"></span>
                         </span>
                         <span class="_casecalendar_info-50per" data-title="Task:" data-infocase="tasks" ></span>
                         <span class="_casecalendar_info-50per" data-title="Attribution Model:" data-infocase="customer_attributionmodel" ></span>

@@ -690,12 +690,10 @@ var jp_list_emailtemplatecontent = {
               <td align="left" style=" padding-bottom: 18px;">
 
                 Google テクニカルソリューションチームとご予約いただき、誠にありがとうございます。
-                Google 広告アカウント担当者より依頼を受け、
-                ケース<strong><span class="replaced" data-infocase="case_id" data-highlight="need_recheck"> Case
+                ご依頼のケース:<strong><span class="replaced" data-infocase="case_id" data-highlight="need_recheck"> Case
                     ID</span></strong>
                 にて
-                <strong><span class="replaced" data-infocase="tasks_nowrap"
-                    data-highlight="need_recheck">TASKS</span></strong>についてサポート致します。
+                <strong><span> Google アナリティクス 4 の移行 </span></strong>についてサポート致します。
               </td>
             </tr>
             <tr>
@@ -880,12 +878,10 @@ var jp_list_emailtemplatecontent = {
               <td align="left" style=" padding-bottom: 18px;">
 
                 Google テクニカルソリューションチームとご予約いただき、誠にありがとうございます。
-                Google 広告アカウント担当者より依頼を受け、
-                ケース<strong><span class="replaced" data-infocase="case_id" data-highlight="need_recheck"> Case
+                ご依頼のケース:<strong><span class="replaced" data-infocase="case_id" data-highlight="need_recheck"> Case
                     ID</span></strong>
                 にて
-                <strong><span class="replaced" data-infocase="tasks_nowrap"
-                    data-highlight="need_recheck">TASKS</span></strong>についてサポート致します。
+                <strong><span"> Google アナリティクス 4 の移行</span></strong>についてサポート致します。
               </td>
             </tr>
             <tr>

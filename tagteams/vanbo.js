@@ -88,10 +88,10 @@ try {
         var callTime = Math.abs(oncallDate - now)/mins2mlsecond;
         console.log(callTime+' last')
         console.log(oncallDate)
-        if(callTime>5) clearInterval(checkTime); else audio.play();
+//         if(callTime>5) clearInterval(checkTime); else audio.play();
         var checkTime = setInterval(() => {
             console.log(new Date())
-            audio.play();
+//             audio.play();
             if(callTime>5) clearInterval(checkTime);
         }, 1000*60);
         var isCommingAppointment = document.querySelector('.mdc-button');

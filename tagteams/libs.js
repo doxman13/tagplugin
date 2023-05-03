@@ -212,10 +212,12 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
 
     wait4Elem(str_elmparent + 'email-address-input.input.cc input.input').then((_caseid_elm) => {
         
-        cLog(() => {console.log("eie --- START Wait - has input "  ); });
+        cLog(() => {console.log("eie --- START Wait - has input ", window.dataCase  ); });
         
         var _obj_wait = () => {
-            var caseload = window.dataTagteam.current_case;
+            var caseload = window.dataCase;
+            var is_gcc_external = window.dataCase.am_isgcc_external || window.dataCase.is_gcc_external || window.dataCase.is_gcc || window.dataCase.is_external;
+            cLog(() => {console.log("eie --- START Wait - is_gcc_external ", is_gcc_external  ); });
             if(caseload) {
                 
                 // Email customer empty
@@ -228,10 +230,11 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                         return false;
                     }
 
+
                 // Case ID is match
                 var _caseid_elm = document.querySelector('[debug-id="case-id"] .case-id');
                 if(_caseid_elm) {
-                    if(window.dataTagteam.current_case.case_id !== _caseid_elm.innerText.trim()) {
+                    if(caseload.case_id !== _caseid_elm.innerText.trim()) {
                         setTimeout(() => {
                             checkInputEmailInboxAndFix(n_once_check + 1);
                         }, 1000);
@@ -240,7 +243,7 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                     }
                 }
                 
-                cLog(() => {console.log("eie --- START", "Case ID", window.dataTagteam.current_case.case_id ); });
+                cLog(() => {console.log("eie --- START", "Case ID", caseload.case_id,  _caseid_elm.innerText.trim() ); });
                     
                 // n > 10 stop ngay
                 var n_oncedequi = 0;
@@ -325,7 +328,7 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                                     n_err++;
                                 }
                             
-                                if(caseload.am_isgcc_external) {
+                                if(is_gcc_external) {
                                     if(_email_input_cc.innerText.includes("@") !== false) {
                                         cLog(() => { console.log("eie - recheck_fix_alert is gcc CC has DATA => It should empty ") });
                                         n_err++;
@@ -454,7 +457,7 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
     
                                 // Fix cc bcc
                                     var elm_area = elm_parentheader.querySelector(".input.cc");
-                                    if (caseload.am_isgcc_external) {
+                                    if (is_gcc_external) {
                                         elm_area = elm_parentheader.querySelector(".input.bcc");
                                     }
                                 
@@ -882,6 +885,17 @@ function loadFetchObject(url, _callback) {
     })
         .then(function(response) {
             return response.json();
+        }).then(function(_content) {
+            _callback(_content);
+        });
+}
+
+function loadFetchText(url, _callback) {
+    fetch(url, {
+        method: 'GET'
+    })
+        .then(function(response) {
+            return response.text();
         }).then(function(_content) {
             _callback(_content);
         });
@@ -1515,7 +1529,7 @@ function loadEmailTemplateAction(){
     cLog(() => {console.log('dongmail - load email content');});
     onClickElm('._panel_btn--addtemplate', 'click', function(elm, e){
         cLog(() => {
-            console.log(1, "Here 1515");
+            console.log(1, "Here 1515", window.dataCase);
         })
         
         // 0. ready
@@ -1541,7 +1555,14 @@ function loadEmailTemplateAction(){
                 body_content.style.width = '100%';
                 // Insert value
                 subject.value = template_title.innerText;
-                body_content_top.innerHTML = template_body.innerHTML;
+                
+                console.log('Here 1515', window.dataCase);
+                
+                replaceAllHtmlElement(template_body, window.dataCase);
+                
+                var _replace_all = template_body.innerHTML;
+                
+                body_content_top.innerHTML = _replace_all;
                 
                 // action save status
                     subject.dispatchEvent(new Event('input'));
@@ -1718,13 +1739,13 @@ function loadTemplateEmailGoogleSheet(_caseid, _keylanguage) {
             }
 
             if(_rs) {
-                cLog(() => { console.log('cdtx google', _rs); })
+                // cLog(() => { console.log('cdtx google', _rs); })
                 _rs['Variable'].sheettab.forEach(_item => {
                     var _sheet_cr_mail = _item['sheet_cr_mail'];
                     if(_sheet_cr_mail.includes(_keylanguage + " | ")) {
                         // Load
                         _rs[_sheet_cr_mail].sheettab.forEach(_item => {
-                            // cLog(() => { console.log('cdtx html', _item['Is HTML Custom']); })
+                            // cLog(() => { console.log('cdtx loadTemplateEmailGoogleSheet', _item['Is HTML Custom']); })
                             _load_keycase(_item);
                         });
                     }
@@ -1773,7 +1794,7 @@ function loadKLCall(_keylanguage) {
     if(!document.querySelector('.kl_callchecklist')) {
         
         if(document.body.classList.contains('J0p3ve')) {
-            _contenthtml = `<div class="kl_callchecklist">${_contenthtml}</div>`;
+            _contenthtml = `<div class="kl_callchecklist open">${_contenthtml}</div>`;
 
             _contenthtml = _TrustScript(_contenthtml);
             document.body.insertAdjacentHTML('beforeend', _contenthtml);
@@ -1822,10 +1843,13 @@ function loadKLCall(_keylanguage) {
 
 
 function replaceKeyHTMLByCaseID(_elm, _key, _value) {
-    // console.log('cdtx review', _elm, _key, _value);
+    // cLog(() => {console.log('cdtx review', _elm, _key, _value); });
+    if(!_value) return false;
+
 
     // div, span
-    _elm.innerHTML = _elm.innerHTML.replaceAll(`{%${_key}%}`,`${_value}`);
+    // debugger;
+    _elm.innerHTML = _TrustScript(_elm.innerHTML.replaceAll(`{%${_key}%}`,`${_value}`));
 
 
     // Input text, input date, textarea
@@ -1842,21 +1866,50 @@ function replaceKeyHTMLByCaseID(_elm, _key, _value) {
         elm.innerText = _value;
         elm.setAttribute('data-infocase_value', _value);
     });
+
+    // div, span
+    _elm.querySelectorAll('[data-infocase_html="' + _key + '"]').forEach(function(elm){
+        elm.innerHTML = _value;
+    });
+
+    // div, span
     _elm.querySelectorAll('[data-infocase_capitalize="' + _key + '"]').forEach(function(elm){
         elm.innerText = capitalizeFirstLetter(_value);
     });
     
     _elm.querySelectorAll('[data-infocase_link="' + _key + '"]').forEach(function(elm){
-        _value = (!(_value.includes('http://') || _value.includes('https://')) ? `http://${_value}` : _value);
-        elm.setAttribute("href", _value);
+        var _value_link = (!(_value.includes('http://') || _value.includes('https://')) ? `http://${_value}` : _value);
+        if(_value_link) {
+            elm.setAttribute("href", _value_link);
+        }
     });
+    
+    
+    // New format
+    if(_key == 'tasks') {
+        _elm.querySelectorAll('[data-infocase="tasks_nowrap"]').forEach(function(elm){
+            elm.innerHTML = _value.trim().replace("\n", ", ");
+        });
+    }
+    
+    if(_key == 'customer_adsid') {
+        _elm.querySelectorAll('[data-infocase="customer_adsid_format"]').forEach(function(elm){
+            elm.innerHTML = reformatAdsId(_value);
+        });
+    }
+    if(_key == 'case_id') {
+        _elm.querySelectorAll('[data-infocase="case_id"]').forEach(function(elm){
+            elm.innerText = _value;
+        });
+    }
 
     
     return _elm;
 }
 
+// replaceAllHtmlElement
 function replaceAllHtmlElement(_panel, _data) {
-    cLog(() => { console.log('cdtx replaceAllHtmlElement -', _panel, _data); })
+    // cLog(() => { console.log('cdtx replaceAllHtmlElement -', _panel, _data); })
     if(_data.case_id) {
         var _value_tmp = '';
 
@@ -1868,6 +1921,25 @@ function replaceAllHtmlElement(_panel, _data) {
         }
     }
 }
+
+// replaceTextByData
+// s1: replace all by format {%_key_%}
+function replaceTextByData(_str) {
+    if(window.dataCase.case_id) {
+        var _value_tmp = '';
+
+        for (const [key, value] of Object.entries(window.dataCase)) {
+            _value_tmp = value;
+            _str = _str.replaceAll(`{%${key}%}`,`${value}`)
+        }
+        
+        return _str;
+    }
+    
+    return _str;
+}
+
+
 
 // REPLACE ALL KEY HTML BY CASE ID
 // s1: load data by case
@@ -1882,4 +1954,492 @@ function replaceAllKeyHtmlByCaseID(_elmpanel, _caseid, _callback) {
             _callback();
         }
     })
+}
+
+// Validate email
+function validateEmail(emailstr, callback) {
+    if(typeof emailstr === 'string') {
+        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if(emailstr.match(validRegex)) {
+            callback(emailstr)
+            return false;
+        }
+    }
+    
+    callback(false);
+}
+
+// getToolShortlink
+function getToolShortlink(_caseid, _callback) {
+    var _key = 'cdtx_tool_shortlink';
+    getChromeStorage(_key, (response) => {
+        var data_notedlist = response.value || false;
+        _callback(data_notedlist[_caseid]);
+        return false;
+    })
+}
+
+// Add more short link 
+function panelAddShortcutLink() {
+    if(location.hostname !== 'cases.connect.corp.google.com') return;
+    try {
+        
+		// Select the node that will be observed for mutations
+		var targetNode = document.body;
+
+		// Options for the observer (which mutations to observe)
+		var config = { attributes: true, childList: true, subtree: true };
+
+		// Callback function to execute when mutations are observed
+		var callback = function(mutationList, observer) {
+			var _istopelm = document.querySelector(`[data-area="btn-shortcutcase"]`);
+			if(_istopelm) {
+				if (_istopelm.querySelector("#tool_shortlink") === null) {
+                    
+                    var tool_shortlink_html = _TrustScript(`<div class="tool_shortlink_row">
+                            <div class="tool_shortlink_gr-row tool_shortlink_gr-list" ></div>
+                        </div>
+                        <span class="tool_shortlink_btn" data-btnsclick="add_shortlink" >+ Add shortlink</span>
+                        <div class="tool_shortlink_row">
+                            <div class="tool_shortlink_gr-row tool_shortlink_gr-content" >
+                                <span class="tool_shortlink_gr-url" data-tttip="U" title="URL" contenteditable="plaintext-only"></span>
+                                <span class="tool_shortlink_gr-text" data-tttip="N" title="Name" contenteditable="plaintext-only"></span>
+                                <span class="tool_shortlink_btn" data-btnsclick="save" >Save</span>
+                                <span class="tool_shortlink_btn" data-btnsclick="close" >Close</span>
+                            </div>
+                        </div>`);
+                    
+                    const dom = document.createElement('div');
+                    dom.innerHTML = tool_shortlink_html;
+                    dom.id = 'tool_shortlink';
+                    dom.className = 'tool_shortlink';
+                    _istopelm.appendChild(dom);
+
+                    setTimeout(() => {
+                        var _tool_shortlink = document.querySelector('.tool_shortlink');
+                        var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+                        if(_case_idelm) {
+                            var _caseid = _case_idelm.innerText.trim();
+                            window._caseid_toolscript = window._caseid_toolscript || '';
+
+                            if(_caseid !== window._caseid_toolscript) {
+                                
+                                getToolShortlink(_caseid, (data) => {
+                                    if(data) {
+                                        _tool_shortlink.querySelector('.tool_shortlink_gr-list').innerHTML = data;
+                                    }
+                                });
+                                
+                                window._caseid_toolscript = _caseid;
+                            }
+                        }
+
+                        
+                        onClickElm('.tool_shortlink [contenteditable]', 'keypress', function(elm, e){
+                            if (e.which === 13) {
+                                e.preventDefault();
+                                _shortcutlink_actsave(elm, () => {
+                                    cLog(() => { console.log('cdtx Have save'); })
+                                });
+                            }
+                        });
+                    }, 1000)
+                    
+
+				}
+				
+                
+                
+                     
+                
+                
+			}
+		};
+
+		// Create an observer instance linked to the callback function
+		var observer = new MutationObserver(callback);
+		// Start observing the target node for configured mutations
+		observer.observe(targetNode, config);
+    } catch (error) {
+        console.error('cdtx panelAddShortcutLink function');
+    }
+
+    try {
+        
+        var update_tool_shortlink = (_caseid, _value, _callback) => {
+            var _key = 'cdtx_tool_shortlink';
+            var _temp = {};
+            _temp[_caseid] = _value;
+            getChromeStorage(_key, (response) => {
+                var data_notedlist = response.value || {};
+                
+                cLog(() => { console.log('cdtx update_tool_shortlink' , data_notedlist, _temp); })
+
+                Object.assign(data_notedlist, _temp);
+
+
+
+                setChromeStorage(_key, data_notedlist, (response2) => {
+                    // var datars2 = response2.value || {};
+
+                    cLog(() => {
+                        console.log("cdtx update_tool_shortlink", response2);
+                    });
+
+                    _callback(response2);
+                });
+            })
+            return false;
+        }
+
+        var _shortcutlink_actsave = (elm, callback) => {
+            var _parent = elm.closest('.tool_shortlink'),
+            _url = _parent.querySelector('.tool_shortlink_gr-url'),
+            _text = _parent.querySelector('.tool_shortlink_gr-text');
+
+            if(_text.innerText.trim() === '' || _url.innerText.trim() === '') {
+                cLog(() => { console.log('tool_shortlink - URL or text this empty value') });
+                return false;
+            }
+
+            if(/^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(_url.innerText.trim()) != true) {
+                cLog(() => { console.log('tool_shortlink - URL wrong ' + _url.innerText.trim()) });
+                return false;
+            }
+            
+            var _htmltrust = _TrustScript(`<span class="tool_shortlink_gr-grbtn"><a href="${_url.innerText.trim()}" data-keytext="${_text.innerText.trim()}" data-link="${_url.innerText.trim()}" target="_blank">${_text.innerText.trim()}</a><span class="tool_shortlink_gr-removebtn" data-btnsclick="remove">X</span></span>`);
+            _parent.querySelector('.tool_shortlink_gr-list').insertAdjacentHTML("beforeEnd", _htmltrust);
+            
+            // Reset
+            _url.innerText = '';
+            _text.innerText = '';
+
+            // Close
+            _parent.classList.toggle('content_open');
+
+            // Save localstorage
+            var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+            if(_case_idelm) {
+                
+                // Remove data
+                var _html_linkelm = _parent.querySelector('.tool_shortlink_gr-list');
+                var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+                if(_case_idelm) {
+                    var _caseid = _case_idelm.innerText.trim();
+                    
+                    update_tool_shortlink(_caseid, _html_linkelm.innerHTML, (rs) => {
+                        callback();
+                    });  
+                }
+            }
+        }
+
+        onClickElm('[data-btnsclick]', 'click', function(elm, e){
+            try {
+                var _action = elm.getAttribute("data-btnsclick");
+                
+
+                var _parent = elm.closest('.tool_shortlink');
+
+
+                // add_precall
+                if(_action === 'add_shortlink') {
+                    _parent.classList.toggle('content_open');
+                    
+                }
+
+                // close
+                if(_action === 'close') {
+                    _parent.classList.toggle('content_open');
+                }
+
+                // save
+                if(_action === 'save') {
+                    _shortcutlink_actsave(elm, () => {
+                        _parent.classList.toggle('content_open');
+                        cLog(()=>{  console.log('cdtx panelAddShortcutLink save XONG')});
+                    });
+                }
+
+                // save
+                if(_action === 'remove') {
+
+                    if (confirm("You sure remove?")) {
+                        elm.closest('.tool_shortlink_gr-grbtn').remove();
+
+                        // Remove data
+                        var _html_linkelm = _parent.querySelector('.tool_shortlink_gr-list');
+                        var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
+                        if(_case_idelm) {
+                            var _caseid = _case_idelm.innerText.trim();
+                            
+                            update_tool_shortlink(_caseid, _html_linkelm.innerHTML, (rs) => {
+                                cLog(()=>{  console.log('cdtx panelAddShortcutLink remove XONG')});
+                            });  
+                        }
+                    }
+                }
+                
+            } catch (error) {
+                console.error('cdtx panelAddShortcutLink', error)
+            }
+        });
+    } catch (error) {
+        console.error('cdtx panelAddShortcutLink', error)
+    }
+}
+
+
+// crSubjectByHotKeyEmail 
+function crSubjectByHotKeyEmail() {
+    window.subject_hotkey_email = window.subject_hotkey_email || {}
+    if(location.hostname !== 'cases.connect.corp.google.com') return;
+    
+    
+    try {
+        // Đổ data vào    
+        getGooglesheetPublish((rs) => {
+            if(rs) {
+                var _tab_cr_subject_templatemail = rs[`${window.keylanguage} | CR, Subject, Template Emails`];
+                if(_tab_cr_subject_templatemail) {
+                    var _sheet_tab = _tab_cr_subject_templatemail['sheettab'];
+                    _sheet_tab.forEach((item) => {
+                        var _tempsubject = item['Subject'];
+                        console.log('crSubjectByHotKeyEmail', _tempsubject, window.dataCase);
+                        window.subject_hotkey_email[item['Key']] = _tempsubject;
+                    });    
+                }
+                
+            }
+        });
+
+        
+    } catch (error) {
+        console.error('cdtx panelAddShortcutLink', error)
+
+    }
+    
+}
+
+
+// Open Gooogle Ads By Ads ID
+//   and update CID (consider)
+//  parameter: _awid=123123
+//   url: https://adwords.corp.google.com/aw/internal/search?ocid=0&__awid=269-475-6195
+function openGAdsbyAdsID() {
+    if(location.hostname !== 'adwords.corp.google.com') return;
+    
+    try {
+        // javsacript
+        var queryString = window.location.search;
+        cLog(() => { console.log('cdtx openGAdsbyAdsID', queryString); });
+        var urlParams = new URLSearchParams(queryString);
+        var __awid = urlParams.get('__awid')
+        if(__awid) {
+            document.body.classList.add('_ads_wait1m');
+            setTimeout(() => {
+                document.body.classList.remove('_ads_wait1m');
+            }, 10000)
+        
+            var _inputsearch = document.querySelector('menu-suggest-input input.search-box');
+            _inputsearch.value = __awid;
+            _inputsearch.dispatchEvent(new Event('input'));
+            _inputsearch.dispatchEvent(new Event('keypress'));
+            _inputsearch.dispatchEvent(new KeyboardEvent("keypress", {keyCode: 13,which: 13,}));
+        }
+    } catch (error) {
+        console.error('openGAdsbyAdsID', error)
+    }
+}
+
+// Get data google sheets publish
+// 
+function getGooglesheetPublish(_callback) {
+    if(window.loadgooglesheetpublish) {
+        if(Object.keys(window.loadgooglesheetpublish).length) {
+            _callback(window.loadgooglesheetpublish);
+            return true;
+        }    
+    }
+    
+    getChromeStorage("cdtx_loadgooglesheetpublish", (response2) => {
+        var _rs = response2.value || 0;
+        if(_rs) {
+            window.loadgooglesheetpublish = _rs;
+            _callback(window.loadgooglesheetpublish);
+            return true;
+        }
+    });
+    
+    return false;
+}
+
+function updateMeetContentBySheet(_panel) {
+    try {
+        if(window.loadgooglesheetpublish) {
+            if(window.loadgooglesheetpublish['email varabiles']['sheettab']) {
+                window.loadgooglesheetpublish['email varabiles']['sheettab'].forEach((item) => {
+                    if(item[window.keylanguage]) {
+                        if(item['Attribute']) {
+                            // console.log('GOOGLE SHEET', window.dataCase.customer_gmeet, item[window.keylanguage], window.keylanguage, item);        
+                            if(window.dataCase.customer_gmeet){
+                                _panel.querySelectorAll(`[${item['Attribute']}]`).forEach(function(__elm){
+                                    __elm.innerHTML = item[window.keylanguage];
+                                });
+                                replaceAllHtmlElement(_panel, window.dataCase);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    } catch (error) {
+        console.error('cdtx updateMeetContentBySheet have error', error)
+    }
+}
+
+function toolEditorEmailTemplate4Dev() {
+    try {
+        
+        var _load = () => {
+            const dom_editor = document.createElement("div");
+            dom_editor.id = 'editor_email';
+            dom_editor.className = 'editor_email';
+            dom_editor.style.display = 'block';
+            dom_editor.style.height = '600px';
+            document.querySelector('.read-card.focused .section.header:first-child').insertAdjacentElement('afterEnd', dom_editor);
+
+            var editor = ace.edit("editor_email");
+            editor.setTheme("ace/theme/monokai");
+            editor.session.setMode("ace/mode/html");
+            editor.session.setUseWrapMode(true);
+
+
+            var _temlocalStorage = localStorage.getItem('_tempsaveaceeditor1');
+            if(_temlocalStorage) {
+                editor.setValue(_temlocalStorage);
+                var _ebc = document.querySelector('.write-cards-wrapper:not([style*="none"]) .editor #email-body-content');
+
+                if(_ebc) {
+                    _ebc.innerHTML = _temlocalStorage;
+                    replaceAllHtmlElement(_ebc, window.dataCase);
+                    updateMeetContentBySheet(_ebc);
+                } 
+            }
+
+            editor.session.on('change', function(delta) {
+                // delta.start, delta.end, delta.lines, delta.action
+                // editor.getValue(); // or session.getValue
+                var _ebc = document.querySelector('.write-cards-wrapper:not([style*="none"]) .editor #email-body-content');
+
+                _ebc.innerHTML = editor.getValue();
+                replaceAllHtmlElement(_ebc, window.dataCase);
+                updateMeetContentBySheet(_ebc);
+
+                localStorage.setItem('_tempsaveaceeditor1', editor.getValue());
+
+            });
+        }
+        if(!document.querySelector('#editor_email.ace_editor')) {
+            if(typeof ace === 'object') {
+                _load();
+            }
+            loadFetchText("https://cdnjs.cloudflare.com/ajax/libs/ace/1.19.0/ace.min.js", (rs) => {
+                eval(rs);
+                if(typeof ace === 'object') {
+                    _load();
+                }          
+            })
+        }
+    
+    } catch (error) {
+        console.error('cdtx toolEditorEmailTemplate4Dev', error)  
+    }   
+}
+
+
+
+function clearAndPrepareCRTemplate() {
+    // Prepare
+    var _composeemailcard = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"]');
+    if(_composeemailcard) {
+        cLog(()=>{console.log("CR -> Start")});
+        var _email_body_content = _composeemailcard.querySelector('#email-body-content');
+        _email_body_content.style.padding = '0px';
+        _email_body_content.style.width = '100%';
+
+        var _email_body_content_top = _composeemailcard.querySelector('#email-body-content-top');
+        _email_body_content_top.innerHTML = '<div id="email-body-content-top-content"><p dir="auto"></p></div>';
+
+        var _email_body_content_top_content = _composeemailcard.querySelector('#email-body-content-top-content');
+        
+        
+        _email_body_content_top_content.innerHTML = '<p dir="auto"><br></p>';
+        
+        var ntime = 0;
+        var myInterval = setInterval(() => {
+            cLog(()=>{console.log("CR -> interval focus cursor point and check content")});
+
+            addCursor2Contenteditable(_email_body_content_top_content);
+
+            if(_email_body_content_top_content.innerText.trim().length > 0) {
+                clearInterval(myInterval);
+
+                // replace heading search td table and replace heading
+                var _tdcellist = _email_body_content_top_content.querySelectorAll("td");
+                if(_tdcellist.length) {
+                    _tdcellist.forEach((item) => {
+                        var _heading = item.innerText.trim();
+                        var _getvalue = searchAndReturnValue(vi_heading_searchandreplace, _heading, 1);
+                        if(_getvalue) {
+                            item.innerText = _getvalue;
+                        }
+                    });
+                }
+
+                // replace heading search td table and replace heading
+                var _tdcellist = _email_body_content_top_content.querySelectorAll(".replaced");
+                if(_tdcellist.length) {
+                    _tdcellist.forEach((item) => {
+                        var _heading = item.innerText.trim();
+                        var _list = ['']
+                        var _getvalue = searchAndReturnValue(vi_key_task_searchandreplace, _heading, 1);
+                        if(_getvalue) {
+                            item.innerText = _getvalue;
+                        }
+                    })
+                }
+
+                // remove text
+                var _tr = _email_body_content_top_content.querySelectorAll("tr");
+                if(_tr.length) {
+                    _tr.forEach((item) => {
+                        var _text = item.innerText.trim();
+                        vi_searchandremove.forEach((item2) => {
+                            if(_text == item2) {
+                                item.remove();
+                            }
+                        })
+                    })
+                }
+
+
+                // Update action
+                _email_body_content_top_content.dispatchEvent(new Event('input'));
+                _email_body_content_top_content.dispatchEvent(new Event('focus'));
+                _email_body_content_top_content.dispatchEvent(new Event('click'));
+                _email_body_content_top_content.click();
+                document.execCommand("insertText", false, " ");
+            }
+
+            // more than 10s
+            if(ntime > 10) {
+                cLog(()=>{console.log("CR -> Clear time more than 10s")});
+                clearInterval(myInterval);
+            }
+            ntime++;
+            
+            
+        }, 1000);
+    }
 }

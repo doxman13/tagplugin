@@ -15,7 +15,6 @@ chrome.storage.sync.get({
         var _default_action = () => {
             window.dataTagteam.language = other_language;
             window.dataTagteam.panel_div = other_panel_div;
-            window.dataTagteam.panel_div_style = other_panel_div_style;
             window.dataTagteam.api_blog = other_api_blog;
             window.dataTagteam.current_case = {};
 
@@ -32,7 +31,6 @@ chrome.storage.sync.get({
             _default_action = () => {
                 window.dataTagteam.language = vi_language;
                 window.dataTagteam.panel_div = vi_panel_div;
-                window.dataTagteam.panel_div_style = vi_panel_div_style;
                 window.dataTagteam.api_blog = vi_api_blog;
                 window.dataTagteam.current_case = {};
 
@@ -52,7 +50,6 @@ chrome.storage.sync.get({
             _default_action = () => {
                 window.dataTagteam.language = th_language;
                 window.dataTagteam.panel_div = th_panel_div;
-                window.dataTagteam.panel_div_style = th_panel_div_style;
                 window.dataTagteam.api_blog = th_api_blog;
                 window.dataTagteam.current_case = {};
 
@@ -70,7 +67,6 @@ chrome.storage.sync.get({
             _default_action = () => {
                 window.dataTagteam.language = en_language;
                 window.dataTagteam.panel_div = en_panel_div;
-                window.dataTagteam.panel_div_style = en_panel_div_style;
                 window.dataTagteam.api_blog = en_api_blog;
                 window.dataTagteam.current_case = {};
 
@@ -89,7 +85,6 @@ chrome.storage.sync.get({
             _default_action = () => {
                 window.dataTagteam.language = jp_language;
                 window.dataTagteam.panel_div = jp_panel_div;
-                window.dataTagteam.panel_div_style = jp_panel_div_style;
                 window.dataTagteam.api_blog = jp_api_blog;
                 window.dataTagteam.current_case = {};
 

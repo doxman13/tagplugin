@@ -148,7 +148,7 @@ var vi_checkStyleByTheme = (opt_isdisable) => {
             _sync_api(_objectvalue);
         }
     });
-}
+};
 
 var vi_clearAndPrepareCRTemplate = () => {
     // Prepare
@@ -233,7 +233,7 @@ var vi_clearAndPrepareCRTemplate = () => {
             
         }, 1000);
     }
-}
+};
 
 
 
@@ -359,7 +359,7 @@ var vi_sendFirstEmail = () => {
         });
         document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new Event('blur'));
     });
-}
+};
 
 
 
@@ -1617,7 +1617,7 @@ var vi_TagteamFocusCase = () => {
                         }
 
                         if (field == 'Sales Program') {
-                            isGCC = matchingElement.innerText.toUpperCase().includes('gCC');
+                            isGCC = matchingElement.innerText.toUpperCase().includes('GCC');
                             if(ntime == 0) {
                                 ntime++;
                                 onClickElm('[debug-id="canned_response_button"]', 'click', function(elm){ 
@@ -1841,7 +1841,16 @@ var vi_TagteamFocusCase = () => {
                         elm.click();
                         divLoading.remove();
                         var _title = vi_hotkey_email[key] ? vi_hotkey_email[key] : "Đội giải pháp kỹ thuật - Thông báo";
-                        document.querySelector('.is-top .subject').value = `${_title} cho trường hợp [${caseid}]`;
+                        var _subject = `${_title} [${caseid}]`;
+                        
+                        if(window.subject_hotkey_email) {
+                            if(window.subject_hotkey_email[key]) {
+                                _subject = window.subject_hotkey_email[key];
+                                _subject = replaceTextByData(_subject);
+                            }
+                        }
+                        
+                        document.querySelector('.is-top .subject').value = _subject;
                         document.querySelector('.is-top .subject').focus();
                         document.querySelector('.is-top .subject').dispatchEvent(new Event('input'));
                         document.execCommand('innerText', false, ' ')
@@ -1909,4 +1918,4 @@ var vi_TagteamFocusCase = () => {
         console.error("tagteamFocusCase => ", error);
     }
 
-}
+};

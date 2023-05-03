@@ -1043,6 +1043,12 @@ var th_TagteamFocusCase = () => {
                             src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/dashboard.png" alt=""
                             style="width: 60%; height: 60%">
                     </li>
+                    <li class="li-14">
+                        <div class="name">Connect Appointment</div>
+                        <img class="ico connect-appointment"
+                            src="https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/tagteam/assets/img/groups/connect-appointment.png" alt=""
+                            style="width: 60%; height: 60%">
+                    </li>
             
                 </div>
             </div>`;
@@ -1100,6 +1106,7 @@ var th_TagteamFocusCase = () => {
             document.querySelector('.open-gearloose').addEventListener('click', gearloose)
             document.querySelector('.ogt-dashboard').addEventListener('click', ogtDashboard)
             document.querySelector('.ec-dashboard').addEventListener('click', ecDashboard)
+            document.querySelector('.connect-appointment').addEventListener('click', connectAppointment)
         }
 
         var modalHtml = `
@@ -1624,6 +1631,10 @@ var th_TagteamFocusCase = () => {
 
                 waitForElm('.case-id').then(elem => {
                     caseid = elem.innerText;
+                    waitForElm('#findCalendarBtn').then(btn => {
+                        var url = 'https://calendar.google.com/calendar/u/0/r/search?q='+caseid
+                        btn.setAttribute('href', url);
+                    })
                 })
                 waitForElm('.more-less-button:not(.show-more)').then(elem => {
                     elem.click();
@@ -1716,13 +1727,20 @@ var th_TagteamFocusCase = () => {
         }
 
         function ogtDashboard() {
-            var ogtUrl = 'https://dashboards.corp.google.com/view/_7f750f18_1d9b_4f6e_82b8_70e37c1e992a?f=customer_id:eq:' + cid;
-            window.open(ogtUrl, '_blank').focus();
+            var ogtauditUrl = 'https://dashboards.corp.google.com/view/_a186557f_a4ad_4e9b_b1f0_fc360bc3143e?f=customer_id:in:' + cid;
+            var ogtTechsolURL = 'https://dashboards.corp.google.com/view/_7f750f18_1d9b_4f6e_82b8_70e37c1e992a?f=customer_id:eq:'+cid
+            window.open(ogtauditUrl, '_blank').focus();
+            window.open(ogtTechsolURL, '_blank');
         }
 
         function ecDashboard() {
             var ecUrl = 'https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:' + cid;
             window.open(ecUrl, '_blank').focus();
+        }
+        function connectAppointment(){
+            var caseid = document.querySelector('.case-id').innerText;
+            var popupwin = window.open('https://appointments.connect.corp.google.com/appointmentDetails?caseId='+caseid,'popUpWindow','height=350,width=400,left=100,top=100,resizable=yes,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no, status=yes');    
+            setTimeout(function() { popupwin.close();}, 5000);
         }
 
         function prepareCR() {
@@ -1824,7 +1842,16 @@ var th_TagteamFocusCase = () => {
                         elm.click();
                         divLoading.remove();                        
                         var _title = th_hotkey_email[key] ? th_hotkey_email[key] : "ทีมโซลูชันทางเทคนิค - ";
-                        document.querySelector('.is-top .subject').value = `${_title} สำหรับเคส [${caseid}]`;
+                        var _subject = `${_title} สำหรับเคส [${caseid}]`;
+                        if(window.subject_hotkey_email) {
+                            if(window.subject_hotkey_email[key]) {
+                                _subject = window.subject_hotkey_email[key];
+                                _subject = replaceTextByData(_subject);
+                            }
+                        }
+                        
+
+                        document.querySelector('.is-top .subject').value = _subject;
                         document.querySelector('.is-top .subject').focus();
                         document.querySelector('.is-top .subject').dispatchEvent(new Event('input'));
                         document.execCommand('innerText', false, ' ')
@@ -1854,7 +1881,7 @@ var th_TagteamFocusCase = () => {
                     if (isGCC) {
                         var emailCC = document.evaluate('//span[contains(text(),"CC")]//following-sibling::email-address-input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
                         var emailBCC = document.evaluate('//span[contains(text(),"BCC")]//following-sibling::email-address-input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                        emailBCC.querySelector('input').value = emailCC.querySelector('.value').innerText;
+                        emailBCC.querySelector('input').value = document.querySelector('material-input.action-input.input-email .input').value;
                         emailBCC.querySelector('input').dispatchEvent(new Event('input'));
                         if (emailCC) emailCC.querySelector('.remove').click();
                         waitForElm('focus-trap [debug-id="email"]').then(item => {
@@ -1892,4 +1919,4 @@ var th_TagteamFocusCase = () => {
         console.error("tagteamFocusCase => ", error);
     }
 
-}
+};

@@ -1,4 +1,14 @@
 function global_case() {
+    console.log('global_case START');
+    window.dataCase = window.dataCase || {};
+    window.dataMeetLink = window.dataMeetLink || {};
+    window.caseCurrent = window.caseCurrent || {};
+    window.isdongtest = localStorage.getItem("dongtest") || false;
+    window.isdongtest_local = localStorage.getItem("dongtest_local") || false;
+    window.keylanguage = window.keylanguage || '';
+    
+    var _url_googlesheet = 'https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vRMxOxerJ3zWV07uTOdTQCaa13ODbTfZVj5SB7-4Q6QlFhFTU8uXA-wsywXAUUqzHtOiGQdGgCYfRmk/pubhtml';
+    
     var _keylanguage = '';
                     
     switch (result.mycountry) {
@@ -37,9 +47,565 @@ function global_case() {
             break;
     }
 
-
+    window.keylanguage = _keylanguage;
 
     
+
+    var bosungHienthi = (_datacase, _temp) => {
+        console.log(_datacase, _temp);
+    }
+
+    var case_restructor = (_caseid, _temp) => {
+        try {
+            
+            
+            var _tempdataCase = {};
+            _tempdataCase.case_id = _caseid;
+            _tempdataCase.data_all = _temp;
+
+
+            
+            if(_temp) {
+                // Get from GSheet
+                var _keylang = window.loadgooglesheetpublish['Key language'].sheettab;
+    
+
+                for (const [key, value] of Object.entries(_temp)) {
+                    
+                    // By Google Sheet
+                    // cLog(() => { console.log(`cdtx - major`, key, value); })
+                    _value_tmp = value;
+                    _keylang.forEach((item_2) => {
+                        var _item_2key = item_2['key'].trim();
+
+                        // cLog(() => { console.log(`cdtx - major`, key, '===', item_2['en']); })
+                        if(key === item_2['vi']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                        if(key === item_2['en']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                        if(key === item_2['jp']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                        if(key === item_2['cn']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                        if(key === item_2['kr']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                        if(key === item_2['in']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                        if(key === item_2['th']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                    })
+                    
+                    // tiep tuc xu ly
+                    
+                    // Validate Email
+                    if(typeof value === 'string') {
+                        // console.log('cdtx --- email', value);
+                        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+                        if(value.match(validRegex)) {
+                            if(!value.includes('@google.com')) {
+                                _tempdataCase['customer_name'] = key;
+                                _tempdataCase['customer_email'] = value;
+                            }
+                        }
+                    }
+
+                    
+                    // Name customer
+                    if(key === 'contact_info_name') {
+                        _tempdataCase['customer_name'] = value;
+                    }
+                    
+                    // Name phonevalue
+                    if(key === 'contact_phonevalue') {
+                        _tempdataCase['customer_contact'] = value;
+                    }
+
+                    
+                    if(key.includes('(submitter)')) {
+                        var _arr = value.split("\n");
+                        _tempdataCase['am_name'] = _arr[0];
+                        _tempdataCase['am_email'] = _arr[1];
+                    }
+                    
+                    
+                    if(key.includes('Contact')) {
+                        var _arr = value.split("/*/");
+                        for (let index = 0; index < _arr.length; index++) {
+                            if(_arr[index].startsWith('+')) {
+                                if(!_tempdataCase['customer_contact']) {
+                                    _tempdataCase['customer_contact'] = _arr[index];
+                                }
+                            }
+                            
+                        }
+                    }
+                    
+                }
+
+
+                
+    
+                try {
+                    if(typeof _tempdataCase['customer_ua_ga'] !== 'undefined') {
+                        if(_tempdataCase['customer_ua_ga'].includes('G-') || 
+                            _tempdataCase['customer_ua_ga'].includes('UA-')) {
+                            _tempdataCase['is_external'] = 1;
+                        }
+                    }
+                    
+                    if(typeof _tempdataCase['interaction_type'] !== 'undefined') {
+                        if(_tempdataCase['interaction_type'].includes('external')) {
+                            _tempdataCase['is_external'] = 1;
+                            // am_isgcc_external
+                        }
+                    }
+                    
+                } catch (error) {
+                    console.log('cdtx - major error', error)
+                }
+    
+                if(_tempdataCase['sales_program']) {
+                    if(_tempdataCase['sales_program'].toLowerCase().includes('gcc')) {
+                        _tempdataCase['is_gcc'] = 1;
+                    }
+                }
+                
+                if(
+                    _tempdataCase['tasks']
+                ) {
+                    if(_tempdataCase['tasks'].toLowerCase().includes('ads enhanced conversions')) {
+                        _tempdataCase['is_ads_enhanced_conversions'] = 1;
+                    }
+                }
+                
+                if(
+                    _tempdataCase['is_gcc'] || 
+                    _tempdataCase['is_external']
+                ) {
+                    _tempdataCase['am_isgcc_external'] = 1;    
+                }
+                
+                
+                // *****
+                // Format again 1 - _temp
+                // *****
+
+                for (const [key, value] of Object.entries(_temp)) {
+                    
+                    // By Google Sheet
+                    // cLog(() => { console.log(`cdtx - major`, key, value); })
+                    _value_tmp = value;
+                    _keylang.forEach((item_2) => {
+
+                        // cLog(() => { console.log(`cdtx - majorkey`, key === item_2['vi'], key, '===', item_2['vi']); })
+                        // cLog(() => { console.log(`cdtx - majorkey`, key); })
+                        if(key === item_2['vi']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                        if(key === item_2['en']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                        if(key === item_2['jp']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                        if(key === item_2['cn']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                        if(key === item_2['kr']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                        if(key === item_2['in']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                        if(key === item_2['th']) {
+                            _tempdataCase[item_2['key']] = value;
+                        }
+                    })
+                }
+                // *****
+                // Format again 1 - _tempdataCase
+                // *****
+
+                for (const [key, value] of Object.entries(_tempdataCase)) {
+                    
+                    if(key === 'am_info') {
+                        var _arr = value.split("\n");
+                        _tempdataCase['am_name'] = _arr[0];
+                        _tempdataCase['am_email'] = _arr[1];
+                    }
+
+                    if(key === 'am_name_info') {
+                        try {
+                            var _arr = value.split("/*/")[0].split("\n");
+                            _tempdataCase['am_name'] = _arr[0];
+                            _tempdataCase['am_email'] = _arr[1];  
+                        } catch (error) {  
+                            console.error("cdtx - count not get am_name_info");
+                        }
+                    }
+                }
+    
+                // _temp.forEach((item, index) => {
+                //     console.log('cdtx - major', index);
+                //     _keylang.forEach((item_2) => {
+                //         // Vi
+                //         var _key = item_2.key.trim();
+                //         if(item === item_2['vi']) {
+                //             _temp[_key] = _t2;
+                //         }
+            
+                //         // En
+                //         if(item === item_2['en']) {
+                //             _temp[_key] = _t2;
+                //         }
+            
+                //         // En
+                //         if(item === item_2['js']) {
+                //             _temp[_key] = _t2;
+                //         }
+                //     });
+                // });
+                
+            }
+
+
+            cLog(() => { console.log("cdtx - major", "_temp 2", _temp, _tempdataCase); });
+            if(window.loadgooglesheetpublish['Key language'].sheettab) {
+                cLog(() => { console.log("cdtx - major", "Google sheet", window.loadgooglesheetpublish['Key language'].sheettab); });
+            }
+            
+            return _tempdataCase;
+        } catch (error) {
+            console.error('cdtx', error);
+            return _temp;
+        }
+
+        return _temp;
+    }
+
+    var addButtonToDocContent = () => {
+        try {
+            
+            var _contenthtml = `
+                <div class="material-button" data-btnclk="open_panelnote" >
+                    <div class="content">Panel</div>
+                </div>`;
+    
+            if (document.querySelector('._panel_btnshortcut')) {
+                var _panel_btnshortcut = document.querySelector('._panel_btnshortcut');
+                
+                // For Panel
+                if (!_panel_btnshortcut.querySelector(`[data-btnclk="open_panelnote"]`)) {
+                    _contenthtml = _TrustScript(_contenthtml);
+                    _panel_btnshortcut.insertAdjacentHTML('afterBegin', _contenthtml);
+                }
+                
+                
+                // For go Team
+                if (!document.querySelector(`._panel_btnshortcut ._panel_shortcut_go_teamvietnam`)) {
+                    _contenthtml = `<a href="#" target="_blank" class="material-button _panel_shortcut_go_teamvietnam" data-textview="You have not accessed the group link today?" style="display: none" >
+                            <img src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/jpteam/go_JPdashboard.png">
+                    </a>`;
+                    _contenthtml = _TrustScript(_contenthtml);
+                    _panel_btnshortcut.insertAdjacentHTML('beforeEnd', _contenthtml);
+    
+                    var _goteamelm = _panel_btnshortcut.querySelector(`._panel_shortcut_go_teamvietnam`);
+    
+                    getGooglesheetPublish((rs) => {
+                        rs['Variable']['sheettab'].forEach(element => {
+                            if(element.key === window.keylanguage) {
+                                _goteamelm.setAttribute('href', element['goteam_link']);
+                                
+                                if(element['goteam_link_iconurl']) {
+                                    _goteamelm.querySelector('img').setAttribute('src', element['goteam_link_iconurl']);                                
+                                }
+                                
+                                _goteamelm.style.display = '';
+                            }
+                        });
+                    });
+                    
+                    
+                    var _timekey_current = new Date().getDate();
+                    getChromeStorage('goTeamToDay', (response) => {
+                        var _timestorage = response.value || false;
+                        if(_timestorage != _timekey_current) {
+                            _goteamelm.classList.add('notview_today');
+                        }
+                    });
+
+                    _goteamelm.addEventListener("click", (e) => {
+                        // sessionStorage.setItem("goTeamToDay", _timekey_current);
+                        setChromeStorage('goTeamToDay', _timekey_current);
+                        // e.target.remove();
+                    });
+                    
+                }
+            }
+    
+        } catch (error) {
+            console.error('addButtonToDocContent', error);
+        }
+    }
+    
+    var addButtonResetVersion = () => {
+        var _contenthtml = `
+        <div class="material-button _fordevmode" data-btnclk="tool_mail_test" >
+            <div class="content">
+                Mail test
+            </div>
+        </div>`;
+
+
+        // For Dev
+        if(!window.isdongtest) return false;
+
+        _contenthtml += `
+        <div class="material-button" data-btnclk="resetdata" >
+            <div class="content">
+                <img src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/105981/reload.svg">
+            </div>
+        </div>
+        <div class="material-button" data-btnclk="removecase_example" title="remove 1 case storage example" >
+            <div class="content">
+                <img src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/315851/close.svg" alt="" srcset="">
+            </div>
+        </div>
+        <div class="material-button" data-btnclk="get_window_data_case" >
+            <div class="content">
+                <img src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/311132/reading-list.svg">
+            </div>
+        </div>`;
+
+        if(!document.querySelector(`._panel_btnshortcut [data-btnclk="resetdata"]`)) {
+            
+            if(document.querySelector('._panel_btnshortcut')) {
+                _contenthtml = _TrustScript(_contenthtml);
+                document.querySelector('._panel_btnshortcut').insertAdjacentHTML('beforeEnd', _contenthtml);    
+            }
+            
+        }
+    }
+    
+    var global_crawl_major = (callback, unlockmark = false) => {
+        var _temp = {};
+        
+        console.log("cdtx - major begin");
+        
+        var _nlimit = 0;
+        var _ishave_review_case_in_connect_sales_elm = false;
+        var myTime = setInterval(() => {
+            var _n_isok = 0;
+            var _n_notready = 0;
+            
+            // Break
+            console.log('cdtx - global_crawl_major', unlockmark, _n_notready);
+            _nlimit++; if(_nlimit > 30) {clearInterval(myTime);}
+            
+            var _list_elem = [];
+            var _cuf_form_field = document.querySelectorAll('card.read-card:not(.hidden) cuf-form-field');
+            var _data_pair_content = document.querySelectorAll('card.read-card:not(.hidden) home-data-item');
+            var _internal_user_info_email = document.querySelectorAll('card.read-card:not(.hidden) internal-user-info');
+            var _contact_email_field = document.querySelectorAll('card.read-card:not(.hidden) contact-email-field');
+            
+            _list_elem.push(_cuf_form_field);
+            _list_elem.push(_data_pair_content);
+            _list_elem.push(_internal_user_info_email);
+            _list_elem.push(_contact_email_field);
+            
+            
+
+            if(_cuf_form_field.length > 5 ) {
+                _n_isok++;
+            }
+            
+            
+            
+            // If is unlock request true => recheck have unmark class and is have ***
+            if(unlockmark && _n_notready === 0) {
+                
+                _list_elem.forEach((__item) => {
+                     
+                    __item.forEach(elm => {
+                         var _unmark = elm.querySelector('[debugid="unmask-button"]');
+                         if(_unmark) {
+                            _unmark.click();
+                            _n_notready++;
+
+                            if(window.isdongtest_local) {
+                                _unmark.setAttribute('debugid', '');
+                            }
+                         }
+                         
+                         if(elm.innerText.includes('***')) {
+                            _n_notready++;
+
+
+                            
+                            if(window.isdongtest_local) {
+                                _unmark.innerText = _unmark.innerText.replaceAll('*', '');
+                            }
+                         }
+
+                         // 
+                         document.querySelectorAll('#read-card-tab-panel-case-log .case-log-container.active-case-log-container .activities > div').forEach(function(elm){
+                            if(elm.innerText.includes('Review case in Connect Sales')) {            
+                                // cLog(() => { console.log(elm.querySelector("table")) })
+            
+                                elm.querySelector('case-message-view [class*="message-content-container"]').click();
+                            
+                                if(!document.querySelector('#read-card-tab-panel-case-log .case-log-container.active-case-log-container .activities > div table tr')) {
+                                    cLog(() => { console.log('cdtx - 1111') });
+                                    _n_notready++;
+
+                                    // 5 lần không tìm thấy thì bỏ qua
+                                    
+                                    if(_nlimit > 4) {
+                                        cLog(() => { console.log('cdtx - global_crawl_major skip after 5s') });
+                                        _n_notready--;
+                                    } 
+                                } else {
+                                    
+                                    cLog(() => { console.log('cdtx - global_crawl_major true') });
+                                    _ishave_review_case_in_connect_sales_elm = true;
+                                }
+                            }
+                        });
+                        
+
+                     })
+                });
+
+
+             
+                 // Stop if _n_notready > 0 
+                if(_n_notready > 0) return false;
+             
+            }
+            
+            console.log("cdtx - major begin - 3");
+            
+            
+
+            // if(_data_pair_content.length ) {
+            //     _n_isok++;   
+            // }
+
+            // if(_internal_user_info_email.length ) {
+            //     _n_isok++;
+            // }
+
+            // if(_contact_email_field.length ) {
+            //     _n_isok++;
+            // }
+
+            if(_n_isok > 0) {
+                
+                var _filter = (data_filter) => {
+                    var _key = data_filter[0];
+                    var _value = '';
+
+                    delete data_filter[0];
+                    data_filter = data_filter.filter(n => n);
+                    _value = data_filter.join("\n");
+                    
+                    if(_temp[_key]) {
+                        _temp[_key] = _temp[_key] + "/*/" + _value;
+                    } else {
+                        _temp[_key] = _value;
+                    }
+                    
+                    
+                    validateEmail(_key, function(rs) {
+                        if(rs) {
+                            
+                            if(!_temp['email'].includes(rs)) {
+                                _temp['email'] = (_temp['email']) ? _temp['email'] + "/*/" + rs : rs;
+                            }
+                        }
+                    })
+                    
+                    validateEmail(_value, function(rs) {
+                        if(rs) {
+                            if(!_temp['email']) {
+                                _temp['email'] = rs;
+                            } else {
+                                if(!_temp['email'].includes(rs)) {
+                                    _temp['email'] = _temp['email'] + "/*/" + rs;
+                                }    
+                            }
+                            
+                            
+                            
+                        }
+                    })
+                }
+                
+                _list_elem.forEach((__item) => {
+                    __item.forEach(elm => {
+                        var data_filter = elm.innerText.trim().split("\n");
+                        data_filter = data_filter.map(s => s.trim());
+                        data_filter = data_filter.filter(function (el) {return el != "";});
+    
+                        _filter(data_filter);
+                        
+                    });    
+                });
+                
+                var contact_info_name = document.querySelector('card.read-card:not(.hidden) [debug-id="contact-info-name"]');
+                if(contact_info_name) {
+                    _temp['contact_info_name'] = contact_info_name.innerText.trim();
+                }
+                
+                var contact_phonevalue = document.querySelector('card.read-card:not(.hidden) [debugid="pii-phone-value"]');
+                if(contact_phonevalue) {
+                    _temp['contact_phonevalue'] = contact_phonevalue.innerText.trim();
+                }
+
+
+                // 
+                
+
+
+
+                // 1. Merge 
+                // // Restructor 
+                var _rsdatacase = {};
+                try {
+                    var _caseid = document.querySelector('[debug-id="case-id"] span.case-id').innerText;
+                    _rsdatacase = case_restructor(_caseid, _temp);
+                } catch (error) {
+                    console.error(error, _temp);
+                }
+
+                
+                // Merge với connect case
+                cLog(() => { console.log('cdtx - global_crawl_major is OVERWRITE by connect sale', unlockmark, _ishave_review_case_in_connect_sales_elm) });
+                if(unlockmark && _ishave_review_case_in_connect_sales_elm) {
+                    
+                    global_review_case_in_connect_sales((rs) => {
+                        Object.assign(_rsdatacase, rs);
+                    });
+                }
+                
+                cLog(() => {console.log('cdtx - major END', _temp); });
+
+                callback(_rsdatacase);
+                
+                clearInterval(myTime);
+            }
+        }, 1000);
+
+    }
+
+
     var global_crawl_external_case = (callback) => {
         var _datatemp = _datatemp || {};
 
@@ -55,7 +621,7 @@ function global_case() {
 
         try {
          
-            var _dfa_key_lang = window.loadgooglesheetpublish['DfA key lang'].sheettab;
+            var _dfa_key_lang = window.loadgooglesheetpublish['Key language'].sheettab;
             var cuf_forn_field = document.querySelectorAll("card.read-card:not(.hidden) cuf-form-field"); 
 
             if(cuf_forn_field.length) {
@@ -130,11 +696,224 @@ function global_case() {
         
         callback(_datatemp);
     }
+    
+    var addGoCase2Calendar = (_caseid) => {
+        // go_caseincalendar
+        // https://calendar.google.com/calendar/u/0/r/search?q=2-4476000033977
+        
+        var _link = `https://calendar.google.com/calendar/u/0/r/search?q=${_caseid}`;
+        
+        
+        if(!document.querySelector('#go_caseincalendar')) {
+            var _contenthtml = `<a href="${_link}" target="_blank" id="go_caseincalendar">Go calendar</a>`;
+            _contenthtml = _TrustScript(_contenthtml);
+            document.querySelector('.home.header .card-title').insertAdjacentHTML('beforeEnd', _contenthtml);
+        }
+        
+        
+        if(document.querySelector('#go_caseincalendar')) {
+            document.querySelector('#go_caseincalendar').setAttribute('href', _link);
+        }
+        
+           
+    }
+
+    var addPanelNote2Case = (_caseid) =>{
+        var _contenthtml = `<div class="_infocase_byme"></div>`;
+        var _contenthtml_inner = `
+        <span class="_infocase_byme-btnopen" data-btnclk="_infocase_byme-openact" ></span>
+        <div class="_infocase_byme-inner">
+            <span class="_infocase_byme-warning" >Note: The information is only stored on computer memory. And you can <span data-btnclk="removecase_example"  >refresh this data</span></span>
+            
+            <div class="_infocase_byme-row" >
+                <div class="_infocase_byme-col _infocase_byme-note" data-title="Note" data-infocase="note" contenteditable="plaintext-only" ></div>
+                <div class="_infocase_byme-col" >
+                    <div class="_infocase_byme-field" data-title="Customer name" data-infocase="customer_name" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                    <div class="_infocase_byme-field" data-title="Customer email" data-infocase="customer_email" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                    <div class="_infocase_byme-field" data-title="Customer contact" data-infocase="customer_contact" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                    <div class="_infocase_byme-field" data-title="AM email" data-infocase="am_email" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                    <div class="_infocase_byme-field" data-title="Meet link" data-infocase="customer_gmeet" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                    <div class="_infocase_byme-field is_debug" data-title="Is External" data-infocase="is_external" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                    <div class="_infocase_byme-field is_debug" data-title="Is GCC" data-infocase="is_gcc" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                    <div class="_infocase_byme-field" data-title="Your call quality" data-iscenter="1" data-infocase="self_assessment_call_quality" data-disnewline="1" contenteditable="plaintext-only" data-select="7,6,5,4,3,2,1,∞" data-btnclk="note_select" >∞</div>
+                </div>
+            </div>
+            <div class="_infocase_byme-row" data-area="btn-shortcutcase" ></div>
+            <div class="_infocase_byme-row" data-area="btn-shortcutcase_temp" ></div>
+            
+            
+            <div class="_infocase_byme-row" data-area="forsetting" >
+                <div class="_infocase_byme-col" >
+                    <div class="_infocase_byme-field _infocase_byme-setting--yourname" data-title="Your Name" data-infosetting="your-name" contenteditable="plaintext-only" ></div>
+                </div>
+            </div>
+        </div>`;
+        
+        if(!document.querySelector('._infocase_byme')) {
+            if(!document.querySelector('[debug-id="case-id"] span.case-id')) return false;
+            
+            var _caseid = document.querySelector('[debug-id="case-id"] span.case-id').innerText;
+            
+            const _infocase_bymeelm = document.createElement("div");
+            _infocase_bymeelm.className  = '_infocase_byme' + (window.isdongtest ? " dongdev" : "");
+            _infocase_bymeelm.innerHTML = _contenthtml_inner;
+            _infocase_bymeelm.id = '_infocase_byme';
+
+            document.querySelector('read-deck .read-cards-wrapper').appendChild(_infocase_bymeelm);
+            // var _infocase_bymeelm = document.querySelector('._infocase_byme');
+
+            // == 
+            
+            // == Add Event
+                    
+            var setChangeListener = (elm, listener) => {
+                elm.addEventListener("keypress", listener, true);
+                elm.addEventListener("change", listener, true);
+                elm.addEventListener("blur", listener, true);
+                elm.addEventListener("keyup", listener, true);
+                elm.addEventListener("paste", listener, true);
+                elm.addEventListener("copy", listener, true);
+                elm.addEventListener("cut", listener, true);
+                elm.addEventListener("delete", listener, true);
+                elm.addEventListener("mouseup", listener, true);
+            }
 
 
-    var gloabl_crawl_case = (callback) => {
+            var _value_compare = '';
+            setChangeListener(_infocase_bymeelm, (even) => {
+
+                var _target = even.target;
+                var __disnewline = _target.getAttribute('data-disnewline');
+                var __key_seting = _target.getAttribute('data-infosetting');
+                var __key = _target.getAttribute('data-infocase');
+                var __value = _target.innerText.trim();
+                
+                // console.log(__key);
+                if(__key_seting) {
+                    if(even.type === 'blur') {
+                        console.log('cdtx HERE', __key_seting, __value);
+                        updateFieldSetting2Storage(__key_seting, __value , (rs) => {
+                            Toastify({
+                                text: `Setting Saved!!!`,
+                                duration: 2000,
+                                callback: function(){
+                                    this.remove();
+                                }
+                            }).showToast();
+                            console.log('cdtx setting ', rs);
+                            
+                            for (const [key, value] of Object.entries(rs)) {
+                                document.querySelectorAll(`#_panel_div [data-infosetting="${key}"]`).forEach(function(elm){
+                                    elm.innerText = value;
+                                });
+                            }
+                        });
+                    }
+                }
+                if(!__key) return false;
+
+                console.log('cdtx addPanelNote2Case' , even.type, __key, __value, _target);
+
+                if(__disnewline) {
+                    if(even.which == 13) {
+                        even.preventDefault();
+                    }
+                }
+                
+                if(even.type === 'mouseup') {
+                    if(__key) {
+                        // console.log('cdtx addPanelNote2Case', even.type, __key, 'isupdate' , _value_compare !== __value);
+                        _value_compare = __value;
+                        
+                    }
+
+
+                }
+
+                if(even.type === 'blur') {
+                        // console.log('cdtx addPanelNote2Case' , even.type, __key, 'isupdate' , _value_compare !== __value);
+
+                        // Compare value before save
+                        if(__value !== _value_compare) {
+                            _value_compare = __value;
+
+                            switch (__key) {
+                                case 'note':
+                                    updateNoteCase(_caseid, __value, (rs) => {
+                                        Toastify({
+                                            text: `Saved note ${_caseid}!!!`,
+                                            duration: 2000,
+                                            callback: function(){
+                                                this.remove();
+                                            }
+                                        }).showToast();
+                                    });  
+                                    
+                                    break;
+
+                                default:
+
+
+                                    updateFieldCase2Storage(__key, __value, _caseid , (rs) => {
+                                        Toastify({
+                                            text: `Saved 1!!! ${__key}`,
+                                            duration: 2000,
+                                            callback: function(){
+                                                this.remove();
+                                            }
+                                        }).showToast();
+                                        
+                                        window.dataCase = rs;
+                                        reupdateForAll(rs, ['panelnotecase']);
+                                    });
+
+
+                                    break;
+                            }                    
+                        }
+
+                        
+                        // 2.1 blur => for action
+                        if(__key === 'self_assessment_call_quality') {
+                            // remove all note_select_lstchoice
+                            if(_infocase_bymeelm.querySelector('#note_select_lstchoice')) {
+                                _infocase_bymeelm.querySelector('#note_select_lstchoice').remove();
+                            }
+                        }
+                        
+                }
+
+                
+                if(even.type === 'change') {
+                    if(__key) {
+                        console.log('cdtx addPanelNote2Case', __value);   
+                    }
+                }
+            })
+
+
+
+
+
+            
+        }
+    }
+    
+    var renderHTML2PanelNoteCase = (_datecase = false) => {
+        // For panel
+        var _infocase_bymeelm = document.querySelector('._infocase_byme');
+        _infocase_bymeelm.querySelectorAll('[data-infocase][contenteditable]').forEach((elm) => {elm.innerHTML = ''})
+        
+        if(!_datecase) {
+            _datecase = window.dataCase;
+        }
+
+        replaceAllHtmlElement(_infocase_bymeelm, _datecase);
+    }
+
+
+    var global_review_case_in_connect_sales = (callback) => {
         var _datatemp = _datatemp || {};
-
         document.querySelectorAll('#read-card-tab-panel-case-log .case-log-container.active-case-log-container .activities > div').forEach(function(elm){
             if(elm.innerText.includes('Review case in Connect Sales')) {            
 
@@ -266,68 +1045,206 @@ function global_case() {
                 
             }
         });
+
         
-        
-        // customer_gender
-            _datatemp.customer_gender = "bạn";
-
-        // internal // external  || interaction_type
-            _datatemp.interaction_type = "internal";
-            
-            document.querySelectorAll("card.read-card:not(.hidden) home-data-item").forEach(function(elm){
-                var dataList = elm.innerText.split("\n");
-                
-                if(dataList[0].includes('Google Ads External Customer ID')) {
-                    _datatemp.customer_adsid = dataList[1];
-                }
-            
-                if(dataList[1].toLowerCase().includes('external')) {
-                    _datatemp.interaction_type = dataList[1].toLowerCase();
-                    _datatemp.am_isgcc_external = 1;
-
-                    // 
-                }
-            });
-        
-            // cuf-form-field
-            var getdatall = (elmall) => {
-                if(elmall.length) {
-                    _datatemp.data_all = [];
-                    elmall.forEach((elm) => {
-                        var _cufstr = elm.innerText.trim().split("\n");
-                        var _t1 = _cufstr[0];
-                        
-                        var _form_label = elm.querySelector('.form-label');
-                        if(_form_label) {
-                            _t1 = _form_label.innerText.trim();
-                        }
-
-                        var _form_label = elm.querySelector('.data-pair-label');
-                        if(_form_label) {
-                            _t1 = _form_label.innerText.trim();
-                        }
-
-                        _cufstr = _cufstr.filter(function(item) {
-                            return item !== _t1;
-                        });
-
-                        var _t2 = _cufstr.join(", ");
-                        // Data All
-                        _datatemp.data_all.push({
-                            'key': _t1,
-                            'value': _t2,
-                        })
-
-                    });
-                }
-            }
-
-            
-            getdatall(document.querySelectorAll("card.read-card:not(.hidden) cuf-form-field"));
-            getdatall(document.querySelectorAll("card.read-card:not(.hidden) home-data-item"));
-
         callback(_datatemp);
-    };
+    }
+    // var global_crawl_case = (callback) => {
+    //     var _datatemp = _datatemp || {};
+
+    //     document.querySelectorAll('#read-card-tab-panel-case-log .case-log-container.active-case-log-container .activities > div').forEach(function(elm){
+    //         if(elm.innerText.includes('Review case in Connect Sales')) {            
+
+    //             var _tableinfo = elm.querySelectorAll("table tr"); 
+    //             if(_tableinfo.length) {
+    //                 _tableinfo.forEach((elm) => {   
+    //                     var _td_1 = elm.querySelector("td:nth-child(1)");
+    //                     var _td_2 = elm.querySelector("td:nth-child(2)"); 
+
+    //                     if(_td_1 &&  _td_2) {
+    //                         // cLog(() => { console.log(_td_1.innerText, _td_2.innerText); })
+                            
+    //                         if(_td_1.innerText.includes("Team")) {
+    //                             _datatemp.team = _td_2.innerText;
+    //                         }
+                            
+    //                         if(_td_1.innerText.includes("Company")) {
+    //                             _datatemp.company = _td_2.innerText;
+    //                         }
+                            
+    //                         if(_td_1.innerText.includes("Case Summary")) {
+    //                             _datatemp.case_summary = _td_2.innerText;
+    //                         }
+                            
+    //                         if(_td_1.innerText.includes("Accounts")) {
+    //                             _datatemp.customer_ocid = _td_2.innerText;
+    //                         }
+                            
+    //                         if(_td_1.innerText.includes("Website")) {
+    //                             _datatemp.customer_website = _td_2.innerText;
+    //                         }
+                            
+    //                         if(_td_1.innerText.includes("Request Category")) {
+    //                             _datatemp.request_category = _td_2.innerText;
+    //                         }
+                            
+    //                         if(_td_1.innerText.includes("Sales Program")) {
+    //                             _datatemp.sales_program = _td_2.innerText;
+    //                             if(_td_2.innerText.toUpperCase().includes("GCC")) {
+    //                                 _datatemp.am_isgcc_external = 1;
+    //                             }
+    //                         }
+                            
+    //                         if(_td_1.innerText.includes("Contact")) {
+    //                             var _temp_now = _td_2.innerHTML.split("<br>");
+    //                             _temp_now.forEach(function(str_item){
+    //                                 str_item = str_item.replace(/(<([^>]+)>)/gi, "");
+
+    //                                 if(str_item.includes("Name: ")) {
+    //                                     _datatemp.customer_name = str_item.split("Name: ")[1];
+    //                                 }
+
+    //                                 if(str_item.includes("Email: ")) {
+    //                                     _datatemp.customer_email = str_item.split("Email: ")[1];
+    //                                 }
+
+    //                                 if(str_item.includes("Phone: ")) {
+    //                                     _datatemp.customer_contact = str_item.split("Phone: ")[1];
+    //                                 }
+
+    //                             });
+    //                         }
+
+    //                         if(_td_1.innerText.includes("Appointment Time")) {
+    //                             _datatemp.appointment_time = _td_2.innerText;
+    //                         }
+                            
+    //                         if(_td_1.innerText.includes("Merchant Center ID")) {
+    //                             _datatemp.merchant_center_id = _td_2.innerText;
+    //                         }
+
+    //                         if(_td_1.innerText.includes("Please let us know if there are any specific details that we should be aware of for this request - Guide")) {
+    //                             _datatemp.special_guide = _td_2.innerText;
+    //                             _datatemp.request = _td_2.innerText;
+    //                         }
+
+    //                         if(_td_1.innerText.includes("Attribution Model")) {
+    //                             _datatemp.customer_attributionmodel = _td_2.innerText;
+    //                         }
+                            
+    //                         if(_td_1.innerText.includes("Tasks")) {
+    //                             _datatemp.tasks = _td_2.innerText.trim().replace("\n", "").replace(",", ", ");
+    //                         }
+                            
+    //                         if(_td_1.innerText.includes("Instructions for the Implementation (Guide)")) {
+    //                             _datatemp.implementation_guide = _td_2.innerText;
+    //                             _datatemp.request = _td_2.innerText;
+    //                         }
+                            
+    //                         if(_td_1.innerText.includes("What Product Area(s) does your customer need help with?")) {
+    //                             _datatemp.customer_need_help = _td_2.innerText;
+    //                         }
+    //                     }
+                        
+    //                 });
+    //             }
+
+                
+    //             // Track AM info
+    //             if(elm.querySelector('sanitized-content')) {
+    //                 var _contenttext = elm.querySelector('sanitized-content').innerText;
+    //                 _contenttext = _contenttext.split('was submitted by')[1];
+    //                 if(_contenttext.includes('@google.com')) {
+    //                     var _emails = _contenttext.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
+    
+    //                     var am_emailgoogle = _emails.find((_item2) => { return _item2.includes('@google.com')});
+    
+    //                     if(am_emailgoogle) {
+    //                         var am_name = _contenttext.split('(')[0].trim();
+    //                         var am_email = am_emailgoogle;
+                            
+    //                         _datatemp.am_name = am_name;
+    //                         _datatemp.am_email = am_email;
+    //                     }
+    //                 }
+    //             }
+
+                
+    //             // Meeting time
+    //             var _date_key = [
+    //                 new Date().getFullYear(),
+    //                 ("0" + (new Date().getMonth() + 1)).slice(-2),
+    //                 ("0" + new Date().getDate()).slice(-2),
+    //             ];
+                
+    //             if(_datatemp.appointment_time) {
+    //                 _datatemp.meeting_time = convertDateCustom(_datatemp.appointment_time, 2);
+    //             }
+                
+    //         }
+    //     });
+        
+        
+    //     // customer_gender
+    //         _datatemp.customer_gender = "bạn";
+
+    //     // internal // external  || interaction_type
+    //         _datatemp.interaction_type = "internal";
+            
+    //         document.querySelectorAll("card.read-card:not(.hidden) home-data-item").forEach(function(elm){
+    //             var dataList = elm.innerText.split("\n");
+                
+    //             if(dataList[0].includes('Google Ads External Customer ID')) {
+    //                 _datatemp.customer_adsid = dataList[1];
+    //             }
+            
+    //             if(dataList[1].toLowerCase().includes('external')) {
+    //                 _datatemp.interaction_type = dataList[1].toLowerCase();
+    //                 _datatemp.am_isgcc_external = 1;
+
+    //                 // 
+    //             }
+    //         });
+        
+    //         // cuf-form-field
+    //         var getdatall = (elmall) => {
+    //             if(elmall.length) {
+    //                 _datatemp.data_all = [];
+    //                 elmall.forEach((elm) => {
+    //                     var _cufstr = elm.innerText.trim().split("\n");
+    //                     var _t1 = _cufstr[0];
+                        
+    //                     var _form_label = elm.querySelector('.form-label');
+    //                     if(_form_label) {
+    //                         _t1 = _form_label.innerText.trim();
+    //                     }
+
+    //                     var _form_label = elm.querySelector('.data-pair-label');
+    //                     if(_form_label) {
+    //                         _t1 = _form_label.innerText.trim();
+    //                     }
+
+    //                     _cufstr = _cufstr.filter(function(item) {
+    //                         return item !== _t1;
+    //                     });
+
+    //                     var _t2 = _cufstr.join(", ");
+    //                     // Data All
+    //                     _datatemp.data_all.push({
+    //                         'key': _t1,
+    //                         'value': _t2,
+    //                     })
+
+    //                 });
+    //             }
+    //         }
+
+            
+    //         getdatall(document.querySelectorAll("card.read-card:not(.hidden) cuf-form-field"));
+    //         getdatall(document.querySelectorAll("card.read-card:not(.hidden) home-data-item"));
+
+    //     callback(_datatemp);
+    // };
 
     
     var global_btnoncall_precall = (callback) => {
@@ -340,21 +1257,6 @@ function global_case() {
 
             if (_istopelm.querySelector("#cdtx__precallbtn") === null && _istopelm.querySelector("#cdtx__oncallbtn") === null) {
                 var _arr_btnlist = [];
-                var _temp_oncall = {
-                    'id' : 'cdtx__oncallbtn',
-                    'btn_text': 'On Call',
-                    'content_insert' : `
-                        <p dir="auto"><b>Sub-status:&nbsp;&nbsp;<span class="_sub_i" data-btnclk="choice_status_list" >Click Choice</span></b> </p>
-                        <p dir="auto"><b>Sub-status Reason:&nbsp;&nbsp;</b> </p>
-                        <p dir="auto"><b>Speakeasy ID:&nbsp;&nbsp;</b> </p>
-                        <p dir="auto"><b>On Call Comments:&nbsp;&nbsp;</b> </p>
-                        <p dir="auto"><b>Tags Implemented:&nbsp;&nbsp;</b> <span class="_task_i"></span></p>
-                        <p dir="auto"><b>Screenshots:&nbsp;&nbsp;</b></p>
-                        <p dir="auto"><b>Multiple CIDs:&nbsp;&nbsp;</b>NA</p>
-                        <p dir="auto"><b>On Call Screenshot:&nbsp;&nbsp;</b> </p>
-                    `
-                };
-                _arr_btnlist.push(_temp_oncall);
 
                 var _temp_precall = {
                     'id' : 'cdtx__precallbtn',
@@ -375,6 +1277,23 @@ function global_case() {
                 _arr_btnlist.push(_temp_precall);
 
 
+                var _temp_oncall = {
+                    'id' : 'cdtx__oncallbtn',
+                    'btn_text': 'On Call',
+                    'content_insert' : `
+                        <p dir="auto"><b>Sub-status:&nbsp;&nbsp;<span class="_sub_i" data-btnclk="choice_status_list" data-infocase="status_case" >Click Choice</span></b> </p>
+                        <p dir="auto"><b>Sub-status Reason:</b>&nbsp;&nbsp; </p>
+                        <p dir="auto"><b>Speakeasy ID:&nbsp;&nbsp;</b> </p>
+                        <p dir="auto"><b>On Call Comments:</b>&nbsp;&nbsp; </p>
+                        <p dir="auto"><b>Tags Implemented:&nbsp;&nbsp;</b></p>
+                        <p dir="auto"><b>Screenshots:&nbsp;&nbsp;</b></p>
+                        <p dir="auto"><b>Multiple CIDs:&nbsp;&nbsp;</b>NA</p>
+                        <p dir="auto"><b>On Call Screenshot:&nbsp;&nbsp;</b> </p>
+                    `
+                };
+                _arr_btnlist.push(_temp_oncall);
+
+
 
                 _arr_btnlist.forEach((item) => {
                     var _elmcasenote = _istopelm.querySelector(`.case-note`);
@@ -387,30 +1306,66 @@ function global_case() {
                         _elmcasenote.insertAdjacentElement("afterBegin", dom);
 
                         dom.addEventListener("click", () => {
+                            var _paneltext = document.createElement('div');
+                            _paneltext.innerHTML = text;
+                            var _caseid = document.querySelector('[debug-id="case-id"] span.case-id').innerText;
+                            
 
-                            if(typeof window.dataTagteam !== 'undefined') {
-                                if(window.dataTagteam.hasOwnProperty("current_case")) {
-                                    if(window.dataTagteam.current_case.hasOwnProperty("tasks")) {
+                            console.log("cdtx - major - precall", window.dataCase);
+                            // is_ads_enhanced_conversions
+                            if(typeof window.dataCase !== 'undefined') {
+                                
+                                if(window.dataCase.case_id) {
+                                    replaceAllHtmlElement(_paneltext, window.dataCase);
+                                }
 
-                                        if(window.dataTagteam.current_case.qlus_status) {
-                                            text = text.replace(/<span class="_sub_i">[\s\S]*?<\/span>/g, `<span class="_sub_i">${window.dataTagteam.current_case.qlus_status}</span>`);
-                                        }
 
-                                        if(window.dataTagteam.current_case.tasks) {
-                                            text = text.replace(/<span class="_task_i">[\s\S]*?<\/span>/g, `<span class="_task_i">${window.dataTagteam.current_case.tasks}</span>`);
+                                var _document_attachurl_elm = _paneltext.querySelector('._document_attachurl_i');
+                                var _task_i_elm = _paneltext.querySelector('._task_i');
+                                if(_document_attachurl_elm) {
+                                    if(window.dataCase['is_ads_enhanced_conversions']) {
+                                        _document_attachurl_elm.insertAdjacentHTML('beforeEnd', `<span class="_document_attachurl_i">DOCUMENT EC: <span data-infocase="customer_name" data-highlight="need_recheck">ZZZZ</span></span>`);
+                                    }
+                                    if(window.dataCase['is_external']) {
+                                        _document_attachurl_elm.insertAdjacentHTML('beforeEnd', `<span class="_document_attachurl_i">DOCUMENT DfA: <span data-infocase="customer_name" data-highlight="need_recheck">ZZZZDfAZZZZ</span></span>`);
+                                    }
+                                }
 
-                                            var _task_i = window.dataTagteam.current_case.tasks;
-                                            if(_task_i.includes("Ads Enhanced Conversions")) {
-                                                text = text.replace(/<span class="_document_attachurl_i">[\s\S]*?<\/span>/g, `<span class="_document_attachurl_i">DOCUMENT EC: <span data-infocase="customer_name" data-highlight="need_recheck">ZZZZ</span></span>`);
-                                            }
-                                        }
-
+                                if(_task_i_elm) {
+                                    if(window.dataCase['tasks']) {
+                                        _task_i_elm.insertAdjacentHTML('beforeEnd', `${window.dataCase['tasks'].replaceAll("\n", ", ")}`);
                                     }
                                 }
                             }
+                            // if(typeof window.dataTagteam !== 'undefined') {
+                            //     if(window.dataTagteam.hasOwnProperty("current_case")) {
+                            //         if(window.dataTagteam.current_case.hasOwnProperty("tasks")) {
+
+                            //             if(window.dataTagteam.current_case.status_case) {
+                            //                 text = text.replace(/<span class="_sub_i">[\s\S]*?<\/span>/g, `<span class="_sub_i">${window.dataTagteam.current_case.status_case}</span>`);
+                            //             }
+
+                            //             if(window.dataTagteam.current_case.tasks) {
+                            //                 text = text.replace(/<span class="_task_i">[\s\S]*?<\/span>/g, `<span class="_task_i">${window.dataTagteam.current_case.tasks}</span>`);
+
+                            //                 var _task_i = window.dataTagteam.current_case.tasks;
+                            //                 if(_task_i.includes("Ads Enhanced Conversions")) {
+                            //                     text = text.replace(/<span class="_document_attachurl_i">[\s\S]*?<\/span>/g, `<span class="_document_attachurl_i">DOCUMENT EC: <span data-infocase="customer_name" data-highlight="need_recheck">ZZZZ</span></span>`);
+                            //                 }
+                            //             }
+
+                            //         }
+                                        
+                            //         if(window.dataTagteam.current_case.interaction_type) {
+                            //             if(window.dataTagteam.current_case.interaction_type.includes("external")) {
+                            //                 text = text.replace(/<span class="_document_attachurl_i">[\s\S]*?<\/span>/g, `<span class="_document_attachurl_i">DOCUMENT DfA: <span data-infocase="customer_name" data-highlight="need_recheck">ZZZZ</span></span>`);
+                            //             }
+                            //         }
+                            //     }
+                            // }
 
                             _elm_content = _istopelm.querySelector(`.editor [contenteditable="true"]`);
-                            _elm_content.innerHTML += text;
+                            _elm_content.innerHTML += _paneltext.innerHTML;
                             _elm_content.dispatchEvent(new Event('input'));
                             _elm_content.dispatchEvent(new Event('focus'));
                             _elm_content.dispatchEvent(new Event('click'));
@@ -423,6 +1378,65 @@ function global_case() {
         }
     }
 
+
+    // reupdateForAll
+    // Disable reupdate a special - Exclude: panelnotecase
+    function reupdateForAll(_datacase = false, arr_exclude = []) {
+        
+        if(!_datacase) {
+            _datacase = window.dataCase;
+        }
+
+        console.log('cdtx reupdateForAll', _datacase);
+
+
+        noteBarAlert('CLEAR');
+
+        if(_datacase.is_external) {
+            noteBarAlert('Is EXTERNAL!', _datacase.case_id);
+        }
+        
+        if(_datacase.is_gcc || _datacase.sales_program.toLowerCase().includes('gcc')) {
+            noteBarAlert('AM is GCC!', _datacase.case_id);
+        }
+
+        if(!arr_exclude.includes('panelnotecase')) {
+            renderHTML2PanelNoteCase(_datacase);
+        }
+
+        // Display noted
+        getNoteCase(_datacase.case_id, (data) => {
+            if(data) {
+                document.querySelectorAll('[data-infocase="note"]').forEach((item) => {
+                    item.innerHTML = data;
+                })
+            }
+        });
+
+        checkIsNotePrecall(_datacase.case_id);
+
+        updateMeetContentBySheet(document.querySelector('#_panel_div'));
+
+        getFieldSetting2Storage((rs) => {
+            for (const [key, value] of Object.entries(rs)) {
+                document.querySelectorAll(`#_panel_div [data-infosetting="${key}"]`).forEach(function(elm){
+                    elm.innerText = value;
+                });
+                document.querySelectorAll(`#_infocase_byme [data-infosetting="${key}"]`).forEach(function(elm){
+                    elm.innerText = value;
+                });
+            }
+        })
+
+        // ******************
+        // Replace all panel
+        // ******************
+        // _panel_div
+        replaceAllHtmlElement(document.querySelector('#_panel_div'), _datacase);
+
+    }
+
+
     function global_checkAddLoadMoreInfo(_caseid) {
         console.log("1231231")
         wait4Elem('material-input.case-summary-input').then(function (elm) {
@@ -430,142 +1444,7 @@ function global_case() {
         })
     }
     
-    // Is Ready Connect Case
-    function global_is_external_readycaseconnect(_callback) {
 
-        var n_time_dkneed = 0,  
-            n_time_dkneed_compare = 0;
-        var is_ready = () => {
-            cLog(() => { console.log('cdtx is ready external', n_time_dkneed_compare, n_time_dkneed, n_time_dkneed_compare < n_time_dkneed); })
-                // Test
-            if(n_time_dkneed_compare < n_time_dkneed) return;
-            _callback();
-            
-        }
-
-
-        // -- unmark all
-        n_time_dkneed++;
-        var _unmask_buttons = document.querySelectorAll('card.read-card:not(.hidden) cuf-form-field .unmask-button');
-        var _no_unmask_btnstr = 'card.read-card:not(.hidden) cuf-form-field span:not(.unmask-button)';
-        var _cuf_form_field = 'card.read-card:not(.hidden) cuf-form-field';
-        if(_unmask_buttons.length) {
-            _unmask_buttons.forEach(function(elm3) {
-                elm3.click();
-            })
-
-            
-            var _cuf_form_field = 'card.read-card:not(.hidden) cuf-form-field';
-            wait4Elem(_no_unmask_btnstr).then(function () {
-                var _cuf_form_field_elms = document.querySelectorAll(_cuf_form_field);
-
-                var _my_time = setInterval(() => {
-                        var _is_havemask = false;
-                        _cuf_form_field_elms.forEach(function(elm4) {
-                            // cLog(() => { console.log('cdtx OKOKOKOK', elm4.innerText); })
-                            if(elm4.innerText.includes('***')) {
-                                _is_havemask = true;
-                            }
-                        });
-                        
-                        if(_is_havemask === false) {
-                            is_ready(n_time_dkneed_compare++);
-                            
-                            clearInterval(_my_time);
-                        }
-                }, 500);    
-                
-                
-                
-            });
-        }
-    }
-    
-    var global_is_readycaseconnect = (_caseid, _callback) => {
-        
-        var n_time_dkneed = 0,  
-            n_time_dkneed_compare = 0;
-        var is_ready = () => {            
-            cLog(() => { console.log('cdtx is ready', n_time_dkneed_compare, n_time_dkneed, n_time_dkneed_compare < n_time_dkneed); })
-
-            // Chống bị chờ // khác case id
-            if(document.querySelector('[debug-id="case-id"] .case-id')) {
-                cLog(() => { console.log('cdtx dong', _caseid === document.querySelector('[debug-id="case-id"] .case-id').innerText); })
-
-                if(_caseid !== document.querySelector('[debug-id="case-id"] .case-id').innerText) {
-                    return;
-                }
-            }
-            
-            // Hạ 1 đơn vị để so sánh
-            // -> recheck xem có phải external;
-            var is_external = false;
-            
-            cLog(() => { console.log('cdtx is ready 1'); })
-            if(n_time_dkneed_compare === (n_time_dkneed - 1)) {
-                cLog(() => { console.log('cdtx is ready 2'); })
-                document.querySelectorAll("card.read-card:not(.hidden) home-data-item").forEach(function(elm){
-                    var dataList = elm.innerText.split("\n");
-                    if(dataList[1].toLowerCase().includes('external')) {
-                        is_external = true;
-                        _callback(is_external);
-                        return;
-                    }   
-                });
-                
-                document.querySelectorAll("card.read-card:not(.hidden) cuf-form-field").forEach(function(elm){
-                    var dataList = elm.innerText.trim().split("\n");
-                    dataList = dataList.filter(function (el) {
-                        return el != "";
-                    });
-                  
-                    if(dataList[0].toLowerCase().includes('universal analytics')) {
-                        is_external = true;
-                        _callback(is_external);
-                        return;
-                    }
-                });
-            } 
-
-            
-                // Test
-            if(n_time_dkneed_compare < n_time_dkneed) return;
-            _callback(is_external);
-            
-        }
-
-        n_time_dkneed++;
-        wait4Elem("card.read-card:not(.hidden) cuf-form-field").then(function () {
-            is_ready(n_time_dkneed_compare++);
-        });
-        
-        n_time_dkneed++;
-        wait4Elem('[debug-id="case-id"] .case-id').then(function () {
-            is_ready(n_time_dkneed_compare++);
-        });
-
-        
-        n_time_dkneed++;
-        wait4Elem("#read-card-tab-panel-case-log .case-log-container.active-case-log-container .activities > div").then((elm1) => {    
-
-            document.querySelectorAll('#read-card-tab-panel-case-log .case-log-container.active-case-log-container .activities > div').forEach(function(elm){
-                if(elm.innerText.includes('Review case in Connect Sales')) {            
-                    // cLog(() => { console.log(elm.querySelector("table")) })
-
-                    elm.querySelector('case-message-view .message-content-container-full').click();
-                
-                    wait4Elem("#read-card-tab-panel-case-log .case-log-container.active-case-log-container .activities > div table tr").then( (elm2) => {
-                        
-                        
-                        is_ready(n_time_dkneed_compare++);
-                    })
-                }
-            });
-        });
-
-        
-    }
-    
     
 
     function amInfoUpdate(_caseid) {
@@ -622,34 +1501,150 @@ function global_case() {
                     var _casenote = `.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="case-note"]`;
                     var _casenote_editor = _casenote + ` .editor[contenteditable="true"]`;
                     var _casenote_precall = _casenote + ` #pre-call`;
-                    if(document.querySelector(_casenote + ` #cdtx__precallbtn`)) {
-                        _casenote_precall = _casenote + ` #cdtx__precallbtn`;
-                    }
+                    
 
-                    if(!document.querySelector(_casenote)) {
-                        document.querySelector('material-fab.case-note').click();
+                    var ntime = 0;
+                    var myTime = setInterval(() => {
 
-                        var ntime = 0;
-                        var myTime = setInterval(() => {
+                        if(document.querySelector(_casenote)) {
+                            console.log('cdtx - log 1')
+                            if(document.querySelector(_casenote + ` #cdtx__precallbtn`)) {
+                                console.log('cdtx - log 2')
+                                _casenote_precall = _casenote + ` #cdtx__precallbtn`;   
+                            }
                             if(document.querySelector(_casenote_precall)) {
+                                console.log('cdtx - log 3')
                                 document.querySelector(_casenote_precall).click();
+
                                 if(document.querySelector(_casenote_editor).innerText.trim() !== "") {
+                                    
                                     clearInterval(myTime);
                                 }
                             }
-
-                            if(ntime > 10) {
-                                clearInterval(myTime);
+                        } else {
+                            if(!document.querySelector('material-fab.case-note')) {
+                                console.log('cdtx - log 1')
+                                document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter')); 
+                                if(document.querySelector('material-fab.case-note')) {
+                                    document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter')); 
+                                    document.querySelector('material-fab.case-note').click();
+                                }
+                            } else {
+                                console.log('cdtx - log 1.2')
+                                document.querySelector('material-fab.case-note').click();
                             }
-                            ntime++;
-                        }, 500)
-                    } else {
-                        if(document.querySelector(_casenote_editor).innerText.trim() === "") {
-                            document.querySelector(_casenote_precall).click();
                         }
-                    }
 
-                    elm.remove();
+                        if(ntime > 10) {
+                            clearInterval(myTime);
+                        }
+                        ntime++;
+                        
+                    }, 500);
+
+                    elm.closest('._note_add_precall').remove();
+                }
+                
+                
+                
+                if(_action === 'copy_attrcopycontent') {
+                    copyTextToClipboard(elm.getAttribute('data-copycontent'));
+                }
+                
+                if(_action === 'tool_mail_test') {
+                    toolEditorEmailTemplate4Dev();
+                }
+                
+                if(_action === 'open_panelnote') {
+                    document.querySelector('[data-btnclk="_infocase_byme-openact"]').click();
+                }
+                
+                if(_action === 'removecase_example') {
+                    var _caseid = 'cdtx_caseid_' + document.querySelector('[debug-id="case-id"] .case-id').innerText;
+                    if (confirm(`You sure refresh ${_caseid} at memory`)) {
+                        removeChromeStorage(_caseid, () => {
+                            Toastify({
+                                text: `Remove ${_caseid} success!!!`,
+                                duration: 3000,
+                                callback: function(){
+                                    this.remove();
+                                }
+                            }).showToast();
+                        });
+                    }
+                }
+                
+                if(_action === 'get_window_data_case') {
+                    cLog(() => {
+                        console.log('cdtx debug - window - dataCase ', window.dataCase);
+                        console.log('cdtx debug - window - dataMeetLink ', window.dataMeetLink);
+                        console.log('cdtx debug - window - loadgooglesheetpublish ', window.loadgooglesheetpublish);
+                    })
+                    
+                }
+
+                if(_action === 'resetdata') {
+                    if (confirm("You sure reupdate")) {
+                        var _arrlistkey = [
+                            'cdtx_scriptsync_auto', 
+                            'cdtx_loadgooglesheetpublish_timesave', 
+                            'cdtx_loadgooglesheetpublish', 
+                            'stylecasebytheme', 
+                        ];
+                        
+                        _arrlistkey.forEach(key => {
+                            removeChromeStorage(key, () => {
+                                Toastify({
+                                    text: `Clear ${key} success!!!`,
+                                    duration: 3000,
+                                    callback: function(){
+                                        this.remove();
+                                    }
+                                }).showToast();
+                            });
+                        });
+                        
+                        location.reload();
+                    }
+                    
+                }
+                
+                
+                
+                if(_action === 'remove_this_precall') {
+                    elm.closest('._note_add_precall').remove();
+                }
+                
+                if(_action === 'note_select') {
+                    var _dataselect = elm.getAttribute('data-select');
+                    var data_filter = _dataselect.split(',');
+                    data_filter = data_filter.filter(n => n);
+                    console.log('zzzzz', data_filter);
+
+                    if(!elm.querySelector('#note_select_lstchoice')) {
+                        var dom = document.createElement("span");
+                        dom.id = 'note_select_lstchoice';
+                        elm.appendChild(dom);
+                        data_filter.forEach((item) => {
+                            dom.insertAdjacentHTML('beforeEnd', `<span>${item}</span>`);
+                        });
+
+                        dom.querySelectorAll('span').forEach((__elm) => {
+                            __elm.addEventListener('click', function(e) {
+                                elm.innerHTML = e.target.innerText;
+                                dom.remove();
+                                elm.dispatchEvent(new Event('blur'));
+                            });
+                        })
+                    }
+                }
+                
+                if(_action === '_infocase_byme-openact') {
+                    elm.closest('._infocase_byme').classList.toggle('open');
+                    var _isoutsite = elm.closest('.read-cards-wrapper');
+                    if(_isoutsite) {
+                        _isoutsite.classList.toggle('_infocase_byme_open');
+                    }
                 }
 
 
@@ -672,10 +1667,6 @@ function global_case() {
                     elm.closest('.kl_callchecklist__listload').classList.toggle('opacity')
                 }
 
-                // click_desc_calendar_expand
-                if(_action === 'click_desc_calendar_expand') {
-                    elm.classList.add('open');
-                }
 
                 // add_amcontact_tgopenclose
                 if(_action === 'copy_innertext') {
@@ -707,8 +1698,8 @@ function global_case() {
 
                 // xxxx
                 if(_action === 'choice_status_list') {
-                    if(document.querySelector('._sub_i_ul')) {
-                        document.querySelector('._sub_i_ul').remove();
+                    if(document.querySelector('._sub_i_outer')) {
+                        document.querySelector('._sub_i_outer').remove();
                     } else {
                         var _lst = `
                                 <span class="_sub_i_li" data-key="AS - Work in Progress" ></span>
@@ -728,7 +1719,7 @@ function global_case() {
                                 <span class="_sub_i_li" data-key="IN - Not Reachable" ></span>
                                 <span class="_sub_i_li" data-key="IN - Not Interested" ></span>
                                 <span class="_sub_i_li" data-key="IN - Not Ready" ></span>
-                                <span class="_sub_i_li" data-key="IN - Reschedule spanmit Exceeded" ></span>
+                                <span class="_sub_i_li" data-key="IN - Reschedule limit Exceeded" ></span>
                                 <span class="_sub_i_li" data-key="IN - Other" ></span>
                                 <span class="_sub_i_li" data-key="DC - Not Needed" ></span>
                                 <span class="_sub_i_li" data-key="DC - Test Case" ></span>
@@ -745,8 +1736,13 @@ function global_case() {
                         _sub_i_ul_elm.style.top = _position_screen.top + "px";
                         _sub_i_ul_elm.style.position = 'fixed';
                         
-                        document.body.appendChild(_sub_i_ul_elm);
-                        _sub_i_ul_elm.querySelectorAll('._sub_i_li').forEach((_sub_i_ul_itemli) => {
+                        // Create outer
+                        var _sub_i_outer_elm = document.createElement('span');
+                        _sub_i_outer_elm.classList.add('_sub_i_outer');
+                        _sub_i_outer_elm.innerHTML = _sub_i_ul_elm.outerHTML;
+
+                        document.body.appendChild(_sub_i_outer_elm);
+                        _sub_i_outer_elm.querySelectorAll('._sub_i_li').forEach((_sub_i_ul_itemli) => {
                             
                             _sub_i_ul_itemli.innerText = _sub_i_ul_itemli.getAttribute('data-key');
     
@@ -754,14 +1750,22 @@ function global_case() {
                                 elm.innerText = e.target.innerText;
                                 var __caseidelm = document.querySelector('[debug-id="case-id"] .case-id');
                                 if(__caseidelm) {
-                                    updateFieldCase2Storage('qlus_status', elm.innerText, __caseidelm.innerText , () => {
-                                        cLog(() => { console.log('cdtx', 'qlus_status', innerText) })
+                                    updateFieldCase2Storage('status_case', elm.innerText, __caseidelm.innerText , () => {
+                                        cLog(() => { console.log('cdtx', 'status_case', elm.innerText) })
                                     });
                                 }
-                                _sub_i_ul_elm.remove();
+                                _sub_i_outer_elm.remove();
                             })
-    
+                        });
+
+                        // Closest by outsite
+                        _sub_i_outer_elm.addEventListener('click', function(e) {
+                            if(e.target.classList.contains('_sub_i_outer')) {
+                                _sub_i_outer_elm.remove();
+                            }
+
                         })
+
                     }
                     
                     
@@ -794,9 +1798,6 @@ function global_case() {
                 // Save
                 var _time = +new Date();
                 // dataStatus.cdtx_lastupdate = _time;
-
-                cLog(() => { console.log("cdtx Dong Dieu` tra", _data); })
-
                 setChromeStorage('cdtx_caseid_' + case_id, _data, _callback);
 
             }
@@ -804,11 +1805,48 @@ function global_case() {
     }
 
     // Update field 
+    
+    function updateNoteCase(_caseid, _value, _callback) {
+        var _key = 'cdtx_notedlist';
+        var _temp = {};
+        _temp[_caseid] = _value;
+        getChromeStorage(_key, (response) => {
+            var data_notedlist = response.value || {};
+            
+            cLog(() => { console.log('cdtx updateNoteCase' , data_notedlist, _temp); })
+
+            Object.assign(data_notedlist, _temp);
+
+
+
+            setChromeStorage(_key, data_notedlist, (response2) => {
+                // var datars2 = response2.value || {};
+
+                cLog(() => {
+                    console.log("cdtx updateNoteCase", response2);
+                });
+
+                _callback(response2);
+            });
+        })
+        return false;
+    }
+
+    function getNoteCase(_caseid, _callback) {
+        var _key = 'cdtx_notedlist';
+        getChromeStorage(_key, (response) => {
+            var data_notedlist = response.value || false;
+            _callback(data_notedlist[_caseid]);
+            return false;
+        })
+    }
+    
+    // Update field 
     function updateFieldCase2Storage(strfield, value, _caseid , _callback) {
         // ID trust
         
         loadCaseStorageByID(_caseid, (response) => {
-            cLog(() => { console.log('cdtx response' , response); })
+            cLog(() => { console.log('cdtx response updateFieldCase2Storage' , response); })
             var caseload = response.value || false;
             
             if(caseload.case_id) {   
@@ -821,10 +1859,34 @@ function global_case() {
             }
         })
     }
+    
+    function getFieldSetting2Storage(_callback) {
+        // ID trust
+        getChromeStorage('cdtx_settings', (response) => {
+            var _datatemp = response.value || {};
+            // window.dataTagTeamSettings = response.value || false;
+            // console.log('WHAT', _datatemp)
+            _callback(_datatemp)
+        });
+           
+    }
+    
+    function updateFieldSetting2Storage(strfield, value , _callback) {
+        // ID trust
+        var _temp = {};
+        _temp[strfield] = value;
+        getChromeStorage('cdtx_settings', (response) => {
+            var _datatemp = response.value || {};
+            // window.dataTagTeamSettings = response.value || false;
+            Object.assign(_datatemp, _temp);
+            setChromeStorage('cdtx_settings', _datatemp, _callback);
+        });
+           
+    }
 
 
 
-    function autoUpdatelistLinkCalendar() {
+    function autoUpdatelistLinkCalendar(is_auto = false) {
         if(location.hostname !== 'calendar.google.com') return;
         var is_updatelist_link = () => {
             getChromeStorage("cdtx_listmeetlink", (response) => {
@@ -841,21 +1903,21 @@ function global_case() {
                     }
                 });
                 
+                window.dataMeetLink = casesmeet;
                 setChromeStorage("cdtx_listmeetlink", casesmeet, () => {
-                    
-                    cLog(() => {
-                        cLog(() => { console.log("Has update meet link!"); })
-                    })
+                    cLog(() => { console.log("Has update meet link!"); });
                 });
             });
         }
 
         is_updatelist_link();
 
-        // reUpdate 20mins
-        setInterval(() => {
-            is_updatelist_link();
-        }, 1000 * 60 * 10);
+        // reUpdate 10mins
+        if(is_auto) {
+            setInterval(() => {
+                is_updatelist_link();
+            }, 1000 * 60 * 10);
+        }
     }
     
     function checkIsNotePrecall(_caseid) {
@@ -887,27 +1949,40 @@ function global_case() {
             if(__note_add_precall) __note_add_precall.remove();
 
             var is_precall = false;
-            wait4Elem('.case-log-container.active-case-log-container case-message-view').then((elm) => {
-                setTimeout(() => {
-                    var casemessageview_elm_all = document.querySelectorAll(".case-log-container.active-case-log-container case-message-view");
+            
+
+            
+            var n_limit = 0;
+            var myTime = setInterval(() => {
+                n_limit++; if(n_limit > 10) clearInterval(myTime);
+                var casemessageview_elm_all = document.querySelectorAll(".case-log-container.active-case-log-container case-message-view");
+                console.log('zzzzzzzzzz2' , casemessageview_elm_all.length);
+
+                if(casemessageview_elm_all.length > 0) {
                     casemessageview_elm_all.forEach(function(elm){
                         if(elm.innerText.includes("Emails or feedback from Advertiser")) {
                             is_precall = true;
                         }
                     });
         
-    
                     // If false
                     if(is_precall == false) {
                         var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"])`);
                         if(_istopelm) {
-                            _istopelm.insertAdjacentHTML("beforeBegin", `<span class="_note_add_precall" data-btnclk="add_precall" title="click add precall" >Missing note precall</span>`)
+                            _istopelm.insertAdjacentHTML("beforeBegin", `<span class="_note_add_precall"  title="click add precall" >
+                            <span data-btnclk="add_precall">Missing note precall</span>
+                            <span data-btnclk="remove_this_precall" style="">Close</span>  
+                            </span>`)
                         }
-                    }
-                }, 3000);
-                
 
-            });
+                    }
+
+
+                    clearInterval(myTime);
+                }
+
+            }, 1000)
+
 
 
             // once
@@ -917,8 +1992,36 @@ function global_case() {
 
 
     var saveCaseNow = (_caseid, callback) => {
+        window.n_start = window.n_start || 0;
         
-        // Nếu ldap chưa đúng
+        // Major Crawl
+        try {
+            
+            global_crawl_major((data_rs) => {
+                cLog(() => { console.log('cdtx - saveCaseNow global_crawl_major' , window.dataCase, data_rs); });
+                
+                // Only reupdate if don't have data below
+                if(window.n_start === 0) {
+                    window.dataCase = data_rs;
+                    reupdateForAll(data_rs);
+                }
+            });
+
+
+            
+            getChromeStorage("cdtx_listmeetlink", (response) => {
+                var casesmeet = response.value || {};
+
+                window.dataMeetLink = casesmeet;
+            });
+
+            
+            
+        } catch (error) {
+            console.log(error)
+        }
+
+        // IF ldap not match => STOP
         if(document.querySelector('profile-icon img.photo')) {
             var _ldap = document.querySelector('profile-icon img.photo').src.split('/');
             _ldap = _ldap[_ldap.length - 1].split('?')[0];
@@ -942,15 +2045,17 @@ function global_case() {
         
         cLog(() => { console.log("cdtx-save case - 0/5 start: ", window.once_savecase_load, _caseid); })
         loadCaseStorageByID(_caseid, (response) => {
-            cLog(() => { console.log('cdtx response' , response); })
+            cLog(() => { console.log('cdtx response saveCaseNow' , response); })
             var caseload = response.value || false;
             
             // var caseload = false; // test
             cLog(() => { console.log("cdtx-save case - 1/5 is caseindata: ", caseload, _caseid); })
             window.once_savecase_load = 0;
 
+
+            
+
             if(!caseload) {
-                
                 if(document.querySelector('profile-icon img.photo')) {
                     var _ldap = document.querySelector('profile-icon img.photo').src.split('/');
                     _ldap = _ldap[_ldap.length - 1].split('?')[0];
@@ -965,55 +2070,38 @@ function global_case() {
                             // ==============
 
                             cLog(() => { console.log("cdtx-save case - 3 start ", _caseid); })
-                            global_is_readycaseconnect(_caseid, (is_external) => {
-                                cLog(() => { console.log("cdtx-save case - 4.1/5 is_external", is_external, _caseid); })
-                                // is run if has element need
-                                if(is_external === false) {
-                                    gloabl_crawl_case((_datatemp) => {
-                                        cLog(() => { console.log("cdtx-save case - 4.2/5 có thể cào", _caseid, _datatemp); })
-                                        
-                                        _datatemp.case_id = _caseid;
-                                        _datatemp.assignee = _ldap;
-                                        _datatemp.qlus_status = 'ZZZZ';
-                                        saveCase2Storage(_datatemp, (response) => {
-                                            cLog(() => { console.log('cdtx-save case - 5/5 - Finished save case', response); })
-                                            callback();
-                                        });
-                                    })
-                                }
-                                
-                                if(is_external === true) {
-                                    cLog(() => { console.log("cdtx-save external case"); })
-                                    
-                                    global_is_external_readycaseconnect(() => {
-                                        global_crawl_external_case((_datatemp) => {
-                                            cLog(() => { console.log("cdtx-save external case - 4/5 có thể cào", _caseid); })
-                                            
-                                            _datatemp.case_id = _caseid;
-                                            _datatemp.assignee = _ldap;
-                                            _datatemp.qlus_status = 'ZZZZ';
-                                            _datatemp.am_isgcc_external = 1;
-
-                                            
-                                            cLog(() => { console.log('cdtx-save external case - 4/5 -data', _datatemp); })
-
-                                            saveCase2Storage(_datatemp, (response2) => {
-                                                cLog(() => { console.log('cdtx-save external case - 5/5 - Finished save case', response2); })
-                                                callback();
-                                            });
-                                        })
-                                    })
-                                }
-                                
-                            })
                             
-                            // is_readycaseconnect(() => {
-                            //     unmark_all_and_crawl(() => {
-                            //         cLog(() => {cLog(() => { console.log('is_readycaseconnect and unmark_all_and_crawl', window.dataTagteam.current_case)}); })
+                            global_crawl_major((data_rs) => {
+                                cLog(() => { console.log('cdtx-save case - 4/5 rs crawl' , window.dataCase, data_rs); });
 
-                            //         // _form();
-                            //     });
-                            // });
+                                saveCase2Storage(data_rs, (response) => {
+                                    cLog(() => { console.log('cdtx-save case - 5/5 - Finished save case', response); });
+
+                                    // 1. Add Meet Link if not exist
+                                    if(!response.customer_gmeet) {
+                                        response.customer_gmeet = window.dataMeetLink[_caseid];
+
+                                        if(window.dataMeetLink) {
+                                            updateFieldCase2Storage('customer_gmeet', response.customer_gmeet, _caseid , (rs) => {
+                                                Toastify({
+                                                    text: `Saved 2!!!`,
+                                                    duration: 2000,
+                                                    callback: function(){
+                                                        this.remove();
+                                                    }
+                                                }).showToast();
+                                            });
+                                        }
+                                    }
+
+                                    window.dataCase = response;
+                                    window.n_start = window.n_start + 1;
+                                    reupdateForAll(response);
+
+                                    callback();
+                                });
+                            }, true);
+
                         }
                     }
                 }
@@ -1021,7 +2109,43 @@ function global_case() {
                 
                 // 3. Load content case
                 // ==============
-                cLog(() => { console.log("cdtx - Load content case"); })
+                cLog(() => { console.log("cdtx - major : Load content case 1", caseload); })
+
+                // 1. Add Meet Link if not exist
+                if(!caseload.customer_gmeet) {
+                    caseload.customer_gmeet = window.dataMeetLink[_caseid];
+
+                    if(window.dataMeetLink) {
+                        updateFieldCase2Storage('customer_gmeet', caseload.customer_gmeet, _caseid , (rs) => {
+                            Toastify({
+                                text: `Saved Google Meet!!!`,
+                                duration: 2000,
+                                callback: function(){
+                                    this.remove();
+                                }
+                            }).showToast();
+                        });
+                    }
+                }
+
+                
+                // Remove case by not isset customer website
+                // if(!caseload.customer_website) {
+                //     cLog(() => { console.log("cdtx - major : Load content case 2, Dont have custom_website"); })
+                //     var _caseid_indb = 'cdtx_caseid_' + _caseid;
+                //     removeChromeStorage(_caseid_indb, () => {
+                //         cLog(() => { console.log("cdtx - major : Load content case 3, remove"); })
+                //     });
+                // }
+                
+                window.dataCase = caseload;
+
+                cLog(() => { console.log("cdtx - major : Load content case 4", caseload, "window.dataCase", window.dataCase); });
+                window.n_start = window.n_start + 1;
+
+
+                reupdateForAll(caseload);
+
                 callback(caseload);
             }
         });
@@ -1029,6 +2153,45 @@ function global_case() {
 
 
 
+
+    function addActionFirstEmail() {
+        var _btn_fistemail = document.querySelector('._panel_shortcut_fisrtemail');
+        var _btn_fistemail_is_addaction = document.querySelector('._panel_shortcut_fisrtemail.is_addaction');
+        if(!_btn_fistemail_is_addaction) {
+            if(_btn_fistemail) {
+                _btn_fistemail.classList.add('is_addaction');
+                
+                
+                _btn_fistemail.addEventListener("click", (e) => {
+                    // document.querySelector('[data-btnaction="firstemail"]').click();
+                    cLog(() => {console.log('CDTX datacase', window.dataCase)});
+                    
+                    var elm_default = document.querySelector(`._panel_btn--addtemplate[data-btnaction="emailtemp__insert1stemail"]`);
+                    var elm_dfa = document.querySelector(`._panel_btn--addtemplate[data-key="ts as new dfa"]`);
+                    var elm_as_new = document.querySelector(`._panel_btn--addtemplate[data-key="ts as new"]`);
+                    
+                    if(window.dataCase.is_external) {
+                        if(elm_dfa) {
+                            elm_dfa.click();
+                        } else {
+                            if(elm_as_new) {
+                                elm_as_new.click();
+                            } else {
+                                elm_default.click();
+                            }
+                        }
+                    } else {
+                        if(elm_as_new) {
+                            elm_as_new.click();
+                        } else {
+                            elm_default.click();
+                        }
+                    }
+                });
+                
+            }
+        }
+    }
 
     function loadRealtime(_callback) {
         if(
@@ -1050,16 +2213,25 @@ function global_case() {
         observeOnce((elm) => {
             // Add link style head
             if(!document.head.querySelector("#cdtx_style")) {
-                var link = document.createElement('link');
+                var link = document.createElement('style');
                 link.rel = 'stylesheet';
                 link.id = 'cdtx_style';
-                link.href = `https://cdtx.lyl.vn/cdtx-assistant/_Bookmark/assets/css/style.css?t=${new Date().valueOf() }"`;
+                // link.href = `https://cdtx.lyl.vn/cdtx-assistant/_Bookmark/assets/css/style.css?t=${new Date().valueOf() }"`;
                 
+                link.innerHTML = _panel_style;
+
                 document.head.appendChild(link);
             }
+            // if(!document.querySelector('#kl_tagteam_inline_style')) {
+                
+            //     var style_tag = `<style id="kl_tagteam_inline_style">${window.dataTagteam.panel_div_style}</style>`;
+            //     var style_tag = _TrustScript(style_tag);
+            //     document.body.insertAdjacentHTML("afterEnd", style_tag);
+            // }
 
             // for cases.connect.corp.google.com
             if(location.hostname === 'cases.connect.corp.google.com') {
+                if(!document.querySelector('[debug-id="case-id"] span.case-id')) return false;
 
 
                 // 1. detech change case-id
@@ -1074,8 +2246,13 @@ function global_case() {
                     // ===========
                     // Alway load
                     // ===========
-                        // Check 
-                        checkIsNotePrecall(_caseid);
+                        addPanelNote2Case(_caseid);
+                        // Add button reset version
+                        addButtonResetVersion();
+                        // Add button feature
+                        addButtonToDocContent();
+                        // Add button feature
+                        addActionFirstEmail();
                         // Button oncall precall
                         global_btnoncall_precall(() => {
                             console.log("cdtx add oncall precall ok")
@@ -1090,13 +2267,31 @@ function global_case() {
                         // TH 1: caseid diff caseonce    
                         if(_caseid != _caseid_once) {
                             cLog(() => { console.log("cdtx - TH 1 here"); })
+                            
+                            // addGoCase2Calendar 
+                            addGoCase2Calendar(_caseid);
+                            
+                            
                             saveCaseNow(_caseid, (caseload) => {
-                                cLog(() => { console.log('cdtx - TH 1 here -  saveCaseNow - DONE'); });
+                                if(typeof caseload == 'undefined') return false;
+                                
+                                cLog(() => { console.log('cdtx - TH 1 here -  saveCaseNow - DONE', caseload); });
+                                
+                                window.caseCurrent = {};
+                                window.caseCurrent = caseload;
+                                
+                                
                                 global_checkAddLoadMoreInfo(_caseid);
-
-                                if(caseload.interaction_type == 'external') {
-                                    amInfoUpdate(_caseid);
+                                
+                                checkInputEmailInboxAndFix();
+                                
+                                if(caseload.interaction_type) {
+                                    
+                                    if(caseload.interaction_type == 'external') {
+                                        amInfoUpdate(_caseid);
+                                    }
                                 }
+                                
                             });
                             _caseid_once = _caseid;
                         }
@@ -1109,12 +2304,17 @@ function global_case() {
                             if(window.once_state_button !== state_button.innerText) {
                                 cLog(() => { console.log("cdtx - TH 2 HERE"); })
                                 saveCaseNow(_caseid, (caseload) => {
-                                    cLog(() => { console.log('cdtx - TH 2 here - saveCaseNow - DONE') });
+                                    if(typeof caseload == 'undefined') return false;
+                                    
+                                    cLog(() => { console.log('cdtx - TH 2 here - saveCaseNow - DONE', caseload) });
+                                    window.caseCurrent = {};
+                                    window.caseCurrent = caseload;
+                                    
+                                    
                                     global_checkAddLoadMoreInfo(_caseid);
-                                        
-                                    if(caseload.interaction_type == 'external') {
-                                        amInfoUpdate(_caseid);
-                                    }
+                                    
+                                    checkInputEmailInboxAndFix();
+                                    
                                 });
 
                                 // Overwrite
@@ -1132,6 +2332,12 @@ function global_case() {
             }
 
             if(location.hostname === 'calendar.google.com') {
+                var n_button_event = document.querySelectorAll('[jscontroller="ABQtfe"]').length
+                window.n_button_event = window.n_button_event || 0;
+                if(n_button_event > 0 &&  n_button_event !== window.n_button_event) {
+                    window.n_button_event = n_button_event;
+                }
+                
                 var _headelm = document.querySelector('#rAECCd');
                 if(_headelm) {
                     var _title = _headelm.innerText;
@@ -1149,16 +2355,8 @@ function global_case() {
                             }
                         }
                         
-                        // Add max length
-                        var _descriptionelm = document.querySelector('#xDetDlgDesc');
-                        if(_descriptionelm) {
-                            if(_descriptionelm.innerText.trim().split('').length > 800) {
-                                if(_descriptionelm.getAttribute('data-btnclk') != 'click_desc_calendar_expand') {
-                                    _descriptionelm.setAttribute('data-btnclk', 'click_desc_calendar_expand');
-                                }
-
-                            }
-                        }
+                        
+                        
                         if(!document.querySelector('[jscontroller="dIQ6id"] ._casecalendar_info')) {
 
                             // Display after Title
@@ -1174,31 +2372,33 @@ function global_case() {
                                 return false;
                             }
                         
-                            var _contenthtml = `<div class="_casecalendar_info">
-                            <span class="_casecalendar_info-50per" data-title="Case ID:"   >
-                                <a href="https://cases.connect.corp.google.com/#/case/${_caseid}" target="_blank" >${_caseid}</a>
-                            </span>`;
+                            var _contenthtml = `
+                            <div class="_casecalendar_info" >
+                                <div class="_casecalendar_info--notification" ></div>
+                                <div class="_casecalendar_info--inner"  data-isgcc="{%is_gcc%}" data-isexternal="{%is_external%}" >
+                                    <span class="_casecalendar_info-50per" data-title="Case ID:" >
+                                        <a href="https://cases.connect.corp.google.com/#/case/${_caseid}" target="_blank" >${_caseid}</a>
+                                        <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_caseid}" ></span>
+                                    </span>
+                                </div>
+                            </div>`;
                         
                             _contenthtml = _TrustScript(_contenthtml);
                             _elmappend.insertAdjacentHTML("afterEnd", _contenthtml);
                             
-                            cLog(() => { console.log("cdtx ---- "); })
+
                             
                             _contenthtml = `
-                                <span class="_casecalendar_info-50per" data-title="Case ID:" data-isgcc="{%am_isgcc_external%}"  data-interactiontype="{%interaction_type%}" >
-                                    <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" target="_blank" data-infocase="case_id" ></a>
+                                <span class="_casecalendar_info-50per" data-title="Case ID:"   >
+                                    <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" target="_blank" data-infocase="case_id" ></a><span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_caseid}" ></span>
                                     <br>
                                     <br>
                                     <a href="#" target="_blank" data-linkcasetomeet="1" data-infocase_link="customer_gmeet" ></a>
-                                    <br>
-                                    <span data-infocase="interaction_type" ></span>
                                 </span>
                                 
                                 <span class="_casecalendar_info-50per" data-title="Ads ID & Adv name:" >
-                                    <a href="https://adwords.corp.google.com/aw/conversions?ocid={%customer_ocid%}" target="_blank" data-infocase="customer_adsid" ></a>
-                                    <br>
-                                        <span data-infocase="customer_name" ></span>
-                                    <br>
+                                    <a href="https://adwords.corp.google.com/aw/conversions?ocid={%customer_ocid%}" target="_blank" data-infocase="customer_adsid_format" ></a>
+                                    <span data-infocase="customer_name" ></span>
                                     <span data-infocase="customer_email" ></span>
                                 </span>
                                 
@@ -1206,61 +2406,64 @@ function global_case() {
                                 <span class="_casecalendar_info-50per" data-title="Website:" data-select ><a href="#" target="_blank" data-infocase_link="customer_website" data-infocase="customer_website" ></a></span>
                                 <span class="_casecalendar_info-50per" data-title="Request:" >
                                     <span data-infocase="request_category"></span>
-                                    <br>
+                                    <span data-infocase="case_summary"></span>
                                     <span data-infocase="request"></span>
+                                    
                                 </span>
                                 <span class="_casecalendar_info-50per" data-title="AM:" data-am="{%team%} {%sales_program%}" >
                                     <span data-infocase="am_name"></span>
-                                    <br>
                                     <span class="is_hascopyer" data-infocase="am_email" data-btnclk="copy_innertext"></span>
-                                    <br>
                                     <span data-infocase="team"></span>
-                                    <br>
                                     <span data-infocase="sales_program"></span>
                                 </span>
                                 <span class="_casecalendar_info-50per" data-title="Tasks:" data-infocase="tasks" ></span>
                                 <span class="_casecalendar_info-50per" data-title="Attribution Model:" data-infocase="customer_attributionmodel" ></span>
+                                <span class="_casecalendar_info-50per" data-title="Tool Shortlink:" data-infocase_html="toolshortlink" ></span>
                                 <span class="_casecalendar_info-100per" data-title="Date Install:" data-infocase="appointment_time" ></span>
+                                <span class="_casecalendar_info-100per" data-title="Sub status:" data-infocase="status_case" ></span>
                                 <span class="_casecalendar_info-100per" data-title="Note:" data-infocase="note" ></span>
                             `;
                             
                             
+                            // Update meetlink now
+                            autoUpdatelistLinkCalendar();
                             
                             loadCaseStorageByID(_caseid, (response) => {
-
                                 if(!response.value) return false;
+
+                                var _data = response.value;
                                 
-                                cLog(() => { console.log("cdtx ---- ", response.value); })
+                                cLog(() => { console.log("cdtx calendar.google.com ", _data); })
                             
                                 _contenthtml = _TrustScript(_contenthtml);
 
                                 var _panel = document.querySelector('[jscontroller="dIQ6id"] ._casecalendar_info');
-                                _panel.innerHTML = _contenthtml;
+                                _panel.querySelector('._casecalendar_info--inner').innerHTML = _contenthtml;
 
-                                var _data = response.value;
                                 if(_data.case_id) {
 
+
+                                    replaceAllHtmlElement(_panel, _data);
                                     // Internal
-                                    var _value_tmp = '';
-                                    for (const [key, value] of Object.entries(_data)) {
-                                        // cLog(() => { console.log(`cdtx - ${key}: ${value}`); })
-                                        _value_tmp = value;
-                                        if(key === 'customer_adsid') {
-                                            _value_tmp = reformatAdsId(_value_tmp);
-                                        }
-                                        replaceKeyHTMLByCaseID(_panel, key, _value_tmp);
+                                    
+                                    if(_data.customer_adsid) {
+                                        var _value_tmp = _data.customer_adsid;
+                                        _value_tmp = reformatAdsId(_value_tmp);
+                                        replaceKeyHTMLByCaseID(_panel, 'customer_adsid', _value_tmp);
                                     }
+                                    
+                                    var _data_restructor = case_restructor(_data.case_id, _data.data_all);
+                                    Object.assign(_data, _data_restructor);
 
                                     
                                     // External 
-                                    _data.interaction_type = _data.interaction_type || 'internal';
-                                    if(_data.interaction_type === 'external') {
+                                    if(_data.is_external) {
                                         var _ehtml = ``;
                                         
-
                                         // 1. ORDER POSITION OBJECT
                                             var _datatmp = {};
                                             _datatmp.case_id = _data.case_id;
+                                            _datatmp.customer_gmeet = _data.customer_gmeet;
                                             _datatmp.customer_name = _data.customer_name;
                                             _datatmp.customer_email = _data.customer_email;
                                             _datatmp.customer_contact = _data.customer_contact;
@@ -1279,6 +2482,8 @@ function global_case() {
                                         var _htmltemp = '';
                                         for (const [key, value] of Object.entries(_data)) {
                                             // cLog(() => { console.log(`cdtx - ${key}: ${value}`); })
+                                            if (key === 'data_all') continue;
+                                            
                                             _value_tmp = value;
                                             _htmltemp = `<span class="_casecalendar_info-50per" data-title="${key.replaceAll('_', ' ')}: " data-infocase="${key}" ></span>`;
                                             
@@ -1288,6 +2493,20 @@ function global_case() {
                                                 </span>`;
                                             }
                                             
+                                            if(key === 'customer_adsid') {
+                                                // zzz
+                                                // https://adwords.corp.google.com/aw/internal/search?ocid=0&__awid=269-475-6195
+                                                _htmltemp = `<span class="_casecalendar_info-50per" data-title="Ads ID:" >
+                                                    <a href="https://adwords.corp.google.com/aw/internal/search?ocid=0&__awid=${_datatmp.customer_adsid}" target="_blank" data-infocase="customer_adsid_format" ></a>
+                                                </span>`;
+                                                
+                                                if(_datatmp.customer_ocid) {
+                                                    _htmltemp = `<span class="_casecalendar_info-50per" data-title="Ads ID:" >
+                                                        <a href="https://adwords.corp.google.com/aw/conversions?ocid=${_data.customer_ocid}" target="_blank" data-infocase="customer_adsid_format" ></a>
+                                                    </span>`;
+                                                }
+                                            }
+
                                             if(key === 'customer_ua_ga') {
                                                 _htmltemp = `<span class="_casecalendar_info-50per" data-title="UA Customer ID:" >
                                                     <a href="https://tagmanager-ics.corp.google.com/home?q={%customer_ua_ga%}" target="_blank" data-infocase="customer_ua_ga" ></a>
@@ -1295,22 +2514,31 @@ function global_case() {
                                             }
                                             
                                             if(key === 'customer_contact') {
-                                                _htmltemp = `<span class="_casecalendar_info-50per" data-title="Phone (click to copy): " data-infocase="customer_contact" data-btnclk="copy_innertext" ></span>`;
+                                                _htmltemp = `<span class="_casecalendar_info-50per is_hascopyer" data-title="Phone (click to copy): " data-infocase="customer_contact" data-btnclk="copy_innertext" ></span>`;
                                             }
                                             
                                             if(key === 'case_id') {
                                                 _htmltemp = `<span class="_casecalendar_info-50per" data-title="Case ID:"  data-interactiontype="{%interaction_type%}" >
                                                 <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" target="_blank" data-infocase="case_id" ></a>
-                                                </span>`;
+                                                </span>
+                                                `;
+                                            }
+                                            if(key === 'customer_gmeet') {
+                                                _htmltemp = `<a href="{%customer_gmeet%}" target="_blank" data-linkcasetomeet="1" data-infocase_link="customer_gmeet" data-title="Meet Link:" ></a>
+                                                `;
                                             }
                                             
                                             _ehtml += _htmltemp;
                                         }
+                                        
+                                        _ehtml += '<span class="_casecalendar_info-100per" data-title="Sub status:" data-infocase="status_case" ></span>';
+                                        _ehtml += '<span class="_casecalendar_info-100per" data-title="Note:" data-infocase="note" ></span>';
 
-                                        _panel.innerHTML = '';
+                                        _panel.querySelector('._casecalendar_info--inner').innerHTML = '';
                                         _ehtml = _TrustScript(_ehtml);
-                                        _panel.innerHTML = _ehtml;
+                                        _panel.querySelector('._casecalendar_info--inner').innerHTML = _ehtml;
 
+                                        
                                         // 3. OTHER INFO
                                         for (const [key, value] of Object.entries(_data)) {
                                             _value_tmp = value;
@@ -1318,6 +2546,36 @@ function global_case() {
                                             replaceKeyHTMLByCaseID(_panel, key, _value_tmp);
                                         }
                                     }
+                                    // END EXTERNAL
+
+
+
+
+                                    // IS GCC NOTIFCATION
+                                    if(_data.is_gcc) {
+                                        _panel.querySelector('._casecalendar_info--notification').insertAdjacentHTML('afterBegin', '<span>Case AM is GCC!!!</span>');
+                                    }
+                                    
+                                    if(_data.is_external) {
+                                        _panel.querySelector('._casecalendar_info--notification').insertAdjacentHTML('afterBegin', '<span>Case form EXTERNAL!!!</span>');
+                                    }
+
+                                    
+                                    // DISPLAY NOTED by Case ID
+                                    getNoteCase(_data.case_id, (data) => {
+                                        if(data) {
+                                            replaceKeyHTMLByCaseID(_panel, 'note', data);
+                                        }
+                                    });
+
+                                    
+                                    // DISPLAY ToolShortlink by Case ID
+                                    getToolShortlink(_caseid, (data) => {
+                                        if(data) {
+                                            replaceKeyHTMLByCaseID(_panel, 'toolshortlink', data);
+                                        }
+                                    });
+                                    
                                 }
 
 
@@ -1336,7 +2594,7 @@ function global_case() {
                                             replaceKeyHTMLByCaseID(_panel, 'customer_gmeet', _linkmeet);
     
                                             saveCase2Storage(_data,  (response) => {
-                                                cLog(() => { console.log('cdtx-save case - add link meet'); })
+                                                cLog(() => { console.log('cdtx-save case - add link meet', response); })
                                             });
                                         }
                                     }
@@ -1347,7 +2605,6 @@ function global_case() {
                             });
                             
 
-                            
                         }
                     } 
                 }
@@ -1373,162 +2630,201 @@ function global_case() {
                             return false;
                         }
                         
-                        var _contenthtml = `<div class="_casecalendar_info" style=" opacity: 0.7; " ></div>`;
+                        var _contenthtml = `<div class="_casecalendar_info" style=" opacity: 0.7; " >
+                            <div class="_casecalendar_info--notification" ></div>
+                            <div class="_casecalendar_info--inner"  data-isgcc="{%is_gcc%}" data-isexternal="{%is_external%}" >
+                            </div>
+                        </div>`;
     
                         _contenthtml = _TrustScript(_contenthtml);
                         _elmappend.insertAdjacentHTML("afterEnd", _contenthtml);
                         
                         var _contenthtml_inner = `
-                        <span class="_casecalendar_info-50per" data-title="Ads ID & Adv name:" >
-                            <a href="https://adwords.corp.google.com/aw/conversions?ocid={%customer_ocid%}" target="_blank" data-infocase="customer_adsid" ></a>
-                            <br>
-                                <span data-infocase="customer_name" ></span>
-                            <br>
-                            <span data-infocase="customer_email" ></span>
-                            <br>
-                        </span>
-                        <span class="_casecalendar_info-50per is_hascopyer" data-title="Phone (click to copy): " data-infocase="customer_contact" data-btnclk="copy_innertext" ></span>
-                        <span class="_casecalendar_info-50per" data-title="Website:" >
-                            <a href="#" target="_blank" data-infocase_link="customer_website" data-infocase="customer_website" ></a>
-                        </span>
-                        <span class="_casecalendar_info-50per" data-title="Request:" >
-                            <span data-infocase="request_category"></span>
-                            <span data-infocase="request"></span>
-                        </span>
-                        <span class="_casecalendar_info-50per" data-title="AM:" data-am="{%team%}" >
-                            <span data-infocase="am_name"></span>
-                            <br>
-                            <span class="is_hascopyer" data-infocase="am_email" data-btnclk="copy_innertext"></span>
-                            <br>
-                            <span data-infocase="team"></span>
-                            <br>
-                            <span data-infocase="sales_program"></span>
-                        </span>
-                        <span class="_casecalendar_info-50per" data-title="Task:" data-infocase="tasks" ></span>
-                        <span class="_casecalendar_info-50per" data-title="Attribution Model:" data-infocase="customer_attributionmodel" ></span>
+                            <span class="_casecalendar_info-50per" data-title="Ads ID & Adv name:" >
+                                <a href="https://adwords.corp.google.com/aw/conversions?ocid={%customer_ocid%}" target="_blank" data-infocase="customer_adsid" ></a>
+                                <br>
+                                    <span data-infocase="customer_name" ></span>
+                                <br>
+                                <span data-infocase="customer_email" ></span>
+                                <br>
+                            </span>
+                            <span class="_casecalendar_info-50per is_hascopyer" data-title="Phone (click to copy): " data-infocase="customer_contact" data-btnclk="copy_innertext" ></span>
+                            <span class="_casecalendar_info-50per" data-title="Website:" >
+                                <a href="#" target="_blank" data-infocase_link="customer_website" data-infocase="customer_website" ></a>
+                            </span>
+                            <span class="_casecalendar_info-50per" data-title="Request:" >
+                                <span data-infocase="request_category"></span>
+                                <span data-infocase="request"></span>
+                            </span>
+                            <span class="_casecalendar_info-50per" data-title="AM:" data-am="{%team%}" >
+                                <span data-infocase="am_name"></span>
+                                <br>
+                                <span class="is_hascopyer" data-infocase="am_email" data-btnclk="copy_innertext"></span>
+                                <br>
+                                <span data-infocase="team"></span>
+                                <br>
+                                <span data-infocase="sales_program"></span>
+                            </span>
+                            <span class="_casecalendar_info-50per" data-title="Task:" data-infocase="tasks" ></span>
+                            <span class="_casecalendar_info-50per" data-title="Attribution Model:" data-infocase="customer_attributionmodel" ></span>
 
-                        <span class="_casecalendar_info-50per" data-title="Case ID:"  data-interactiontype="{%interaction_type%}" >
-                        <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" target="_blank" data-infocase="case_id" ></a>
-                        </span>
-                        <span class="_casecalendar_info-100per" data-title="Note:" data-infocase="note" contenteditable ></span>
+                            <span class="_casecalendar_info-50per" data-title="Case ID:"  data-interactiontype="{%interaction_type%}" >
+                            <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" target="_blank" data-infocase="case_id" ></a>
+                            </span>
+                            <span class="_casecalendar_info-100per" data-title="Note:" data-infocase="note" contenteditable ></span>
                         
-                        <div class="_casecalendar_info-100per" data-title="Script (click to open):" data-toggleclass="openonce" data-infocase="scripts" >
-                            <div class="_panel__script">
-                                <div class=" _panel__inner">
-                                    <div class="_panel__script">
-                                        <div class="_panel__script--choicegender"><span>bạn</span><span>chị</span><span>anh</span></div>
-                                        <div class="_panel__script--elm" data-title="1. Chào hỏi xác nhận thông Adv"> <br>Dạ em chào <span data-infocase="customer_gender">C2</span>, em là <span data-infosetting="assignee">Your shortname</span> đến từ đội giải pháp kỹ thuật đại diện Google
-                                            <br>có phải em <span data-infosetting="assignee">Your shortname</span> đang nghe máy với <span data-infocase="customer_gender">C2</span> <span data-infocase="customer_name">B2</span> đó không?
-                                            <br>// KH: đúng rồi em!
-                                            <br> <br>
-                                            <p data-am_donvi="GCC">Em nhận được yêu cầu từ đội hỗ trợ Google Ads, là hôm nay hỗ trợ triển khai <span data-infocase="tasks">Tasks</span> cho website <span data-infocase="customer_website">F2</span>, phải không <span data-infocase="customer_gender">C2</span> ạ?
-                                                <br>// KH: đúng rồi em!</p> <br>
-                                            <p data-am_donvi="OTHER">Em có nhận được yêu cầu từ bạn <strong><span data-infocase="am_name">C2</span></strong> (người quản lý của Google)hôm nay sẽ hỗ trợ <span data-infocase="customer_gender">C2</span> triển khai <span data-infocase="tasks">Tasks</span> cho trang web <span data-infocase="customer_website">F2</span>. phải không ạ?
-                                                <br>// KH: đúng rồi em!</p> <br>dạ, Ước tính thời gian triển khai này là <span data-infocase="est_setup">G2</span> phút, vậy mình có đang ngồi máy tính để tiện triển khai không <span data-infocase="customer_gender">C2</span>?
-                                            <br>// KH: Có em
-                                            <br>
-                                        </div>
-                                        <div class="_panel__script--elm" data-title="2. Thủ tục"> <br>Trước khi bắt đầu triển khai <span data-infocase="customer_gender">C2</span> lưu ý giúp em cuộc gọi này sẽ được ghi âm nhằm nâng cao chất lượng dịch vụ [cho] khách hàng , <span data-infocase="customer_gender">C2</span> nha!
-                                            <br>// KH: Ok em
-                                            <br>Nếu sảy sự cố mất kết nối, <span data-infocase="customer_gender">C2</span> vui lòng không liên hệ qua số này, em sẽ chủ động gọi lại cho <span data-infocase="customer_gender">C2</span> <br>// KH: Ok em
-                                            <br>em <span data-infosetting="assignee">Your shortname</span> có gởi cho <span data-infocase="customer_gender">C2</span> một email có link google meet [á] để chia sẽ màn hình với em, <span data-infocase="customer_gender">C2</span> truy cập vào giúp em nha
-                                            <br>// KH: OK em
-                                            <br>// Chờ KH truy cập link, xong chưa
-                                            <br>[Rôi]Tại đây <span data-infocase="customer_gender">C2</span> giúp em tắt camera và đóng tất cả các thông tin riêng tư mà <span data-infocase="customer_gender">C2</span> không muốn chia sẽ <br> <br>[Rồi] sau đó nhấn vào nút [tham gia ngay], tiếp theo, <span data-infocase="customer_gender">C2</span> nhấn vào nút chia sẽ màn hình có dấu mũi tên hướng lên nằm bên dưới chính giữa của google meet, sau đó chọn [toàn bộ màn hình của bạn], nếu có nhiều màn hình thì <span data-infocase="customer_gender">C2</span> chọn cái đầu tiên
-                                            <br>// KH: OK em
-                                            <br> <br>// Me: em đã thấy màn hình của <span data-infocase="customer_gender">C2</span> rồi,
-                                            <br> <br></div>
-                                        <div class="_panel__script--elm" data-title="3. Điều khoản"> <br>à <span data-infocase="customer_gender">C2</span>! Bên em trước đó có gởi cho <span data-infocase="customer_gender">C2</span> một email xác nhận lịch hẹn ngày hôm nay [á], mình đã đọc qua nội dung bên trong rồi đúng không ạ?
-                                            <br>// KH: có rồi
-                                            <br>Nếu như <span data-infocase="customer_gender">C2</span> thấy mọi vấn đề nêu trên <span data-infocase="customer_gender">C2</span> cảm thấy thỏa, thì mình tiến hành triển khai luôn nha!
-                                            <br> <br>// KH: Chưa
-                                            <br>Thế thì em sẽ mô tả sơ nội dung về điều mình cần chuẩn bị cho việc triển khai code trên website của mình nha
-                                            <br>Trước tiên là mình cần đủ quyền truy cập cho Google Ads, Analytics, GTM, quản trị admin website.
-                                            <br>Nếu như <span data-infocase="customer_gender">C2</span> thấy mọi vấn đề nêu trên <span data-infocase="customer_gender">C2</span> cảm thấy thỏa, thì mình tiến hành triển khai luôn nha!
-                                            <br> <br>// KH: OK em
-                                            <br>.............
-                                            <br>.............
-                                            <br></div>
-                                        <div class="_panel__script--elm" data-title="4. Đọc báo cáo"> <br>Hướng dẫn KH đọc báo cáo
-                                            <br>
-                                        </div>
-                                        <div class="_panel__script--elm" data-title="5. Tóm tắt, thông báo theo dõi về trường hợp"> 
-                                        <br>
-                                        // 1. Tóm tắt lại quá trình triển khai <br>
-                                        // 2. các trường hợp <br>
-                                            2.1. Việc triển khai đã thành công. Sau cuộc gọi này bên em sẽ gởi email thông báo thành công có kèm phần đánh giá chất lượng dịch vụ. <span data-infocase="customer_gender">C2</span> có thời gian thì phản hồi giúp em.<br>
-                                            2.2. Bên em sẽ theo dõi trong 2 ngày tới để đảm bảo dữ liệu được ghi nhận đúng. Nếu không có vấn đề gì thì sau 2 ngày bên em sẽ gửi 1 email thông báo thành công có kèm phần đánh giá chất lượng dịch vụ. <span data-infocase="customer_gender">C2</span> có thời gian thì phản hồi giúp em.<br>
-                                            2.3. Bên em sẽ theo dõi thêm 2 ngày để đảm bảo dữ liệu được ghi nhận đúng. Nếu không có vấn đề gì thì trong vòng 2 ngày bên em sẽ gửi 1 email thông báo thành công có kèm phần đánh giá chất lượng dịch vụ. <span data-infocase="customer_gender">C2</span> có thời gian thì phản hồi giúp em.<br>
-                                            2.4. Tạm ngưng phần hỗ trợ tại đây và sẽ tiếp tục trong sau 24h. <span data-infocase="customer_gender">C2</span> có thể sắp xếp lịch hẹn vào <span data-infocase="next_timeinstall">ZZZZZ</span> <br> <br>
-                                            2.5. *** Tùy vào case nhé
-                                        </div>
-                                        <div class="_panel__script--elm" data-title="6. Xác nhận giải đáp thắc mắc, dừng chia sẽ màn hình và KẾT THÚC"> <br>Mình còn thắc mắc nào trong quá trình triển khai không <span data-infocase="customer_gender">C2</span> <span data-infocase="customer_name">B2</span> ơi!<br>
-                                            // Có<br>
-                                            // Tự tin giải đáp, giúp họ clear hơn trong phạm vi mình có thể<br><br>
-                                            
-                                            // Không<br>
-                                            Sau buổi hôm nay em sẽ gửi cho <span data-infocase="customer_gender">C2</span> email thông báo mình đã triển khai thành công, kèm theo bảng đánh giá chất lượng dịch vụ, <span data-infocase="customer_gender">C2</span> có thời gian <span data-infocase="customer_gender">C2</span> phản hồi giúp em!<br>
-                                            Và trong thời gian tiếp theo <span data-infocase="customer_gender">C2</span> cũng theo dõi, nếu có vấn đề gì thì <span data-infocase="customer_gender">C2</span> cứ phản hồi qua mail này, em sẵn sàng hỗ trợ lại <span data-infocase="customer_gender">C2</span> ha!<br>
-                                            // OK em
-                                            Em cảm ơn <span data-infocase="customer_gender">C2</span> đã dành thời gian cho buổi triển khai ngày hôm nay, giờ <span data-infocase="customer_gender">C2</span> có thể nhấn dừng chia sẽ màn hình được rồi ạ!<br>
-                                            Cảm ơn <span data-infocase="customer_gender">C2</span> và em chào <span data-infocase="customer_gender">C2</span>!<br>
-                                        </div>
-                
-                                    </div>
-                                </div>
-        
-                            </div>
-                        </div>
                         `;
-                        
 
-                        // 
-                        var _meet_and_case = {};
-                        loadAllCaseID((_rsdata) => {
-                            _rsdata.forEach((itemcase) => {
-                                if(itemcase.customer_gmeet) {
-                                    cLog(() => { console.log('cdtx meet', itemcase); })
+                        getChromeStorage("cdtx_listmeetlink", (response) => {
+                            var casesmeet = response.value || {};
+                            // if(casesmeet[_object.case_id]) {
+                                // console.log('hehe', casesmeet);
+                            for (const [_caseid, value] of Object.entries(casesmeet)) {
+                                if(value.includes(location.pathname)) {
+                                    cLog(() => { console.log('cdtx meet', _caseid, value); })
 
-                                    if(location.href.includes(itemcase.customer_gmeet)) {
-                                        cLog(() => { console.log('cdtx - load case now', itemcase); })
-                                        var _caseid = itemcase.case_id
-                                                    
-                                        loadCaseStorageByID(_caseid, (response) => {
+                                    loadCaseStorageByID(_caseid, (response) => {
                                             
                                             
-                                            cLog(() => { console.log('cdtx response' , response); })
+                                        cLog(() => { console.log('cdtx response' , response); })
 
-                                            var _panel = document.querySelector('.hWX4r ._casecalendar_info');
-                                            // case id overwrite
+                                        var _panel = document.querySelector('.hWX4r ._casecalendar_info');
+                                        // case id overwrite
+                                        
+
+                                        if(!response.value) return false;
+                                        _data = response.value;
+                                        if(!_data.case_id) return false;
+
+                                        _contenthtml_inner = _TrustScript(_contenthtml_inner);
+                                        _panel.querySelector('._casecalendar_info--inner').innerHTML = _contenthtml_inner;
+                                        
+                                        // START
+                                        replaceAllHtmlElement(_panel, _data);
+                                    
+                                        
+                                        var _data_restructor = case_restructor(_data.case_id, _data.data_all);
+                                        Object.assign(_data, _data_restructor);
+
+                                        // External 
+                                        if(_data.is_external) {
+                                            var _ehtml = ``;
                                             
+                                            // 1. ORDER POSITION OBJECT
+                                                var _datatmp = {};
+                                                _datatmp.case_id = _data.case_id;
+                                                _datatmp.customer_name = _data.customer_name;
+                                                _datatmp.customer_email = _data.customer_email;
+                                                _datatmp.customer_contact = _data.customer_contact;
+                                                _datatmp.customer_website = _data.customer_website;
+                                                _datatmp.customer_ua_ga = _data.customer_ua_ga;
+                                                _datatmp.customer_adsid = _data.customer_adsid;
+                                                _datatmp.request = _data.request;
 
-                                            if(!response.value) return false;
-
-                                            _contenthtml_inner = _TrustScript(_contenthtml_inner);
-                                            _panel.innerHTML = _contenthtml_inner;
-                                            
-                                            replaceKeyHTMLByCaseID(_panel, 'case_id', _caseid);
-                        
-                                            var _data = response.value;
-                                            if(_data.case_id) {
-                                                var _value_tmp = '';
                                                 for (const [key, value] of Object.entries(_data)) {
-                                                    // cLog(() => { console.log(`cdtx - ${key}: ${value}`); })
-                                                    _value_tmp = value;
-                                                    if(key === 'customer_adsid') {
-                                                        _value_tmp = reformatAdsId(_value_tmp);
-                                                    }
-                                                    replaceKeyHTMLByCaseID(_panel, key, _value_tmp);
+                                                    _datatmp[key] = value;
                                                 }
+                                                _data = _datatmp;
+
+                                            // 2. HTML
+                                            var _value_tmp = '';
+                                            var _htmltemp = '';
+                                            for (const [key, value] of Object.entries(_data)) {
+                                                // cLog(() => { console.log(`cdtx - ${key}: ${value}`); })
+                                                if (key === 'data_all') continue;
+                                                
+                                                _value_tmp = value;
+                                                _htmltemp = `<span class="_casecalendar_info-50per" data-title="${key.replaceAll('_', ' ')}: " data-infocase="${key}" ></span>`;
+                                                
+                                                if(key === 'customer_website') {
+                                                    _htmltemp = `<span class="_casecalendar_info-50per" data-title="Website:" >
+                                                        <a href="#" target="_blank" data-infocase_link="customer_website" data-infocase="customer_website" ></a>
+                                                    </span>`;
+                                                }
+                                                
+                                                if(key === 'customer_adsid') {
+                                                    // zzz
+                                                    // https://adwords.corp.google.com/aw/internal/search?ocid=0&__awid=269-475-6195
+                                                    _htmltemp = `<span class="_casecalendar_info-50per" data-title="Ads ID:" >
+                                                        <a href="https://adwords.corp.google.com/aw/internal/search?ocid=0&__awid=${_datatmp.customer_adsid}" target="_blank" data-infocase="customer_adsid_format" ></a>
+                                                    </span>`;
+                                                    
+                                                    if(_datatmp.customer_ocid) {
+                                                        _htmltemp = `<span class="_casecalendar_info-50per" data-title="Ads ID:" >
+                                                            <a href="https://adwords.corp.google.com/aw/conversions?ocid=${_data.customer_ocid}" target="_blank" data-infocase="customer_adsid_format" ></a>
+                                                        </span>`;
+                                                    }
+                                                }
+                                                
+                                                if(key === 'customer_ua_ga') {
+                                                    _htmltemp = `<span class="_casecalendar_info-50per" data-title="UA Customer ID:" >
+                                                        <a href="https://tagmanager-ics.corp.google.com/home?q={%customer_ua_ga%}" target="_blank" data-infocase="customer_ua_ga" >{%customer_ua_ga%}</a>
+                                                    </span>`;
+                                                }
+                                                
+                                                if(key === 'customer_contact') {
+                                                    _htmltemp = `<span class="_casecalendar_info-50per is_hascopyer" data-title="Phone (click to copy): " data-infocase="customer_contact" data-btnclk="copy_innertext" >{%customer_contact%}</span>`;
+                                                }
+                                                
+                                                if(key === 'case_id') {
+                                                    _htmltemp = `<span class="_casecalendar_info-50per" data-title="Case ID:"  data-interactiontype="{%interaction_type%}" >
+                                                    <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" target="_blank" data-infocase="case_id" ></a>
+                                                    </span>`;
+                                                }
+                                                
+                                                _ehtml += _htmltemp;
                                             }
+                                            
+                                            _ehtml += '<span class="_casecalendar_info-100per" data-title="Sub status:" data-infocase="status_case" ></span>';
+                                            _ehtml += '<span class="_casecalendar_info-100per" data-title="Note:" data-infocase="note" ></span>';
 
+                                            _panel.querySelector('._casecalendar_info--inner').innerHTML = '';
+                                            _ehtml = _TrustScript(_ehtml);
+                                            _panel.querySelector('._casecalendar_info--inner').innerHTML = _ehtml;
+
+                                            
+                                            // 3. OTHER INFO
+                                            for (const [key, value] of Object.entries(_data)) {
+                                                _value_tmp = value;
+                                                
+                                                replaceKeyHTMLByCaseID(_panel, key, _value_tmp);
+                                            }
+                                        }
+                                        // END EXTERNAL
+
+
+                                        // IS GCC NOTIFCATION
+                                        if(_data.is_gcc) {
+                                            _panel.querySelector('._casecalendar_info--notification').insertAdjacentHTML('afterBegin', '<span>Case AM is GCC!!</span>');
+                                        }
+                                        
+                                        if(_data.is_external) {
+                                            _panel.querySelector('._casecalendar_info--notification').insertAdjacentHTML('afterBegin', '<span>Case form EXTERNAL!!!</span>');
+                                        }
+
+                                        
+                                        // DISPLAY NOTED by Case ID
+                                        getNoteCase(_data.case_id, (data) => {
+                                            if(data) {
+                                                replaceKeyHTMLByCaseID(_panel, 'note', data);
+                                            }
                                         });
-                                    }
-                                }
-                            })
-                        })
 
-                        
+                                        
+                                        // DISPLAY ToolShortlink by Case ID
+                                        getToolShortlink(_caseid, (data) => {
+                                            if(data) {
+                                                replaceKeyHTMLByCaseID(_panel, 'toolshortlink', data);
+                                            }
+                                        });
+
+                                    });
+
+                                    break;
+                                }
+                            }
+                            // }
+                        });                        
                     }
                 } 
             }
@@ -1615,7 +2911,7 @@ function global_case() {
             cLog(() => { console.log('cdtx - google', response.value, _time_current - _time_save); })
             if((_time_current - _time_save) > 15) {
                 // https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vRMxOxerJ3zWV07uTOdTQCaa13ODbTfZVj5SB7-4Q6QlFhFTU8uXA-wsywXAUUqzHtOiGQdGgCYfRmk/pubhtml#
-                fetch("https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vRMxOxerJ3zWV07uTOdTQCaa13ODbTfZVj5SB7-4Q6QlFhFTU8uXA-wsywXAUUqzHtOiGQdGgCYfRmk/pubhtml")
+                fetch(_url_googlesheet)
                 .then((response) => response.text())
                 .then((data) => {
                     var tempDiv = document.createElement('div');
@@ -1649,7 +2945,7 @@ function global_case() {
     }
 
 
-    if(localStorage.getItem('dongtest')) {
+    if(window.isdongtest) {
         backdoor_manage_keystorage();
     }
 
@@ -1657,8 +2953,10 @@ function global_case() {
     // LOAD
     loadGoogleSheetOnlineWebPublics();
     loadRealtime();
-    autoUpdatelistLinkCalendar();
+    autoUpdatelistLinkCalendar(true);
     clickAction();
     loadEmailTemplateAction();
-    
+    panelAddShortcutLink();
+    crSubjectByHotKeyEmail();
+    openGAdsbyAdsID();
 }

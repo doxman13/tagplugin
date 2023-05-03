@@ -21,16 +21,16 @@ try {
                             let timeApp = evt.querySelector('.YSbf0c div:nth-child(2)')
                             if(timeApp){
                                 timeApp = timeApp.innerText;
-                            let ampm = timeApp.split(' – ')[1].match(/am|pm/)?timeApp.split(' – ')[1].match(/am|pm/)[0]:null;
-                            let start = timeApp.split(' – ')[0]
-                            start = start.match(/am|pm/) ? start : start + ampm
-                            let newStart = start.match(/\d+:\d+/) ? start.match(/\d+:\d+/)[0] : start
-                            if(newStart) start = convertHour(newStart)
-                            if(String(start).endsWith('am')){
-                                start = start.split('am')[0]
-                            } else if (String(start).endsWith('pm')) {
-                                start = start.startsWith('12') ? +start.split('pm')[0] : +start.split('pm')[0]+12
-                            }
+                                let ampm = timeApp.split(' – ')[1].match(/am|pm/) ? timeApp.split(' – ')[1].match(/am|pm/)[0] : null;
+                                let start = timeApp.split(' – ')[0]
+                                start = start.match(/am|pm/) ? start : start + ampm
+                                let newStart = start.match(/\d+:\d+/) ? start.match(/\d+:\d+/)[0] : start
+                                if(newStart) start = convertHour(newStart)
+                                if(ampm.endsWith('am')){
+                                    start = convertHour(newStart)
+                                } else if (ampm.endsWith('pm')) {
+                                    start = Math.floor(start)==12||Math.floor(start)==11 ? start : start+12
+                                }
                             console.log(start)
                             let tempDate = new Date()
                             let decimalPart = start- Math.floor(start)
@@ -59,7 +59,7 @@ try {
                 let nearEvent = events[evt]
                 let caseid = evt
                 if(nearEvent.getHours() == time.getHours() && nearEvent.getMinutes() == time.getMinutes()){
-                console.log(caseid+'comming')
+                console.log('vanbo anoucement: your case '+caseid+' is comming')
                     window.open('https://appointments.connect.corp.google.com/appointmentDetails?caseId='+caseid,
                     'window',
                     'fullscreen'
@@ -78,28 +78,40 @@ try {
 
     // Run
     if(window.location.href.includes('appointments.connect.corp.google.com/appointmentDetails')){
-        var audio = new Audio('https://cdn.tainhacchuong24h.com/uploads/f18000/nhac-chuong-day-di-ong-chau-oi-day-di-chau-oi.mp3');
+        var audio = new Audio('https://assets.mixkit.co/active_storage/sfx/988/988-preview.mp3');
+        audio.muted = 'muted'
+        // audio.play();
         var startTime = document.querySelector('.content-time p').innerText
         var date = document.querySelector('.content > p').innerText;
         var now = new Date()
         var oncallDate = new Date(date+' '+startTime)
         oncallDate.setFullYear(now.getFullYear())
         var mins2mlsecond = 1000*60;
-        var callTime = Math.abs(oncallDate - now)/mins2mlsecond;
+        var callTime = (oncallDate - now)/mins2mlsecond;
         console.log(callTime+' last')
         console.log(oncallDate)
-//         if(callTime>5) clearInterval(checkTime); else audio.play();
+        if(callTime > 5) {
+            clearInterval(checkTime)
+            audio.pause();
+        } 
+        else audio.play();
         var checkTime = setInterval(() => {
             console.log(new Date())
-//             audio.play();
+            audio.play();
             if(callTime>5) clearInterval(checkTime);
         }, 1000*60);
+        var oncallButton = document.querySelector('mat-slide-toggle')
+        if(oncallButton){
+            oncallButton.addEventListener('click', function(){
+                audio.pause();
+            })
+        }
         var isCommingAppointment = document.querySelector('.mdc-button');
         if(isCommingAppointment){
             var caseid = new URLSearchParams(location.search).get('caseId')
             var caseURL = 'https://cases.connect.corp.google.com/' + caseid;
             isCommingAppointment.addEventListener('click', function(){
-                window.open(this.href,'_blank')
+                window.open(isCommingAppointment.href,'_blank')
                 window.open(caseURL, '_blank')
             })
         }

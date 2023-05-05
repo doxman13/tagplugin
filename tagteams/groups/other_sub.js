@@ -1915,6 +1915,9 @@ var other_TagteamFocusCase = () => {
                 console.error("paste unsuccessful, execCommand not supported");
             }
         }
+        onClickElm('[debug-id="canned_response_button"]', 'click', function(elm){ 
+            prepareForEmail();
+        });
         // ==== END CODE - VAN BO       
     } catch (error) {
         console.error("tagteamFocusCase => ", error);

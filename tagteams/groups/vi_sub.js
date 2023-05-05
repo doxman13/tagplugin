@@ -70,6 +70,7 @@ var vi_heading_searchandreplace = `
     We are working to reroute your case to the correct support team:Chúng tôi đang làm việc để chuyển trường hợp của bạn đến đúng nhóm hỗ trợ
     Your request is out of scope for the Technical Solutions Team:Yêu cầu của bạn nằm ngoài phạm vi của Nhóm giải pháp kỹ thuật
     Your case will be closed. Tìm hiểu lý do:Trường hợp của bạn sẽ được đóng lại. Tìm hiểu lý do
+    Nhóm trải nghiệm khách hàng gTech:---
 `;
 
 var vi_hotkey_email = {
@@ -1616,15 +1617,6 @@ var vi_TagteamFocusCase = () => {
                             }
                         }
 
-                        if (field == 'Sales Program') {
-                            isGCC = matchingElement.innerText.toUpperCase().includes('GCC');
-                            if(ntime == 0) {
-                                ntime++;
-                                onClickElm('[debug-id="canned_response_button"]', 'click', function(elm){ 
-                                    prepareForEmail(isGCC);
-                                });
-                            }
-                        }
                     }
                 });
 
@@ -1913,6 +1905,12 @@ var vi_TagteamFocusCase = () => {
                 console.error("paste unsuccessful, execCommand not supported");
             }
         }
+
+
+        
+        onClickElm('[debug-id="canned_response_button"]', 'click', function(elm){ 
+            prepareForEmail();
+        });
         // ==== END CODE - VAN BO       
     } catch (error) {
         console.error("tagteamFocusCase => ", error);

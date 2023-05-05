@@ -161,11 +161,12 @@ function global_case() {
                     }
                     
                     if(typeof _tempdataCase['interaction_type'] !== 'undefined') {
-                        if(_tempdataCase['interaction_type'].includes('external')) {
+                        if(_tempdataCase['interaction_type'].toLowerCase().includes('external')) {
                             _tempdataCase['is_external'] = 1;
                             // am_isgcc_external
                         }
                     }
+                    
                     
                 } catch (error) {
                     console.log('cdtx - major error', error)
@@ -344,7 +345,7 @@ function global_case() {
                     _goteamelm.addEventListener("click", (e) => {
                         // sessionStorage.setItem("goTeamToDay", _timekey_current);
                         setChromeStorage('goTeamToDay', _timekey_current);
-                        // e.target.remove();
+                        e.target.classList.remove('notview_today');
                     });
                     
                 }
@@ -731,6 +732,8 @@ function global_case() {
                     <div class="_infocase_byme-field" data-title="Customer name" data-infocase="customer_name" data-disnewline="1" contenteditable="plaintext-only" ></div>
                     <div class="_infocase_byme-field" data-title="Customer email" data-infocase="customer_email" data-disnewline="1" contenteditable="plaintext-only" ></div>
                     <div class="_infocase_byme-field" data-title="Customer contact" data-infocase="customer_contact" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                    <div class="_infocase_byme-field" data-title="Customer Ads ID" data-infocase="customer_adsid" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                    <div class="_infocase_byme-field" data-title="Customer OCID" data-infocase="customer_ocid" data-disnewline="1" contenteditable="plaintext-only" ></div>
                     <div class="_infocase_byme-field" data-title="AM email" data-infocase="am_email" data-disnewline="1" contenteditable="plaintext-only" ></div>
                     <div class="_infocase_byme-field" data-title="Meet link" data-infocase="customer_gmeet" data-disnewline="1" contenteditable="plaintext-only" ></div>
                     <div class="_infocase_byme-field is_debug" data-title="Is External" data-infocase="is_external" data-disnewline="1" contenteditable="plaintext-only" ></div>
@@ -812,7 +815,7 @@ function global_case() {
                 }
                 if(!__key) return false;
 
-                console.log('cdtx addPanelNote2Case' , even.type, __key, __value, _target);
+                // console.log('cdtx addPanelNote2Case' , even.type, __key, __value, _target);
 
                 if(__disnewline) {
                     if(even.which == 13) {
@@ -1387,7 +1390,7 @@ function global_case() {
             _datacase = window.dataCase;
         }
 
-        console.log('cdtx reupdateForAll', _datacase);
+        cLog(() => {console.log('cdtx reupdateForAll', _datacase); })
 
 
         noteBarAlert('CLEAR');
@@ -1396,8 +1399,25 @@ function global_case() {
             noteBarAlert('Is EXTERNAL!', _datacase.case_id);
         }
         
-        if(_datacase.is_gcc || _datacase.sales_program.toLowerCase().includes('gcc')) {
-            noteBarAlert('AM is GCC!', _datacase.case_id);
+        try {
+            
+            var __is_external = false;
+            if(_datacase.is_gcc) {
+                __is_external = true;
+            }
+            
+            if(_datacase.sales_program) {
+                if(_datacase.sales_program.toLowerCase().includes('gcc')) {
+                    __is_external = true;    
+                }
+            }
+            
+            if(__is_external) {
+                noteBarAlert('AM is GCC!', _datacase.case_id);    
+            }
+            
+        } catch (error) {
+            console.log('reupdateForAll', error);
         }
 
         if(!arr_exclude.includes('panelnotecase')) {
@@ -1426,7 +1446,18 @@ function global_case() {
                     elm.innerText = value;
                 });
             }
-        })
+        });
+        
+        document.querySelectorAll('[data-infosetting="your-name"]').forEach(function(elm){
+            if(elm.innerText.trim() === '') {
+                if(typeof window.tagteamoption !== 'undefined') {
+                    if(typeof window.tagteamoption.optionkl__inputyourname !== 'undefined') {
+                        elm.innerText = window.tagteamoption.optionkl__inputyourname;
+                        elm.dispatchEvent(new Event('blur'));
+                    }
+                }
+            }
+        });
 
         // ******************
         // Replace all panel
@@ -1490,6 +1521,27 @@ function global_case() {
     }
 
     function clickAction() {
+        
+        
+        onClickElm('[data-btnaction="close_panel"]', 'click', function(elm, e){
+            if(elm.closest('[data-panel="email-template"].active')) {
+                document.querySelector('._panel_shortcut_openemailtemplate').click();
+            }
+            
+        })
+        
+        // Toggle close popup
+        onClickElm('.dock-container [debug-id]', 'click', function(elm, e){
+            if(document.querySelector('#_infocase_byme.open')) {
+                document.querySelector('#_infocase_byme.open').classList.remove('open')
+            }
+            if(document.querySelector('._infocase_byme_open')) {
+                document.querySelector('._infocase_byme_open').classList.remove('_infocase_byme_open')
+            }
+            
+        })
+        
+        // For group data btn click
         onClickElm('[data-btnclk]', 'click', function(elm, e){
             try {
                 var _action = elm.getAttribute("data-btnclk");
@@ -1956,11 +2008,12 @@ function global_case() {
             var myTime = setInterval(() => {
                 n_limit++; if(n_limit > 10) clearInterval(myTime);
                 var casemessageview_elm_all = document.querySelectorAll(".case-log-container.active-case-log-container case-message-view");
-                console.log('zzzzzzzzzz2' , casemessageview_elm_all.length);
+                
 
                 if(casemessageview_elm_all.length > 0) {
                     casemessageview_elm_all.forEach(function(elm){
-                        if(elm.innerText.includes("Emails or feedback from Advertiser")) {
+                        // Tối thiểu
+                        if(elm.innerText.includes("Emails or feed")) {
                             is_precall = true;
                         }
                     });

@@ -98,8 +98,8 @@
 				
 			],
 			"js": [
-				"tagteams/_init_style.js",
-				"tagteams/_init_panel.js",
+				"tagteams/groups/_init_style.js",
+				"tagteams/groups/_init_panel.js",
 				"tagteams/libs.js",
 				"tagteams/global.js",
 				"tagteams/vanbo.js",

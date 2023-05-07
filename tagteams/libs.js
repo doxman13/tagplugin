@@ -1883,6 +1883,21 @@ function replaceKeyHTMLByCaseID(_elm, _key, _value) {
             elm.setAttribute("href", _value_link);
         }
     });
+
+    _elm.querySelectorAll('[data-infocase_listlink="' + _key + '"]').forEach(function(elm){
+        
+        var _website_list = _value;
+        if(_website_list) {
+            var _website_listarr = _website_list.split(',');
+            var _arr = [];
+            _website_listarr.forEach((url) => {
+                url = url.trim();
+                _arr.push(`<a href="${url}" target="_blank">${url}</a>`);
+            });
+            elm.innerHTML = _arr.join(',');
+        }
+        
+    });
     
     
     // New format

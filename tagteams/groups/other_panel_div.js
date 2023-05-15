@@ -221,7 +221,7 @@ var other_list_emailtemplatecontent = {
                                             <tbody>
                                                 <tr>
                                                     <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                        <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                        <span data-infosetting="your-name"></span><br>
                                                         <span style="font-size: 16px;"><i>Technical Solutions Team</i><br><i>TDCX on behalf of Google</i></span>
                                                     </td>
                                                 </tr>
@@ -291,7 +291,7 @@ var other_list_emailtemplatecontent = {
           <tbody>
             <tr>
               <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                <span data-infosetting="your-name"></span><br>
                 <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
               </td>
             </tr>

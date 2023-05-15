@@ -132,7 +132,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
                                             </td>
                                         </tr>
@@ -208,7 +208,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
                                             </td>
                                         </tr>
@@ -316,7 +316,7 @@ var th_list_emailtemplatecontent = {
         <tbody>
           <tr>
             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;"><span class="replaced">
-            <span data-infosetting="your-name">YOUR-NAME</span>
+            <span data-infosetting="your-name"></span>
             <span style="font-size:11px"> <br> Technical Solutions Team <br>  TDCX, on behalf of Google <br> <br> <b>เพิ่มประสิทธิภาพโฆษณาในโลกที่ผู้คนให้ความสำคัญกับความเป็นส่วนตัว</b><br>เพิ่มประสิทธิภาพโฆษณาในโลกที่ผู้คนให้ความสำคัญกับความเป็นส่วนตัว ความคาดหวังที่สูงขึ้นในด้านความเป็นส่วนตัวได้เปลี่ยนวิธีที่นักการตลาดใช้เข้าถึงกลุ่มเป้าหมายและวัดผลลัพธ์<br> นี่คือคำแนะนำในการวัดและเพิ่มประสิทธิภาพโฆษณาด้วยกลยุทธ์และโซลูชันที่เหมาะสม โดยคำนึงถึงความเป็นส่วนตัวอยู่เสมอ: <a href="http://ads.google.com/intl/th_th/home/privacy/" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">Link</a><p></p></span></span></td>
           </tr>
           <tr>
@@ -403,7 +403,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Technical Solutions Team</i><br><i>TDCX, on behalf of Google</i></span>
                                             </td>
                                         </tr>
@@ -485,7 +485,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Technical Solutions Team</i><br><i>TDCX, on behalf of Google</i></span>
                                             </td>
                                         </tr>
@@ -555,7 +555,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Technical Solutions Team</i><br><i>TDCX, on behalf of Google</i></span>
                                             </td>
                                         </tr>
@@ -643,7 +643,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Technical Solutions Team</i><br><i>TDCX, on behalf of Google</i></span>
                                             </td>
                                         </tr>
@@ -747,7 +747,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Technical Solutions Team </i><br><i>TDCX, on behalf of Google</i></span>
                                             </td>
                                         </tr>
@@ -829,7 +829,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
                                             </td>
                                         </tr>
@@ -910,7 +910,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
                                             </td>
                                         </tr>
@@ -1000,7 +1000,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
                                             </td>
                                         </tr>
@@ -1079,7 +1079,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
                                             </td>
                                         </tr>
@@ -1187,7 +1187,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
                                             </td>
                                         </tr>
@@ -1258,7 +1258,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
                                             </td>
                                         </tr>
@@ -1329,7 +1329,7 @@ var th_list_emailtemplatecontent = {
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name">YOUR-NAME</span><br>
+                                                <span data-infosetting="your-name"></span><br>
                                                 <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
                                             </td>
                                         </tr>

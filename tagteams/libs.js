@@ -190,107 +190,137 @@ function wait4Elem(selector) {
 }
 
 function checkInputEmailInboxAndFix(n_once_check = 0){
-    if(window.tagteamoption.optionkl__disable_autofixemail == true) {
-        checkInputEmailInbox();
-        return false;
-    }
+    try {
 
-    var str_elmparent = '.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"] ';
+        if(window.tagteamoption.optionkl__disable_autofixemail == true) {
+            checkInputEmailInbox();
+            return false;
+        }
 
-    var _global_status = {
-        "test": true
-    };
+        var str_elmparent = '.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"] ';
 
-    if(n_once_check > 3) {
-        console.log("eie - recheck ???")
-        return false;
-    }
+        if(n_once_check > 3) {
+            console.log("eie - recheck ???")
+            return false;
+        }
 
+                
+        cLog(() => {console.log("eie --- wait checkInputEmailInboxAndFix"  ); });
+        // as least has 1 input cc
+
+        wait4Elem(str_elmparent + 'dropdown-button .address').then((_caseid_elm) => {
             
-    cLog(() => {console.log("eie --- wait checkInputEmailInboxAndFix"  ); });
-    // as least has 1 input cc
+            cLog(() => {console.log("eie --- START Wait - has input ", window.dataCase  ); });
 
-    wait4Elem(str_elmparent + 'email-address-input.input.cc input.input').then((_caseid_elm) => {
+
+            // Check EMAIL customer
+            var is_email_customer = false;
+            if(window.dataCase.customer_email) {
+                if(window.dataCase.customer_email.includes('@')) {
+                    is_email_customer = true;
+                }
+            }
+
+            if(!is_email_customer) {
+                Toastify({
+                    text: `Customer Email Missing at panel, click to update!`,
+                    class: "warning",
+                    duration: 3000,
+                    callback: function(){
+                        document.querySelector('[data-btnclk="open_panelnote"]').click();
+                    }
+                }).showToast();
+
+                console.error('eie', 'Customer Email missing at panel, access panel to update');
+                
+                return false;
+            }
+            
+            var _obj_wait = () => {
+                var caseload = window.dataCase;
+                var is_gcc_external = window.dataCase.am_isgcc_external || window.dataCase.is_gcc_external || window.dataCase.is_gcc || window.dataCase.is_external;
+                
+                // If is silver => make AM email to CC
+                if(window.dataCase.customer_is_silver) {
+                    is_gcc_external = window.dataCase.customer_is_silver == "1" ? false : is_gcc_external ;
+                }
+                
+                cLog(() => {console.log("eie --- START Wait - is_gcc_external ", is_gcc_external  ); });
+                if(caseload) {
+                    // Case ID is match
+                    var _caseid_elm = document.querySelector('[debug-id="case-id"] .case-id');
+                    if(_caseid_elm) {
+                        if(caseload.case_id !== _caseid_elm.innerText.trim()) {
+                            setTimeout(() => {
+                                checkInputEmailInboxAndFix(n_once_check + 1);
+                            }, 1000);
         
-        cLog(() => {console.log("eie --- START Wait - has input ", window.dataCase  ); });
-        
-        var _obj_wait = () => {
-            var caseload = window.dataCase;
-            var is_gcc_external = window.dataCase.am_isgcc_external || window.dataCase.is_gcc_external || window.dataCase.is_gcc || window.dataCase.is_external;
-            cLog(() => {console.log("eie --- START Wait - is_gcc_external ", is_gcc_external  ); });
-            if(caseload) {
-                
-                // Email customer empty
-                    if(!caseload.customer_email) {
-                        cLog(() => {console.log("eie --- caseload.customer_email NOT ISSET 1 "  ); });
-                        return false;
-                    } 
-                    if(caseload.customer_email.includes('@') === false) {
-                        cLog(() => {console.log("eie --- caseload.customer_email NOT ISSET 2 "  ); });
-                        return false;
+                            return false;
+                        }
                     }
-
-
-                // Case ID is match
-                var _caseid_elm = document.querySelector('[debug-id="case-id"] .case-id');
-                if(_caseid_elm) {
-                    if(caseload.case_id !== _caseid_elm.innerText.trim()) {
-                        setTimeout(() => {
-                            checkInputEmailInboxAndFix(n_once_check + 1);
-                        }, 1000);
-    
-                        return false;
-                    }
-                }
-                
-                cLog(() => {console.log("eie --- START", "Case ID", caseload.case_id,  _caseid_elm.innerText.trim() ); });
                     
-                // n > 10 stop ngay
-                var n_oncedequi = 0;
-                var n_email_am_haserror = 0;
-                var timekey = Date.now();
-                var elm_str_elmparent_headers = document.querySelector(str_elmparent + ".headers");
-    
-                // ONCE IF HAS DATA-EIEID
-                if(elm_str_elmparent_headers.getAttribute('data-eieid')) {
-                    cLog(() => { console.log("eie --- STOP -> IF HAS RUN! ") });
-    
-                    return false;
-                }
-                
-                if(elm_str_elmparent_headers) {
-                    elm_str_elmparent_headers.setAttribute('data-eieid', timekey);
-                }
-    
-                var elm_parentheader = document.querySelector(`[data-eieid="${timekey}"]`);
-                if(!elm_parentheader) {
-                    elm_parentheader = elm_str_elmparent_headers;
-                }
-    
-                
-                var recheck_fix_alert = (_callback, n_step = "0unmark", elm_parentheader) => {
-                    
-                    cLog(() => { console.log("eie - recheck_fix_alert - step: ", n_step) });
-    
-                    if(n_oncedequi > 10) {
-                        cLog(() => {console.log("eie --- STOP DEQUI"); });
-                        document.body.classList.remove("is_recheck_fix_alert_fixing");
-                        elm_parentheader.classList.add("finished");
-                        return false;
-                    }
-                    n_oncedequi++;
-    
-    
-                        var _email_input_from = elm_parentheader.querySelector('email-address-dropdown.input.from');
-                        var _email_input_to = elm_parentheader.querySelector('email-address-input.input.to');
-                        var _email_input_cc = elm_parentheader.querySelector('email-address-input.input.cc');
-                        var _email_input_bcc = elm_parentheader.querySelector('email-address-input.input.bcc');
+                    cLog(() => {console.log("eie --- START", "Case ID", caseload.case_id,  _caseid_elm.innerText.trim() ); });
                         
-                        if(_email_input_from && _email_input_to && _email_input_cc && _email_input_bcc) {
+                    // n > 10 stop ngay
+                    var n_oncedequi = 0;
+                    var n_email_am_haserror = 0;
+                    var timekey = Date.now();
+                    var elm_str_elmparent_headers = document.querySelector(str_elmparent + ".headers");
+        
+                    // ONCE IF HAS DATA-EIEID
+                    if(elm_str_elmparent_headers.getAttribute('data-eieid')) {
+                        cLog(() => { console.log("eie --- STOP -> IF HAS RUN! ") });
+        
+                        return false;
+                    }
+                    
+                    if(elm_str_elmparent_headers) {
+                        elm_str_elmparent_headers.setAttribute('data-eieid', timekey);
+                    }
+        
+                    var elm_parentheader = document.querySelector(`[data-eieid="${timekey}"]`);
+                    if(!elm_parentheader) {
+                        elm_parentheader = elm_str_elmparent_headers;
+                    }
+        
+                    
+                    var recheck_fix_alert = (_callback, n_step = "0unmark", elm_parentheader) => {
+                        
+                        cLog(() => { console.log("eie - recheck_fix_alert - step: ", n_step) });
+        
+                        if(n_oncedequi > 10) {
+                            cLog(() => {console.log("eie --- STOP DEQUI"); });
+                            document.body.classList.remove("is_recheck_fix_alert_fixing");
+                            elm_parentheader.classList.add("finished");
+                            return false;
+                        }
+
+                        n_oncedequi++;
+        
+                        // Repair
+                            var _email_input_from = elm_parentheader.querySelector('email-address-dropdown.input.from');
+                            var _email_input_to = () => {
+                                return elm_parentheader.querySelector('email-address-input.input.to');
+                            };
+                            var _email_input_cc = elm_parentheader.querySelector('email-address-input.input.cc');
+                            var _email_input_bcc = elm_parentheader.querySelector('email-address-input.input.bcc');
+                        
+
+                        // START
+                        if(_email_input_from && _email_input_to() && _email_input_cc && _email_input_bcc) {
+                            cLog(() => { console.log('eie 1checkandfix', window.dataCase); })
                             
+
+
+                            // Expand button
+                                var _elm_expand_more = elm_parentheader.querySelector('compose-card-content-wrapper .headers [icon="expand_more"]:not(.rotated)');
+                                if(_elm_expand_more) {
+                                    _elm_expand_more.click();
+                                }
+
                             // Explore 0unmark
                             if(n_step === "0unmark") {
-                                var unmaskbutton = elm_parentheader.querySelectorAll('.unmask-button');
+                                var unmaskbutton = elm_parentheader.querySelectorAll('[debugid="unmask-button"]');
                                 
                                 cLog(() => {console.log("eie --- 0unmark - length ", unmaskbutton.length); });
     
@@ -302,227 +332,247 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                                         //     elm.classList.remove("unmask-button");
                                         // }
                                     });
-                                    
-                                    
-                                    setTimeout(() => {
-                                        recheck_fix_alert(_callback, "0unmark", elm_parentheader);
-                                    }, 2000);
-                                    return false;
-                                } else {
-    
-                                    // NEXT Step => CHECK
-                                    recheck_fix_alert(_callback, "1checkemail", elm_parentheader);
                                 }
+
+                                setTimeout(() => {
+                                    var _isset_unmark = false;
+                                    unmaskbutton.forEach(function (elm) {
+                                        var _is1 = elm.innerText.includes('***');
+                                        var _is2 = elm.querySelector('.loading-state');
+
+                                        if(_is2 || _is1) {
+                                            _isset_unmark = true;
+                                        }
+                                    });
+
+                                    if(_isset_unmark) {
+                                        recheck_fix_alert(_callback, "0unmark", elm_parentheader);
+                                    } else {
+                                        // OK next step 2
+                                        recheck_fix_alert(_callback, "1checkandfix", elm_parentheader);
+                                    }
+                                }, 1000);
+    
+                                
     
                                 return false;
                             }
-    
-                            if(n_step === "1checkemail") {
-                                var n_err = 0;
-                                if(_email_input_from.innerText.includes('technical-solutions@google.com') === false) {
-                                    n_err++;
-                                }
+
+                            if(n_step === '1checkandfix') {
+                                // debugger;
                                 
-                                if(_email_input_to.innerText.includes(caseload.customer_email) === false) {
-                                    cLog(() => { console.log("eie - recheck_fix_alert customer_email ") });
-                                    n_err++;
-                                }
-                            
-                                if(is_gcc_external) {
-                                    if(_email_input_cc.innerText.includes("@") !== false) {
-                                        cLog(() => { console.log("eie - recheck_fix_alert is gcc CC has DATA => It should empty ") });
-                                        n_err++;
-                                        n_email_am_haserror++;
-                                    }
-    
-                                    if(_email_input_bcc.innerText.includes(caseload.am_email) === false) {
-                                        cLog(() => { console.log("eie - recheck_fix_alert is gcc caseload.am_email wrong ") });
-                                        n_err++;
-                                        n_email_am_haserror++;
-                                    }
-                                } else {
-                                    if(_email_input_cc.innerText.includes(caseload.am_email) === false) {
-                                        cLog(() => { console.log("eie - recheck_fix_alert am email wrong ") });
-                                        n_err++;
-                                        n_email_am_haserror++;
-                                    }
-    
-                                    if(_email_input_bcc.innerText.includes("@") !== false) {
-                                        cLog(() => { console.log("eie - recheck_fix_alert BCC has DATA => It should empty ") });
-                                        n_err++;
-                                        n_email_am_haserror++;
-                                    }
-                                }
-    
-                                if(n_err > 0) {
+                                // *******************
+                                // 1. EMAIL FROM
+                                // *******************
+                                if(_email_input_from.innerText.trim().includes('technical-solutions@google.com') === false) {
+                                    cLog(() => { console.log('eie 1checkandfix CLEAR EMAIL INPUT => START'); })
                                     
-                                    var _elm_expand_more = elm_parentheader.querySelector('compose-card-content-wrapper .headers [icon="expand_more"]:not(.rotated)');
-                                    
-                                    if(_elm_expand_more) {
-                                        _elm_expand_more.click();
-                                    }
-    
-                                    // NEXT Step => clear Input
-                                    recheck_fix_alert(_callback, "2clearinputtoccbcc_and_fix", elm_parentheader);
-                                } else {
-    
-                                    // Done
-                                    document.body.classList.remove("is_recheck_fix_alert_fixing");
-                                    elm_parentheader.classList.add("finished");
-                                    _callback();
+                                    cLog(() => { console.log('eie 1checkandfix _email_input_from: NG: ', _email_input_from.innerText.trim()); })
+
+                                    document.querySelector(str_elmparent + ".input.from material-dropdown-select material-icon").click();
+
+                                    wait4Elem('[id="email-address-id--technical-solutions@google.com"]').then((_caseid_elm) => {
+                                        _caseid_elm.click();
+                                        recheck_fix_alert(_callback, "1checkandfix", elm_parentheader);
+                                    })
+
                                     return false;
                                 }
-                            }
-    
-                            if(n_step === '2clearinputtoccbcc_and_fix') {
+
+
                                 
-                                    // clearInput
-                                    if(_email_input_to.innerText.includes(caseload.customer_email) === false) {
-                                        var elm_to_remove = elm_parentheader.querySelectorAll(".input.to cases-icon.remove");
-                                        elm_to_remove.forEach(function (elm) {
-                                            setTimeout(() => {
-                                                elm.click();
-                                            }, 300)
-                                        });
-                                    }
-                                
-                                    if(n_email_am_haserror > 0) {
-                                        var elm_cc_remove = elm_parentheader.querySelectorAll(".input.cc cases-icon.remove");
-                                        elm_cc_remove.forEach(function (elm) {
-                                            setTimeout(() => {
-                                                elm.click();
-                                            }, 300)
-                                        });
+
+
+                                // 
+
+
+                                // *******************
+                                // 2. CLEAR EMAIL INPUT
+                                // *******************
+                                if(!elm_parentheader.classList.contains('clear_emailinput_done')) {
+                                    cLog(() => { console.log('eie 1checkandfix CLEAR EMAIL INPUT => START'); })
                                     
-                                        var elm_bcc_remove = elm_parentheader.querySelectorAll(".input.bcc cases-icon.remove");
-                                        elm_bcc_remove.forEach(function (elm) {
-                                            setTimeout(() => {
-                                                elm.click();
-                                            }, 300)
-                                        });
-                                    }
-    
-                                    setTimeout(()=>{
-                                        recheck_fix_alert(_callback, "3fix", elm_parentheader);
-                                    }, 1500);
-                            }
-    
-                            if(n_step === '3fix') {
-                                document.body.classList.add("is_recheck_fix_alert_fixing");
-                                // Fix mail from
-                                    if(_email_input_from.innerText.includes('technical-solutions@google.com') === false) {
-                                        document.querySelector(str_elmparent + ".input.from material-dropdown-select material-icon").click();
-                                        var n_time = 0;
-                                        var time_input_key1 = setInterval(function(){
-                                            var elm_technical = document.querySelector('[id="email-address-id--technical-solutions@google.com"]');
-                                            if(elm_technical) {
-                                                elm_technical.click();
-                                                clearInterval(time_input_key1);
-                                            }
-                                    
-                                            if(n_time > 5) {
-                                                clearInterval(time_input_key1);
-                                            }
-                                            n_time++;
-                                            
-                                        }, 1000);   
-                                    } 
-    
-                                // Fix mail to
-                                    if(_email_input_to.innerText.includes(caseload.customer_email) === false) {
-                                        var elm_input_to = elm_parentheader.querySelector(".input.to input");
-                                        elm_input_to.value = caseload.customer_email;
-                                        elm_input_to.dispatchEvent(new Event('input'));
-                                        elm_input_to.dispatchEvent(new Event('enter'));
-                                        elm_input_to.dispatchEvent(new Event('change'));
-                                    
-                                    
-                                        var n_time = 0;
-                                        var time_input_key2 = setInterval(function(){
-                                            // debug-id email is outdiv
-                                            var elm_technical = document.querySelector('email-address-content [debug-id="email"]')
-                                            if(elm_technical) {
-                                                elm_technical.click();
-                                                clearInterval(time_input_key2);
-                                            }
-    
-                                            //
-                                            if(n_time > 5) {
-                                                clearInterval(time_input_key2);
-                                            }
-                                            n_time++;
-                                            
-                                        }, 1000);
-                                    }
-    
-                                // Fix cc bcc
                                     var elm_area = elm_parentheader.querySelector(".input.cc");
                                     if (is_gcc_external) {
                                         elm_area = elm_parentheader.querySelector(".input.bcc");
                                     }
+                                    
+                                    var elm_to_remove = () => {
+                                        return elm_parentheader.querySelectorAll(".input.to cases-icon.remove");
+                                    };
+
+                                    var elm_cc_remove = () => {
+                                        return elm_parentheader.querySelectorAll(".input.cc cases-icon.remove");
+                                    };
                                 
-                                    var elm_input = elm_area.querySelector("input");
-                                    if (elm_area.innerText.includes(caseload.am_email) === false) {
-                                        elm_input.value = caseload.am_email;
-                            
-                                        elm_input.dispatchEvent(new Event('input'));
-                                        elm_input.dispatchEvent(new Event('enter'));
-                                        elm_input.dispatchEvent(new Event('change'));
-                            
-                            
-                                        var n_time = 0;
-                                        var time_input_key3 = setInterval(function () {
-                                            var elm_technical = document.querySelector('[debug-id="email"]')
-                                            if (elm_technical) {
-                                                elm_technical.click();
-                                                clearInterval(time_input_key3);
-                                            }
-                            
-                            
-                                            //
-                                            if (n_time > 5) {
-                                                clearInterval(time_input_key3);
-                                            }
-                                            n_time++;
-                            
-                                        }, 1000);
+                                    var elm_bcc_remove = () => { 
+                                        return elm_parentheader.querySelectorAll(".input.bcc cases-icon.remove");
                                     }
-    
-    
-                                // Recheck after 3s
-                                setTimeout(function(){
-                                    recheck_fix_alert(_callback, "1checkemail", elm_parentheader);
-                                }, 4000);
-    
+
+
+                                    elm_to_remove().forEach(function (elm) {
+                                        elm.click();
+                                    });
+                                    elm_cc_remove().forEach(function (elm) {
+                                        elm.click();
+                                    });
+                                    // Clear All BCC
+                                    elm_bcc_remove().forEach(function (elm) {
+                                        elm.click();
+                                    });
+                                    
+
+
+                                    var _n_done = elm_to_remove().length + elm_cc_remove().length + elm_bcc_remove().length;
+
+                                    // Recheck clear finish ???
+                                    cLog(() => { console.log('eie 1checkandfix CLEAR EMAIL INPUT ** 0', _n_done); })
+                                    if(_n_done) {
+                                        cLog(() => { console.log('eie 1checkandfix CLEAR EMAIL INPUT ** 0 -> action recheck'); })
+
+                                        setTimeout(() => {
+                                            recheck_fix_alert(_callback, "1checkandfix", elm_parentheader);
+                                        }, 500);
+
+                                        return false;
+                                    }
+
+                                    // FNISH CLEAR EMAIL ONCE
+                                    elm_parentheader.classList.add("clear_emailinput_done");
+                                }
+
+
+
+
+
+                                // ******************
+                                // 3. Customer Email
+                                // ******************
+                                if(_email_input_to().innerText.trim().includes('@') === false) {
+                                    cLog(() => { console.log('eie 1checkandfix Customer Email ** 1 => START') })
+                                    var elm_input_to = elm_parentheader.querySelector(".input.to input");
+                                    elm_input_to.value = caseload.customer_email.trim();
+                                    elm_input_to.dispatchEvent(new Event('input'));
+                                    elm_input_to.dispatchEvent(new Event('enter'));
+                                    elm_input_to.dispatchEvent(new Event('change'));
+
+                                    var n_time = 0;
+                                    var time_input_key = setInterval(function () {
+                                        
+                                        var elm_technical = document.querySelector('email-address-content [debug-id="email"]');
+                                        if (elm_technical) {
+                                            elm_technical.click();
+                                        }
+                                        cLog(() => {  console.log('eie', _email_input_to().querySelectorAll('user-chip').length, caseload.customer_email.split(',').length, _email_input_to().querySelectorAll('user-chip').length === caseload.customer_email.split(',').length ); });
+                                        if(_email_input_to().querySelectorAll('user-chip').length === caseload.customer_email.split(',').length) {
+                                            clearInterval(time_input_key);
+                                            recheck_fix_alert(_callback, "1checkandfix", elm_parentheader);   
+                                        }
+
+                                        if(n_time > 10) {
+                                            cLog(() => { console.log('eie 1checkandfix Customer Email ** 1 => STOP ACTION '); })
+                                            clearInterval(time_input_key);
+                                            recheck_fix_alert(_callback, "1checkandfix", elm_parentheader);    
+                                        }
+
+                                        n_time++;
+                                    }, 500);
+                                    
+                                    return false;
+                                }
+
+
+                                // ******************
+                                // Add AM EMAIL
+                                // ******************
+                                var elm_area = () => { return elm_parentheader.querySelector(".input.cc"); }
+                                if (is_gcc_external) {
+                                    elm_area = () => { return elm_parentheader.querySelector(".input.bcc"); }
+                                }
+                                
+                                var elm_input = elm_area().querySelector("input");
+                                if(elm_area().innerText.trim().includes('@') === false) {
+                                    cLog(() => { console.log('eie 1checkandfix Add AM EMAIL ** 2 => START', 'is GCC', is_gcc_external); })
+                                    elm_input.value = caseload.am_email;
+                        
+                                    elm_input.dispatchEvent(new Event('input'));
+                                    elm_input.dispatchEvent(new Event('enter'));
+                                    elm_input.dispatchEvent(new Event('change'));
+                    
+                                    var n_time = 0;
+                                    var time_input_key = setInterval(function () {
+                                        var elm_technical = document.querySelector('email-address-content [debug-id="email"]');
+                                        if (elm_technical) {
+                                            elm_technical.click();   
+                                        }
+
+                                        cLog(() => {  console.log('eie', elm_area().querySelectorAll('user-chip').length, caseload.am_email.split(',').length, elm_area().querySelectorAll('user-chip').length === caseload.am_email.split(',').length ); });
+                                        if(elm_area().querySelectorAll('user-chip').length === caseload.am_email.split(',').length) {
+                                            clearInterval(time_input_key);
+                                            recheck_fix_alert(_callback, "1checkandfix", elm_parentheader);   
+                                        }
+
+                                        if (n_time > 10) {
+                                            cLog(() => { console.log('eie 1checkandfix Add AM EMAIL ** 2 => STOP ACTION '); })
+                                            clearInterval(time_input_key);
+                                            recheck_fix_alert(_callback, "1checkandfix", elm_parentheader);
+                                        }
+                                        n_time++;
+                        
+                                    }, 500);
+
+                                    return false;
+                                }
+                                
+
+                                elm_parentheader.classList.add("finished");
+                                
+                                console.log('eie 1checkandfix FINISH');
+
                             }
     
-                        } 
-                }
     
-                setTimeout(() => {
+                        } 
+                    }
+        
+                    // After ... second => auto stop
+                    setTimeout(() => {
+                        if(typeof time_input_key2 === 'number') {
+                            clearInterval(time_input_key2);
+                        }
+                        
+                        if(typeof time_input_key3 === 'number') {
+                            clearInterval(time_input_key3);
+                        }
+
+                        _obj_wait = null;
+                        elm_parentheader.classList.add("finished");
+                    }, 10 * 1000)
+                    
+
+
+
+                    // recheck_fix_alert(() => {
+                    //     console.log("eie -- All OK????");
+                    // }, '0unmark', elm_parentheader);
+                    
                     recheck_fix_alert(() => {
                         console.log("eie -- All OK????");
-                    }, '0unmark', elm_parentheader);
-                }, 1000);
+                    }, '1checkandfix', elm_parentheader);
+                    
+
+
+                }
             }
-        }
 
-        
-        var _my_settimeout = setTimeout(() => {
-            cLog(() => {console.log("eie --- *** TIME OUT"  ); });
-            _obj_wait();
-        }, 4000);
-
-        
-        wait4Elem(str_elmparent + '.unmask-button').then((_caseid_elm) => {
-            cLog(() => {console.log("eie --- *** Has unmark-button"  ); });
-            clearTimeout(_my_settimeout);
-            _obj_wait();
             
+            _obj_wait();
         });
-    });
+            
         
-    
+    } catch (error) {
+        cLog(() => {console.error('eie checkInputEmailInboxAndFix', error)});
+    }
 
 }
 
@@ -921,6 +971,7 @@ function setChromeStorage(key, value, _callback = false) {
     chrome.runtime.sendMessage({method: 'fe2bg_chromestorage_set', key: key, value: value}, (response) => {
         if(_callback !== false) {
             _callback(response);
+            cLog(() => {console.log('__DONG save', key, value, response); });
         }
     });
 }
@@ -930,6 +981,11 @@ function getChromeStorage(key, _callback = false) {
     chrome.runtime.sendMessage({method: 'fe2bg_chromestorage_get', key: key}, (response) => {
         if(_callback !== false) {
             response = response || {};
+            if(response.value) {
+                if(response.value.case_id) {
+                    console.log('__DONG get_st', response.value.case_id, response.value);
+                }
+            }
             _callback(response);
         }
     });
@@ -954,7 +1010,7 @@ function loadCaseStorageByID(case_id, _callback) {
 
 // ============
 // Noted bar 
-function noteBarAlert(note, caseid) {
+function noteBarAlert(note, caseid, colortype = 'alert') {
     
     // Add card noted
     if(note) {
@@ -983,7 +1039,7 @@ function noteBarAlert(note, caseid) {
         
                     if(_is_add) {
                         var _str = _TrustScript(note);
-                        _noted.innerHTML += `<span class="_str" data-text="${_str}">${_str}</span>`;
+                        _noted.innerHTML += `<span class="_str ${colortype}" data-text="${_str}">${_str}</span>`;
                     }
                 } else {
         
@@ -993,7 +1049,7 @@ function noteBarAlert(note, caseid) {
                     });
         
                     // data id
-                    var _str = `<noted data-id="${caseid}" ><span class="_str">${note}</span></noted>`;
+                    var _str = `<noted data-id="${caseid}" ><span class="_str ${colortype}" >${note}</span></noted>`;
                     _str = _TrustScript(_str);
                     elm_casedetails.querySelector('card-deck').insertAdjacentHTML("beforeBegin", _str);
                 }
@@ -1662,111 +1718,116 @@ function loadEmailTemplateAction(){
 
 // Load List Template Mail From Google Sheet
 function loadTemplateEmailGoogleSheet(_caseid, _keylanguage) {
-        
+    try {
     
-    var _elm_cr_listtag = document.querySelector('._emailtemp');
-    if(!_elm_cr_listtag) return false;
-    
-    if(!_elm_cr_listtag.classList.contains('othertemplatemail')) {
-        cLog(() => { console.log('cdtx loadTemplateEmailGoogleSheet', _caseid, _keylanguage); })
-
-        // Case
-        getChromeStorage("cdtx_loadgooglesheetpublish", (response2) => {
-            var _rs = response2.value;
-            
-            
-            var _load_keycase = (_item) => {
-
-                // 1. has HTML Custom :)
-                if(_item['Is HTML Custom'] == 1) {
-                    
-                    var emailHtml = _item['Email Templates Custom'] || "";
-                    var subjectText = _item['Subject'] || "";
-                    var colorText = _item['Color'] || "";
-                    
-                    var tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = emailHtml;
-
-
-                    var item_html = `<div class="_emailtemp-item" data-type="${_item['CR Name']}">
-                        <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-key="${_item['Key']}"  >Insert</span>
-                        <div class="_emailtemp-item__title">${subjectText}</div>
-                        <div class="_emailtemp-item__content">${_item['Email Templates Custom']}</div>
-                    </div>`;
-
-                    
-                    _elm_cr_listtag.insertAdjacentHTML('beforeEnd', item_html);
-                    
-                    
-                    // var li_html = `<li data-tempkey="${_item['CR Name']}" style="color: ${colorText}" >${_item['CR Name']}</li>`;
-                    // wait4Elem('#cr-list-tag').then((elm) => {
-                        
-                    //     var tempLi = document.createElement('div');
-                    //     tempLi.innerHTML = li_html;
-
-                    //     var _li_elm = tempLi.querySelector('li');
-                    //     elm.insertAdjacentElement('beforeEnd', _li_elm);
-                        
-                    //     _li_elm.addEventListener('click', (e) => {
-
-                    //         var _card_istop = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top');
+        var _elm_cr_listtag = document.querySelector('._emailtemp');
+        if(!_elm_cr_listtag) return false;
         
+        if(!_elm_cr_listtag.classList.contains('othertemplatemail')) {
+            cLog(() => { console.log('cdtx loadTemplateEmailGoogleSheet', _caseid, _keylanguage); })
+
+            // Case
+            getChromeStorage("cdtx_loadgooglesheetpublish", (response2) => {
+                var _rs = response2.value;
+                
+                
+                var _load_keycase = (_item) => {
+
+                    // 1. has HTML Custom :)
+                    if(_item['Is HTML Custom'] == 1) {
+                        
+                        var emailHtml = _item['Email Templates Custom'] || "";
+                        var subjectText = _item['Subject'] || "";
+                        var colorText = _item['Color'] || "";
+                        
+                        var tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = emailHtml;
+                        
+                        
+                        subjectText = subjectText.replaceAll('{%case_id%}', '<span data-infocase="case_id"></span>')
+
+                        var item_html = `<div class="_emailtemp-item" data-type="${_item['CR Name']}">
+                            <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-key="${_item['Key']}"  >Insert</span>
+                            <div class="_emailtemp-item__title">${subjectText}</div>
+                            <div class="_emailtemp-item__content">${_item['Email Templates Custom']}</div>
+                        </div>`;
+
+                        
+                        _elm_cr_listtag.insertAdjacentHTML('beforeEnd', item_html);
+                        
+                        
+                        // var li_html = `<li data-tempkey="${_item['CR Name']}" style="color: ${colorText}" >${_item['CR Name']}</li>`;
+                        // wait4Elem('#cr-list-tag').then((elm) => {
+                            
+                        //     var tempLi = document.createElement('div');
+                        //     tempLi.innerHTML = li_html;
+
+                        //     var _li_elm = tempLi.querySelector('li');
+                        //     elm.insertAdjacentElement('beforeEnd', _li_elm);
+                            
+                        //     _li_elm.addEventListener('click', (e) => {
+
+                        //         var _card_istop = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top');
+            
+                                    
+                        //         setTimeout(() => {
+                        //             var subject = _card_istop.querySelector("input.subject");
+                        //             var body_content = _card_istop.querySelector("#email-body-content");
+                        //             var body_content_top = _card_istop.querySelector("#email-body-content-top");
+                        //             var body_content_top_content = _card_istop.querySelector("#email-body-content-top-content");
+            
+                        //             body_content.style.padding = '0px';
+                        //             body_content.style.width = '100%';
+                        //             // Insert value
+                        //             subject.value = subjectText;
+                        //             body_content_top.innerHTML = tempDiv.innerHTML;
+
+                        //             // action save status
+                        //                 subject.dispatchEvent(new Event('input'));
+                        //                 body_content_top.dispatchEvent(new Event('input'));
+                        //                 body_content_top_content.dispatchEvent(new Event('input'));
+                        //                 _card_istop.querySelector('[debug-id="add_highlight"]').click();
+                        //         }, 1000)
                                 
-                    //         setTimeout(() => {
-                    //             var subject = _card_istop.querySelector("input.subject");
-                    //             var body_content = _card_istop.querySelector("#email-body-content");
-                    //             var body_content_top = _card_istop.querySelector("#email-body-content-top");
-                    //             var body_content_top_content = _card_istop.querySelector("#email-body-content-top-content");
-        
-                    //             body_content.style.padding = '0px';
-                    //             body_content.style.width = '100%';
-                    //             // Insert value
-                    //             subject.value = subjectText;
-                    //             body_content_top.innerHTML = tempDiv.innerHTML;
+                                
+                        //     })
 
-                    //             // action save status
-                    //                 subject.dispatchEvent(new Event('input'));
-                    //                 body_content_top.dispatchEvent(new Event('input'));
-                    //                 body_content_top_content.dispatchEvent(new Event('input'));
-                    //                 _card_istop.querySelector('[debug-id="add_highlight"]').click();
-                    //         }, 1000)
-                            
-                            
-                    //     })
-
-                    // })
-                }
-            }
-
-            if(_rs) {
-                // cLog(() => { console.log('cdtx google', _rs); })
-                _rs['Variable'].sheettab.forEach(_item => {
-                    var _sheet_cr_mail = _item['sheet_cr_mail'];
-                    if(_sheet_cr_mail.includes(_keylanguage + " | ")) {
-                        // Load
-                        _rs[_sheet_cr_mail].sheettab.forEach(_item => {
-                            // cLog(() => { console.log('cdtx loadTemplateEmailGoogleSheet', _item['Is HTML Custom']); })
-                            _load_keycase(_item);
-                        });
+                        // })
                     }
-                });
+                }
+
+                if(_rs) {
+                    cLog(() => { console.log('cdtx google', _rs); })
+                    _rs['Variable'].sheettab.forEach(_item => {
+                        var _sheet_cr_mail = _item['sheet_cr_mail'];
+                        if(_sheet_cr_mail.includes(_keylanguage + " | ")) {
+                            // Load
+                            _rs[_sheet_cr_mail].sheettab.forEach(_item => {
+                                // cLog(() => { console.log('cdtx loadTemplateEmailGoogleSheet', _item['Is HTML Custom']); })
+                                _load_keycase(_item);
+                            });
+                        }
+                    });
+
+                    
+
+                    replaceAllKeyHtmlByCaseID(_elm_cr_listtag, _caseid, () => {
+                        cLog(() => {console.log('cdtx google 2', '2222') });
+                    });
+                }
+                
+            });
+
+
+
+            // Once
+            _elm_cr_listtag.classList.add('othertemplatemail');
+        }    
 
                 
-                console.log('cdtx google 1', '1111')
-
-                replaceAllKeyHtmlByCaseID(_elm_cr_listtag, _caseid, () => {
-                    console.log('cdtx google 2', '2222')
-                });
-            }
-            
-        });
-
-
-
-        // Once
-        _elm_cr_listtag.classList.add('othertemplatemail');
-    }    
-
+    } catch (error) {
+        console.log('loadTemplateEmailGoogleSheet', error);
+    }
 }
 
 
@@ -1845,6 +1906,7 @@ function loadKLCall(_keylanguage) {
 function replaceKeyHTMLByCaseID(_elm, _key, _value) {
     // cLog(() => {console.log('cdtx review', _elm, _key, _value); });
     if(!_value) return false;
+    if(!_elm) return false;
 
 
     // div, span
@@ -2457,4 +2519,369 @@ function clearAndPrepareCRTemplate() {
             
         }, 1000);
     }
+}
+
+
+function getVariableSheetByKeyAndLanguage(_columnname, _keylanguage) {
+    try {
+        if(window.loadgooglesheetpublish) {
+            var _rs = window.loadgooglesheetpublish;
+            var _targetarr = _rs['Variable'].sheettab;
+            for (let index = 0; index < _targetarr.length; index++) {
+                const _item = _targetarr[index];
+                
+                if(_item['key'].includes(_keylanguage)) {
+                    // cLog(() => { console.log('xxx',_item[_columnname]) });;
+                    // Load
+                    return _item[_columnname];
+                    break;
+                }
+                
+            }
+        }
+            
+    } catch (error) {
+        console.error('getVariableSheetByKeyAndLanguage', error)
+    }
+
+    return false;
+}
+
+
+// timeLeftGoogleCalendar
+function timeLeftGoogleCalendar() {
+
+    
+    // _TrustScript
+    if(typeof _TrustScript !== 'function') {
+        function _TrustScript(_string) {
+            const staticHtmlPolicyv2 = trustedTypes.createPolicy('foo-static', { createHTML: () => _string });
+            return staticHtmlPolicyv2.createHTML('');
+        }
+    }
+
+
+
+
+    // Stop if ready
+    var drawerMiniMonthNavigatorElm = document.querySelector('#drawerMiniMonthNavigator');
+    // if(drawerMiniMonthNavigatorElm) return false;
+    
+    
+    // Search kim realtime
+    var kim_realtime = document.querySelector(`.H3tRZe`);
+    if(!kim_realtime) return false;
+    
+    // Isset button appointment @group.calendar.google.com
+    var btn_appointment = document.querySelectorAll(`[role="gridcell"] [jslog*="@group.calendar.google.com"]`);
+    var btn_tasks = document.querySelectorAll(`[role="gridcell"] [data-eventid^="tasks_"]`);
+    
+    console.log('wcout', btn_appointment.length, btn_tasks.length)
+    if(btn_appointment.length === 0 && btn_tasks.length === 0) return false;
+    
+
+    // seach tablist
+    var calendar_tablist = document.querySelector(`[role="tablist"]`);
+    if(!calendar_tablist) return false;
+    
+
+    var btn_reminder = () => {
+        return calendar_tablist.querySelector('.panel_info-btnrunremide');
+    };
+    if(btn_reminder()) return false;
+    
+
+    if(calendar_tablist) {
+        if(!btn_reminder()) {
+            var btn_reminder_html = `
+            <style>
+            </style>
+            <div id="gsc-gab-999" class="panel_info-btnrunremide DWWcKd-OomVLb-LgbsSe" data-guest-app-id="999" role="tab" aria-label="remide" aria-selected="false" style="user-select: none;" > <div class="panel_info-btnrunremide-inner DWWcKd-OomVLb-LgbsSe-Bz112c-haAclf" style="background-image: url('data:image/svg+xml,%3Csvg fill=%27%23000000%27 width=%27800px%27 height=%27800px%27 viewBox=%270 0 36 36%27 version=%271.1%27 preserveAspectRatio=%27xMidYMid meet%27 xmlns=%27http://www.w3.org/2000/svg%27 xmlns:xlink=%27http://www.w3.org/1999/xlink%27%3E%3Ctitle%3Etasks-solid-badged%3C/title%3E%3Cpath class=%27clr-i-solid--badged clr-i-solid-path-1--badged%27 d=%27M30,13.5a7.49,7.49,0,0,1-6.46-3.7H11.25V8a1,1,0,0,1,1-1h3.44V6.32a2.31,2.31,0,0,1,4.63,0V7h2.26a7.53,7.53,0,0,1-.07-1,7.53,7.53,0,0,1,.08-1.05h-.5a4.31,4.31,0,0,0-8.17,0H7A1.75,1.75,0,0,0,5,6.64V32.26a1.7,1.7,0,0,0,1.71,1.69H29.29A1.7,1.7,0,0,0,31,32.26V13.43A7.52,7.52,0,0,1,30,13.5Zm-4.23,3.71-9.12,9.12-5.24-5.24a1.4,1.4,0,0,1,2-2l3.26,3.26,7.14-7.14a1.4,1.4,0,1,1,2,2Z%27%3E%3C/path%3E%3Ccircle class=%27clr-i-solid--badged clr-i-solid-path-2--badged clr-i-badge%27 cx=%2730%27 cy=%276%27 r=%275%27%3E%3C/circle%3E%3Crect x=%270%27 y=%270%27 width=%2736%27 height=%2736%27 fill-opacity=%270%27/%3E%3C/svg%3E'); user-select: none;" ></div> </div>`;
+            calendar_tablist.insertAdjacentHTML('afterBegin', _TrustScript(btn_reminder_html));
+            
+        }
+
+    }
+
+    // === SETUP
+    var IS_DEBUG = localStorage.getItem('dongtest');
+
+
+    function toHoursAndMinutes(totalMinutes) {
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        
+        return `${hours > 0 ? `${hours}h`: ""}${minutes > 0 ? ` ${minutes}m` : ""}`;
+    }
+    
+
+
+    function templateShow(_data, _data_task) {
+        if(IS_DEBUG) {
+            console.log('templateShow', _data, _data_task);    
+        }
+
+        if(drawerMiniMonthNavigatorElm) {
+            var _contentsub = '', _contentsub_item = '',  _contentsub_tasks = '';
+            _data.forEach(item => {
+                _contentsub_item += `<p><a href="https://cases.connect.corp.google.com/#/case/${item.caseid}" target="_blank"  >${item.caseid}</a>: <span class="hour">${toHoursAndMinutes(item.timeleft)}</span> left</p>`
+            });
+
+
+            _data_task.forEach(item => {
+                _contentsub_tasks += `<p><a href="https://cases.connect.corp.google.com/#/case/${item.caseid}" target="_blank"  >${item.caseid}</a>: <span class="hour">${toHoursAndMinutes(item.timeleft)}</span> left</p>`
+            });
+
+            _contentsub = `
+            <span class="panel_info-casesoverview">
+                <span>${_data.length}</span> case</span>
+                ${_data_task.length > 0 ? `<span class="panel_info-casesoverview panel_info-tasksoverview" style="left: 59%; z-index: -1; transform: translateX(-50%) scale(.8)"><span>${_data_task.length}</span> tasks</span>` : ''}
+                
+                <div class="panel_info-inner" >
+                    ${_contentsub_item}
+                </div>`;
+
+            var _tempHtml = `
+            <div class="panel_info _r" >
+                ${_contentsub}
+            </div>`;
+
+            
+            if(!document.querySelector('.panel_info')) {
+                drawerMiniMonthNavigatorElm.insertAdjacentHTML("afterEnd", _TrustScript(_tempHtml))
+            } else {
+                document.querySelector('.panel_info').innerHTML = _TrustScript(_contentsub);
+            }
+        }
+    }
+
+    // Đã có trong libs.js
+    if(typeof getOnlyCaseId !== 'function') {
+        function getOnlyCaseId(_string) {
+            try {
+                var _regex = /[0-9]{1}[-][0-9]{13}/g;
+                _string = _regex.exec(_string);
+                if (_string[0]) {
+                    return _string[0];
+                }
+                return false;
+            } catch (error) {
+                return false;
+                console.error(error);
+            }
+            return false;
+        }
+    }
+
+    // getMeetID
+    // lấy meetID
+    function getMeetID(_string) {
+        try {
+            var _regex = /[0-9a-z]{3}[-][0-9a-z]{4}[-][0-9a-z]{3}/g;
+            _string = _regex.exec(_string);
+            if (_string[0]) {
+                return _string[0];
+            }
+            return false;
+        } catch (error) {
+            return false;
+            console.error(error);
+        }
+        return false;
+    }
+
+    // convertPostion2Time
+    // chuyển position thành định dạng thời gian
+    function convertPostion2Time(_time_position) {
+        
+        var _convert = (_time_position % 1) * 60 / 100;
+        
+            _convert = _convert.toFixed(2) * 100;
+            _convert = Math.round(_convert);
+        var _timecasecurrent = parseInt(_time_position) + ":" + _convert;
+        
+        return _timecasecurrent;
+    }
+
+
+    // convertPostion2Minute
+    // chuyển position thành dạng phút
+    function convertPostion2Minute(_time_position) {
+        
+        var _convert = _time_position * 60 / 100;
+        
+            _convert = _convert * 100;
+            _convert = Math.round(_convert);
+        var _timecasecurrent = _convert;
+        
+        return _timecasecurrent;
+    }
+
+    // Chuyển postion thành thời gian số
+    // time current: position * 24 giờ / chiều cao của tổng
+    function convertPostion(_elm, _col) {
+        
+        var _pos_event_top = _elm.offsetTop;
+        var _time_position = _pos_event_top * 24 / _col.offsetHeight;
+        
+        
+        return _time_position;
+    }
+
+    function notificationCaseChrome(_caseid, _timeleft) {
+        const options = {
+            body: `${_timeleft}min - ${_caseid}`,
+            dir: 'ltr',
+        };
+        const notification = new Notification('Notification', options);
+
+        notification.onclick = function () {
+            var _caseurl = 'https://cases.connect.corp.google.com/#/case/' + _caseid
+            window.open(_caseurl);
+        };
+    }
+
+    function calendarGetInfoRealtime() {
+        var _cols = document.querySelectorAll('[role="presentation"] [role="row"] [data-principal-ids]');
+
+        for (let i1 = 0; i1 < _cols.length; i1++) {
+            const element = _cols[i1];
+            // Nếu trong cột ngày có tồn tại kim thời gian thực => cột của ngày hiện tại
+            if(element.querySelector('.H3tRZe')) {
+                var _col = element;
+                var _pos_events = _col.querySelectorAll("[data-eventid]"); 
+                
+                var _data = [];
+                var _data_task = [];
+                for (var index = 0; index < _pos_events.length; index++) {
+                    var _elm = _pos_events[index];
+                    
+                    // Lấy case ID trong title
+                    var _get_title = _elm.querySelector('.FAxxKc');
+                    var _get_caseid = '';
+                    if(_get_title) {
+                        _get_caseid = getOnlyCaseId(_get_title.innerText);
+                    
+                    }
+                
+                    // Lấy vị trí thanh realtime point
+                    var _pos_realtime_elm = _col.querySelector('.H3tRZe');
+                    var _pos_realtime_elm_time = 0;
+                    if(_pos_realtime_elm) {
+                        _pos_realtime_elm_time = convertPostion(_pos_realtime_elm, _col);
+                    }
+                
+                    
+                    
+                    // 1. Nếu tồn tại Case ID
+                    if(_get_caseid) {
+                        var _timecasecurrent = convertPostion(_elm, _col);
+
+                        console.log('_get_caseid', _get_caseid);
+                        
+                        // 1. Nếu tồn tại Google Meet ID  
+                        var _jslog = _elm.getAttribute('jslog');
+                        if(getMeetID(_jslog)) {
+                            if(IS_DEBUG) {
+                                console.log(convertPostion2Time(_pos_realtime_elm_time), convertPostion2Time(_timecasecurrent), _pos_realtime_elm_time, _timecasecurrent, _get_caseid,  getMeetID(_jslog));    
+                            }
+                            if(_timecasecurrent - _pos_realtime_elm_time > 0) {
+                                var _minute_timeleft = convertPostion2Minute(_timecasecurrent - _pos_realtime_elm_time);
+                                if(IS_DEBUG) { console.log("time minute left: ", _minute_timeleft); }
+                                
+                                var _temp_info = {
+                                    'timeleft': _minute_timeleft,
+                                    'caseid': _get_caseid,
+                                };
+                                _data.push(_temp_info);
+                                if(_minute_timeleft < 6) {
+                                    window.caseNotiOnce = window.caseNotiOnce || _get_caseid;
+                                    if(window.caseNotiOnce !== _get_caseid) {
+                                        notificationCaseChrome(_get_caseid, _minute_timeleft);
+                                        window.caseNotiOnce = _get_caseid;
+                                    }
+                                }
+                                
+                            }
+                        }
+                        
+                        // 1.2 Get task
+                        if(_elm.getAttribute('jslog').includes('tasks@tasks.google.com')) {
+                            if(!_elm.querySelector('.w9eXqe')) {
+                                var _temp_info = {
+                                    'timeleft': _minute_timeleft,
+                                    'caseid': _get_caseid,
+                                };
+                                _data_task.push(_temp_info);    
+                            }
+                            
+                        }
+                    }
+                }
+
+
+                templateShow(_data, _data_task);
+                
+
+                // Tìm thấy nhau thì dừng lại và bỏ qua mọi thứ xung quanh;
+                break;
+            }
+            
+        }
+    }
+
+
+    // Run Once
+    var _oncerun = 0;
+    var _run = () => {
+        if(_oncerun > 0) return false;
+        _oncerun++;
+        calendarGetInfoRealtime();
+        setInterval(() => {
+            calendarGetInfoRealtime();
+        }, 1000 * 60)
+    }
+    
+    if(localStorage.getItem('show_calendarview')) {
+        _run();
+        btn_reminder().classList.add("active");
+    }
+
+    // click
+    btn_reminder().addEventListener('click', function(e) {
+        _run();
+
+        if(btn_reminder().classList.contains('active')) {
+            document.querySelector('.panel_info').classList.add('hidden');
+            localStorage.removeItem('show_calendarview');
+        } else {
+            document.querySelector('.panel_info').classList.remove('hidden');
+            localStorage.setItem('show_calendarview', 1);
+        }
+
+        btn_reminder().classList.toggle('active');
+        
+    });
+}
+
+
+
+// Example
+// var _a = {'a': 123, 'b': 3333}
+// var _b = {'a': 4444, 'c': 3333}
+// mergeObjectNotOverwrite(_a, _b);
+// {a: 123, b: 3333, c: 3333}
+function mergeObjectNotOverwrite(target, src) {
+    var _rs = {};
+    for (const [key, value] of Object.entries(target)) {
+        _rs[key] = value;
+    }
+
+    
+    for (const [key, value] of Object.entries(src)) {
+        if(_rs[key]) continue;
+        _rs[key] = value;
+    }
+
+    return _rs;
 }

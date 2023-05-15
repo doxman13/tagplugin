@@ -25,7 +25,7 @@ javascript: (function () {
             var para = document.querySelector('[class="mat-paginator connect-paginator"]');
             if (Agent.agent != undefined) {
               var agentName = Agent.agent;
-              var link = 'https://cases.connect.corp.google.com' + '?agent=' + encodeURIComponent(agentName) + '/#/queues/bookmark/' + encodeURIComponent(Agent.case.toString().match(/[0-9]{1}-[0-9]{13}/g).join(' OR '));
+              var link = 'https://cases.connect.corp.google.com' + '?agent=' + encodeURIComponent(agentName) + '/#/queues/bookmark/caseid:' + encodeURIComponent(Agent.case.toString().match(/[0-9]{1}-[0-9]{13}/g).join(' OR caseid:'));
               para.innerHTML += `<p>\`${agentName}\` ----> <a target="_blank" href="${link}">${link}</a></p>`;
   
             };

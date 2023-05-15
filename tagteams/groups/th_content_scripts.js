@@ -426,7 +426,6 @@ function th_tagTeamTDCXLoad() {
                 
         onClickElm('[data-btnaction]', 'click', function(elm, e){
             try {
-                debugger;
                 var _action = elm.getAttribute("data-btnaction");
                 cLog(() => { console.log('cdtx', _action); })
 

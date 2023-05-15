@@ -247,7 +247,7 @@ var jp_list_emailtemplatecontent = {
                                               <tr>
                                                   <td colspan="2">
                                                       <span class="replaced" style="font-size:13px;" dir="auto"
-                                                          data-infosetting="your-name"> Name
+                                                          data-infosetting="your-name">
                                                       </span>
                                                       <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
                                                   </td>
@@ -342,7 +342,7 @@ var jp_list_emailtemplatecontent = {
                                             <tr>
                                                 <td colspan="2">
                                                     <span class="replaced" style="font-size:13px;" dir="auto"
-                                                        data-infosetting="your-name"> Name
+                                                        data-infosetting="your-name">
                                                     </span>
                                                     <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
                                                 </td>
@@ -456,7 +456,7 @@ var jp_list_emailtemplatecontent = {
                                                 <tr>
                                                     <td colspan="2">
                                                         <span class="replaced" style="font-size:13px;" dir="auto"
-                                                            data-infosetting="your-name"> Name
+                                                            data-infosetting="your-name">
                                                         </span>
                                                         <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
                                                     </td>
@@ -1159,7 +1159,7 @@ var jp_list_emailtemplatecontent = {
                                             <tr>
                                                 <td colspan="2">
                                                     <span class="replaced" style="font-size:13px;" dir="auto"
-                                                        data-infosetting="your-name"> Name
+                                                        data-infosetting="your-name">
                                                     </span>
                                                     <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
                                                 </td>
@@ -1250,7 +1250,7 @@ var jp_list_emailtemplatecontent = {
                                               <tr>
                                                   <td colspan="2">
                                                       <span class="replaced" style="font-size:13px;" dir="auto"
-                                                          data-infosetting="your-name"> Name
+                                                          data-infosetting="your-name">
                                                       </span>
                                                       <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
                                                   </td>
@@ -1375,7 +1375,7 @@ var jp_list_emailtemplatecontent = {
                                             <tr>
                                                 <td colspan="2">
                                                     <span class="replaced" style="font-size:13px;" dir="auto"
-                                                        data-infosetting="your-name"> Name
+                                                        data-infosetting="your-name">
                                                     </span>
                                                     <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
                                                 </td>
@@ -1422,7 +1422,7 @@ var jp_list_emailtemplatecontent = {
                         <tr>
                             <td align="left" style=" padding-bottom: 18px;">
                                 お世話になっております。Google パートナー事業者テクニカルソリューションチームの<span class="replaced"
-                                    data-infosetting="your-name">NAME</span>
+                                    data-infosetting="your-name"></span>
                                 です。
                             </td>
                         </tr>
@@ -1505,7 +1505,7 @@ var jp_list_emailtemplatecontent = {
                                             <tr>
                                                 <td colspan="2">
                                                     <span class="replaced" style="font-size:13px;" dir="auto"
-                                                        data-infosetting="your-name"> Name
+                                                        data-infosetting="your-name">
                                                     </span>
                                                     <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
                                                 </td>
@@ -1620,7 +1620,7 @@ var jp_list_emailtemplatecontent = {
                                             <tr>
                                                 <td colspan="2">
                                                     <span class="replaced" style="font-size:13px;" dir="auto"
-                                                        data-infosetting="your-name"> Name
+                                                        data-infosetting="your-name">
                                                     </span>
                                                     <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
                                                 </td>
@@ -1752,7 +1752,7 @@ var jp_list_emailtemplatecontent = {
                                                 <tr>
                                                     <td colspan="2">
                                                         <span class="replaced" style="font-size:13px;" dir="auto"
-                                                            data-infosetting="your-name"> Name
+                                                            data-infosetting="your-name">
                                                         </span>
                                                         <br>テクニカルソリューションチーム<br>TDCX（パートナー事業者）
                                                     </td>

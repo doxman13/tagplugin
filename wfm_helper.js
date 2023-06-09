@@ -1,6 +1,6 @@
 javascript: (function () {
     function linkToAgent() {
-      var el = document.querySelectorAll('.mat-row.cdk-row.ng-star-inserted .profile-name');
+      var el = document.querySelectorAll('.profile-name');
       var values = [];
       for (var i = 0; i < el.length; i++) {
         values.push(el[i].innerText);
@@ -15,14 +15,14 @@ javascript: (function () {
         for (let index = 0; index < el.length; index++) {
           if (el[index].innerText === agent) {
 
-            casesAgent.push(document.querySelectorAll('.mat-row.cdk-row.ng-star-inserted .case.cdk-column-case')[index].innerText);
+            casesAgent.push(document.querySelectorAll('.case.cdk-column-case')[index].innerText);
             Agent = {
               'agent': agent,
               'case': casesAgent
             }
           }
           if (index == el.length - 1) {
-            var para = document.querySelector('[class="mat-paginator connect-paginator"]');
+            var para = document.querySelector('[class="mat-mdc-paginator connect-paginator"]');
             if (Agent.agent != undefined) {
               var agentName = Agent.agent;
               var link = 'https://cases.connect.corp.google.com' + '?agent=' + encodeURIComponent(agentName) + '/#/queues/bookmark/caseid:' + encodeURIComponent(Agent.case.toString().match(/[0-9]{1}-[0-9]{13}/g).join(' OR caseid:'));
@@ -48,12 +48,14 @@ javascript: (function () {
     document.body.insertAdjacentElement("afterend", linkToAgentBtn);
     linkToAgentBtn.addEventListener("click", linkToAgent, false);
 
+
     clearBtn.addEventListener("click", function () {
-      const element = document.querySelectorAll('[class="mat-paginator connect-paginator"] p');
+      const element = document.querySelectorAll('[class="mat-mdc-paginator connect-paginator"] p');
       for (let index = 0; index < element.length; index++) {
         element[index].remove();
       }
     });
+
     function showAll() {
       var caseList = document.querySelectorAll('calendar-event [aria-describedby]');
       for (let i = 0; i < caseList.length; i++) {

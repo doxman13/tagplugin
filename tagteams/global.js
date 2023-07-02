@@ -1,12 +1,20 @@
-function global_case() {
-    console.log('global_case START');
+function global_case(optionkl__disable_dialog) {
+    if(optionkl__disable_dialog) return false;
+    console.log('global_case START', );
+
+
+
     window.dataCase = window.dataCase || {};
     window.dataMeetLink = window.dataMeetLink || {};
     window.caseCurrent = window.caseCurrent || {};
     window.isdongtest = localStorage.getItem("dongtest") || false;
+    window.linkenable = localStorage.getItem("linkenable") || false;
     window.isdongtest_local = localStorage.getItem("dongtest_local") || false;
     window.keylanguage = window.keylanguage || '';
+    window.qlus_datalist = window.qlus_datalist || [];
     
+
+
     var _url_googlesheet = 'https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vRMxOxerJ3zWV07uTOdTQCaa13ODbTfZVj5SB7-4Q6QlFhFTU8uXA-wsywXAUUqzHtOiGQdGgCYfRmk/pubhtml';
     
     var _keylanguage = '';
@@ -136,6 +144,13 @@ function global_case() {
                         _tempdataCase['customer_name'] = value;
                     }
                     
+                    
+                    // Name customer
+                    if(key === 'contact_email_field') {
+                        cLog(() => {console.log("OK HERE customer_email", value)})
+                        _tempdataCase['customer_email'] = value;
+                    }
+                    
                     // Name phonevalue
                     if(key === 'contact_phonevalue') {
                         _tempdataCase['customer_contact'] = value;
@@ -169,9 +184,14 @@ function global_case() {
                         }
                     }
                     
-                    // Name phonevalue
                     if(key === 'Program') {
-                        _tempdataCase['customer_is_silver'] = value.toLowerCase().includes('silver') ? "1" : "";
+                        // if(value.toLowerCase().includes('silver')) {
+                        //     _tempdataCase['customer_is_silver'] = value.toLowerCase().includes('silver') ? "1" : "";
+                        // }
+                        
+                        // if(value.toLowerCase().includes('silver')) {
+                        //     _tempdataCase['customer_is_silver'] = value.toLowerCase().includes('silver') ? "1" : "";
+                        // }
                     }
                     
                 }
@@ -414,7 +434,7 @@ function global_case() {
         var _contenthtml = `
         <div class="material-button" data-btnclk="resetdata" >
             <div class="content">
-                <img src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/105981/reload.svg">
+                <img src="${assets_img_reseticon}">
             </div>
         </div>
         <div class="material-button _fordevmode" data-btnclk="enable_devmode" >
@@ -434,12 +454,23 @@ function global_case() {
             </div>
             <div class="material-button" data-btnclk="removecase_example" title="remove 1 case storage example" >
                 <div class="content">
-                    <img src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/315851/close.svg" alt="" srcset="">
+                    <img src="${assets_img_removeicon}" alt="" srcset="">
                 </div>
             </div>
             <div class="material-button _fordevmode" data-btnclk="get_window_data_case" >
                 <div class="content">
                     <img src="data:image/svg+xml,%3Csvg fill='%23000000' width='800px' height='800px' viewBox='0 0 32 32' version='1.1' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3Eeye%3C/title%3E%3Cpath d='M0 16q0.064 0.128 0.16 0.352t0.48 0.928 0.832 1.344 1.248 1.536 1.664 1.696 2.144 1.568 2.624 1.344 3.136 0.896 3.712 0.352 3.712-0.352 3.168-0.928 2.592-1.312 2.144-1.6 1.664-1.632 1.248-1.6 0.832-1.312 0.48-0.928l0.16-0.352q-0.032-0.128-0.16-0.352t-0.48-0.896-0.832-1.344-1.248-1.568-1.664-1.664-2.144-1.568-2.624-1.344-3.136-0.896-3.712-0.352-3.712 0.352-3.168 0.896-2.592 1.344-2.144 1.568-1.664 1.664-1.248 1.568-0.832 1.344-0.48 0.928zM10.016 16q0-2.464 1.728-4.224t4.256-1.76 4.256 1.76 1.76 4.224-1.76 4.256-4.256 1.76-4.256-1.76-1.728-4.256zM12 16q0 1.664 1.184 2.848t2.816 1.152 2.816-1.152 1.184-2.848-1.184-2.816-2.816-1.184-2.816 1.184l2.816 2.816h-4z'%3E%3C/path%3E%3C/svg%3E">
+                </div>
+            </div>`;
+        }
+
+        
+        // For Dev
+        if(window.linkenable) {
+            _contenthtml += `
+            <div class="material-button _fordevmode" data-btnlinhvoclk="loadbot" >
+                <div class="content">
+                    <img src="data:image/svg+xml,%3Csvg height='800px' width='800px' version='1.1' id='_x32_' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 512 512' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23000000;%7D%0A%3C/style%3E%3Cg%3E%3Cpath class='st0' d='M424.712,0c-13.927-0.017-25.211,11.233-25.228,25.16c-0.016,13.91,11.25,25.193,25.16,25.21 c13.91,0.017,25.203-11.25,25.219-25.169C449.872,11.292,438.622,0.009,424.712,0z'/%3E%3Cpath class='st0' d='M429.087,120.032c0.008-8.193-6.614-14.823-14.789-14.832c-8.192-0.008-14.83,6.622-14.839,14.806 c0,8.183,6.63,14.822,14.806,14.822C422.457,134.846,429.087,128.208,429.087,120.032z'/%3E%3Cpath class='st0' d='M461.241,65.304c-9.781-0.026-17.736,7.888-17.736,17.668c-0.018,9.797,7.913,17.711,17.702,17.736 c9.764,0,17.719-7.906,17.719-17.694C478.942,73.242,471.02,65.304,461.241,65.304z'/%3E%3Cpath class='st0' d='M78.238,395.333c-19.712,19.713-19.712,51.782,0,71.494c19.713,19.713,51.79,19.713,71.503,0l146.434-146.434 H153.186L78.238,395.333z'/%3E%3Cpath class='st0' d='M332.374,121.181c-11.934-11.943-31.36-11.943-43.294,0c-7.72,7.72-10.439,18.564-8.175,28.496l-1.96,1.968 L56.752,373.839c-31.57,31.562-31.57,82.921,0,114.483c31.554,31.571,82.922,31.571,114.476,0l222.201-222.193l1.96-1.96 c9.932,2.264,20.785-0.456,28.505-8.175c11.934-11.943,11.943-31.36,0-43.294L332.374,121.181z M381.832,257.159l-57.474,57.482 L160.957,478.043c-25.946,25.937-67.99,25.937-93.935,0c-25.928-25.937-25.928-67.989,0-93.927l162.599-162.598l58.293-58.277 l2.787-2.804c0.388,0.422,0.778,0.828,1.182,1.232l91.52,91.52c0.397,0.405,0.81,0.794,1.225,1.182L381.832,257.159z M413.606,245.715c-4.333,4.333-10.524,5.667-16.014,4.021l-4.164-4.164l-93.926-93.926l-4.164-4.164 c-1.656-5.49-0.312-11.689,4.02-16.022c6.276-6.275,16.461-6.275,22.736,0l91.511,91.51 C419.889,229.254,419.889,239.432,413.606,245.715z'/%3E%3C/g%3E%3C/svg%3E">
                 </div>
             </div>`;
         }
@@ -455,28 +486,45 @@ function global_case() {
         }
     }
     
-    var global_crawl_major = (callback, unlockmark = false) => {
+    var global_crawl_major = (caseid_compare, callback, unlockmark = false) => {
         var _temp = {};
         
-        // console.log("cdtx - major begin");
+        cLog(() => { console.log("cdtx - major begin start", caseid_compare, 'unlockmark: ', unlockmark); });
+        
         
         var _nlimit = 0;
         var _nid_unmark = 0;
         var _ishave_review_case_in_connect_sales_elm = true;
         var myTime = setInterval(() => {
+            
+            cLog(() => { console.log("cdtx - major interval", caseid_compare, 'unlockmark: ', unlockmark); });
+
+            var _caseid_elmcurrent = document.querySelector('[debug-id="case-id"] span.case-id');
+            if(_caseid_elmcurrent) {
+                if(caseid_compare !== _caseid_elmcurrent.innerText) {
+                    clearInterval(myTime);
+                    cLog(() => { console.log(`cdtx - major - STOP by different case ID`); })
+                }
+            }
+            
+        
+            
             var _n_isok = 0;
             var _n_notready = 0;
             
             // Break
-            // cLog(() => console.log('cdtx - global_crawl_major', unlockmark, _n_notready); })
-            _nlimit++; if(_nlimit > 30) {clearInterval(myTime);}
-            _nid_unmark = (_nlimit%3 === 0 ? _nlimit : _nid_unmark)
+            
+            _nlimit++; if(_nlimit > 30) {
+                clearInterval(myTime);
+                cLog(() => { console.log('cdtx - major - limit 30s'); })
+            }
+            _nid_unmark = (_nlimit%3 === 0 ? _nlimit : _nid_unmark);
             
             var _list_elem = [];
-            var _cuf_form_field = document.querySelectorAll('card.read-card:not(.hidden) cuf-form-field');
-            var _data_pair_content = document.querySelectorAll('card.read-card:not(.hidden) home-data-item');
-            var _internal_user_info_email = document.querySelectorAll('card.read-card:not(.hidden) internal-user-info');
-            var _contact_email_field = document.querySelectorAll('card.read-card:not(.hidden) contact-email-field');
+            var _cuf_form_field = document.querySelectorAll('card.read-card cuf-form-field');
+            var _data_pair_content = document.querySelectorAll('card.read-card home-data-item');
+            var _internal_user_info_email = document.querySelectorAll('card.read-card internal-user-info');
+            var _contact_email_field = document.querySelectorAll('card.read-card contact-email-field');
             
             _list_elem.push(_cuf_form_field);
             _list_elem.push(_data_pair_content);
@@ -502,11 +550,20 @@ function global_case() {
                         
                         if(_unmasks.length > 0) {
                             _unmasks.forEach(function(_unmask1){
-                                cLog(() => { console.log(`isloadunmark${_nid_unmark}`); })
+                                cLog(() => { console.log(`cdtx - 1 - isloadunmark${_nid_unmark}`); })
 
                                 if(!_unmask1.classList.contains(`isloadunmark${_nid_unmark}`)) {
+
+                                    // Remove a attribute
+                                    if(_unmask1.closest('a')) {
+                                        _unmask1.closest('a').removeAttribute("href");
+                                        _unmask1.closest('a').removeAttribute("target");
+                                        _unmask1.closest('a').style.pointerEvents = "none";
+                                    }
+
                                     _unmask1.click();
                                     _unmask1.classList.add(`isloadunmark${_nid_unmark}`);
+                                    
                                 }
 
                                 
@@ -522,9 +579,12 @@ function global_case() {
                             _n_notready++;
                         }
                          
-                         if(elm.innerText.includes('***')) {
-                            _n_notready++;
-                         }
+                        // if > 15 skip this, don't follow
+                        if(elm.innerText.includes('***')) {
+                            if(_nlimit < 15) {
+                                _n_notready++;
+                            }
+                        }
 
                          // 
                          document.querySelectorAll('#read-card-tab-panel-case-log .case-log-container.active-case-log-container .activities > div').forEach(function(elm2){
@@ -536,8 +596,16 @@ function global_case() {
                                 var _unmasks = elm2.querySelectorAll('[debugid="unmask-button"]');
                                 if(_unmasks.length > 0) {
                                     _unmasks.forEach(function(elm3){
-                                        cLog(() => { console.log(`isloadunmark${_nid_unmark}`); })
+                                        cLog(() => { console.log(`cdtx - 2 - isloadunmark${_nid_unmark}`); })
                                         if(!elm3.classList.contains(`isloadunmark${_nid_unmark}`)) {
+                                            
+                                            // Remove a attribute
+                                            if(elm3.closest('a')) {
+                                                elm3.closest('a').removeAttribute("href");
+                                                elm3.closest('a').removeAttribute("target");
+                                                elm3.closest('a').style.pointerEvents = "none";
+                                            }
+
                                             elm3.click();
                                             elm3.classList.add(`isloadunmark${_nid_unmark}`);
                                         }
@@ -568,12 +636,16 @@ function global_case() {
 
 
              
-                 // Stop if _n_notready > 0 
-                if(_n_notready > 0) return false;
+                cLog(() => { console.log("cdtx - major unmark count", _n_notready); })
+
+                 // Stop if _n_notready > 0 && if time < 30s
+                if(_nlimit < 30) {
+                    if(_n_notready > 0) return false;
+                }
              
             }
             
-            console.log("cdtx - major begin - 3", _n_notready, _n_isok);
+            cLog(() => { console.log("cdtx - major begin - 3", unlockmark, _n_notready, _n_isok); })
             
             
 
@@ -589,7 +661,17 @@ function global_case() {
             //     _n_isok++;
             // }
 
-            if(_n_isok > 0) {
+            
+
+            var _is_start = _n_isok > 0;
+
+            if(unlockmark) {
+                _is_start = (_n_notready === 0 && _n_isok > 0)
+            }
+
+
+            if(_is_start) {
+                cLog(() => { console.log("cdtx - major begin - start inside", _is_start); });
                 
                 var _filter = (data_filter) => {
                     var _key = data_filter[0];
@@ -608,9 +690,13 @@ function global_case() {
                     
                     validateEmail(_key, function(rs) {
                         if(rs) {
-                            
-                            if(!_temp['email'].includes(rs)) {
-                                _temp['email'] = (_temp['email']) ? _temp['email'] + "/*/" + rs : rs;
+                                 
+                            if(!_temp['email']) {
+                                _temp['email'] = rs;
+                            } else {
+                                if(!_temp['email'].includes(rs)) {
+                                    _temp['email'] = _temp['email'] + "/*/" + rs;
+                                }    
                             }
                         }
                     })
@@ -642,12 +728,17 @@ function global_case() {
                     });    
                 });
                 
-                var contact_info_name = document.querySelector('card.read-card:not(.hidden) [debug-id="contact-info-name"]');
+                var contact_info_name = document.querySelector('card.read-card [debug-id="contact-info-name"]');
                 if(contact_info_name) {
                     _temp['contact_info_name'] = contact_info_name.innerText.trim();
                 }
                 
-                var contact_phonevalue = document.querySelector('card.read-card:not(.hidden) [debugid="pii-phone-value"]');
+                var contact_email_field = document.querySelector('card.read-card contact-email-field .value');
+                if(contact_email_field) {
+                    _temp['contact_email_field'] = contact_email_field.innerText.trim();
+                }
+                
+                var contact_phonevalue = document.querySelector('card.read-card [debugid="pii-phone-value"]');
                 if(contact_phonevalue) {
                     _temp['contact_phonevalue'] = contact_phonevalue.innerText.trim();
                 }
@@ -670,9 +761,8 @@ function global_case() {
 
                 
                 // Merge với connect case
-                cLog(() => { console.log('cdtx - global_crawl_major is OVERWRITE by connect sale', unlockmark, _ishave_review_case_in_connect_sales_elm) });
+                cLog(() => { console.log('cdtx - major is OVERWRITE by connect sale', window.dataMeetLink[(_caseid || caseid_compare)], unlockmark, _ishave_review_case_in_connect_sales_elm) });
                 if(unlockmark && _ishave_review_case_in_connect_sales_elm) {
-                    
                     global_review_case_in_connect_sales((rs) => {
                         Object.assign(_rsdatacase, rs);
                     });
@@ -689,97 +779,6 @@ function global_case() {
     }
 
 
-    var global_crawl_external_case = (callback) => {
-        var _datatemp = _datatemp || {};
-
-
-        // customer_gender
-        _datatemp.customer_gender = "bạn";
-        _datatemp.interaction_type = "external";
-        _datatemp.meeting_time = [
-            new Date().getFullYear(),
-            ("0" + (new Date().getMonth() + 1)).slice(-2),
-            ("0" + new Date().getDate()).slice(-2),
-        ].join('-') + "T12:12" ;
-
-        try {
-         
-            var _dfa_key_lang = window.loadgooglesheetpublish['Key language'].sheettab;
-            var cuf_forn_field = document.querySelectorAll("card.read-card:not(.hidden) cuf-form-field"); 
-
-            if(cuf_forn_field.length) {
-                _datatemp.data_all = [];
-                cuf_forn_field.forEach((elm) => {
-                    var _cufstr = elm.innerText.trim().split("\n");
-                    var _form_label = elm.querySelector('.form-label');
-
-                    
-                    var _t1 = _cufstr[0];
-                    
-                    if(_form_label) {
-                        _t1 = _form_label.innerText.trim();
-                    }
-
-                    _cufstr = _cufstr.filter(function(item) {
-                        return item !== _t1;
-                    });
-
-                    var _t2 = _cufstr.join(", ");
-                    // cLog(() => { console.log("cdtx", _t1, _t2); })
-
-                    
-                    
-                    // Get from GSheet
-                    _dfa_key_lang.forEach((item) => {
-                        // Vi
-                        var _key = item.key.trim();
-                        if(_t1 === item['vi']) {
-                            _datatemp[_key] = _t2;
-                        }
-
-                        // En
-                        if(_t1 === item['en']) {
-                            _datatemp[_key] = _t2;
-                        }
-                    });
-
-                    // Data All
-                    _datatemp.data_all.push({
-                        'key': _t1,
-                        'value': _t2,
-                    })
-
-                });
-            }
-
-        } catch (error) {
-            console.error("cdtx error", error);
-        }
-
-        
-        
-        
-        // Track AM info
-        try {
-            var _contenttext = document.querySelector('internal-user-info');
-            if(_contenttext) {
-                if(_contenttext.innerText.includes('@google.com')) {
-                    _datatemp.am_name = _contenttext.querySelector('[debug-id="name"]').innerText;
-                    _datatemp.am_email = _contenttext.querySelector('[debug-id="details"] .email').innerText;
-                }
-                
-            }
-        } catch (error) {
-            console.error('cdtx internal-user-info not found');
-        }
-
-        cLog(() => { console.log('cdtx', _datatemp) })
-
-
-        
-        callback(_datatemp);
-    }
-    
     var addGoCase2Calendar = (_caseid) => {
         // go_caseincalendar
         // https://calendar.google.com/calendar/u/0/r/search?q=2-4476000033977
@@ -789,6 +788,48 @@ function global_case() {
         
         if(!document.querySelector('#go_caseincalendar')) {
             var _contenthtml = `<a href="${_link}" target="_blank" id="go_caseincalendar">Go calendar</a>`;
+            // _contenthtml += `<ul class="dock_icon">
+            //     <li class="li-2 open-email">
+            //         <span class="name">Send mail</span>
+            //         <img class="ico" src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/gmail.png">
+            //     </li>
+            //     <li class="li-3 click2call">
+            //         <span class="name">Click to call</span>
+            //         <img class="ico click2call"
+            //             src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/phone-call-mac.png" alt="">
+            //     </li>
+            //     <li class="li-5 open-note">
+            //         <span class="name">Oncall Notes</span>
+            //         <img class="ico" src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/note.png" >
+            //     </li>
+            //     <li class="li-10">
+            //         <span class="name">Ads ICS</span>
+            //         <img class="ico ads-ics"
+            //             src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/icon-google-ads.png" >
+            //     </li>
+            //     <li class="li-11">
+            //         <span class="name">Gearloose</span>
+            //         <img class="ico open-gearloose"
+            //             src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/icon-gearloose.png" >
+            //     </li>
+            //     <li class="li-12">
+            //         <span class="name">OGT Dashboard</span>
+            //         <img class="ico ogt-dashboard"
+            //             src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/dashboard.png" >
+            //     </li>
+            //     <li class="li-13">
+            //         <span class="name">EC Dashboard</span>
+            //         <img class="ico ec-dashboard"
+            //             src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/dashboard.png" >
+            //     </li>
+            //     <li class="li-14">
+            //         <span class="name">Connect Appointment</span>
+            //         <img class="ico connect-appointment"
+            //             src="https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/tagteam/assets/img/groups/connect-appointment.png" >
+            //     </li>
+            // </ul>`;
+
+            _contenthtml = `${_contenthtml} `;
             _contenthtml = _TrustScript(_contenthtml);
             document.querySelector('.home.header .card-title').insertAdjacentHTML('beforeEnd', _contenthtml);
         }
@@ -824,13 +865,19 @@ function global_case() {
             var _getmemory_isopen = localStorage.getItem('_connectcase_info--isopen');
             var _contenthtml = `
             <div class="_casecalendar_info _connectcase_info  _hidden" data-caseid="${_caseid}" >
-                <span class="${_getmemory_isopen === 'CLOSE' ? 'CLOSE' : 'OPEN' }" data-btnclk="_connectcase_info-act_toggleopen" ></span>
+                <div class="_casecalendar_info--top_buttons">
+                </div>
+                <div class="_casecalendar_info--buttons">
+                    <span class="${_getmemory_isopen === 'CLOSE' ? 'CLOSE' : 'OPEN' }" data-btnclk="_connectcase_info-act_toggleopen" ></span>
+                </div>
                 <div class="_connectcase_info--outer ${_getmemory_isopen === 'CLOSE' ? '_none' : ''}">
                     <div class="_casecalendar_info--controls _t_right" >
+                        <span class="_btn_stall _connectcase_info-act_refresh" data-btnclk="_connectcase_info-act_refresh" >⟳</span>
                         <span class="_btn_stall _connectcase_info-act_edit" data-btnclk="_connectcase_info-act_edit" >EDIT</span>
                     </div>
                     <div class="_casecalendar_info--notification" ></div>
-                    <div class="_casecalendar_info--inner"  data-isgcc="{%is_gcc%}" data-isexternal="{%is_external%}" data-issilver="{%customer_is_silver%}" >
+                    <div class="_casecalendar_info--consentrecord" >Please Hit SpeakEasy Record Button</div>
+                    <div class="_casecalendar_info--inner"  data-isgcc="{%is_gcc%}" data-isexternal="{%is_external%}" data-issilver="{%customer_program%}" >
                         <span class="_casecalendar_info-50per" data-title="Case ID:" >
                             <a href="https://cases.connect.corp.google.com/#/case/${_caseid}" target="_blank" >${_caseid}</a>
                             <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_caseid}" ></span>
@@ -841,7 +888,13 @@ function global_case() {
             
             if(_elmappend) {
                 _contenthtml = _TrustScript(_contenthtml);
-                _elmappend.querySelector('[debug-id="case-summary-input"]').insertAdjacentHTML("afterEnd", _contenthtml);
+
+                var _elm_prev = document.querySelector('[debug-id="case-summary-input"]')
+                if(document.querySelector('#dock_order_1')) {
+                    _elm_prev = document.querySelector('#dock_order_1');
+                }
+
+                _elm_prev.insertAdjacentHTML("afterEnd", _contenthtml);
                 
                 
                 var _panel = _elmappend.querySelector('._casecalendar_info');
@@ -895,22 +948,24 @@ function global_case() {
                     <div class="_infocase_byme-col">
                         <div class="_infocase_byme-note" data-title="Note" data-infocase="note" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Meet link" data-infocase="customer_gmeet" data-disnewline="1" contenteditable="plaintext-only" ></div>
-                        <div class="_infocase_byme-field" data-title="Is Silver" data-infocase="customer_is_silver" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                        <div class="_infocase_byme-field" data-title="Date install" data-infocase="appointment_time" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Is External" data-infocase="is_external" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Is GCC" data-infocase="is_gcc" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Is Ads Enhanced Conversions" data-infocase="is_ads_enhanced_conversions" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Your call quality" data-iscenter="1" data-infocase="self_assessment_call_quality" data-disnewline="1" contenteditable="plaintext-only" data-select="7,6,5,4,3,2,1,∞" data-btnclk="note_select" >∞</div>
                     </div>
                     <div class="_infocase_byme-col" >
-                        <span class="_btn_stall mb_20px" data-btnsave="1" data-caseid="${_caseid}" >Save</span>
+                        <span class="_btn_stall mb_20px disable" data-btnsave="1" data-caseid="${_caseid}" >Save</span>
                         <div class="_infocase_byme-field" data-title="Customer name" data-infocase="customer_name" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Customer email" data-infocase="customer_email" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Customer contact" data-infocase="customer_contact" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                        <div class="_infocase_byme-field" data-title="Customer Program" data-infocase="customer_program" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Customer Ads ID" data-infocase="customer_adsid" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Customer OCID" data-infocase="customer_ocid" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Customer Website" data-infocase="customer_website" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="AM email" data-infocase="am_email" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Tasks" data-infocase="tasks" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                        <div class="_infocase_byme-field" data-title="UA,GA4" data-infocase="customer_ua_ga" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         
                     </div>
                 </div>
@@ -965,6 +1020,7 @@ function global_case() {
                 var _value_compare = '';
                 var _once_save = false;
                 var _innertext_compare = _infocase_bymeelm.innerText.replace(/(\r\n|\n|\r)/gm, "");
+                
                 setChangeListener(_infocase_bymeelm, (even) => {
 
                     var _innertext_trigger_compare = _infocase_bymeelm.innerText.replace(/(\r\n|\n|\r)/gm, "");
@@ -980,12 +1036,13 @@ function global_case() {
                     // cLog(() => { console.log('wsave', even.type); });
 
                     
-                    // cLog(() => { console.log('wsave length', _innertext_trigger_compare === _innertext_compare); });
+                    cLog(() => { console.log('wsave length', _innertext_trigger_compare === _innertext_compare); });
 
                     
-                    if(_innertext_trigger_compare === _innertext_compare) {
-                        _elmbtnsave.classList.add('disable');
-                    } else {
+                    if(
+                        even.type === 'keypress' ||
+                        even.type === 'keyup' 
+                    ) {
                         _elmbtnsave.classList.remove('disable');
                     }
 
@@ -996,7 +1053,7 @@ function global_case() {
                         }
                     }
 
-                    if(even.type === 'mouseup') {
+                    if(even.type === 'mouseup' && _elmbtnsave.classList.contains('disable') == false ) {
                         // Btn save action click
                         // 
                         // reupdateForAll(rs, ['panelnotecase']);
@@ -1028,7 +1085,6 @@ function global_case() {
 
                                 _nsave++;
                                 updateAllFieldsSetting2Storage(_temp, (rs) => {
-                                    _nsave_saved++;
                                     cLog(() => { console.log(`Saved setting ${_caseid()}!!!`, _temp); });
                                     // Toastify({
                                     //     text: `Setting Saved!!!`,
@@ -1044,6 +1100,7 @@ function global_case() {
                                         });
                                     }
 
+                                    _nsave_saved++;
                                     is_complete_updated((rs) => {})
                                 });
                             
@@ -1070,7 +1127,6 @@ function global_case() {
                                 
                                 _nsave++;
                                 updateAllFieldsCase2Storage(_temp, _caseid(), (rs) => {
-                                    _nsave_saved++;
                                     cLog(() => { console.log(`Setting Case ${_caseid()}!!!`, _temp); });
                                     
                                     // Toastify({
@@ -1082,7 +1138,8 @@ function global_case() {
                                     // }).showToast();
                                     
                                     window.dataCase = rs;
-                                    
+
+                                    _nsave_saved++;
                                     is_complete_updated(() => {})
                                 });
                                 
@@ -1091,7 +1148,6 @@ function global_case() {
                                 var _value_noted = _infocase_bymeelm.querySelector('[data-infocase="note"]').innerText.trim();
                                 _nsave++;
                                 updateNoteCase(_caseid(), _value_noted, (rs) => {
-                                    _nsave_saved++;
                                     cLog(() => { console.log(`Saved note ${_caseid()}!!!`, _value_noted); });
                                     // Toastify({
                                     //     text: `Saved note ${_caseid()}!!!`,
@@ -1100,6 +1156,8 @@ function global_case() {
                                     //         this.remove();
                                     //     }
                                     // }).showToast();
+                                    
+                                    _nsave_saved++;
                                     is_complete_updated(() => {})
                                 });  
 
@@ -1133,33 +1191,56 @@ function global_case() {
         // For panel
         var _infocase_bymeelm = document.querySelector('._infocase_byme');
         if(_infocase_bymeelm) {
+            var _elmbtnsave = _infocase_bymeelm.querySelector('[data-btnsave]');
+            
+            if(_elmbtnsave) {
+                _elmbtnsave.classList.add('disable');    
+            }
+            
             _infocase_bymeelm.querySelectorAll('[data-infocase][contenteditable]').forEach((elm) => {elm.innerHTML = ''})
             
             if(!_datacase) {
                 _datacase = window.dataCase;
             }
     
+            var _iload = 0, _iload_done = 0;
+            var _checkload = (_iload_done) => {
+                if(_iload == _iload_done) {
+                    _infocase_bymeelm.classList.add('childload_done');
+                }
+            }
+
+            
             replaceAllHtmlElement(_infocase_bymeelm, _datacase);
 
             
             // Display noted
+            _iload++;
             getNoteCase(_datacase.case_id, (data) => {
                 if(data) {
                     _infocase_bymeelm.querySelectorAll('[data-infocase="note"]').forEach((item) => {
                         item.innerHTML = data;
                     })
                 }
+
+                _iload_done++;
+                _checkload(_iload_done);
             });
 
             
             // DISPLAY ToolShortlink by Case ID
+            _iload++;
             getToolShortlink(_datacase.case_id, (data) => {
                 if(data) {
                     replaceKeyHTMLByCaseID(_infocase_bymeelm, 'toolshortlink', data);
                 }
+                
+                _iload_done++;
+                _checkload(_iload_done);
             });
 
                 
+            _iload++;
             getFieldSetting2Storage((rs) => {
                 for (const [key, value] of Object.entries(rs)) {
                     document.querySelectorAll(`#_infocase_byme [data-infosetting="${key}"]`).forEach(function(elm){
@@ -1179,6 +1260,9 @@ function global_case() {
                         });
                     }
                 }
+                
+                _iload_done++;
+                _checkload(_iload_done);
             });
         
         }
@@ -1217,10 +1301,15 @@ function global_case() {
                             
                             if(_td_1.innerText.includes("Website")) {
                                 _datatemp.customer_website = _td_2.innerText;
+                                _datatemp.customer_website = _datatemp.customer_website.replace(/\s+|\n/gm, "");
                             }
                             
                             if(_td_1.innerText.includes("Request Category")) {
                                 _datatemp.request_category = _td_2.innerText;
+                            }
+                            
+                            if(_td_1.innerText.includes("Conversion Category")) {
+                                _datatemp.conversion_category = _td_2.innerText;
                             }
                             
                             if(_td_1.innerText.includes("Sales Program")) {
@@ -1464,7 +1553,7 @@ function global_case() {
     //     // internal // external  || interaction_type
     //         _datatemp.interaction_type = "internal";
             
-    //         document.querySelectorAll("card.read-card:not(.hidden) home-data-item").forEach(function(elm){
+    //         document.querySelectorAll("card.read-card home-data-item").forEach(function(elm){
     //             var dataList = elm.innerText.split("\n");
                 
     //             if(dataList[0].includes('Google Ads External Customer ID')) {
@@ -1513,8 +1602,8 @@ function global_case() {
     //         }
 
             
-    //         getdatall(document.querySelectorAll("card.read-card:not(.hidden) cuf-form-field"));
-    //         getdatall(document.querySelectorAll("card.read-card:not(.hidden) home-data-item"));
+    //         getdatall(document.querySelectorAll("card.read-card cuf-form-field"));
+    //         getdatall(document.querySelectorAll("card.read-card home-data-item"));
 
     //     callback(_datatemp);
     // };
@@ -1565,6 +1654,60 @@ function global_case() {
                     `
                 };
                 _arr_btnlist.push(_temp_oncall);
+
+
+                if(localStorage.getItem('dongtest_local')) {
+                    var _temp_oncall = {
+                        'id' : 'cdtx__uioncall--btn',
+                        'btn_text': 'On Call UI',
+                        'content_insert' : `
+                        <div class="cdtx__uioncall">
+                            <div class="cdtx__uioncall-item"><b>Sub-status:&nbsp;&nbsp; <span class="_sub_i" data-btnclk="choice_status_list" data-infocase="status_case" >Click Choice</span></b></div>
+                            <div class="cdtx__uioncall-item">
+                                <br>
+                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
+                                <b><span data-btnclk="choice_substatusreason">Sub-status Reason</span>:</b>&nbsp;&nbsp;
+                            </div>
+                            <div class="cdtx__uioncall-item">
+                                <br>
+                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
+                                <b><span data-btnclk="choice_followup">Follow Up</span>:&nbsp;&nbsp;</b> NA
+                            </div>
+                            <div class="cdtx__uioncall-item">
+                                <br>
+                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
+                                <b><span data-btnclk="choice_speakeasyid">Speakeasy ID</span>:&nbsp;&nbsp;</b>
+                            </div>
+                            <div class="cdtx__uioncall-item">
+                                <br>
+                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
+                                <b>On Call Comments:</b>&nbsp;&nbsp; Like "Sub-status Reason" above
+                            </div>
+                            <div class="cdtx__uioncall-item">
+                                <br>
+                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
+                                <b>Tags Implemented:&nbsp;&nbsp;</b>
+                            </div>
+                            <div class="cdtx__uioncall-item">
+                                <br>
+                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
+                                <b>Screenshots:&nbsp;&nbsp;</b> Attachment
+                            </div>
+                            <div class="cdtx__uioncall-item">
+                                <br>
+                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
+                                <b>Multiple CIDs:&nbsp;&nbsp;</b>NA
+                            </div>
+                            <div class="cdtx__uioncall-item">
+                                <br>
+                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
+                                <b>On Call Screenshot:&nbsp;&nbsp;</b> Attachment
+                            </div>
+                        </div>
+                        `
+                    };
+                    _arr_btnlist.push(_temp_oncall);
+                }
 
 
 
@@ -1669,8 +1812,18 @@ function global_case() {
             noteBarAlert('Is EXTERNAL!', _datacase.case_id);
         }
         
-        if(_datacase.customer_is_silver) {
-            noteBarAlert('Customer is Silver!!!!', _datacase.case_id, 'gold');
+        if(_datacase.customer_program) {
+            if(_datacase.customer_program.toLowerCase().trim().includes('silver')) {
+                noteBarAlert('Customer Silver!!!!', _datacase.case_id, 'silver');
+            }
+            
+            if(_datacase.customer_program.toLowerCase().trim().includes('gold')) {
+                noteBarAlert('Customer Gold!!!!', _datacase.case_id, 'gold');
+            }
+            
+            if(_datacase.customer_program.toLowerCase().trim().includes('platium')) {
+                noteBarAlert('Customer Platium!!!!', _datacase.case_id, 'platium');
+            }
         }
         
         try {
@@ -1747,9 +1900,6 @@ function global_case() {
 
     function global_checkAddLoadMoreInfo(_caseid) {
         cLog(() => { console.log("1231231") });
-        wait4Elem('material-input.case-summary-input').then(function (elm) {
-            
-        })
     }
     
 
@@ -1768,13 +1918,42 @@ function global_case() {
                 _panel_closebtn.click();
             }
             
-        })
+        });
         
+        
+        onClickElm('[debug-id]', 'mouseup', function(elm, e){
+            
+            try {
+                var _action = elm.getAttribute("debug-id");
+                cLog(() => { console.log('cdtx debug-id', _action); })
+
+                // [debug-id="reply-button"]        
+                if(_action === 'reply-button') {
+                    window.hasClkReply = true;
+                    
+                }
+                
+                // [debug-id="reply-all-button"]
+                if(_action === 'reply-all-button') {
+                    window.hasClkReply = true;
+                }
+
+            
+            } catch (error) {
+                console.error('click debug id', error)
+            }
+        })
         // For group data btn click
         onClickElm('[data-btnclk]', 'click', function(elm, e){
             try {
                 var _action = elm.getAttribute("data-btnclk");
                 cLog(() => { console.log('cdtx', _action); })
+
+                // XXXXX
+                if(_action === 'open_connectappointment') {
+                    var _case_id_here = elm.getAttribute('data-text');
+                    connectAppointment(_case_id_here);
+                }
 
                 // add_precall
                 if(_action === 'add_precall') {
@@ -1845,6 +2024,31 @@ function global_case() {
                 }
                 
                 
+                if(_action === 'note_edit') {
+                    
+                    var _parent_noteare = elm.closest('[data-notearea]');
+                    var _note_edit = _parent_noteare.querySelector('[data-infocase="note"]');
+                    if(!_note_edit.getAttribute('contenteditable')) {
+                        _note_edit.setAttribute('contenteditable', 'plaintext-only');
+                        _parent_noteare.classList.add('save_ready');
+                    } else{
+                        var _caseid_here = _note_edit.getAttribute('data-caseidhere');
+                        var _value_noted = _note_edit.innerText.trim();
+                        _note_edit.classList.add("loading");
+
+                        updateNoteCase(_caseid_here, _value_noted, (rs) => {
+                            _note_edit.classList.remove("loading")
+                            cLog(() => { console.log(`Saved note ${_caseid_here}!!!`, _value_noted); });
+                        });
+
+                        // update status
+                        _note_edit.removeAttribute('contenteditable');
+                        _parent_noteare.classList.remove('save_ready');
+                    }
+                    
+                }
+                
+                
                 if(_action === 'open_desc_calendar') {
                     var _desc_case = document.querySelector(`[jscontroller="dIQ6id"] #xDetDlgDesc`);
                     if(_desc_case) {
@@ -1899,6 +2103,31 @@ function global_case() {
                         console.log('cdtx debug - window - dataCase ', window.dataCase);
                         console.log('cdtx debug - window - dataMeetLink ', window.dataMeetLink);
                         console.log('cdtx debug - window - loadgooglesheetpublish ', window.loadgooglesheetpublish);
+                        getChromeStorage("cdtx_caseidcurrentmeet_pspeakeasy_caseid", (response) => {
+                            var _list_rs = response.value || [];
+                            console.log('cdtx debug - window - cdtx_caseidcurrentmeet_pspeakeasy_caseid ', _list_rs);
+
+                            var _rsstr = 'rs: \n';
+                            _list_rs.forEach((item) => {
+                                if(item.caseid === window.dataCase.case_id) {
+                                    _rsstr += `${item.id} - ${item.date} - ${item.time} \n`;
+                                    
+                                }
+                            })
+                            console.log(_rsstr);
+                            
+                            
+                        });
+                        getChromeStorage("qlus_lststorage", (response) => {
+                            var _list_rs = response.value || [];
+                            console.log('cdtx debug - window - qlus_lststorage ', _list_rs);
+                            
+                        });
+                        getChromeStorage("cdtx_qlus_detail_list_case", (response) => {
+                            var _list_rs = response.value || [];
+                            console.log('cdtx debug - window - cdtx_qlus_detail_list_case ', _list_rs);
+                            
+                        });
                     })
                     
                 }
@@ -1906,6 +2135,7 @@ function global_case() {
                 if(_action === 'removecase_example') {
                     var _caseid = 'cdtx_caseid_' + document.querySelector('[debug-id="case-id"] .case-id').innerText;
                     if (confirm(`You sure refresh ${_caseid} at memory`)) {
+                        document.querySelector('._casecalendar_info._connectcase_info').remove()
                         removeChromeStorage(_caseid, () => {
                             Toastify({
                                 text: `Remove ${_caseid} success!!!`,
@@ -1955,7 +2185,7 @@ function global_case() {
                     var _dataselect = elm.getAttribute('data-select');
                     var data_filter = _dataselect.split(',');
                     data_filter = data_filter.filter(n => n);
-                    console.log('zzzzz', data_filter);
+                    
 
                     if(!elm.querySelector('#note_select_lstchoice')) {
                         var dom = document.createElement("span");
@@ -2103,10 +2333,120 @@ function global_case() {
 
                     })
                 }
-                if(_action === 'choice_status_list') {
-                    if(document.querySelector('._sub_i_outer')) {
-                        document.querySelector('._sub_i_outer').remove();
+
+                if(_action === 'cdtx__uioncall_choice_removeitem') {
+                    elm.closest(".cdtx__uioncall-item").remove();
+                }
+
+                if(_action === 'choice_speakeasyid') {
+                    var __elm = null;
+                    if(__elm = document.querySelector('._sub_selist_outer')) {
+                        __elm.remove();
+                    }
+                
+                    var _lst = `
+                    <div class="_sub_selist_seouter--inner">
+                    <div class="_sub_selist_drow">
+                        <div class="_sub_selist_dcol" data-listse="1" >
+                        </div>
+                        <div class="_sub_selist_dcol" data-list>
+                            <ul class="_sub_selist_ul_list" contenteditable="true" ><li class="_d_hidden" ></li></ul>
+                        </div>
+                    </div>
+                    <span class="_sub_selist_seouter--clickadd">Insert</span>
+                    </div>
+                    
+                    `;
+                    var _position_screen = elm.getBoundingClientRect();
+                    
+                    var _sub_selist_ul_elm = document.createElement('span');
+                    _sub_selist_ul_elm.classList.add('_sub_selist_ul');
+                    _sub_selist_ul_elm.innerHTML = _lst;
+                    _sub_selist_ul_elm.style.left = (_position_screen.left - 100) + "px";
+                    _sub_selist_ul_elm.style.top = (_position_screen.top + elm.offsetHeight) + "px";
+                    _sub_selist_ul_elm.style.position = 'fixed';
+                    
+                    // Create outer
+                    
+                    var _sub_selist_outer_elm = document.createElement('span');
+
+                    if(document.querySelector('._sub_selist_outer')) {
+                        _sub_selist_outer_elm  = document.querySelector('._sub_selist_outer');
+                        _sub_selist_outer_elm.classList.remove('_d_hidden');
                     } else {
+                        var _sub_selist_outer_elm = document.createElement('span');
+                        _sub_selist_outer_elm.classList.add('_sub_selist_outer');
+                        _sub_selist_outer_elm.classList.add('_sub_selist_seouter');
+                        _sub_selist_outer_elm.innerHTML = _sub_selist_ul_elm.outerHTML;
+
+                        document.body.appendChild(_sub_selist_outer_elm);
+
+                        
+                        getChromeStorage("cdtx_caseidcurrentmeet_pspeakeasy_caseid", (response) => {
+                            var _list_rs = response.value || [];
+                            console.log('cdtx debug - window - cdtx_caseidcurrentmeet_pspeakeasy_caseid ', _list_rs);
+
+                            var _rsstr = 'rs: \n';
+                            _rsstr += '<div data-seid="P123123123123" >P123123123 - <small>202123123 - 12:12</small></div>';
+                            _rsstr += '<div data-seid="P222222" >P222222 - <small>202223123 - 12:12</small></div>';
+                            _list_rs.forEach((item) => {
+                                if(item.caseid === window.dataCase.case_id) {
+                                    _rsstr += `<div data-seid="${item.id}" >${item.id} - <small style="color: #777777">${item.date} - ${item.time}</small></div>`;
+                                }
+                            })
+                            
+                            _sub_selist_outer_elm.querySelector('[data-listse]').insertAdjacentHTML('beforeEnd', _rsstr);
+
+                            
+                            _sub_selist_outer_elm.querySelectorAll('[data-seid]').forEach((_sub_selist_ul_itemli) => {
+                                _sub_selist_ul_itemli.addEventListener('click', (e) => {
+                                    try {
+                                        _sub_selist_outer_elm.querySelector('._sub_selist_ul_list').insertAdjacentHTML('beforeEnd', `<li><a href="https://contactcenter.corp.google.com/quality/player/?recording_id=${_sub_selist_ul_itemli.getAttribute('data-seid')}" target="_blank">${_sub_selist_ul_itemli.getAttribute('data-seid')}</a>&nbsp;&nbsp;</li>`)
+                                        if(_sub_selist_outer_elm.querySelector('._sub_selist_ul_list ._d_hidden')) {
+                                            _sub_selist_outer_elm.querySelector('._sub_selist_ul_list ._d_hidden').remove();
+                                        }
+                                        _sub_selist_outer_elm.classList.add('readyinsert')
+                                    } catch (error) {
+                                        console.error('ERROR choice_selist', error)
+                                    }
+                                })
+                            });
+                        });
+                    }
+                    
+
+
+                    _sub_selist_outer_elm.querySelector('._sub_selist_seouter--clickadd').addEventListener('click', (e) => {
+                        try {
+                            var _this = null;
+                            if(_this = elm.closest(".cdtx__uioncall-item").querySelector('._sub_selist_ul_list')) {
+                                _this.innerHTML = _sub_selist_outer_elm.querySelector('[data-list] ul').innerHTML;
+                            } else {
+                                elm.closest(".cdtx__uioncall-item").insertAdjacentHTML('beforeEnd', _sub_selist_outer_elm.querySelector('[data-list]').innerHTML);
+                            }
+                            
+                            _sub_selist_outer_elm.classList.add('_d_hidden');
+                        } catch (error) {
+                            console.error('ERROR choice_selist', error)
+                        }
+                    })
+
+
+
+
+                        
+                        // Closest by outsite
+                        _sub_selist_outer_elm.addEventListener('click', function(e) {
+                            if(e.target.classList.contains('_sub_selist_outer')) {
+                                _sub_selist_outer_elm.classList.add('_d_hidden');
+                            }
+
+                        })
+
+
+                }
+
+                if(_action === 'choice_status_list') {
                         var _lst = `
                                 <span class="_sub_i_li" data-key="AS - Work in Progress" ></span>
                                 <span class="_sub_i_li" data-key="AS - Reschedule 1" ></span>
@@ -2136,6 +2476,7 @@ function global_case() {
                         var _position_screen = elm.getBoundingClientRect();
                         
                         var _sub_i_ul_elm = document.createElement('span');
+
                         _sub_i_ul_elm.classList.add('_sub_i_ul');
                         _sub_i_ul_elm.innerHTML = _lst;
                         _sub_i_ul_elm.style.left = (_position_screen.left + (elm.offsetWidth || 0) + 10) + "px";
@@ -2143,10 +2484,15 @@ function global_case() {
                         _sub_i_ul_elm.style.position = 'fixed';
                         
                         // Create outer
-                        var _sub_i_outer_elm = document.createElement('span');
+                    var _sub_i_outer_elm = document.createElement('span');
+                    if(document.querySelector('._sub_i_outer')) {
+                        _sub_i_outer_elm  = document.querySelector('._sub_i_outer');
+                        _sub_i_outer_elm.innerHTML = _sub_i_ul_elm.outerHTML;
+                        _sub_i_outer_elm.classList.remove('_d_hidden');
+                    } else {
+
                         _sub_i_outer_elm.classList.add('_sub_i_outer');
                         _sub_i_outer_elm.innerHTML = _sub_i_ul_elm.outerHTML;
-
                         document.body.appendChild(_sub_i_outer_elm);
                         _sub_i_outer_elm.querySelectorAll('._sub_i_li').forEach((_sub_i_ul_itemli) => {
                             
@@ -2163,22 +2509,109 @@ function global_case() {
                                 _sub_i_outer_elm.remove();
                             })
                         });
-
-                        // Closest by outsite
-                        _sub_i_outer_elm.addEventListener('click', function(e) {
-                            if(e.target.classList.contains('_sub_i_outer')) {
-                                _sub_i_outer_elm.remove();
-                            }
-
-                        })
-
                     }
+
+                    // Closest by outsite
+                    _sub_i_outer_elm.addEventListener('click', function(e) {
+                        if(e.target.classList.contains('_sub_i_outer')) {
+                            _sub_i_outer_elm.remove();
+                        }
+                    })
                     
                     
                 }
 
                 // xxxx
-                if(_action === 'xxxx') {
+                if(_action === 'qplus-rescan') {
+                    if(location.hostname === 'gauge.corp.google.com') {
+                        location.href = "https://gauge.corp.google.com?apiconnect=AIzaSyCPDi7thwGXTtdTmxmU9RW-7qVPRD2ZvIM";
+                    }
+
+                    if(location.hostname === 'calendar.google.com') {
+                        window.open("https://gauge.corp.google.com?apiconnect=AIzaSyCPDi7thwGXTtdTmxmU9RW-7qVPRD2ZvIM");
+                    }
+
+                }
+
+                // xxxx
+                if(_action === '_connectcase_info-act_refresh') {
+                    document.querySelector('._casecalendar_info').remove();
+                }
+
+                // xxxx
+                if(_action === 'ui-qplus-addtrviewall') {
+                    var _alla_tagviewdetail = elm.closest('table').querySelectorAll('[data-btnclk="ui-qplus-addtrviewdetail"]');
+                    _alla_tagviewdetail.forEach((elm) => {
+                        elm.click();
+                    })
+                }
+                
+                // xxxx
+                if(_action === 'ui-qplus-addtrviewdetail') {
+                    var _foneme = () => {
+                        var tr = elm.closest('tr');
+                        var td = tr.querySelectorAll('td');
+
+                        var iscreate = false;
+                        if(tr.nextElementSibling) {
+                            console.log(tr.nextElementSibling)
+                            console.log(tr.nextElementSibling.getAttribute('data-detailcase'))
+                            if(!tr.nextElementSibling.getAttribute('data-detailcase')) {
+                                iscreate = true;
+                            }
+                        } else {
+                            iscreate = true;
+                        }
+
+                        if(iscreate === false) {
+                            if(tr.nextElementSibling) {
+                                tr.nextElementSibling.classList.toggle("close"); 
+                            }
+                        }
+
+                        if(iscreate === true) {
+                            var _caseid = elm.getAttribute('data-caseidhere');
+                            loadCaseStorageByID(_caseid, (response) => {
+                                if(!response.value) return false;
+                                var _data = response.value;
+                                
+                                if(_data.case_id) {
+    
+                                    var html = `<tr data-detailcase="1">
+                                        <td colspan="${td.length}">
+                                        
+                                        <div class="_casecalendar_info" >
+                                            <div class="_casecalendar_info--notification" ></div>
+                                            <div class="_casecalendar_info--consentrecord" >Please Hit SpeakEasy Record Button</div>
+                                            <div class="_casecalendar_info--inner"  data-isgcc="{%is_gcc%}" data-isexternal="{%is_external%}" data-issilver="{%customer_program%}" >
+                                                <span class="_casecalendar_info-50per" data-title="Case ID:" >
+                                                    <a href="https://cases.connect.corp.google.com/#/case/${_caseid}" target="_blank" >${_caseid}</a>
+                                                    <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_caseid}" ></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        </td>
+                                    </tr>`;
+    
+                                    tr.insertAdjacentHTML('afterEnd', html);
+
+                                    
+                                    templateDisplay(tr.nextElementSibling, _data);
+                                }
+                            });
+                        }
+
+                    }
+                    
+                    _foneme();
+                }
+
+                // xxxx
+                if(_action === 'copy_textattr_and_dial') {
+                    if(elm.getAttribute('data-text')) {
+                        copyTextToClipboard(elm.getAttribute('data-text'));
+                        // setChromeStorage('');
+                    }
                 }
 
                 // xxxx
@@ -2286,6 +2719,11 @@ function global_case() {
             saveCase2Storage(caseload, _callback);
         })
     }
+
+    function checkSpeakEasy(_data) {
+        // if(_data)
+
+    }
     
     function getFieldSetting2Storage(_callback) {
         // ID trust
@@ -2322,8 +2760,6 @@ function global_case() {
            
     }
 
-
-
     function autoUpdatelistLinkCalendar(is_auto = false) {
         if(location.hostname !== 'calendar.google.com') return;
         try {
@@ -2345,6 +2781,43 @@ function global_case() {
                     window.dataMeetLink = casesmeet;
                     setChromeStorage("cdtx_listmeetlink", casesmeet, () => {
                         cLog(() => { console.log("Has update meet link!"); });
+                    });
+                });
+
+                
+                getChromeStorage("cdtx_listmeetlink_all", (response) => {
+                    var casesmeet = response.value || {};
+                    document.querySelectorAll('[jslog][data-eventid]').forEach(function(elm){
+                        var jslog = elm.getAttribute('jslog');
+                        var caseid = elm.innerText.match(/\d-\d+/g);
+                        if(jslog){
+                            var meetid = jslog.match(/\w{3}-\w{4}-\w{3}/g);
+                        }
+
+                        if(caseid && meetid){
+                            casesmeet[meetid[0]] = caseid[0];
+                            // var _temp = {
+                            //     meetid: meetid[0],
+                            //     caseid: caseid[0]
+                            // };
+                            
+                            // var _issave = true;
+                            // casesmeet.forEach(function(item) {
+                            //     if(item.meetid == _temp.meetid) {
+                            //         _issave = false;
+                            //     }
+                            // })
+
+                            // if(_issave) {
+                            //     casesmeet.push(_temp);
+                            // }
+                        }
+
+                    }); 
+                    // end loop
+
+                    setChromeStorage("cdtx_listmeetlink_all", casesmeet, () => {
+                        cLog(() => { console.log("Has update meet all link!", casesmeet); });
                     });
                 });
             }
@@ -2441,7 +2914,16 @@ function global_case() {
         // Major Crawl
         try {
             
-            global_crawl_major((data_rs) => {
+            getChromeStorage("cdtx_listmeetlink", (response) => {
+                var casesmeet = response.value || {};
+
+                window.dataMeetLink = casesmeet;
+
+                console.log('cdtx ', window.dataMeetLink);
+            });
+
+            // without unmark
+            global_crawl_major(_caseid, (data_rs) => {
                 cLog(() => { console.log('cdtx - saveCaseNow global_crawl_major' , window.dataCase, data_rs); });
                 
                 // Only reupdate if don't have data below
@@ -2453,11 +2935,6 @@ function global_case() {
 
 
             
-            getChromeStorage("cdtx_listmeetlink", (response) => {
-                var casesmeet = response.value || {};
-
-                window.dataMeetLink = casesmeet;
-            });
 
             
             
@@ -2515,7 +2992,7 @@ function global_case() {
 
                             cLog(() => { console.log("cdtx-save case - 3 start ", _caseid); })
                             
-                            global_crawl_major((data_rs) => {
+                            global_crawl_major(_caseid, (data_rs) => {
                                 cLog(() => { console.log('cdtx-save case - 4/5 rs crawl' , window.dataCase, data_rs); });
 
                                 saveCase2Storage(data_rs, (response) => {
@@ -2605,6 +3082,13 @@ function global_case() {
 
     var templateDisplay = (_panel, _data) => {
         try {
+            var _iload = 0, _iload_done = 0;
+            var _checkload = (_iload_done) => {
+                if(_iload == _iload_done) {
+                    _panel.classList.add('childload_done');
+                    window.htmlPanelTemp = _panel.innerHTML;
+                }
+            }
             var _contenthtml = `
                 <span class="_casecalendar_info-50per" data-title="Case ID:"  data-info="case_id" >
                     <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" target="_blank" data-infocase="case_id" ></a><span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.case_id}" ></span>
@@ -2614,7 +3098,7 @@ function global_case() {
                 </span>
                 
                 <span class="_casecalendar_info-50per" data-title="Ads ID & Adv name:" >
-                    <a href="https://adwords.corp.google.com/aw/conversions?ocid={%customer_ocid%}" target="_blank" data-infocase="customer_adsid_format" ></a><span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.customer_adsid}" ></span>
+                    <a href="#" target="_blank" data-infocase="customer_adsid_format" data-infocase_link="customer_adsid_format" ></a><span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.customer_adsid}" ></span>
                     <span data-infocase="customer_name" ></span>
                     <span data-infocase="customer_email" ></span>
                 </span>
@@ -2625,6 +3109,7 @@ function global_case() {
                 <span class="_casecalendar_info-50per" data-title="Website:" data-select ><span data-infocase_listlink="customer_website" ></span></span>
                 <span class="_casecalendar_info-50per" data-title="Request:" >
                     <span data-infocase="request_category"></span>
+                    <span data-infocase="conversion_category"></span>
                     <span data-infocase="case_summary"></span>
                     <span data-infocase="request"></span>
                     
@@ -2639,8 +3124,14 @@ function global_case() {
                 <span class="_casecalendar_info-50per" data-title="Attribution Model:" data-infocase="customer_attributionmodel" ></span>
                 <span class="_casecalendar_info-50per" data-title="Tool Shortlink:" data-infocase_html="toolshortlink" ></span>
                 <span class="_casecalendar_info-100per" data-title="Date Install:" data-infocase="appointment_time" ></span>
-                <span class="_casecalendar_info-100per" data-title="Sub status:" data-infocase="status_case" ></span>
-                <span class="_casecalendar_info-100per" data-title="Note:" data-infocase="note" ></span>
+                <span class="_casecalendar_info-100per" data-title="Qplus status:"  >
+                    <span data-infocase="qplus_status" ></span>
+                    <span data-infocase="status_case" style="opacity: 0.8; font-size: 80%" data-title="status on note:" ></span>
+                </span>
+                <span class="_casecalendar_info-100per" data-title="Note:" data-notearea="1">
+                    <span data-btnclk="note_edit"></span>
+                    <span data-infocase="note" data-caseidhere="{%case_id%}" ></span>
+                </span>
             `;
     
     
@@ -2653,7 +3144,7 @@ function global_case() {
             if(_data.customer_adsid) {
                 var _value_tmp = _data.customer_adsid;
                 _value_tmp = reformatAdsId(_value_tmp);
-                replaceKeyHTMLByCaseID(_panel, 'customer_adsid', _value_tmp);
+                replaceKeyHTMLByCaseID(_panel, 'customer_adsid', _value_tmp, _data);
             }
             
             var _data_restructor = case_restructor(_data.case_id, _data.data_all);
@@ -2673,6 +3164,7 @@ function global_case() {
                     _datatmp.customer_email = _data.customer_email;
                     _datatmp.customer_contact = _data.customer_contact;
                     _datatmp.customer_website = _data.customer_website;
+                    _datatmp.customer_website = _data.customer_website.replace(/\s+|\n/gm, "");
                     _datatmp.customer_ua_ga = _data.customer_ua_ga;
                     _datatmp.customer_adsid = _data.customer_adsid;
                     _datatmp.request = _data.request;
@@ -2688,6 +3180,9 @@ function global_case() {
                 for (const [key, value] of Object.entries(_data)) {
                     // cLog(() => { console.log(`cdtx - ${key}: ${value}`); })
                     if (key === 'data_all') continue;
+                    if (key === 'am_isgcc_external') continue;
+                    if (key === 'is_external') continue;
+                    if (key === 'am_name_info') continue;
                     
                     _value_tmp = value;
                     _htmltemp = `<span class="_casecalendar_info-50per" data-title="${key.replaceAll('_', ' ')}: " data-infocase="${key}" ></span>`;
@@ -2699,16 +3194,16 @@ function global_case() {
                     }
                     
                     if(key === 'customer_adsid') {
-                        // zzz
-                        // https://adwords.corp.google.com/aw/internal/search?ocid=0&__awid=269-475-6195
                         _htmltemp = `<span class="_casecalendar_info-50per" data-title="Ads ID:" >
-                            <a href="https://adwords.corp.google.com/aw/internal/search?ocid=0&__awid=${_datatmp.customer_adsid}" target="_blank" data-infocase="customer_adsid_format" ></a>
+                            <a href="https://adwords.corp.google.com/aw/go?external_cid=${_datatmp.customer_adsid}" target="_blank" data-infocase="customer_adsid_format" ></a>
                         </span>`;
                         
                         if(_datatmp.customer_ocid) {
-                            _htmltemp = `<span class="_casecalendar_info-50per" data-title="Ads ID:" >
-                                <a href="https://adwords.corp.google.com/aw/conversions?ocid=${_data.customer_ocid}" target="_blank" data-infocase="customer_adsid_format" ></a>
-                            </span>`;
+                            if(_datatmp.customer_ocid.trim()) {
+                                _htmltemp = `<span class="_casecalendar_info-50per" data-title="Ads ID:" >
+                                    <a href="https://adwords.corp.google.com/aw/conversions?ocid=${_data.customer_ocid}" target="_blank" data-infocase="customer_adsid_format" ></a>
+                                </span>`;
+                            }
                         }
                     }
     
@@ -2724,7 +3219,7 @@ function global_case() {
                     
                     if(key === 'case_id') {
                         _htmltemp = `<span class="_casecalendar_info-50per" data-title="Case ID:"  data-interactiontype="{%interaction_type%}" >
-                        <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" target="_blank" data-infocase="case_id" ></a>
+                        <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" target="_blank" data-infocase="case_id" ></a><span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.case_id}" ></span>
                         </span>
                         `;
                     }
@@ -2735,9 +3230,17 @@ function global_case() {
                     
                     _ehtml += _htmltemp;
                 }
+
+                if(_data.data_all['Additional info']) {
+                    _ehtml += '<span class="_casecalendar_info-100per" data-title="Additional info:" >' + _data.data_all['Additional info'] + '</span>';
+                }
                 
-                _ehtml += '<span class="_casecalendar_info-100per" data-title="Sub status:" data-infocase="status_case" ></span>';
-                _ehtml += '<span class="_casecalendar_info-100per" data-title="Note:" data-infocase="note" ></span>';
+                _ehtml += '<span class="_casecalendar_info-100per" data-title="Qplus Status:" data-infocase="qplus_status" ></span>';
+                _ehtml += '<span class="_casecalendar_info-100per" data-title="Tool Shortlink:" data-infocase_html="toolshortlink" ></span>';
+                _ehtml += `<span class="_casecalendar_info-100per" data-title="Note:" data-notearea="1">
+                                <span data-btnclk="note_edit"></span>
+                                <span data-infocase="note" data-caseidhere="{%case_id%}" ></span>
+                            </span>`;
     
                 _panel.querySelector('._casecalendar_info--inner').innerHTML = '';
                 _ehtml = _TrustScript(_ehtml);
@@ -2748,7 +3251,7 @@ function global_case() {
                 for (const [key, value] of Object.entries(_data)) {
                     _value_tmp = value;
                     
-                    replaceKeyHTMLByCaseID(_panel, key, _value_tmp);
+                    replaceKeyHTMLByCaseID(_panel, key, _value_tmp, _data);
                 }
             }
             // END EXTERNAL
@@ -2758,29 +3261,71 @@ function global_case() {
     
             // IS GCC NOTIFCATION
             if(_data.is_gcc) {
-                _panel.querySelector('._casecalendar_info--notification').insertAdjacentHTML('afterBegin', '<span>Case AM is GCC!!!</span>');
+                _panel.querySelector('._casecalendar_info--notification').insertAdjacentHTML('afterBegin', '<span>AM is GCC!!!</span>');
             }
             
             if(_data.is_external) {
-                _panel.querySelector('._casecalendar_info--notification').insertAdjacentHTML('afterBegin', '<span>Case form EXTERNAL!!!</span>');
+                _panel.querySelector('._casecalendar_info--notification').insertAdjacentHTML('afterBegin', '<span>Case EXTERNAL!!!</span>');
+            }
+
+
+            
+            if(_data.customer_program) {
+                if(_data.customer_program.toLowerCase().trim().includes('gold')) {
+                    _panel.querySelector('._casecalendar_info--notification').insertAdjacentHTML('afterBegin', '<span class="__gold" >Adv Gold!!!</span>');
+                }
+                
+                if(_data.customer_program.toLowerCase().trim().includes('silver')) {
+                    _panel.querySelector('._casecalendar_info--notification').insertAdjacentHTML('afterBegin', '<span class="__silver" >Adv Silver!!!</span>');
+                }
+                
+                if(_data.customer_program.toLowerCase().trim().includes('platium')) {
+                    _panel.querySelector('._casecalendar_info--notification').insertAdjacentHTML('afterBegin', '<span class="__platium" >Adv Platium!!!</span>');
+                }
             }
     
             
             // DISPLAY NOTED by Case ID
+            _iload++;
             getNoteCase(_data.case_id, (data) => {
                 if(data) {
                     replaceKeyHTMLByCaseID(_panel, 'note', data);
                 }
+                
+                _iload_done++;
+                _checkload(_iload_done);
             });
     
             
             // DISPLAY ToolShortlink by Case ID
+            _iload++;
             getToolShortlink(_data.case_id, (data) => {
                 if(data) {
                     replaceKeyHTMLByCaseID(_panel, 'toolshortlink', data);
                 }
+                
+                _iload_done++;
+                _checkload(_iload_done);
             });
-        
+            
+
+            // DISPLAY qplus
+            var getqplus = () => {
+                window.qlus_datalist = window.qlus_datalist || {};
+                if(window.qlus_datalist.list_bycaseid) {
+                    if(status_here = window.qlus_datalist.list_bycaseid[_data.case_id]) {
+                        var _html = `${status_here[0].statusCase} 
+                            ${(status_here[0].followUpCase) ? `FL: ${status_here[0].followUpCase} ` : '' }
+                            ${formatDate(new Date(status_here[0].dateReview))}
+                        `;
+                        replaceKeyHTMLByCaseID(_panel, 'qplus_status', _html);
+                    }
+                }
+            }
+            getqplus();
+            getQlusDetailListCase(() => {
+                getqplus();
+            });
     
         } catch (error) {
             cLog(() => {
@@ -2829,12 +3374,51 @@ function global_case() {
         }
     }
 
-    function loadRealtime(_callback) {
+    function loadStyle() {
         if(
             !(
                 location.hostname === 'cases.connect.corp.google.com'
                 || location.hostname === 'calendar.google.com'
                 || location.hostname === 'meet.google.com'
+                || location.hostname === 'barkeep.corp.google.com'
+                || location.hostname === 'gauge.corp.google.com'
+                )
+                ) 
+        {
+            cLog(() => { console.log('cdtx - could not run other domain'); })
+            return false;
+        }
+
+        var run_style = () => {
+            if(!document.head.querySelector("#cdtx_style")) {
+                var link = document.createElement('style');
+                link.rel = 'stylesheet';
+                link.id = 'cdtx_style';
+                // link.href = `https://cdtx.lyl.vn/cdtx-assistant/_Bookmark/assets/css/style.css?t=${new Date().valueOf() }"`;
+                
+                link.innerHTML = _panel_style;
+
+                document.head.appendChild(link);
+            }
+        }
+
+
+
+        // RUN
+        run_style();
+        observeOnce((elm) => {
+            // Add link style head
+            run_style();
+            
+        });
+    }   
+    function loadRealtime(_callback) {
+    if(
+            !(
+                location.hostname === 'cases.connect.corp.google.com'
+                || location.hostname === 'calendar.google.com'
+                || location.hostname === 'meet.google.com'
+                || location.hostname === 'barkeep.corp.google.com'
             )
         ) 
         {
@@ -2847,17 +3431,6 @@ function global_case() {
         var _title = '';
         var _caseid_once = '';
         observeOnce((elm) => {
-            // Add link style head
-            if(!document.head.querySelector("#cdtx_style")) {
-                var link = document.createElement('style');
-                link.rel = 'stylesheet';
-                link.id = 'cdtx_style';
-                // link.href = `https://cdtx.lyl.vn/cdtx-assistant/_Bookmark/assets/css/style.css?t=${new Date().valueOf() }"`;
-                
-                link.innerHTML = _panel_style;
-
-                document.head.appendChild(link);
-            }
             // if(!document.querySelector('#kl_tagteam_inline_style')) {
                 
             //     var style_tag = `<style id="kl_tagteam_inline_style">${window.dataTagteam.panel_div_style}</style>`;
@@ -2882,6 +3455,10 @@ function global_case() {
                     // ===========
                     // Alway load
                     // ===========
+                        // Load button
+                        addShortCutBtn();
+                        // Load code vanbo
+                        tagteamFocusCase();
                         // add infocase
                         addInfoCase2CaseConnect(_caseid);
                         // Add button reset version
@@ -2903,7 +3480,13 @@ function global_case() {
                     // ========
                         // TH 1: caseid diff caseonce    
                         if(_caseid != _caseid_once) {
-                            cLog(() => { console.log("cdtx - TH 1 here"); })
+                            cLog(() => { console.log("cdtx - TH 1 here", window.dataCase.case_id, _caseid); });
+
+                            var _panel_closebtn = document.querySelector('._infocase_byme.open [data-btnclk="_infocase_byme-openact"]');
+                            if(_panel_closebtn) {
+                                _panel_closebtn.click();
+                            }
+                            
                             
                             // addGoCase2Calendar 
                             addGoCase2Calendar(_caseid);
@@ -2964,11 +3547,17 @@ function global_case() {
                     // Load once
                     // ===========
                 }
+
+
+
+                // callUI
+                callPhoneDefaultNumber();
             }
 
 
             if(location.hostname === 'calendar.google.com') {
                 // For reminder
+                
                 timeLeftGoogleCalendar();
                 
                 // For case
@@ -2980,12 +3569,27 @@ function global_case() {
                 
                 var _headelm = document.querySelector('#rAECCd');
                 if(_headelm) {
+                    window.calendarCaseNow = window.calendarCaseNow || {};
                     var _title = _headelm.innerText;
                     var _caseid = getOnlyCaseId(_title);
                     
                     // has case id and isset area input template
                     if(_caseid && document.querySelector('[jscontroller="dIQ6id"]')) {
                         
+
+                        // Add Apoiment Icon
+                        // pPTZAe
+                        if(!document.querySelector('.cdtx_opencaseconnect')) {
+                            
+                            
+                            var _contenthtml = `<span class="cdtx_opencaseconnect" data-btnclk="open_connectappointment" data-text="${_caseid}" ></span> `;
+                            _contenthtml = _TrustScript(_contenthtml);
+                            document.querySelector('.pPTZAe').insertAdjacentHTML("afterBegin", _contenthtml);
+                        }
+                        
+
+
+
                         // Insert test
                         if(!_headelm.querySelector('.caseid_ins')) {
                             if(_title.split('').length > 59) {
@@ -3007,15 +3611,22 @@ function global_case() {
                                 // Note, 
 
                             var _elmappend = document.querySelectorAll('[jscontroller="dIQ6id"] .nBzcnc.OcVpRe')[0];
-
+                            window.htmlPanelTemp = window.htmlPanelTemp || '';
+                            
                             if(!_elmappend) {
                                 return false;
+                            }
+
+                            if(window.calendarCaseNowCaseID != _caseid || !document.querySelector('[jscontroller="dIQ6id"][data-once]')) {
+                                window.htmlPanelTemp = '';
+                                document.querySelector('[jscontroller="dIQ6id"]').setAttribute('data-once', 1);
                             }
                         
                             var _contenthtml = `
                             <div class="_casecalendar_info" >
                                 <div class="_casecalendar_info--notification" ></div>
-                                <div class="_casecalendar_info--inner"  data-isgcc="{%is_gcc%}" data-isexternal="{%is_external%}" data-issilver="{%customer_is_silver%}" >
+                                <div class="_casecalendar_info--consentrecord" >Please Hit SpeakEasy Record Button</div>
+                                <div class="_casecalendar_info--inner"  data-isgcc="{%is_gcc%}" data-isexternal="{%is_external%}" data-issilver="{%customer_program%}" >
                                     <span class="_casecalendar_info-50per" data-title="Case ID:" >
                                         <a href="https://cases.connect.corp.google.com/#/case/${_caseid}" target="_blank" >${_caseid}</a>
                                         <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_caseid}" ></span>
@@ -3023,6 +3634,14 @@ function global_case() {
                                 </div>
                             </div>`;
                         
+                            
+                            if(window.htmlPanelTemp) {
+                                _contenthtml = `
+                                    <div class="_casecalendar_info" >
+                                        ${window.htmlPanelTemp}
+                                    </div>`;
+                            }
+
                             _contenthtml = _TrustScript(_contenthtml);
                             _elmappend.insertAdjacentHTML("afterEnd", _contenthtml);
                             
@@ -3030,44 +3649,49 @@ function global_case() {
                             // Update meetlink now
                             autoUpdatelistLinkCalendar();
 
-                            var _panel = document.querySelector('[jscontroller="dIQ6id"] ._casecalendar_info');
 
-                            
-                            loadCaseStorageByID(_caseid, (response) => {
-                                if(!response.value) return false;
-                                var _data = response.value;
-                                cLog(() => { console.log("cdtx calendar.google.com ", _data); })
-                                
-                                if(_data.case_id) {
-                                    // Display content
-                                    templateDisplay(_panel, _data);
-                                }
+                            var _panel = () => { return document.querySelector('[jscontroller="dIQ6id"] ._casecalendar_info'); };
 
 
-                                // Meet link
-                                var _linkmeet = _data.customer_gmeet || '';
-                                var _parent = _panel.closest('[jscontroller="dIQ6id"]');
-                                if(_parent) {
-                                    var _atagmeet = _parent.querySelector('a[href*="https://meet.google.com"]');
-                                    if(_atagmeet) {
-                                        if(_linkmeet != _atagmeet.getAttribute('href')) {
-                                            _linkmeet = _atagmeet.getAttribute('href');
-                                            _linkmeet = _linkmeet.split('?')[0];
-                                            _data.customer_gmeet = _linkmeet;
+                            if(!window.htmlPanelTemp) {
 
-                                            
-                                            replaceKeyHTMLByCaseID(_panel, 'customer_gmeet', _linkmeet);
+                                loadCaseStorageByID(_caseid, (response) => {
+                                    if(!response.value) return false;
+                                    var _data = response.value;
+                                    cLog(() => { console.log("cdtx calendar.google.com ", _data); })
+                                    
+                                    if(_data.case_id) {
+                                        // Display content
+                                        window.calendarCaseNowCaseID = _data.case_id;
+                                        templateDisplay(_panel(), _data);
+                                    }
     
-                                            saveCase2Storage(_data,  (response) => {
-                                                cLog(() => { console.log('cdtx-save case - add link meet', response); })
-                                            });
+    
+                                    // Meet link
+                                    var _linkmeet = _data.customer_gmeet || '';
+                                    var _parent = _panel().closest('[jscontroller="dIQ6id"]');
+                                    if(_parent) {
+                                        var _atagmeet = _parent.querySelector('a[href*="https://meet.google.com"]');
+                                        if(_atagmeet) {
+                                            if(_linkmeet != _atagmeet.getAttribute('href')) {
+                                                _linkmeet = _atagmeet.getAttribute('href');
+                                                _linkmeet = _linkmeet.split('?')[0];
+                                                _data.customer_gmeet = _linkmeet;
+    
+                                                
+                                                replaceKeyHTMLByCaseID(_panel(), 'customer_gmeet', _linkmeet, _data);
+        
+                                                saveCase2Storage(_data,  (response) => {
+                                                    cLog(() => { console.log('cdtx-save case - add link meet', response); })
+                                                });
+                                            }
                                         }
                                     }
-                                }
-
-
-
-                            });
+    
+    
+    
+                                });
+                            }
 
                             // HIDE Description
                             try {
@@ -3087,8 +3711,135 @@ function global_case() {
                 }
             }
             
-           
             
+            
+            if(location.hostname === 'barkeep.corp.google.com') {
+
+            }
+            
+            // if(location.hostname === 'barkeep.corp.google.com') {
+
+            //     var is_record = false
+            //     var is_qa_recode_show = false
+            //     var _pcurrentid = null;
+            //     var _pcurrentid_str = '';
+            //     var _pcurrent_object = {};
+
+            //     // Check entry
+            //     var list_callentry = document.querySelectorAll('#call-history .container .entry');
+            //     var _arr_list_callentry = [];
+            //     if(list_callentry.length > 0) {
+            //         try {
+            //             _pcurrentid = list_callentry[0].querySelector('.session-id');
+            //             if(_pcurrentid) {
+            //                 _pcurrentid_str = _pcurrentid.innerText;
+                            
+            //                 _pcurrentid_date = list_callentry[0].querySelector('.date').innerText;
+            //                 _pcurrentid_time = list_callentry[0].querySelector('.time').innerText;
+            //                 _pcurrent_object.id = _pcurrentid_str;
+            //                 _pcurrent_object.date = _pcurrentid_date;
+            //                 _pcurrent_object.time = _pcurrentid_time;
+
+            //                 list_callentry.forEach(item => {
+            //                     var _temp_info = {};
+            //                     _temp_info.id = item.querySelector('.session-id').innerText;
+            //                     _temp_info.date = item.querySelector('.date').innerText;
+            //                     _temp_info.time = item.querySelector('.time').innerText;
+            //                     _arr_list_callentry.push(_temp_info);
+            //                 })
+                            
+            //             }
+            //             cLog(() => { console.log('cdtx barkeep ', list_callentry.length, _pcurrentid_str); })
+            //         } catch (error) {
+            //             console.log("cdtx barkeep", error)
+            //         }
+            //     }
+
+            //     // Check recording 
+            //     if(document.querySelector('#consent-yes-button')) {
+            //         is_qa_recode_show = true;
+            //         cLog(() => { console.log('cdtx barkeep is_qa_recode_show', is_qa_recode_show); })
+            //     }
+
+            //     if(document.querySelector('session-panel.footer')) {
+            //         if(
+            //             document.querySelector('session-panel.footer participant-list-item') 
+            //             && document.querySelector('#duration') 
+            //         ) {
+                        
+            //             var _timeduration =  document.querySelector('#duration').innerText.trim().replace(/[^\d]+/g, '');
+            //             _timeduration = parseInt(_timeduration);
+            //             if(_timeduration % 10 == 0) {
+            //                 cLog(() => { console.log('cdtx barkeep load oncall record'); })
+            //                 is_record = true;
+                            
+            //                 if(_pcurrentid) {
+            //                     cLog(() => { console.log('cdtx barkeep start', is_record, _pcurrentid.innerText); })
+                                
+                                
+            //                     setChromeStorage("cdtx_caseidcurrentmeet_consentyesbutton", is_qa_recode_show, (response) => {
+            //                         cLog(() => { console.log('cdtx barkeep cdtx_caseidcurrentmeet_consentyesbutton', is_qa_recode_show, _pcurrentid_str, _timeduration); })
+            //                     });
+                                
+            //                     // Only qa_record show => OK
+            //                     if(is_qa_recode_show == false) {
+            //                         // isset last call
+            //                         if(_arr_list_callentry.length > 0) {
+            //                             getChromeStorage("cdtx_caseidcurrentmeet", (response) => {
+            //                                 var _data = response.value || null;
+            //                                 if(_data.caseid) {
+            //                                     if(_data.datetime) {
+            //                                         const date1 = new Date();
+            //                                         const date2 = new Date(_data.datetime);
+            //                                         const diffTime = Math.abs(date2 - date1);
+            //                                         const diffMinute = Math.ceil(diffTime / (1000 * 60)); 
+
+            //                                         if(diffMinute < 5) {
+            //                                             _data.pcurrentid = _pcurrentid_str;
+            //                                             cLog(() => { console.log('cdtx barkeep load oncall record', _data, diffMinute + " min", _pcurrentid_str, is_record, _timeduration); })
+                
+                
+            //                                             // merge to object
+            //                                             _pcurrent_object.meetid = _data.meetid;
+            //                                             _pcurrent_object.caseid = _data.caseid;
+            //                                             _pcurrent_object.datetime = _data.datetime;
+            //                                             _arr_list_callentry = merge2array(_arr_list_callentry, [_pcurrent_object], "id");
+    
+            //                                             // merge to data
+            //                                             getChromeStorage("cdtx_caseidcurrentmeet_pspeakeasy_caseid", (response) => {
+            //                                                 var _list_rs = response.value || [];
+                                                            
+            //                                                 if(typeof _list_rs === 'object') {
+            //                                                     _list_rs = merge2array(_arr_list_callentry, _list_rs, "id");
+            //                                                     _list_rs = merge2array(_list_rs, [_pcurrent_object], "id");
+            
+            //                                                     console.log('cdtx list 2', _list_rs, _arr_list_callentry);
+            
+            //                                                     setChromeStorage("cdtx_caseidcurrentmeet_pspeakeasy_caseid", _list_rs, (response) => {
+            //                                                         cLog(() => { console.log('cdtx barkeep cdtx_caseidcurrentmeet_pspeakeasy_caseid have save', _list_rs) })
+            //                                                     })
+            //                                                 }
+                
+                
+            //                                             });
+                                                        
+            //                                         } 
+                                                    
+            //                                     }
+            //                                 }
+            //                             });     
+            //                         }   
+            //                     }
+                                
+            //                 } 
+            //             }
+                        
+            //         }
+            //     }
+
+                
+            // }
+
             if(location.hostname === 'meet.google.com') {
                 loadKLCall(_keylanguage);
 
@@ -3109,7 +3860,8 @@ function global_case() {
                         
                         var _contenthtml = `<div class="_casecalendar_info" style=" opacity: 0.7; " >
                             <div class="_casecalendar_info--notification" ></div>
-                            <div class="_casecalendar_info--inner"  data-isgcc="{%is_gcc%}" data-isexternal="{%is_external%}" data-issilver="{%customer_is_silver%}" >
+                            <div class="_casecalendar_info--consentrecord" >Please Hit SpeakEasy Record Button</div>
+                            <div class="_casecalendar_info--inner"  data-isgcc="{%is_gcc%}" data-isexternal="{%is_external%}" data-issilver="{%customer_program%}" >
                             </div>
                         </div>`;
     
@@ -3118,13 +3870,12 @@ function global_case() {
                         
 
                         var _panel = document.querySelector('.hWX4r ._casecalendar_info');
-                        getChromeStorage("cdtx_listmeetlink", (response) => {
+                        getChromeStorage("cdtx_listmeetlink_all", (response) => {
                             var casesmeet = response.value || {};
                             // if(casesmeet[_object.case_id]) {
-                                // console.log('hehe', casesmeet);
-                            for (const [_caseid, value] of Object.entries(casesmeet)) {
-                                if(value.includes(location.pathname)) {
-                                    cLog(() => { console.log('cdtx meet', _caseid, value); })
+                            for (const [_meetid, _caseid] of Object.entries(casesmeet)) {
+                                if(location.pathname.includes(_meetid)) {
+                                    cLog(() => { console.log('cdtx meet', _caseid, _caseid); })
 
                                     loadCaseStorageByID(_caseid, (response) => {
                                             
@@ -3141,8 +3892,34 @@ function global_case() {
                                         
                                         templateDisplay(_panel, _data);
 
+                                        checkSpeakEasy(_data);
 
 
+                                        window.meetTimeInv = window.meetTimeInv || null;
+                                        clearInterval(window.meetTimeInv); 
+
+                                        window.meetTimeInv = setInterval(() => {
+                                            var _temp_obj = {
+                                                meetid: _meetid, 
+                                                caseid: _caseid,
+                                                datetime: new Date(),
+                                            };
+                                            setChromeStorage("cdtx_caseidcurrentmeet", _temp_obj, () => {
+                                                cLog(() => { console.log('cdtx cdtx_caseidcurrentmeet', _temp_obj); })
+                                            });
+    
+    
+                                            _panel.setAttribute('data-consentrecord', 0);
+                                            getChromeStorage("cdtx_caseidcurrentmeet_consentyesbutton", (response2) => {
+                                                var _data2 = response2.value || null;
+                                                if(_data2) {
+                                                    _panel.setAttribute('data-consentrecord', 1);
+                                                    cLog(() => { console.log('cdtx barkeep load oncall record', _data2); });
+                                                    
+                                                }
+                                            });
+                                        }, 4000)
+                                        
                                     });
 
                                     break;
@@ -3151,7 +3928,48 @@ function global_case() {
                             // }
                         });                        
                     }
-                } 
+                }
+
+
+                // loadCopyDianumber
+                try {
+                    if(document.querySelector('.vFzkO')) {
+                        if(!document.querySelector('.vFzkO .cdtx_copydial_1')) {
+                            var _elm = document.querySelector('.vFzkO .iMP6zc + [jsname="zQ0Yjb"]');
+                            if(_elm) {
+                                var _textview = _elm.innerText.trim();
+                                if(_textview) {
+                                    _textview = _textview.replace(/[^\d#+]/g, '');
+                                    var _html = `<span class="cdtx_copydial cdtx_copydial_1" data-btnclk="copy_textattr_and_dial" data-text="${_textview}" >COPY</span>`;
+                                    _html = _TrustScript(_html);
+                                    _elm.insertAdjacentHTML("afterEnd", _html);
+                                }
+                            }
+                        }
+
+                        
+                        if(!document.querySelector('.vFzkO .cdtx_copydial_2')) {
+                            _elm = document.querySelector('.vFzkO .iMP6zc + [jsname="pCHCHe"]');
+                            if(_elm) {
+                                var _textview = _elm.innerText.trim();
+                                if(_textview) {
+                                    _textview = _textview.replace(/[^\d#+]/g, '');
+                                    var _html = `<span class="cdtx_copydial cdtx_copydial_2" data-btnclk="copy_textattr_and_dial" data-text="${_textview}" >COPY</span>`;
+                                    _html = _TrustScript(_html);
+                                    _elm.insertAdjacentHTML("afterEnd", _html);
+                                }
+                            }
+                            
+                        }
+                    }
+                
+                
+                
+                    
+                } catch (error) {
+                    console.error('catch', error)
+                }
+
             }
             
         }, document.body);
@@ -3277,6 +4095,7 @@ function global_case() {
 
     // LOAD
     loadGoogleSheetOnlineWebPublics();
+    loadStyle();
     loadRealtime();
     autoUpdatelistLinkCalendar(true);
     clickAction();
@@ -3284,4 +4103,6 @@ function global_case() {
     panelAddShortcutLink();
     crSubjectByHotKeyEmail();
     openGAdsbyAdsID();
+    initQplusLoad();
+    uiOnCallPanel();
 }

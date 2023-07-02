@@ -118,25 +118,6 @@ console.log('Value currently is ' + result.mycountry);
 			  
 		  
 });
-		
-
-try {
-	var s = document.createElement('script');
-	s.src = chrome.extension.getURL('script.js');
-	s.onload = function() {
-		(document.head||document.documentElement).appendChild(s);
-		var s2 = document.createElement('script');
-		s2.src = chrome.extension.getURL('script.js');
-		(document.head||document.documentElement).appendChild(s2);
-		s2.onload = function() {
-		var s3 = document.createElement('script');
-		s3.src = chrome.extension.getURL('script.js');
-		(document.head||document.documentElement).appendChild(s3);
-		};
-	};
-} catch (error) {
-	
-}
 
 
 if (window.location.hostname === "cases.connect.corp.google.com" && window.location.href.indexOf("#/case/") > - 1) {
@@ -184,65 +165,6 @@ if (window.location.hostname === "cases.connect.corp.google.com" && window.locat
 			}
 		}
 
-
-		// // Select the node that will be observed for mutations
-		// var targetNode = document.body;
-
-		// // Options for the observer (which mutations to observe)
-		// var config = { attributes: true, childList: true, subtree: true };
-
-		// // Callback function to execute when mutations are observed
-		// var callback = function(mutationList, observer) {
-		// 	// on-call, precall button 
-		// 	var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top`);
-		// 	if(_istopelm) {
-		// 		if (_istopelm.querySelector("#pre-call") === null && _istopelm.querySelector("#on-call") === null) {
-		// 			createDomWithText("Precall", `<ul dir="auto"><li>Emails or feedback from Advertiser/Seller (including seller request to join the call)[C]&nbsp;</li><li>Call being made in business hours[C]</li><li>Program ,task type (including special instructions),advertiser need and readiness [C]</li><li>Related cases [C]</li><li>CMS being used  [C]</li><li>Gtag/GTM/GA already exists  [C] (NA applicable only for Shopping or OCT cases)</li></ul><span class="_document_attachurl_i"></span>`, "pre-call");
-		// 			createDomWithText("OnCall", `<b>Sub-status:&nbsp;<span class="_sub_i"></span></b>&nbsp; <p dir="auto"><b>Sub-status Reason:</b>&nbsp;</p><p dir="auto"><b>Speakeasy ID:&nbsp;</b></p><p dir="auto"><b>On Call Comments:</b>&nbsp;</p><p dir="auto"><b>Tags Implemented:</b>&nbsp;<span class="_task_i"></span></p><p dir="auto"><b>Screenshots:&nbsp;</b></p><p dir="auto"><b>Multiple CIDs:&nbsp;</b></p><p dir="auto"><b>On Call Screenshot:</b>&nbsp;</p>`, "on-call");
-
-
-		// 		}
-		// 	}
-			
-		// 	// findCalendarBtn button go to calendar
-		// 	var _elmHomeTitle = document.querySelector('#read-card-tab-panel-home .section.header.home:not([style*="display:none"]):not([style*="display: none"])');
-		// 	if(_elmHomeTitle) {
-		// 		if (_elmHomeTitle.querySelector("#findCalendarBtn") === null) {
-		// 			if(document.querySelector('[debug-id="case-id"]')) {
-		// 				var _caseId = document.querySelector('[debug-id="case-id"]').innerText;
-		// 				var _findCalendarBtnHtmlStr = `<a href="https://calendar.google.com/calendar/u/0/r/search?q=${_caseId}" id="findCalendarBtn" target="_blank"
-		// 				style="
-		// 				border: 1px solid #bbb7b7;
-		// 				line-height: 0;
-		// 				padding: 11px;
-		// 				border-radius: 4px;
-		// 				color: #444;
-		// 				font-weight: 700;
-		// 				text-shadow: 1px 1px 2px #fff;
-		// 				background-color: #eee;
-		// 				margin-right: 6px;
-		// 				cursor: pointer;
-		// 				font-size: 12px;
-		// 				text-decoration: none;"
-						
-		// 				>Go to Calendar</a>`;
-		// 				if(_elmHomeTitle) {
-		// 					_elmHomeTitle.insertAdjacentHTML("beforeEnd", _findCalendarBtnHtmlStr);
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// };
-
-		// // Create an observer instance linked to the callback function
-		// var observer = new MutationObserver(callback);
-
-		// // Start observing the target node for configured mutations
-		// observer.observe(targetNode, config);
-
-
-		
-		// Later, you can stop observe
 		
 	} catch (error) {
 		
@@ -254,59 +176,10 @@ if (window.location.hostname === "cases.connect.corp.google.com" && window.locat
 
 
 chrome.storage.sync.get({mycountry: 'thailand',ouremail: 'xxx@google.com'}, function(result) {
-console.log('Value currently is ' + result.mycountry);
+	// console.log('Value currently is ' + result.mycountry);
 
 	if(result.mycountry == "Vietnam") {
-		function waitForElm(selector) {return new Promise(resolve => {if (document.querySelector(selector)) {return resolve(document.querySelector(selector));
-}
-const observer = new MutationObserver(mutations => {
-	if (document.querySelector(selector)) {
-		resolve(document.querySelector(selector));
-		observer.disconnect();
-	}
-});
-observer.observe(document.body, {
-	childList: true,
-	subtree: true
-});
-});
-}
-var sendMailBtn = document.createElement('material-button');
-sendMailBtn.innerHTML = `<div class="content _ngcontent-jrt-7"><!----><material-icon size="xx-large" class="_ngcontent-jrt-13 _nghost-jrt-31"><i class="material-icon-i material-icons-extended _ngcontent-jrt-31" role="img" aria-hidden="true">contact_mail</i></material-icon></div><material-ripple aria-hidden="true" class="_ngcontent-jrt-7"></material-ripple>`;
-Object.assign(sendMailBtn, {
-className: 'dock-item',
-style: 'cursor: pointer',
-onclick: sendMail,
-});
-waitForElm('.decks .dock-container').then((elm) => {
-	elm.appendChild(sendMailBtn);
-	});function sendMail(){
-var caseId = document.querySelector('.case-id').innerText;
-document.querySelector('.recipient-dropdown > dropdown-button .button-text').click();
-document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new Event('focus'));
-waitForElm('material-list.options-list').then((elm) => {
-document.querySelector('material-list.options-list .item:nth-child(1)').click();
-waitForElm('[debug-id="contact-info-name"]').then(elm => {waitForElm('[aria-label="Create new email"]').then(elm => {
-  elm.click();
-  waitForElm('email-address-dropdown material-dropdown-select .address').then(elm => {
-	elm.click();
-	waitForElm('[id*=email-address-id--technical-solutions]').then(elm => {
-	elm.click();
-	waitForElm('.is-top .subject').then(elm => {elm.value = `Đội giải pháp kỹ thuật - Xác nhận lịch hẹn [${caseId}]`;elm.dispatchEvent(new Event('input'));(function() {
-	waitForElm('.editor-frame #email-body-content-top').then(emailBodyTop => {
-	var xpath = `//div[contains(@class, 'form-label')][text() = 'Website']//following-sibling::div`;
-	var url = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.innerText;
-	var name = document.querySelector('.internal-user-info .name').innerText;
-	var inviteHtml = `<p dir="auto">Xin chào <b>${name}</b>,</p><p dir="auto">Cảm ơn bạn đã lên lịch hẹn với Đội giải pháp kỹ thuật đại diện cho Google. Người Quản lý tài khoản Google của bạn đã thay mặt bạn yêu cầu cuộc hẹn này và chúng tôi sẽ hỗ trợ bạn với mã trường hợp: <b>${caseId}</b> cho website: <b>${url}</b>.</p><p dir="auto">Vui lòng kiểm tra hộp thư đến để biết lịch mời cuộc hẹn sắp tới với chúng tôi và làm theo hướng dẫn để xác nhận tham gia. Trước khi cuộc gọi diễn ra, vui lòng xem và hoàn thành danh sách việc cần làm qua liên kết <a href="https://support.google.com/google-ads/answer/11605860?hl=vi" style="color: rgb(26, 115, 232); text-decoration-line: none;" class="ignore-globals">này</a>.</p><p dir="auto">Nếu bạn có bất kỳ câu hỏi nào trước cuộc gọi với chúng tôi hoặc muốn thêm người tham gia, vui lòng cho chúng tôi biết bằng cách trả lời email này hoặc liên hệ với Người Quản lý tài khoản Google của bạn</p><p dir="auto">Chúng tôi rất mong được làm việc với bạn.</p><p dir="auto">Trân trọng,<div style="font:normal 13px/17px Roboto,sans-serif;display:block">&nbsp;</div><div style="font:normal 13px/17px Roboto,sans-serif;display:block">`;
-	var agentSign = '<div style="font:normal 13px/17px Roboto,sans-serif;display:block">'+emailBodyTop.querySelectorAll('.replaced')[1].innerHTML+'</div>';
-	var note = `<div style="font:normal 13px/17px Roboto,sans-serif;display:block">&nbsp;</div><div style="font:normal 13px/17px Roboto,sans-serif;display:block"><em>Lưu ý: Nếu sau này bạn cần nêu mã vé hỗ trợ này, thì mã là <span class="replaced">${caseId}</span></em></div>`;
-	emailBodyTop.innerHTML = inviteHtml + agentSign+note;document.execCommand("insertText",false," ");})})();});
-  });
-  });
-});});
-document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new Event('blur'));
-});
-}
+		
 
 	} else if (result.mycountry == "Thailand") {
 
@@ -365,7 +238,7 @@ document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new E
 		}
 		
 
-	}else if (result.mycountry == "China") {
+	} else if (result.mycountry == "China") {
 
 
 		
@@ -422,7 +295,7 @@ document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new E
 		});
 		}
 
-	}else if (result.mycountry == "Japan") {
+	} else if (result.mycountry == "Japan") {
 		
 	function waitForElm(selector) {return new Promise(resolve => {if (document.querySelector(selector)) {return resolve(document.querySelector(selector));
 		}
@@ -487,66 +360,66 @@ document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new E
 		document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new Event('blur'));
 		});
 		}
-	}else if (result.mycountry == "Korea") {
+	} else if (result.mycountry == "Korea") {
 		
-	function waitForElm(selector) {return new Promise(resolve => {if (document.querySelector(selector)) {return resolve(document.querySelector(selector));
-		}
-		const observer = new MutationObserver(mutations => {
-			if (document.querySelector(selector)) {
-				resolve(document.querySelector(selector));
-				observer.disconnect();
-			}
-		});
-		observer.observe(document.body, {
-			childList: true,
-			subtree: true
-		});
-		});
-		}
+			function waitForElm(selector) {return new Promise(resolve => {if (document.querySelector(selector)) {return resolve(document.querySelector(selector));
+				}
+				const observer = new MutationObserver(mutations => {
+					if (document.querySelector(selector)) {
+						resolve(document.querySelector(selector));
+						observer.disconnect();
+					}
+				});
+				observer.observe(document.body, {
+					childList: true,
+					subtree: true
+				});
+				});
+				}
 
-		var sendMailBtn = document.createElement('material-button');
-		sendMailBtn.innerHTML = `<div class="content _ngcontent-jrt-7"><!----><material-icon size="xx-large" class="_ngcontent-jrt-13 _nghost-jrt-31"><i class="material-icon-i material-icons-extended _ngcontent-jrt-31" role="img" aria-hidden="true">contact_mail</i></material-icon></div><material-ripple aria-hidden="true" class="_ngcontent-jrt-7"></material-ripple>`;
-		Object.assign(sendMailBtn, {
-		className: 'dock-item',
-		style: 'cursor: pointer',
-		onclick: sendMail,
-		});
-		waitForElm('.decks .dock-container').then((elm) => {
-		elm.appendChild(sendMailBtn);
-		});
-		function sendMail(){
-		var caseId = document.querySelector('.case-id').innerText;
-		document.querySelector('.recipient-dropdown > dropdown-button .button-text').click();
-		document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new Event('focus'));
-		waitForElm('material-list.options-list').then((elm) => {
-		document.querySelector('material-list.options-list .item:nth-child(1)').click();
-		waitForElm('[debug-id="contact-info-name"]').then(elm => {waitForElm('[aria-label="Create new email"]').then(elm => {
-		  elm.click();
-		  waitForElm('email-address-dropdown material-dropdown-select .address').then(elm => {
-			elm.click();
-			waitForElm('[id*=email-address-id--technical-solutions]').then(elm => {
-			elm.click();
-			waitForElm('.is-top .subject').then(elm => {elm.value = `기술 솔루션 팀 - 사전 준비 사항 안내 [${caseId}]`;elm.dispatchEvent(new Event('input'));(function() {
-			waitForElm('.editor-frame #email-body-content-top-content').then(elm => {
-			var xpath = `//div[contains(@class, 'form-label')][text() = 'Website']//following-sibling::div`;
-			var url = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.innerText;
-			var name = document.querySelector('.internal-user-info .name').innerText;
-			var inviteHtml = `<p dir="auto">안녕하세요 <b>${name} 님</b>,</p>
-<p dir="auto">Google 기술 솔루션팀과 일정 예약을 해주셔서 감사합니다. 고객님의 Google 담당자가 이 미팅 일정을 요청하셨고 저희는 <b>${url}</b>의 케이스 <b>${caseId}</b>에 대해 지원을 드릴 예정입니다.</p>
-<p dir="auto"> 저희 기술 솔루션팀과의 예정된 미팅 일정 초대 이메일을 확인해주시고 지침에 따라 미팅 일정 참석에 대해 답변해주시기 바랍니다. 상담을 준비하기 위해, <a href="https://support.google.com/google-ads/answer/11605860?hl=ko" style="color: rgb(26, 115). , 232); text-decoration-line: none;" class="ignore-globals">여기</a>를 확인하셔서 할 일 목록을 검토해주시기 바랍니다.</p>
-<p dir="auto">상담 전 다른 문의가 있으시거나 미팅에 다른 참석자가 있는 경우, 이 이메일에 회신 주시거나 고객님의 Google 계정 담당자님께 문의 부탁드립니다.</p>
-<p dir="auto">감사합니다.<div style="font:normal 13px/17px Roboto,sans-serif;display:block">&nbsp;</div><div style="font:normal 13px/17px Roboto,sans-serif;display:block">`;
-			var emailBodyTop = document.querySelector('.editor-frame #email-body-content-top-content');
-			var agentSign = emailBodyTop.querySelector('.replaced:last-child').innerHTML;
-			emailBodyTop.innerHTML = inviteHtml + agentSign;document.execCommand("insertText",false," ");})})();});
-		  });
-		  });
-		});});
-		document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new Event('blur'));
-		});
-		}
+				var sendMailBtn = document.createElement('material-button');
+				sendMailBtn.innerHTML = `<div class="content _ngcontent-jrt-7"><!----><material-icon size="xx-large" class="_ngcontent-jrt-13 _nghost-jrt-31"><i class="material-icon-i material-icons-extended _ngcontent-jrt-31" role="img" aria-hidden="true">contact_mail</i></material-icon></div><material-ripple aria-hidden="true" class="_ngcontent-jrt-7"></material-ripple>`;
+				Object.assign(sendMailBtn, {
+				className: 'dock-item',
+				style: 'cursor: pointer',
+				onclick: sendMail,
+				});
+				waitForElm('.decks .dock-container').then((elm) => {
+				elm.appendChild(sendMailBtn);
+				});
+				function sendMail(){
+				var caseId = document.querySelector('.case-id').innerText;
+				document.querySelector('.recipient-dropdown > dropdown-button .button-text').click();
+				document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new Event('focus'));
+				waitForElm('material-list.options-list').then((elm) => {
+				document.querySelector('material-list.options-list .item:nth-child(1)').click();
+				waitForElm('[debug-id="contact-info-name"]').then(elm => {waitForElm('[aria-label="Create new email"]').then(elm => {
+				elm.click();
+				waitForElm('email-address-dropdown material-dropdown-select .address').then(elm => {
+					elm.click();
+					waitForElm('[id*=email-address-id--technical-solutions]').then(elm => {
+					elm.click();
+					waitForElm('.is-top .subject').then(elm => {elm.value = `기술 솔루션 팀 - 사전 준비 사항 안내 [${caseId}]`;elm.dispatchEvent(new Event('input'));(function() {
+					waitForElm('.editor-frame #email-body-content-top-content').then(elm => {
+					var xpath = `//div[contains(@class, 'form-label')][text() = 'Website']//following-sibling::div`;
+					var url = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.innerText;
+					var name = document.querySelector('.internal-user-info .name').innerText;
+					var inviteHtml = `<p dir="auto">안녕하세요 <b>${name} 님</b>,</p>
+		<p dir="auto">Google 기술 솔루션팀과 일정 예약을 해주셔서 감사합니다. 고객님의 Google 담당자가 이 미팅 일정을 요청하셨고 저희는 <b>${url}</b>의 케이스 <b>${caseId}</b>에 대해 지원을 드릴 예정입니다.</p>
+		<p dir="auto"> 저희 기술 솔루션팀과의 예정된 미팅 일정 초대 이메일을 확인해주시고 지침에 따라 미팅 일정 참석에 대해 답변해주시기 바랍니다. 상담을 준비하기 위해, <a href="https://support.google.com/google-ads/answer/11605860?hl=ko" style="color: rgb(26, 115). , 232); text-decoration-line: none;" class="ignore-globals">여기</a>를 확인하셔서 할 일 목록을 검토해주시기 바랍니다.</p>
+		<p dir="auto">상담 전 다른 문의가 있으시거나 미팅에 다른 참석자가 있는 경우, 이 이메일에 회신 주시거나 고객님의 Google 계정 담당자님께 문의 부탁드립니다.</p>
+		<p dir="auto">감사합니다.<div style="font:normal 13px/17px Roboto,sans-serif;display:block">&nbsp;</div><div style="font:normal 13px/17px Roboto,sans-serif;display:block">`;
+					var emailBodyTop = document.querySelector('.editor-frame #email-body-content-top-content');
+					var agentSign = emailBodyTop.querySelector('.replaced:last-child').innerHTML;
+					emailBodyTop.innerHTML = inviteHtml + agentSign;document.execCommand("insertText",false," ");})})();});
+				});
+				});
+				});});
+				document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new Event('blur'));
+				});
+				}
 		
-	}else if (result.mycountry == "Indonesia") {
+	} else if (result.mycountry == "Indonesia") {
 		
 		function waitForElm(selector) {return new Promise(resolve => {if (document.querySelector(selector)) {return resolve(document.querySelector(selector));
 		}
@@ -601,7 +474,7 @@ document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new E
 		});
 		}
 		
-	}else if (result.mycountry == "Other") {
+	} else if (result.mycountry == "Other") {
 		
 		
 		console.log('Value currently is ' + result.mycountry + 'in IF ELSE') ;
@@ -618,7 +491,6 @@ document.querySelector('[aria-label="Create a write card"]').dispatchEvent(new E
 
 
 //Auto refresh and check on Unassigned page in connect dash
-
 setInterval(function () {
 	if(window.location.href === "https://appointments.connect.corp.google.com/" && document.querySelector('input:checked + label').textContent === "Unbooked "){
     	

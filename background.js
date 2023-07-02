@@ -76,7 +76,6 @@ chrome.contextMenus.onClicked.addListener(function (itemData) {
 		);
 	}
 	if (itemData.menuItemId == "SF console") {
-		console.log("infomenuitem match");
 		var tabId;
 		chrome.tabs.query(
 		  { url: "https://smbsalesimplementation.my.salesforce.com/console*" },
@@ -117,7 +116,6 @@ chrome.contextMenus.onClicked.addListener(function (itemData) {
 		  }
 		);
 	  }
-
 });
 
 chrome.storage.sync.get(
@@ -153,41 +151,6 @@ chrome.storage.sync.get(
 );
 
 chrome.runtime.onMessage.addListener(function (textme, sender, sendResponse) {
-	//15 mins warning
-	// if (textme.textyou == "15min") {
-	// 	console.log("15min");
-	// 	var opt = {
-	// 		type: "basic",
-	// 		title: "Get Ready!",
-	// 		message: "You have less than 15 mins!",
-	// 		contextMessage: "click this to go to salesforce now",
-	// 		iconUrl: "https://screenshot.googleplex.com/yaPAh5U0920.png"
-	// 	};
-	// }
-
-	// if (textme.textyou == "10min") {
-	// 	console.log("gotit");
-	// 	var opt = {
-	// 		type: "basic",
-	// 		title: "Almost there! Dont miss it",
-	// 		message: "You have less than 10 mins!",
-	// 		contextMessage: "click this to go to salesforce now",
-	// 		iconUrl: "https://screenshot.googleplex.com/voy4NRVLQGN.png"
-	// 	};
-	// }
-
-	// if (textme.textyou == "5min") {
-	// 	console.log("gotit");
-	// 	var opt = {
-	// 		type: "basic",
-	// 		title: "STATUS ON CALL NOW!",
-	// 		message: "You have less than 5 mins!",
-	// 		contextMessage: "click this to go to salesforce now",
-	// 		requireInteraction: true,
-	// 		iconUrl: "https://screenshot.googleplex.com/Y1hrPgKf2LN.png"
-	// 	};
-	// }
-
 	if (textme.textyou == "toNotifyNoAppt") {
 		console.log("gotit");
 		chrome.notifications.create(
@@ -217,32 +180,32 @@ chrome.runtime.onMessage.addListener(function (textme, sender, sendResponse) {
 });
 
 function openService(theCountry) {
-console.log(theCountry);	
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    if (changeInfo.status != 'complete')
-        return;
-    if (tab.url.indexOf('https://smbsalesimplementation.my.salesforce.com/console') != -1) {
-        			  
-			var openTab=(href,cb=null)=>{
-				console.log(href);
-				var param={url:href};
+	console.log(theCountry);	
+	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+		if (changeInfo.status != 'complete')
+			return;
+		if (tab.url.indexOf('https://smbsalesimplementation.my.salesforce.com/console') != -1) {
+						
+				var openTab=(href,cb=null)=>{
+					console.log(href);
+					var param={url:href};
+				
+					chrome.tabs.query(param,tabs=>{
+					param.active=false;
+						function cb(newID) {
+							console.log(newID)
+							chrome.tabs.move(newID.id, {index: 0})	
+						}
+					(tabs.length==0)?chrome.tabs.create(param,cb):console.log('already have tab');
 			
-				chrome.tabs.query(param,tabs=>{
-				param.active=false;
-					function cb(newID) {
-						console.log(newID)
-						chrome.tabs.move(newID.id, {index: 0})	
-					}
-				(tabs.length==0)?chrome.tabs.create(param,cb):console.log('already have tab');
+				
+					});
+				
+				}
+				openTab('https://smbsalesimplementation.my.salesforce.com/a0l?fcf=00B3x00000AZxH6');
+		}
+	});
 		
-			
-				});
-			
-			}
-			openTab('https://smbsalesimplementation.my.salesforce.com/a0l?fcf=00B3x00000AZxH6');
-    }
-});
-	
 	
 }
 
@@ -267,7 +230,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) =>{
 		key_value[key] = value;
 		chrome.storage.local.set(key_value, function() {
 			sendResponse(value);
-		  // console.log('SW storage Set:key=' + key + ' value=' + value);
 		});
 		break;
 		

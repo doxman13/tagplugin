@@ -2,6 +2,7 @@
 window.dataTagteam = window.dataTagteam || {};
 window.dataTagteam.extension_id = chrome.runtime.id;
 window.dataTagteam.assets_url_img = 'chrome-extension://' + window.dataTagteam.extension_id + '/assets/img';
+window.dataTagteam.api_blog = 'https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/api.php';
 
 
 
@@ -23,7 +24,42 @@ function loadCaseDatabaseByID(case_id) {
     return false;
 }
 
+function getDomainOnlyURL(_argurl) {
+    // var _argurl = 'dong.com'
+    var _url = '';
+    try {
+        var _urlobj = new URL(_argurl);
+        _url = _urlobj.hostname
+    } catch(e) {
+        _url = _argurl;
+    }
+    
+    return _url;
+}
+// Display day next exclude 7,8 
+function dayNextByCustom(_daynext) {
+    function calcWorkingDays(fromDate, days) {
+        var count = 0;
+        while (count < days) {
+            fromDate.setDate(fromDate.getDate() + 1);
+            if (fromDate.getDay() != 0 && fromDate.getDay() != 6) 
+                count++;
+        }
+        return fromDate;
+    }; 
+    
+    /* var _date_14day = (calcWorkingDays(new Date("2023/05/23"), 14)); */ 
+    var _date_nextday = (calcWorkingDays(new Date(), _daynext));
 
+    // dd/mm/yyyy
+    var _date_key_format = [
+        ("0" + _date_nextday.getDate()).slice(-2),
+        ("0" + (_date_nextday.getMonth() + 1)).slice(-2),
+        _date_nextday.getFullYear(),
+    ];
+    
+    return _date_key_format.join('/');
+}
 function fallbackCopyTextToClipboard(text) {
     var textArea = document.createElement("textarea");
     textArea.value = text;
@@ -239,11 +275,29 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
             var _obj_wait = () => {
                 var caseload = window.dataCase;
                 var is_gcc_external = window.dataCase.am_isgcc_external || window.dataCase.is_gcc_external || window.dataCase.is_gcc || window.dataCase.is_external;
-                
-                // If is silver => make AM email to CC
-                if(window.dataCase.customer_is_silver) {
-                    is_gcc_external = window.dataCase.customer_is_silver == "1" ? false : is_gcc_external ;
-                }
+                var is_exclude_am_emaildfa = false;
+
+                // If is Gold / silver => make AM email to CC
+                    if(caseload.customer_program) {
+                        var is_goldsilver = false;
+                        if(caseload.customer_program.toLowerCase().trim().includes('silver')) {
+                            is_goldsilver = true;
+                        }
+                        
+                        if(caseload.customer_program.toLowerCase().trim().includes('gold')) {
+                            is_goldsilver = true;
+                        }
+
+                        if(is_goldsilver && window.dataCase.is_external) {
+                            is_gcc_external = is_goldsilver ? false : is_gcc_external ;
+                        }
+                    }
+
+                // is external & has am
+                    if(window.dataCase.is_external && is_gcc_external) {
+                        is_exclude_am_emaildfa = true;
+                    }
+
                 
                 cLog(() => {console.log("eie --- START Wait - is_gcc_external ", is_gcc_external  ); });
                 if(caseload) {
@@ -268,6 +322,21 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                     var elm_str_elmparent_headers = document.querySelector(str_elmparent + ".headers");
         
                     // ONCE IF HAS DATA-EIEID
+                    
+                    // If click reply email => STOp
+                    cLog(() => { console.log("eie - recheck_fix_alert - hasClkReply: ", window.hasClkReply) });
+                    if(window.hasClkReply == true) {
+                        window.hasClkReply = false;
+                        
+                        elm_str_elmparent_headers.setAttribute('data-eieid', timekey);
+                        
+                        var elm_parentheader = document.querySelector(`[data-eieid="${timekey}"]`);
+                        elm_parentheader.classList.add("finished");
+                        elm_parentheader.classList.add("finished-reply");
+
+                        return false;
+                    }
+                    
                     if(elm_str_elmparent_headers.getAttribute('data-eieid')) {
                         cLog(() => { console.log("eie --- STOP -> IF HAS RUN! ") });
         
@@ -286,8 +355,9 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                     
                     var recheck_fix_alert = (_callback, n_step = "0unmark", elm_parentheader) => {
                         
-                        cLog(() => { console.log("eie - recheck_fix_alert - step: ", n_step) });
+                        cLog(() => { console.log("eie - recheck_fix_alert - step: ", n_step, window.hasClkReply) });
         
+                        
                         if(n_oncedequi > 10) {
                             cLog(() => {console.log("eie --- STOP DEQUI"); });
                             document.body.classList.remove("is_recheck_fix_alert_fixing");
@@ -449,19 +519,22 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                                 // 3. Customer Email
                                 // ******************
                                 if(_email_input_to().innerText.trim().includes('@') === false) {
-                                    cLog(() => { console.log('eie 1checkandfix Customer Email ** 1 => START') })
                                     var elm_input_to = elm_parentheader.querySelector(".input.to input");
                                     elm_input_to.value = caseload.customer_email.trim();
                                     elm_input_to.dispatchEvent(new Event('input'));
                                     elm_input_to.dispatchEvent(new Event('enter'));
                                     elm_input_to.dispatchEvent(new Event('change'));
+                                    cLog(() => { console.log('eie 1checkandfix Customer Email ** 1 => START', elm_input_to) })
 
                                     var n_time = 0;
                                     var time_input_key = setInterval(function () {
                                         
+                                        elm_input_to.dispatchEvent(new Event('blur'));
                                         var elm_technical = document.querySelector('email-address-content [debug-id="email"]');
                                         if (elm_technical) {
-                                            elm_technical.click();
+                                            if(elm_technical.innerText.includes(caseload.customer_email.trim())) {
+                                                elm_technical.click();
+                                            }
                                         }
                                         cLog(() => {  console.log('eie', _email_input_to().querySelectorAll('user-chip').length, caseload.customer_email.split(',').length, _email_input_to().querySelectorAll('user-chip').length === caseload.customer_email.split(',').length ); });
                                         if(_email_input_to().querySelectorAll('user-chip').length === caseload.customer_email.split(',').length) {
@@ -473,6 +546,8 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                                             cLog(() => { console.log('eie 1checkandfix Customer Email ** 1 => STOP ACTION '); })
                                             clearInterval(time_input_key);
                                             recheck_fix_alert(_callback, "1checkandfix", elm_parentheader);    
+                                            
+                                            elm_input_to.dispatchEvent(new Event('blur'));
                                         }
 
                                         n_time++;
@@ -491,7 +566,7 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                                 }
                                 
                                 var elm_input = elm_area().querySelector("input");
-                                if(elm_area().innerText.trim().includes('@') === false) {
+                                if(elm_area().innerText.trim().includes('@') === false && is_exclude_am_emaildfa === false) {
                                     cLog(() => { console.log('eie 1checkandfix Add AM EMAIL ** 2 => START', 'is GCC', is_gcc_external); })
                                     elm_input.value = caseload.am_email;
                         
@@ -501,9 +576,13 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                     
                                     var n_time = 0;
                                     var time_input_key = setInterval(function () {
+
+                                        elm_input.dispatchEvent(new Event('blur'));
                                         var elm_technical = document.querySelector('email-address-content [debug-id="email"]');
                                         if (elm_technical) {
-                                            elm_technical.click();   
+                                            if(elm_technical.innerText.includes(caseload.am_email)) {
+                                                elm_technical.click();
+                                            }
                                         }
 
                                         cLog(() => {  console.log('eie', elm_area().querySelectorAll('user-chip').length, caseload.am_email.split(',').length, elm_area().querySelectorAll('user-chip').length === caseload.am_email.split(',').length ); });
@@ -516,6 +595,7 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                                             cLog(() => { console.log('eie 1checkandfix Add AM EMAIL ** 2 => STOP ACTION '); })
                                             clearInterval(time_input_key);
                                             recheck_fix_alert(_callback, "1checkandfix", elm_parentheader);
+                                            elm_input.dispatchEvent(new Event('blur'));
                                         }
                                         n_time++;
                         
@@ -527,7 +607,7 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
 
                                 elm_parentheader.classList.add("finished");
                                 
-                                console.log('eie 1checkandfix FINISH');
+                                cLog(() => {console.log('eie 1checkandfix FINISH');});
 
                             }
     
@@ -718,7 +798,10 @@ function checkInputEmailInbox(){
 function globalForAll(window) {
 
     // Feature auto save and recall case id
-    if(window.location.hostname === "analytics-ics.corp.google.com" ) {
+    if(
+        window.location.hostname === "analytics-ics.corp.google.com" || 
+        window.location.hostname === "tagmanager-ics.corp.google.com" 
+        ) {
 
         try {
         
@@ -756,14 +839,7 @@ function globalForAll(window) {
             });
 
 
-            // Select the node that will be observed for mutations
-            var targetNode = document.body;
-    
-            // Options for the observer (which mutations to observe)
-            var config = { attributes: true, childList: true, subtree: true };
-    
-            // Callback function to execute when mutations are observed
-            var callback = function(mutationList, observer) {
+            observeOnce((elm) => {
                 // on-call, precall button 
                 var _istopelm = document.querySelector(`md-dialog.ics-data-access-reason-dialog [name="caseId"]`);
                 cLog(() => { console.log("analytics - 1") });
@@ -781,13 +857,7 @@ function globalForAll(window) {
                 } else {
                     n_once = 0;
                 }
-            };
-    
-            // Create an observer instance linked to the callback function
-            var observer = new MutationObserver(callback);
-    
-            // Start observing the target node for configured mutations
-            observer.observe(targetNode, config);
+            })
         } catch (error) {
             console.error(error)
         }
@@ -971,7 +1041,7 @@ function setChromeStorage(key, value, _callback = false) {
     chrome.runtime.sendMessage({method: 'fe2bg_chromestorage_set', key: key, value: value}, (response) => {
         if(_callback !== false) {
             _callback(response);
-            cLog(() => {console.log('__DONG save', key, value, response); });
+            // cLog(() => {console.log('__DONG save', key, value, response); });
         }
     });
 }
@@ -983,7 +1053,7 @@ function getChromeStorage(key, _callback = false) {
             response = response || {};
             if(response.value) {
                 if(response.value.case_id) {
-                    console.log('__DONG get_st', response.value.case_id, response.value);
+                    // console.log('__DONG get_st', response.value.case_id, response.value);
                 }
             }
             _callback(response);
@@ -1051,7 +1121,7 @@ function noteBarAlert(note, caseid, colortype = 'alert') {
                     // data id
                     var _str = `<noted data-id="${caseid}" ><span class="_str ${colortype}" >${note}</span></noted>`;
                     _str = _TrustScript(_str);
-                    elm_casedetails.querySelector('card-deck').insertAdjacentHTML("beforeBegin", _str);
+                    elm_casedetails.querySelector('.case-body').insertAdjacentHTML("beforeBegin", _str);
                 }
             }
         }
@@ -1550,7 +1620,7 @@ function backdoor_manage_keystorage() {
             var li = "";
             for (let key in results) {
                 li += `<li>${key} <span data-btnremovekeystorage="${key}">Remove</span></li> `;
-                console.log(key, results[key]);
+                // console.log(key, results[key]);
             }
 
             panel_div.querySelector("ul.list_keystorage").innerHTML = _TrustScript(li);
@@ -1585,8 +1655,28 @@ function loadEmailTemplateAction(){
     cLog(() => {console.log('dongmail - load email content');});
     onClickElm('._panel_btn--addtemplate', 'click', function(elm, e){
         cLog(() => {
-            console.log(1, "Here 1515", window.dataCase);
+            console.log(1, "CDTX Here 1515", window.dataCase);
         })
+        
+        var _caseid = () => {
+            if(document.querySelector('[debug-id="case-id"] span.case-id')) {
+                return document.querySelector('[debug-id="case-id"] span.case-id').innerText;
+            }
+            return '';
+        };
+
+        if(_caseid() !== window.dataCase.case_id) {
+            Toastify({
+                text: 'Data case not ready!  One Minute ',
+                duration: 3000,
+                class: "warning",
+                callback: function(){
+                    this.remove();
+                }
+            }).showToast();
+            return false;
+        }
+        
         
         // 0. ready
         var _insertmailbox = (_this) => {
@@ -1668,7 +1758,7 @@ function loadEmailTemplateAction(){
             _insertmailbox(elm);
         } else {
             document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
-            document.querySelector("material-fab.themeable.action-2.compose").addEventListener("click", () => {
+            document.querySelector("material-fab.themeable.compose").addEventListener("click", () => {
                 var n_card = document.querySelectorAll("card[casesanimate].write-card").length || 0;
                 var myTimeCheck = setInterval(() => {
                     var n_card_2 = document.querySelectorAll("card[casesanimate].write-card").length || 0;
@@ -1685,7 +1775,7 @@ function loadEmailTemplateAction(){
             });
             
             // 1.2
-            document.querySelector("material-fab.themeable.action-2.compose").click();
+            document.querySelector("material-fab.themeable.compose").click();
             
         }
 
@@ -1903,10 +1993,28 @@ function loadKLCall(_keylanguage) {
 
 
 
-function replaceKeyHTMLByCaseID(_elm, _key, _value) {
+function replaceKeyHTMLByCaseID(_elm, _key, _value, _data = {}) {
     // cLog(() => {console.log('cdtx review', _elm, _key, _value); });
     if(!_value) return false;
     if(!_elm) return false;
+
+
+    var _date_key = [
+        ("0" + new Date().getDate()).slice(-2), "/",
+        ("0" + (new Date().getMonth() + 1)).slice(-2), "/",
+        new Date().getFullYear(),
+    ];
+
+    var _date_key_japan = [
+        new Date().getFullYear(),"/",
+        ("0" + (new Date().getMonth() + 1)).slice(-2),"/",
+        ("0" + new Date().getDate()).slice(-2),"/",
+        " ",
+        new Date().getHours(),":",
+        new Date().getMinutes(),"",
+        
+    ];
+    
 
 
     // div, span
@@ -1923,10 +2031,24 @@ function replaceKeyHTMLByCaseID(_elm, _key, _value) {
         elm.value = _value;
     });
     
+
+    // setup time
+    _elm.querySelectorAll('[data-infocase="local_format_meeting_time"]').forEach(function(elm){
+        elm.innerText = _date_key.join('');
+        if (result.mycountry == "Japan") { 
+            elm.innerText = _date_key_japan.join('');
+        }
+    });
+    
     // div, span
     _elm.querySelectorAll('[data-infocase="' + _key + '"]').forEach(function(elm){
         elm.innerText = _value;
         elm.setAttribute('data-infocase_value', _value);
+    });
+    
+    // div, span
+    _elm.querySelectorAll('[data-infocase_attr="' + _key + '"]').forEach(function(elm){
+        elm.setAttribute('data-infocase_attr', _value);
     });
 
     // div, span
@@ -1954,7 +2076,11 @@ function replaceKeyHTMLByCaseID(_elm, _key, _value) {
             var _arr = [];
             _website_listarr.forEach((url) => {
                 url = url.trim();
-                _arr.push(`<a href="${url}" target="_blank">${url}</a>`);
+                var url_http = url;
+                if(!url_http.startsWith('http')) {
+                    url_http = '//' + url_http;
+                }
+                _arr.push(`<a href="${url_http}" target="_blank">${url}</a>`);
             });
             elm.innerHTML = _arr.join(',');
         }
@@ -1973,12 +2099,23 @@ function replaceKeyHTMLByCaseID(_elm, _key, _value) {
         _elm.querySelectorAll('[data-infocase="customer_adsid_format"]').forEach(function(elm){
             elm.innerHTML = reformatAdsId(_value);
         });
+
+        _elm.querySelectorAll('[data-infocase_link="customer_adsid_format"]').forEach(function(elm){
+            elm.setAttribute("href", `https://adwords.corp.google.com/aw/go?external_cid=${_data.customer_adsid}`);
+            if(_data.customer_ocid) {
+                if(_data.customer_ocid.trim()) {
+                    elm.setAttribute("href", `https://adwords.corp.google.com/aw/conversions?ocid=${_data.customer_ocid}`)
+                } 
+            }
+            
+        });
     }
     if(_key == 'case_id') {
         _elm.querySelectorAll('[data-infocase="case_id"]').forEach(function(elm){
             elm.innerText = _value;
         });
     }
+    
 
     
     return _elm;
@@ -1994,7 +2131,7 @@ function replaceAllHtmlElement(_panel, _data) {
         for (const [key, value] of Object.entries(_data)) {
             _value_tmp = value;
             
-            replaceKeyHTMLByCaseID(_panel, key, _value_tmp);
+            replaceKeyHTMLByCaseID(_panel, key, _value_tmp, _data);
         }
     }
 }
@@ -2059,6 +2196,9 @@ function getToolShortlink(_caseid, _callback) {
 // Add more short link 
 function panelAddShortcutLink() {
     if(location.hostname !== 'cases.connect.corp.google.com') return;
+    
+    
+
     try {
         
 		// Select the node that will be observed for mutations
@@ -2282,7 +2422,7 @@ function crSubjectByHotKeyEmail() {
                     var _sheet_tab = _tab_cr_subject_templatemail['sheettab'];
                     _sheet_tab.forEach((item) => {
                         var _tempsubject = item['Subject'];
-                        console.log('crSubjectByHotKeyEmail', _tempsubject, window.dataCase);
+                        cLog(() => { console.log('crSubjectByHotKeyEmail', _tempsubject, window.dataCase); })
                         window.subject_hotkey_email[item['Key']] = _tempsubject;
                     });    
                 }
@@ -2576,7 +2716,7 @@ function timeLeftGoogleCalendar() {
     var btn_appointment = document.querySelectorAll(`[role="gridcell"] [jslog*="@group.calendar.google.com"]`);
     var btn_tasks = document.querySelectorAll(`[role="gridcell"] [data-eventid^="tasks_"]`);
     
-    console.log('wcout', btn_appointment.length, btn_tasks.length)
+    cLog(() => { console.log('wcout', btn_appointment.length, btn_tasks.length) })
     if(btn_appointment.length === 0 && btn_tasks.length === 0) return false;
     
 
@@ -2600,7 +2740,6 @@ function timeLeftGoogleCalendar() {
             calendar_tablist.insertAdjacentHTML('afterBegin', _TrustScript(btn_reminder_html));
             
         }
-
     }
 
     // === SETUP
@@ -2624,12 +2763,12 @@ function timeLeftGoogleCalendar() {
         if(drawerMiniMonthNavigatorElm) {
             var _contentsub = '', _contentsub_item = '',  _contentsub_tasks = '';
             _data.forEach(item => {
-                _contentsub_item += `<p><a href="https://cases.connect.corp.google.com/#/case/${item.caseid}" target="_blank"  >${item.caseid}</a>: <span class="hour">${toHoursAndMinutes(item.timeleft)}</span> left</p>`
+                _contentsub_item += `<p><a href="https://appointments.connect.corp.google.com/appointmentDetails?caseId=${item.caseid}" target="_blank"  >${item.caseid}</a>: <span class="hour">${toHoursAndMinutes(item.timeleft)}</span> left</p>`
             });
 
 
             _data_task.forEach(item => {
-                _contentsub_tasks += `<p><a href="https://cases.connect.corp.google.com/#/case/${item.caseid}" target="_blank"  >${item.caseid}</a>: <span class="hour">${toHoursAndMinutes(item.timeleft)}</span> left</p>`
+                _contentsub_tasks += `<p><a href="https://appointments.connect.corp.google.com/appointmentDetails?caseId=${item.caseid}" target="_blank"  >${item.caseid}</a>: <span class="hour">${toHoursAndMinutes(item.timeleft)}</span> left</p>`
             });
 
             _contentsub = `
@@ -2639,7 +2778,19 @@ function timeLeftGoogleCalendar() {
                 
                 <div class="panel_info-inner" >
                     ${_contentsub_item}
-                </div>`;
+                </div>
+                <hr>
+                <p class="panel_info-qplus">
+                    <span data-btnclk="qplus-rescan" data-qplus_status="Q+"></span>
+                </p>      
+                `;
+                
+                // <p class="panel_info-daysnext">
+                //     Next 14days: <span class="slall">${dayNextByCustom(14)}</span><br>
+                //     Next 07days: <span class="slall">${dayNextByCustom(7)}</span><br>
+                //     Next 05days: <span class="slall">${dayNextByCustom(5)}</span><br>
+                //     Next 03days: <span class="slall">${dayNextByCustom(3)}</span>
+                // </p>
 
             var _tempHtml = `
             <div class="panel_info _r" >
@@ -2736,7 +2887,7 @@ function timeLeftGoogleCalendar() {
         const notification = new Notification('Notification', options);
 
         notification.onclick = function () {
-            var _caseurl = 'https://cases.connect.corp.google.com/#/case/' + _caseid
+            var _caseurl = 'https://appointments.connect.corp.google.com/appointmentDetails?caseId=' + _caseid
             window.open(_caseurl);
         };
     }
@@ -2777,7 +2928,7 @@ function timeLeftGoogleCalendar() {
                     if(_get_caseid) {
                         var _timecasecurrent = convertPostion(_elm, _col);
 
-                        console.log('_get_caseid', _get_caseid);
+                        // console.log('_get_caseid', _get_caseid);
                         
                         // 1. Nếu tồn tại Google Meet ID  
                         var _jslog = _elm.getAttribute('jslog');
@@ -2830,14 +2981,49 @@ function timeLeftGoogleCalendar() {
         }
     }
 
+    function getInfoQPlus() {
+        if(typeof getQlusDetailListCase === 'function') {
+            getQlusDetailListCase(() => {
+                window.qlus_datalist = window.qlus_datalist || {};
+                cLog(() => { console.log('cdtx window.qlus_datalist', window.qlus_datalist); });
+                var _lst_arr_followup = [];
+                
+                var _date_key = [
+                    ("0" + new Date().getDate()).slice(-2),
+                    ("0" + (new Date().getMonth() + 1)).slice(-2),
+                    new Date().getFullYear(),
+                ];
+
+                var _ntoday = 0;
+                for (const [key, value] of Object.entries(window.qlus_datalist.list_bycaseid)) {
+                    if(!value[0].followUpCase) continue;
+                    _lst_arr_followup.push(value[0]);
+ 
+                    if(value[0].followUpCase.includes(_date_key.join('/'))) {
+                        _ntoday++;
+                    }
+                }
+
+                if(_lst_arr_followup.length > 0) {
+                    if(qlust_status = document.querySelector('[data-qplus_status]')) {
+                        qlust_status.innerHTML = `${_ntoday} / ${_lst_arr_followup.length} cases - FL today`;
+                    }
+                }
+
+            });
+        }
+    }
 
     // Run Once
     var _oncerun = 0;
     var _run = () => {
         if(_oncerun > 0) return false;
         _oncerun++;
+
         calendarGetInfoRealtime();
+        getInfoQPlus();
         setInterval(() => {
+            getInfoQPlus();
             calendarGetInfoRealtime();
         }, 1000 * 60)
     }
@@ -2885,3 +3071,989 @@ function mergeObjectNotOverwrite(target, src) {
 
     return _rs;
 }
+
+function initQplusLoad() {
+    if(location.hostname !== 'gauge.corp.google.com') return;
+    window.qlus_lststorage_badurl = window.qlus_lststorage_badurl || [];
+    var qplus_version = '1.2.1.20230603';
+    // 1.2.1.20230605 : display UI
+    // 1.1.1.20230603 : complete crawl all case qplus
+    
+    try {
+    
+        
+        
+    // _TrustScript
+        function _TrustScript(_string) {
+            const staticHtmlPolicyv2 = trustedTypes.createPolicy('foo-static', { createHTML: () => _string });
+            return staticHtmlPolicyv2.createHTML('');
+        }
+    
+        // them vao list localStorage
+        var _updateQplusCaseIDTimeReview = function(strKey) {
+            strKey = strKey.toString();
+            var _lstitem = localStorage.getItem('dr_itemslst') || false;
+            var _lstarr = _lstitem ? _lstitem.split("//") : [];
+            if(!_lstarr.includes(strKey)) {
+                _lstarr.push(strKey);
+            
+                var _rs = _lstarr.join("//");
+                localStorage.setItem("dr_itemslst", _rs);
+            }
+        }
+    
+        function setStorage(_key, datainput){
+            if(typeof datainput === 'object') {
+                datainput = JSON.stringify(datainput);
+            }
+            
+            // localStorage.setItem('qplus_lst_outsitelink', datainput)
+            localStorage.setItem(_key, datainput)
+        }
+    
+    
+        function getStorage(_key){        
+            var rs = localStorage.getItem(_key);
+            try {
+                return JSON.parse(rs);
+            } catch (error) {
+                return rs;
+            }
+        }
+
+        
+        function uiOverview(){        
+            var _html = `
+                <div class="uiqplus_inner">
+                    <div class="uiqplus_row uiqplus_process">
+                        <span class="uiqplus_process--rescan" data-btnclk="qplus-rescan" >Rescan</span>
+                        <div class="uiqplus_process--bar" data-barinfo="0/0"></div>
+                    </div>
+                    <div class="uiqplus_row">
+                        <div class="uiqplus_panel--tabpanel">
+                            <div class="uiqplus_panel--tab">
+                            <span class="uiqplus_panel--tab-refreshdata">Refresh</span> - <span class="uiqplus_panel--tab-time"></span>
+                            <div class="uiqplus_panel--tabinner">
+                                <div class="uiqplus_panel--item" data-pntabitem="last_submit" data-pntablabel="Last submit" ></div>
+                                <div class="uiqplus_panel--item" data-pntabitem="follow_up" data-pntablabel="Follow up" ></div>
+                                <div class="uiqplus_panel--item" data-pntabitem="case" data-pntablabel="Case" ></div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+
+            var uiqplus_elm = document.createElement("div");
+            uiqplus_elm.id = "uiqplus";
+            uiqplus_elm.className = "uiqplus";
+            uiqplus_elm.innerHTML = _html;
+
+
+            var _list_tab = '';
+            uiqplus_elm.querySelectorAll('.uiqplus_panel--item').forEach(item => {
+                _list_tab += `<span data-pntabitem_act="${item.getAttribute('data-pntabitem')}" >${item.getAttribute('data-pntablabel')}</span>`;
+            });
+
+            var _list_tab = `<div class="uiqplus_panel--tab_btnact">${_list_tab}</div>`;
+
+            uiqplus_elm.querySelector('.uiqplus_panel--tab').insertAdjacentHTML('beforeBegin', _list_tab);
+
+
+            onClickElm('[data-pntabitem_act]', 'click', function(elm, e){
+                var _this = e.target;
+                _this_action = _this.getAttribute('data-pntabitem_act');
+                
+                
+                uiqplus_elm.querySelectorAll('[data-pntabitem]').forEach(elm => { elm.classList.remove('active')})
+                uiqplus_elm.querySelector(`[data-pntabitem="${_this_action}"]`).classList.add('active');
+                
+                uiqplus_elm.querySelectorAll('[data-pntabitem_act]').forEach(elm => { elm.classList.remove('active')})
+                _this.classList.add('active');
+            });
+
+
+            var _convertmmddyyyy2Date = (_str) => {
+                // var _str = '01/06/2023';
+                var _arr_str = _str.split('/');
+                _arr_str.reverse();
+
+                return new Date(_arr_str.join('/'));
+            }
+
+            var _get_diffday = (str_date) => {
+                const date1 = _convertmmddyyyy2Date(str_date);
+                const date2 = new Date();
+                const diffTime = Math.abs(date2 - date1);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                var _str = 'today';
+                if(diffDays > 0) {
+                    _str = diffDays + " days";
+                    if(date2 > date1) {
+                        _str = '-' + diffDays + " days";
+                    }
+                }
+                return _str;
+            }
+
+            // get Data
+            
+            
+            wait4Elem('[data-pntabitem_act="follow_up"]').then((elm) => {
+                elm.click();
+            });
+
+            var _reupdate = () => {
+                getQlusDetailListCase(() => {
+                    window.qlus_datalist = window.qlus_datalist || {};
+                    cLog(() => { console.log('cdtx window.qlus_datalist', window.qlus_datalist); });
+    
+                    //  for Last submit
+                        var _temp = (_value) => {
+                            return `<tr>
+                                <td><a href="${_value.linkEvaluationDetails}" target="_blank">${_value.caseID}</a> q+</td>
+                                <td>${_value.statusCase}</td>
+                                <td>${_value.dateReview}</td>
+                                <td>${_value.followUpCase + `${_value.followUpCase ? ` (${_get_diffday(_value.followUpCase)})` : "" }`}</td>
+                                <td>
+                                    <span data-btnclk="ui-qplus-addtrviewdetail" data-caseidhere="${_value.caseID}" >View</span>
+                                </td>
+                            </tr>`;
+                        }
+                        var _tr = ``;
+                        for (const [key, value] of Object.entries(window.qlus_datalist.list_bycaseid)) {
+                            
+                            _tr += _temp(value[0])
+                        }
+                        
+                        var _lst_table = `<table>
+                                <thead>
+                                    <tr>
+                                        <th>Case ID</th>
+                                        <th>Status</th>
+                                        <th>Submit</th>
+                                        <th>FL</th>
+                                        <th class="uiqplus-act"><span data-btnclk="ui-qplus-addtrviewall" >View all</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                ${_tr}
+                                </tbody>
+                        </table>`;
+                        uiqplus_elm.querySelector(`[data-pntabitem="last_submit"]`).innerHTML = _lst_table;
+                    
+                    //  for Follow up
+                        var _lst_arr_followup = [];
+                        for (const [key, value] of Object.entries(window.qlus_datalist.list_bycaseid)) {
+                            if(!value[0].followUpCase) continue;
+                            _lst_arr_followup.push(value[0]);
+                        }
+    
+                        _lst_arr_followup.sort((a,b) => {
+                            var _a_time_date = _convertmmddyyyy2Date(a.followUpCase);
+                            var _b_time_date = _convertmmddyyyy2Date(b.followUpCase);
+                            if(_a_time_date && _b_time_date) {
+                                if ( _a_time_date < _b_time_date ){
+                                    return -1;
+                                }
+                            }
+                            return 0;
+                        })
+    
+                        var _tr = ``;
+                        
+                        cLog(() => { console.log('CHECK', _lst_arr_followup) });
+                        for (const value of _lst_arr_followup) {
+                            _tr += _temp(value);
+                        }
+                        
+                        var _lst_table = `<table>
+                                <thead>
+                                    <tr>
+                                        <th>Case ID</th>
+                                        <th>Status</th>
+                                        <th>Submit</th>
+                                        <th>FL</th>
+                                        <th class="uiqplus-act"><span data-btnclk="ui-qplus-addtrviewall" >View all</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                ${_tr}
+                                </tbody>
+                        </table>`;
+                        uiqplus_elm.querySelector(`[data-pntabitem="follow_up"]`).innerHTML = _lst_table;
+
+                        
+                    //  for Case
+                        var _tr = ``;
+                        loadAllCaseID((listcase) => {
+                            // console.log('HERE', listcase);
+                            // cLog(() => { console.log('CHECK', _lst_arr_followup) });
+                            
+                            var _lst_arr_followup = [];
+                            for (const value of listcase) {
+                                if(!value.status_case) continue;
+                                _lst_arr_followup.push(value);
+                            }
+
+                            _lst_arr_followup.sort((a,b) => {
+                                if(!(
+                                    a.status_case.includes('SO -')
+                                    || a.status_case.includes('IN -')
+                                )) {
+                                    return -1;
+                                }
+                                return 0;
+                            });
+
+                            
+                            for (const value of _lst_arr_followup) {
+
+                                _tr += `<tr>
+                                            <td>${value.case_id}</td>
+                                            <td>${getDomainOnlyURL(value.customer_website)}</td>
+                                            <td>${value.status_case}</td>
+                                            <td><span data-btnclk="ui-qplus-addtrviewdetail" data-caseidhere="${value.case_id}" >View</span></td>
+                                        </tr>`;
+                            }                            
+                        
+                            var _lst_table = `<table>
+                                <thead>
+                                    <tr>
+                                        <th>Case ID</th>
+                                        <th>Website</th>
+                                        <th>Status</th>
+                                        <th class="uiqplus-act"><span data-btnclk="ui-qplus-addtrviewall" >View all</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                ${_tr}
+                                </tbody>
+                            </table>`;
+                            uiqplus_elm.querySelector(`[data-pntabitem="case"]`).innerHTML = _lst_table;
+                        });
+                        // var _lst_arr_followup = [];
+                        // for (const [key, value] of Object.entries(window.qlus_datalist.list_bycaseid)) {
+                        //     if(!value[0].followUpCase) continue;
+                        //     _lst_arr_followup.push(value[0]);
+                        // }
+
+                        // _lst_arr_followup.sort((a,b) => {
+                        //     var _a_time_date = _convertmmddyyyy2Date(a.followUpCase);
+                        //     var _b_time_date = _convertmmddyyyy2Date(b.followUpCase);
+                        //     if(_a_time_date && _b_time_date) {
+                        //         if ( _a_time_date < _b_time_date ){
+                        //             return -1;
+                        //         }
+                        //     }
+                        //     return 0;
+                        // })
+
+                        // var _tr = ``;
+                        
+                        // cLog(() => { console.log('CHECK', _lst_arr_followup) });
+                        // for (const value of _lst_arr_followup) {
+                        //     _tr += _temp(value);
+                        // }
+                        
+
+
+                        
+                    uiqplus_elm.querySelector(`.uiqplus_panel--tab-time`).innerHTML = new Date();
+
+
+                    
+                });
+            }
+
+            _reupdate();
+            
+            uiqplus_elm.querySelector('.uiqplus_panel--tab-refreshdata').addEventListener('click', () => {
+                _reupdate();
+            })
+            // body append
+            document.body.insertAdjacentElement("afterEnd", uiqplus_elm);
+
+        }
+
+        var uiOverviewElem = () => {
+            return document.querySelector('.uiqplus');
+        }
+    
+        // them vao list localStorage
+        function qplusActionByParam() {
+            let params = new URLSearchParams(location.search);
+            let updateParam = (callback) => {
+                var url = new URL(location.href);
+                // url.searchParams.set('x', 42);
+                // url.searchParams.delete('x');
+                callback(url);
+                history.replaceState(null, '', url)
+            }
+    
+            
+            var removeData = params.get('removeData'); 
+            if(removeData) {
+                // Remove param
+                updateParam((url) => {
+                    url.searchParams.delete('removeData');
+                })
+                
+                removeChromeStorage('cdtx_qlus_detail_list_case', () => {
+                    Toastify({
+                        text: `Clear ${'cdtx_qlus_detail_list_case'} success!!!`,
+                        duration: 3000,
+                        callback: function(){
+                            this.remove();
+                        }
+                    }).showToast();
+                });
+
+            }
+
+
+
+            var apiconnect = params.get('apiconnect'); 
+            if(apiconnect) {
+                // Remove param
+                updateParam((url) => {
+                    url.searchParams.delete('apiconnect');
+                })
+
+                document.title = 'Scanning ...';
+
+
+                
+                uiOverview();
+
+
+
+                // crawl by iframe
+                var _crawbyframe_storage = () => {
+                    // Load from cache
+                    var _lst_list_scan = getStorage('qlus_lststorage');
+                    if(_lst_list_scan) {
+                        var _qlus_lststorage_time = getStorage('qlus_lststorage_time');
+                        // Ex:
+                        // var diff = Math.abs(new Date().getTime() - new Date('Fri May 19 2023 01:03:02 GMT+0800 (Malaysia Time)').getTime()) / 3600000;
+                        if(_qlus_lststorage_time) {
+                            var diff = Math.abs(new Date().getTime() - new Date(_qlus_lststorage_time).getTime()) / 3600000;
+                            
+                            // < 6 hour scan => get storage
+                            if(diff < 5) {
+                                cLog(() => { console.log("QPlus - 2 - crawl by frame"); });
+
+                                cLog(() => { console.log('Qplus from Cache') });
+                                crawl_eachlink(_lst_list_scan, 0);
+                                return true;
+                            }
+                        }
+                    }
+                };
+                
+                // debugger;
+                // get link workflow
+                var dqAction = function(n_time) {
+                    document.querySelectorAll('[data-workflow-index][jsaction]').forEach((elm) => {
+                        if (elm.innerText.includes('Technical Solutions Case Update')) {
+                            elm.click();
+                            var _parent = elm.parentElement;
+                
+                            var _oneTime = setInterval(() => {
+                                if (_parent.querySelectorAll('[data-isadmin]').length > 0) {
+                                    n_time = 4;
+                                    clearInterval(_oneTime);
+                                    
+                                    // Start
+                                    getChromeStorage("cdtx_qlus_detail_list_case", (response) => {
+                                        window.qlus_detail_list_case = window.qlus_detail_list_case || [];
+                                        if(rsvlue = response.value) {
+                                            window.qlus_detail_list_case = rsvlue;
+                                        }
+
+                                        initStart(_crawbyframe_storage);                            
+                                    })
+                                }
+                            }, 500);
+                        }
+                    }); 
+    
+                    if(!(n_time < 4)) {
+                        return false;
+                    }
+    
+                    setTimeout(() => {
+                        n_time = n_time + 1;
+                        if(n_time < 4) {
+                            dqAction(n_time);
+                        }
+                            
+                    }, 2000);
+                }
+                dqAction(0);
+                
+                
+                
+                return false;
+            }
+    
+    
+            // URL ?qlusact_click_flow=1
+            var isclickopen = params.get('qlusact_click_flow'); 
+            if(isclickopen) {
+                
+            }
+        }
+    
+        // Libs
+        var issetByKeyOnce = function(keyonce) {
+            window.qlus_detail_list_case = window.qlus_detail_list_case || [];
+            for (let index = 0; index < window.qlus_detail_list_case.length; index++) {
+                const item = window.qlus_detail_list_case[index];
+                if(item.keyonce === keyonce) {
+                    return true;
+                    break;
+                }
+            }
+            return false;
+        }
+    
+        // Libs
+        var _loadurlqplus = function (url_file, _index, elm_query, _callback) {
+            var frameID = '_detail_' + _index;
+            var _str_iframe = '<iframe src="' + url_file + '" id="' + frameID + '" style="opacity: 0; width: 1600px; height: 768px; transform: scale(.3); position: absolute; left: 0; top: 0; opacity: 1; pointer-events: none;"></iframe>';
+            _str_iframe = _TrustScript(_str_iframe);
+            document.body.insertAdjacentHTML("beforeEnd", _str_iframe);
+    
+    
+            var _temp_memory = sessionStorage || localStorage;
+            var _number = 0;
+            var _date_key = [
+                new Date().getFullYear(),
+                ("0" + new Date().getMonth()).slice(-2),
+                ("0" + new Date().getDate()).slice(-2),
+                ("0" + new Date().getHours()).slice(-2),
+                ("0" + new Date().getMinutes()).slice(-2),
+            ];
+    
+            // Frame
+            const iframe = document.getElementById(frameID);
+            const handleLoad = () => {
+                var nTime = 0;
+                var myTime = setInterval(function () {
+                    var frameObj = document.getElementById(frameID);
+                    if (frameObj) {
+                        var frameContent = frameObj.contentWindow.document.documentElement.outerHTML || frameObj.contentWindow.document.body.innerHTML;
+                        var frameContentObj = frameObj.contentWindow.document.documentElement || frameObj.contentWindow.document.body;
+    
+                        var _elms_id_sumary = frameContentObj.querySelectorAll(elm_query);
+    
+                        var _isfinish = false;
+                        if (_elms_id_sumary.length) {
+                            _isfinish = true;
+                        }
+    
+    
+                        if (_isfinish) {
+                            cLog(() => { console.log("finish frame id: " + frameID) });
+    
+                            _number = _elms_id_sumary.length;
+    
+    
+                            // 1 Stop
+                            clearInterval(myTime);
+                            frameObj.remove();
+    
+                            // 2 Load callback
+                            if (parseInt(_number) > 0) {
+                                // LOAD UI
+                                cLog(() => { console.log("callback") });
+    
+                                _callback(frameContentObj)
+                            }
+                        }
+                    }
+    
+    
+                    // 10s
+                    if (nTime > 10) {
+                        cLog(() => { console.log("qplus stop 10s"); });
+                        clearInterval(myTime);
+                        frameObj.remove();
+
+                        // === NEXT
+                        _callback('NEXT LINK');
+
+                        // // === STOPALLL
+                        // clearInterval(myTime);
+                        // window.qlus_lststorage_badurl[url_file] = 1;
+                        // setStorage('qlus_lststorage_badurl', window.qlus_lststorage_badurl);
+                        // setStorage('qlus_lststorage_badurl_time', new Date());
+
+                    }
+                    nTime++;
+                }, 2000);
+    
+    
+            };
+    
+            iframe.addEventListener('load', handleLoad, true);
+    
+        }
+    
+    
+        var TaskOwner = (_step, dom_body = document, callback) => {
+    
+    
+            if(_step === 'qpluslst-getlst') {
+    
+                // Step 2: 
+                var _list_case = [];
+        
+                var dom_body = dom_body;
+                dom_body.querySelectorAll(`[jsaction="click: qOOoce"]`).forEach((elm3) => {
+                // frameContentObj.querySelectorAll(`[jsaction="click: qOOoce"]`).forEach((elm3) => {
+                    if (elm3.innerText.includes('View Evaluation Details')) {
+        
+        
+                        var _parentElm = elm3.parentElement;
+                        var _dateReviewElm = _parentElm.querySelector('.mh4JWc'),
+                            _dateReview_string = '',
+                            _elmTask = {
+                                caseID: '',
+                                caseIDInner: '',
+                                dateReview: '',
+                                linkEvaluationDetails: '',
+                                statusCase: '',
+                                followUpCase: '',
+                            };
+        
+                        // CaseID
+                        _elmTask.caseID = _parentElm.querySelector('.YIWTkd').innerText;
+        
+        
+                        // Link detail
+                        _elmTask.linkEvaluationDetails = 'https://gauge.corp.google.com' + _parentElm.querySelector('.XaulGe .FkE4Ef').getAttribute('href');
+        
+                        var _regex = /[0-9]{1}[-][0-9]{13}/g;
+                        _string = _regex.exec(_elmTask.caseID);
+                        if (_string[0]) {
+                            _elmTask.caseID = _string[0];
+        
+                            // Review case Time
+                            if (_dateReviewElm) {
+                                _dateReview_string = _dateReviewElm.innerText.replace("Reviewed at", "");
+                                _elmTask.dateReview = _dateReview_string;
+                            } 
+        
+                            
+                            // Push
+                            _list_case.push(_elmTask);
+                        }
+                    }
+                });
+        
+                window.qlus_list_case = _list_case;
+                
+                TaskOwner('qpluslst-getdetail', dom_body, callback)
+            }
+        
+        
+        
+            // Tiến tới trang chi tiết
+            if(_step === 'qpluslst-getdetail') {
+                // Step 3
+                // Loop get detail
+                var _ncout = 0;
+                var _n_step_done = 1;
+                var _list_case = window.qlus_list_case;
+                window.qlus_detail_list_case = window.qlus_detail_list_case || [];
+                
+        
+                var _tempLstCase = {};
+                var _tempLstCaseArr = [];
+                var dquiLoadCase = (_index) => {
+                    var item = _list_case[_index];
+                    var keyonce = item.caseID + item.dateReview;
+
+                    // If isset then NEXT LINK
+                    if(issetByKeyOnce(keyonce)) {
+                        cLog(() => { console.log('Qplus issetByKeyOnce'); });
+                        _index++;
+                        if(_index < _list_case.length) {
+                            dquiLoadCase(_index);
+                        } else {
+                            callback();
+                            return false;
+                        }
+
+                        return false;
+                    }
+
+                    _loadurlqplus(item.linkEvaluationDetails, _index, '.uzMjAe', (frameContentObj) => {
+                        cLog(() => { console.log("Qplus", _n_step_done + "/" + _list_case.length, _list_case[_index]);  });
+                        _n_step_done++;
+        
+                        // frameContentObj is NULL have text = NEXT LINK
+                        if(frameContentObj == 'NEXT LINK') {
+                            _index++;
+                            dquiLoadCase(_index);
+                            return false;
+                        }
+
+                        // Case ID
+                        if(frameContentObj.querySelector('[href*="/#/case/"]')) {
+                            _list_case[_index].caseIDInner = frameContentObj.querySelector('[href*="/#/case/"]').innerText;
+                        }
+        
+                        frameContentObj.querySelectorAll('.uzMjAe').forEach((_elminframe) => {
+                            
+                            // // Sub-Status
+                            if (_elminframe.innerText.includes('Sub-Status')) {
+                                cLog(() => { console.log("Sub-Status", _elminframe.querySelector('.FEZIwd').innerText); });
+                                _list_case[_index].statusCase = _elminframe.querySelector('.FEZIwd').innerText;
+                            }
+        
+                            // // Follow up date
+                            if (_elminframe.innerText.includes('Follow up date')) {
+                                var _dateformat = _elminframe.querySelector('.FEZIwd').innerText;
+        
+                                if (/^\d\d\/\d\d\/\d\d\d\d$/.test(_dateformat)) {
+        
+                                    _list_case[_index].followUpCase = _dateformat;
+        
+                                }
+                            }
+        
+                        });
+        
+        
+                        if(issetByKeyOnce(keyonce) === false) {
+                            cLog(() => { console.log('QPlus window.qlus_detail_list_case', window.qlus_detail_list_case); });
+                            window.qlus_detail_list_case.push({
+                                'keyonce': keyonce,
+                                'item': item
+                            });        
+                        }
+                        
+                        _index++;
+        
+                        // Stop by manual
+                        // if(_index > 2) {
+                        //     callback()
+                        //     return false;
+                        // }
+        
+        
+                        if(_index < _list_case.length) {
+                            dquiLoadCase(_index);
+                        } else {
+                            callback();
+                            return false;
+                        }
+        
+                    });
+        
+        
+                }
+                
+                dquiLoadCase(0);
+            }
+        
+        }
+    
+    
+        var crawl_eachlink = (arr_lstlink, _index) => {
+            window.qlus_detail_list_case = window.qlus_detail_list_case || [];
+            cLog(() => { console.log("QPlus - CRAW - GET LINK", _index, arr_lstlink.length, arr_lstlink[_index]); });
+            if(elm_barinfo  = document.querySelector('[data-barinfo]')) {
+                elm_barinfo.setAttribute('data-barinfo', _index + "/" + arr_lstlink.length + "(loading ...)" )
+                elm_barinfo.style.width = (_index * 100 / arr_lstlink.length) + "%";
+
+
+                if(_index === arr_lstlink.length) {
+                    
+                    if(refreshdata = document.querySelector('.uiqplus_panel--tab-refreshdata')) {
+                        refreshdata.click();
+                    }
+                    
+                    setTimeout(() => {
+                        var second = 60 * 15; // 15p
+                        
+                        var ndown = second;
+                        var _myCountDown = setInterval(() => {
+                            ndown--;
+                            elm_barinfo.setAttribute('data-barinfo', `REFRESH ${ndown}s (${Math.round(ndown / 60)}min)` )
+                            elm_barinfo.style.width = (ndown * 100  / second) + "%";
+
+                            if(ndown < 0) {
+                                clearInterval(_myCountDown);
+                                document.querySelector('[data-btnclk="qplus-rescan"]').click();
+                            }
+                        }, 1000)
+                    }, 1000)
+                }
+            }
+            
+            if(arr_lstlink[_index])  {
+                
+                
+                _loadurlqplus(arr_lstlink[_index], _index, '[jsaction="click: qOOoce"]', (frameContentObj) => {
+                    
+                    // frameContentObj is NULL have text = NEXT LINK
+                    if(frameContentObj == 'NEXT LINK') {
+                        _index = _index + 1;
+                        crawl_eachlink(arr_lstlink, _index);
+                        return false;
+                    }
+                    
+                    TaskOwner('qpluslst-getlst', frameContentObj, () => {
+                        
+                        cLog(() => { console.log('QPlus XONG ' + _index, window.qlus_detail_list_case) });
+                                
+                        setChromeStorage("cdtx_qlus_detail_list_case", window.qlus_detail_list_case, (response) => {
+
+                        });
+
+                              
+                        setChromeStorage("cdtx_qlus_detail_list_case_lastupdate", new Date(), (response) => {
+
+                        })
+                        // NEXT
+                        _index = _index + 1
+                        crawl_eachlink(arr_lstlink, _index);
+                    })
+                })
+    
+                
+                
+            }
+        }
+        
+        var initStart = (_callback) => {    
+            cLog(() => { console.log("QPlus - 1 -  initStart - get link to storage") });
+            document.querySelectorAll('[data-workflow-index][jsaction]').forEach((elm) => {
+                var _parent = elm.parentElement;
+        
+                var _n_oneTime = 0
+                var _oneTime = setInterval(() => {
+                    if (_parent.querySelectorAll('[data-isadmin]').length > 0) {
+    
+                        var _i = 0;
+                        var _lst_list_scan = [];
+    
+                        cLog(() => { console.log("QPlus - OK - GET LINK") });
+    
+                        _parent.querySelectorAll('[data-isadmin]').forEach((elm2) => {
+                            var _link = elm2.querySelector('a').getAttribute('href'),
+                                _linkscan7day = 'https://gauge.corp.google.com' + _link + '?id=1&dateRangeField=1&timeRangeType=Last+7+days';
+                                // _linkscan14day = 'https://gauge.corp.google.com' + _link + '?id=0&dateRangeField=1&timeRangeType=Last+14+days';
+                                // _linkscan30day = 'https://gauge.corp.google.com' + _link + '?id=0&dateRangeField=1&timeRangeType=Last+30+days';
+                                _lst_list_scan.push(_linkscan7day);
+                                // _lst_list_scan.push(_linkscan14day);
+                                // _lst_list_scan.push(_linkscan30day);
+                                
+                            _i++;
+                        });
+                        
+                        cLog(() => { console.log("QPlus - OK - GET LINK", _lst_list_scan); });
+                        setStorage('qlus_lststorage', _lst_list_scan);
+                        setStorage('qlus_lststorage_time', new Date());
+    
+                        clearInterval(_oneTime);
+
+                        _callback();
+                    }
+    
+                    if(_n_oneTime > 6) {
+                        clearInterval(_oneTime);
+                        cLog(() => { console.log("QPlus - STOP") });
+                    }
+                    _oneTime++;
+                }, 1000);
+    
+            });
+        
+        }
+            
+    
+        // Search
+        // var str_search = "1-1248000034254";
+        // var rs_lst_search = [];
+        // _list_case.forEach(function(item){
+        //     if(item.caseID === str_search && item.caseIDInner === str_search) {
+        //         rs_lst_search.push(item);
+                
+        //     }
+        // })
+    
+        // rs_lst_search
+        qplusActionByParam();
+    } catch (error) {
+        cLog(() => { console.log('qQlus', error) });
+    }
+    
+}
+
+
+
+
+function getQlusDetailListCase(callback) {
+    cLog( () => { console.log("cdtx", 'getQlusDetailListCase', window.qlus_datalist) });
+    getChromeStorage("cdtx_qlus_detail_list_case", (response) => {
+        var _list_rs = response.value || [];
+
+
+        // Sort by dateReview
+        function compare( a, b ) {
+            if(a.item.dateReview && b.item.dateReview) {
+                if ( new Date(a.item.dateReview.trim()) > new Date(b.item.dateReview.trim()) ){
+                    return -1;
+                }
+            }
+            return 0;
+        }  
+        _list_rs.sort( compare );
+
+        // Group caseid
+        var _listbycaseid = {};
+        var _nodup = [];
+        _list_rs.forEach((_i) => {
+            if(_listbycaseid[_i.item.caseID]) {
+                _listbycaseid[_i.item.caseID].push(_i.item); 
+            } else {
+                _listbycaseid[_i.item.caseID] = [_i.item]
+            }
+        });
+
+        console.log('qplus', _listbycaseid)
+
+        var _temp = {
+            'list_rs': _list_rs,
+            'list_bycaseid': _listbycaseid,
+        }
+
+        console.log('qplus ', _temp);
+
+        window.qlus_datalist = _temp;
+
+        if(typeof callback == 'function') {
+            callback();
+        }
+    });
+}
+
+function merge2array(a, b, prop) {
+  var reduced = a.filter(aitem => !b.find(bitem => aitem[prop] === bitem[prop]))
+  return reduced.concat(b);
+}
+// console.log("ES6", merge(_a, _b, "caseid"));
+
+
+function uiOnCallPanel() {
+    if(!localStorage.getItem("dongtest_local")) return false;
+}
+
+
+function callPhoneDefaultNumber() {
+    // if(!IS_DEBUG) return;
+
+    var _title = document.querySelector('.dialog-with-notification h1');
+    var _phone = document.querySelector('.dialog-with-notification input.input.input-area');
+
+    if(_title && _phone) {
+        if(!document.querySelector('.cdtx__btn')) {
+            const dom = document.createElement('span');
+            dom.innerHTML = '+60 154-600 0161';
+            dom.setAttribute('data-phonenumber', '+60 154-600 0161');
+            dom.className = 'cdtx__btn';
+        
+            _title.insertAdjacentElement('beforeEnd', dom);
+            _title.classList.add('cdtx__havephonenumber');
+            
+            dom.addEventListener('click', function(){
+                
+                _phone.value = dom.getAttribute('data-phonenumber').replace(/[^\d+]+/g, '');
+                _phone.dispatchEvent(new Event('input'));
+                
+
+                setTimeout(() => {
+                    document.querySelector('.dialog-with-notification [debug-id="call-button"]').click();
+                }, 1000)
+            })
+        }
+    }
+    
+
+}
+
+function quaySoBarkeep(){
+    
+    if(!document.querySelector('[data-quayso_input]')) {
+                    
+        cLog(() => { console.log('barkeep.corp.google.com') });
+        
+        if(document.querySelector('.dialpad-section dialpad')) {
+            var _html = `<div style="display: flex;font-size: 13px; justify-content: center;flex-wrap: wrap;outline: none;margin: 5px;"><span data-quayso_input="1" contenteditable="true" style="padding: 6px 10px;background: #fcfcfc;border: 1px solid #ccc;outline: 0;min-width: 70%;box-sizing: border-box;border-radius: 5px 0 0 5px;margin: 0;flex-basis: 0;flex-grow: 1;max-width: calc(100% - 64px);"><span style="color: rgb(32, 33, 36); font-family: consolas, &quot;lucida console&quot;, &quot;courier new&quot;, monospace; font-size: 12px; letter-spacing: normal; white-space-collapse: preserve; background-color: rgb(255, 255, 255);"></span></span> <span style="/* padding: 5px 10px; */background: #1a73e8;border-radius: 0 5px 5px 0;border: 1px solid #1a73e8;cursor: pointer;color: #fff;user-select: none;width: 30%;text-align: center;flex-basis: 0;flex-grow: 1;max-width: 100%;line-height: 28px;height: 28px;font-size: 12px;max-width: 64px;" data-quayso_submit="1">Dial now</span></div>`;
+            
+            _html = _TrustScript(_html);
+
+            
+            document.querySelector('.dialpad-section').insertAdjacentHTML('beforeBegin', _html);
+            
+            
+            document.querySelector('[data-quayso_submit]').addEventListener("click", function(){
+                var _number = document.querySelector('[data-quayso_input]').innerText;
+                _number = _number.replace(/[^\d#*]+/g, '');
+                var _numberarr = _number.split('');
+    
+                var _index_st = 0;
+                var _color_act = `#A` + Math.floor((Math.random() * 99) + 10) + "A00";
+                var _myTime = setInterval(() => {
+                    var _pad = _numberarr[_index_st];
+                    if(_pad) {
+                        var _dialbtn = null;
+                        cLog(() => { console.log(_pad) });
+                        switch (_pad) {
+                            case '#':
+                                _dialbtn = document.querySelector(`.dialpad-section [aria-label="Pound sign"]`);
+                                
+                                break;
+                            case '*':
+                                _dialbtn = document.querySelector(`.dialpad-section [aria-label="Star sign"]`);
+                                
+                                break;
+                        
+                            default:
+                                _dialbtn = document.querySelector(`.dialpad-section [aria-labelledby="dialpad-button-${_pad}"]`);
+
+                                break;
+                        }
+                        
+                        if(_dialbtn) {
+                            // _dialbtn.style.backgroundColor = _color_act;
+                            _dialbtn.click();
+                        }
+    
+                    } else {
+                        clearInterval(_myTime);
+                    }
+                    _index_st = _index_st + 1;
+                }, 100);
+            })
+        }
+    }
+}
+
+
+
+function connectAppointment(caseid = null){
+    if(caseid == null) {
+        if(document.querySelector('.case-id')) {
+            caseid = document.querySelector('.case-id').innerText;
+        }
+    }
+
+    var popupwin = window.open('https://appointments.connect.corp.google.com/appointmentDetails?caseId='+caseid,'popUpWindow','height=350,width=400,left=100,top=100,resizable=yes,scrollbars=no,toolbar=no,menubar=no,location=no,directories=no, status=yes');    
+    setTimeout(function() { popupwin.close();}, 5000);
+}
+

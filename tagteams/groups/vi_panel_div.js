@@ -816,8 +816,8 @@
                                         <tr>
                                             <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
                                                 <p dir="auto"><span class="" style="font-weight: normal;">
-                                                    Cảm ơn <span data-infocase="customer_gender">bạn</span> đã liên hệ với Nhóm giải pháp kỹ thuật về việc <b><span data-infocase="tasks_nowrap">ZZZ</span></b>&nbsp;cho
-                                                    <b><span data-infocase="customer_website">nhuahuongchi.com</span></b>
+                                                    Cảm ơn <span data-infocase="customer_gender">bạn</span> đã liên hệ với Nhóm giải pháp kỹ thuật về việc <b><span data-infocase="tasks_nowrap" data-highlight="need_recheck" >ZZZ</span></b>&nbsp;cho
+                                                    <b><span data-infocase="customer_website" data-highlight="need_recheck" >zzzz.com</span></b>
                                                 </p>
                                                 <ul style="font-weight: normal;"></ul>
                                                 <p style="font-weight: normal;">Hiện tại, chúng tôi đã hoàn tất việc triển khai và đang theo dõi trường hợp này để đảm bảo mọi thứ hoạt động đúng như dự kiến và mang lại kết quả mong muốn.<br>

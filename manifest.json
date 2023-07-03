@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "KL TAG TEAM",
-	"version": "7.6",
+	"version": "7.61",
 	"description": "KL TAG TEAM",
 	"icons": {
 		"16": "icon16x16.png",
@@ -12,7 +12,9 @@
 		"activeTab",
 		"declarativeContent",
 		"storage",
+		"identity",
 		"contextMenus",
+		"unlimitedStorage",
 		"notifications",
 		"tabs",
 		"https://*/",
@@ -35,12 +37,6 @@
 		"default_title": "options"
 	},
 	"content_scripts": [
-		{
-            "css": [ "speakeasy.min.css" ],
-            "js": [ "tagteams/groups/speakeasy/empty.js" ],
-            "matches": [ "https://barkeep.corp.google.com/*", "https://barkeep-test0.corp.google.com/agent/*" ],
-            "run_at": "document_start"
-        },
 		{
             "js": [ "wfm_helper.js" ],
             "matches": [ "https://appointments.connect.corp.google.com/*" ],
@@ -103,6 +99,7 @@
 				"tagteams/libs.js",
 				"tagteams/global.js",
 				"tagteams/vanbo.js",
+				"tagteams/linhvo.js",
 				"tagteams/groups/other_panel_div.js",
 				"tagteams/groups/other_sub.js",
 				"tagteams/groups/other_content_scripts.js",
@@ -119,7 +116,8 @@
 				"tagteams/groups/jp_sub.js",
 				"tagteams/groups/jp_content_scripts.js",
 				"tagteams/init.js"
-			]
+			],
+			"all_frames": true
 		}
 	],
 	"content_security_policy": "script-src 'self' https://www.tagteam-tdcx.com; object-src 'self'",

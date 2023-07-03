@@ -358,10 +358,6 @@ function vi_tagTeamTDCXLoad() {
                 panel_div.setAttribute("data-btntoolaction_status", _action);
                 
                 // open main
-                if(_action === 'focus_case') {
-                    tagteamFocusCase();
-                }
-                // open main
                 if(_action === 'extract_gtm_id') {
                     tagteam_showGTMID();
                 }
@@ -733,7 +729,7 @@ function loadInputCase(_panel, _datatemp, _isvalidate = true) {
 
     // STEP 2: Special display
     _panel.querySelector('[data-infocase_link="case_id"]').setAttribute("href", "https://cases.connect.corp.google.com/#/case/" + _datatemp.case_id);
-    _panel.querySelector('[data-infocase_link="customer_ocid"]').setAttribute("href", "https://adwords.corp.google.com/aw/overview?ocid=" + _datatemp.customer_ocid);
+    _panel.querySelector('[data-infocase_link="customer_ocid"]').setAttribute("href", "https://adwords.corp.google.com/aw/go?ocid=" + _datatemp.customer_ocid);
     
     //Format date
     // alert(new Date(_datatemp.meeting_time).toLocaleDateString('en-GB'));
@@ -1919,10 +1915,12 @@ var set_init_load = () => {
 var loadpanelcaseconnect = (is_reload = false) => {
 
     var _pos_append_html = function (cdtx_paneldivhtml) {
+        
         if(
-            window.location.hostname === "cases.connect.corp.google.com" && window.location.href.indexOf("#/case/") > - 1 || 
+            window.location.hostname === "cases.connect.corp.google.com" || 
             _global_status.test
         ) {
+
             // 1 document.body.classList.add("_panel_sidebar");
             document.documentElement.className += ' _panel_sidebar _hide_main ';
             document.body.insertAdjacentHTML("afterEnd", cdtx_paneldivhtml);
@@ -1933,130 +1931,6 @@ var loadpanelcaseconnect = (is_reload = false) => {
                     cLog(() => {console.log('1. isReadyBasic')});
 
                     isReadyBasic(() => {
-                        var _addshortcutbtn = () => {
-                            var _panel_addshortcutbtn = document.querySelector(".dock-container._panel_btnshortcut");
-                            if(!_panel_addshortcutbtn) {
-                                var dock_container = document.querySelector(".dock-container");
-                                if(dock_container) {
-                                    var strhtml = `<div class="dock-container _panel_btnshortcut">`;
-
-                                    // if(window.tagteamoption.optionkl__disable_dialog === false) {
-                                    //     strhtml += `<div class="material-button _panel_shortcut_toggleopenmain_withoutsave"  >
-                                    //             <div class="content">
-                                    //                 <img src="${window.dataTagteam.assets_url_img}/355037/google.svg">
-                                    //             </div>
-                                    //         </div>`;
-                                    // }
-
-                                    strhtml += `
-                                        <div class="material-button _panel_shortcut_openemailtemplate"  >
-                                            <div class="content">
-                                                <img src="${window.dataTagteam.assets_url_img}/194000/mail.svg">
-                                            </div>
-                                        </div>
-                                        <div class="material-button _panel_shortcut_fisrtemail"  >
-                                            <div class="content">
-                                                <img src="${window.dataTagteam.assets_url_img}/67628/email.svg">
-                                            </div>
-                                        </div>
-                                    </div>`;
-                                    
-                                    // <a href="http://go/teamVN" target="_blank" class="material-button _panel_shortcut_go_teamvietnam" data-textview="Hôm nay bạn chưa ghé go/TeamVN thì phải?"  >
-                                    //     <img src="${window.dataTagteam.assets_url_img}/pepe-4chan.gif">
-                                    //     <span class="content"></span>
-                                    // </a>
-                                    
-                                    var dock_container_add = _TrustScript(strhtml);
-                                    // // Open
-                                    // document.querySelector('[data-btnaction="openmain"]').click();
-                                    dock_container.insertAdjacentHTML("afterEnd", dock_container_add);
-                                    if(document.querySelector('._panel_shortcut_toggleopenmain_withoutsave')) {
-                                        document.querySelector('._panel_shortcut_toggleopenmain_withoutsave').addEventListener("click", (e) => {
-                                            var is_open = toggleClass("mainpanel_template", document.documentElement);
-
-                                            document.documentElement.classList.remove("email_template");
-
-                                            if(is_open) {
-                                                document.documentElement.classList.remove("_hide_main");
-                                                panel_div.classList.remove("hide_main");
-    
-                                                var _panels = panel_div.querySelectorAll(`[data-panel]`);
-                                                _panels.forEach((elm) => {
-                                                    elm.classList.remove("active");
-                                                });
-    
-                                                var _panel_elm_email = panel_div.querySelector(`[data-panel="main"]`);
-                                                _panel_elm_email.classList.add("active");
-                                            } else {
-                                                document.documentElement.classList.add("_hide_main");
-                                                panel_div.classList.add("hide_main");
-                                            }
-
-                                        });
-                                    }
-
-                                    document.querySelector('._panel_shortcut_openemailtemplate').addEventListener("click", (e) => {
-                                        var is_open = toggleClass("email_template", document.documentElement);
-
-                                        document.documentElement.classList.remove("mainpanel_template");
-
-                                        if(is_open) {
-                                            document.documentElement.classList.remove("_hide_main");
-                                            panel_div.classList.remove("hide_main");
-
-                                            var _panels = panel_div.querySelectorAll(`[data-panel]`);
-                                            _panels.forEach((elm) => {
-                                                elm.classList.remove("active");
-                                            });
-
-                                            var _panel_elm_email = panel_div.querySelector(`[data-panel="email-template"]`);
-                                            _panel_elm_email.classList.add("active");
-                                        } else {
-                                            document.documentElement.classList.add("_hide_main");
-                                            panel_div.classList.add("hide_main");
-                                        }
-                                        
-                                    });
-
-                                    
-
-
-                                    // // go/TeamVn
-                                    // var _timekey_current = new Date().getDate();
-                                    // getChromeStorage('goTeamVNToDay', (response) => {
-                                    //     var _timestorage = response.value || false;
-                                    //     if(_timestorage != _timekey_current) {
-                                    //         document.querySelector('._panel_shortcut_go_teamvietnam').classList.add('notview_today');
-                                    //     }
-                                    // });
-
-                                    // document.querySelector('._panel_shortcut_go_teamvietnam').addEventListener("click", (e) => {
-                                    //     // sessionStorage.setItem("goTeamVNToDay", _timekey_current);
-                                    //     setChromeStorage('goTeamVNToDay', _timekey_current);
-
-                                    //     e.target.remove();
-                                    // });
-
-                                    
-                                }
-                                
-                            }
-                        };
-
-                        // Start
-                        
-
-
-                        // 0.2 _addshortcutbtn
-                            cLog(() => {console.log('_addshortcutbtn');})
-                            wait4Elem('[debug-id="case-id"] .case-id').then(function () {
-                                _addshortcutbtn();
-                            });
-
-                            // recheck
-                            setInterval(() => {
-                                _addshortcutbtn();
-                            }, 5000);
 
 
                         // 2. CR Button Email Template
@@ -2167,11 +2041,6 @@ function autoLoadCode(keyaction) {
         }
 
         switch (keyaction) {
-            case 'auto_loadcode_vanbo':
-                if(typeof _datatemp.auto_loadcode_vanbo === "undefined") {
-                    window.dataTagteam.tagteamFocusCase();
-                }
-                break;
 
             case 'auto_loadgtmid':
                 if(typeof _datatemp.auto_loadcode_vanbo === "undefined") {
@@ -2201,25 +2070,6 @@ function loadInit() {
     // 0.1 Load panel
         loadpanelcaseconnect();
     
-    // 0.1 Load focus case
-        if(window.tagteamoption.optionkl__disable_focuscase == false) {
-            if(window.location.hostname === "cases.connect.corp.google.com" && window.location.href.indexOf("#/case/") > - 1) {
-                isReadyBasic(() => {
-                    autoLoadCode('auto_loadcode_vanbo');
-                });
-                
-                // var hashchange_oncevanbo = false;
-                // if(hashchange_oncevanbo === false) {
-                //     hashchange_oncevanbo = true;
-                //     window.addEventListener('hashchange', () => { 
-                //         // Load code van bo
-                //         isReadyBasic(() => {
-                //             autoLoadCode('auto_loadcode_vanbo');
-                //         });
-                //     }, false);
-                // }
-            }
-        }
         
     
 }    

@@ -4,6 +4,9 @@ window.dataTagteam.extension_id = chrome.runtime.id;
 window.dataTagteam.assets_url_img = 'chrome-extension://' + window.dataTagteam.extension_id + '/assets/img';
 window.dataTagteam.api_blog = 'https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/api.php';
 
+if(new Date().getSeconds() % 3 === 0) {
+    window.dataTagteam.api_blog = 'https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/api_backup.php';
+}
 
 
 // ==== LIB ====
@@ -1375,7 +1378,7 @@ function load_remote (result, _default_action) {
                     "language": result.mycountry,
                 };
                 
-                load_fetch_post_content(vi_api_blog, _body, (response_api) => {
+                load_fetch_post_content(window.dataTagteam.api_blog, _body, (response_api) => {
                     if(response_api.rs) {
                         setChromeStorage(_key, response_api.rs , () => {
                             if(response_api.typeaction == 'script_sync') {
@@ -1405,7 +1408,7 @@ function load_remote (result, _default_action) {
                         "language": result.mycountry,
                         "timesync": _timekey_current						
                     };
-                    load_fetch_post_content(vi_api_blog, _body, (response_api) => {
+                    load_fetch_post_content(window.dataTagteam.api_blog, _body, (response_api) => {
                         
                         cLog(() => {console.log("load_fetch_post_content", response_api);})
 
@@ -2716,7 +2719,8 @@ function timeLeftGoogleCalendar() {
     var btn_appointment = document.querySelectorAll(`[role="gridcell"] [jslog*="@group.calendar.google.com"]`);
     var btn_tasks = document.querySelectorAll(`[role="gridcell"] [data-eventid^="tasks_"]`);
     
-    cLog(() => { console.log('wcout', btn_appointment.length, btn_tasks.length) })
+    // cLog(() => { console.log('wcout', btn_appointment.length, btn_tasks.length) })
+    
     if(btn_appointment.length === 0 && btn_tasks.length === 0) return false;
     
 
@@ -3990,10 +3994,10 @@ function quaySoBarkeep(){
     
     if(!document.querySelector('[data-quayso_input]')) {
                     
-        cLog(() => { console.log('barkeep.corp.google.com') });
+        cLog(() => { console.log('barkeep.corp.google.com - Start') });
         
         if(document.querySelector('.dialpad-section dialpad')) {
-            var _html = `<div style="display: flex;font-size: 13px; justify-content: center;flex-wrap: wrap;outline: none;margin: 5px;"><span data-quayso_input="1" contenteditable="true" style="padding: 6px 10px;background: #fcfcfc;border: 1px solid #ccc;outline: 0;min-width: 70%;box-sizing: border-box;border-radius: 5px 0 0 5px;margin: 0;flex-basis: 0;flex-grow: 1;max-width: calc(100% - 64px);"><span style="color: rgb(32, 33, 36); font-family: consolas, &quot;lucida console&quot;, &quot;courier new&quot;, monospace; font-size: 12px; letter-spacing: normal; white-space-collapse: preserve; background-color: rgb(255, 255, 255);"></span></span> <span style="/* padding: 5px 10px; */background: #1a73e8;border-radius: 0 5px 5px 0;border: 1px solid #1a73e8;cursor: pointer;color: #fff;user-select: none;width: 30%;text-align: center;flex-basis: 0;flex-grow: 1;max-width: 100%;line-height: 28px;height: 28px;font-size: 12px;max-width: 64px;" data-quayso_submit="1">Dial now</span></div>`;
+            var _html = `<div style="display: flex;font-size: 13px; justify-content: center;flex-wrap: wrap;outline: none;margin: 5px;"><span data-quayso_input="1" contenteditable="plaintext-only" data-disnewline="1" style="padding: 6px 10px;background: #fcfcfc;border: 1px solid #ccc;outline: 0;min-width: 70%;box-sizing: border-box;border-radius: 5px 0 0 5px;margin: 0;flex-basis: 0;flex-grow: 1;max-width: calc(100% - 64px);"><span style="color: rgb(32, 33, 36); font-family: consolas, &quot;lucida console&quot;, &quot;courier new&quot;, monospace; font-size: 12px; letter-spacing: normal; white-space-collapse: preserve; background-color: rgb(255, 255, 255);"></span></span> <span style="/* padding: 5px 10px; */background: #1a73e8;border-radius: 0 5px 5px 0;border: 1px solid #1a73e8;cursor: pointer;color: #fff;user-select: none;width: 30%;text-align: center;flex-basis: 0;flex-grow: 1;max-width: 100%;line-height: 28px;height: 28px;font-size: 12px;max-width: 64px;" data-quayso_submit="1">Dial now</span></div>`;
             
             _html = _TrustScript(_html);
 
@@ -4008,11 +4012,15 @@ function quaySoBarkeep(){
     
                 var _index_st = 0;
                 var _color_act = `#A` + Math.floor((Math.random() * 99) + 10) + "A00";
+
                 var _myTime = setInterval(() => {
-                    var _pad = _numberarr[_index_st];
-                    if(_pad) {
+                    if(_numberarr[_index_st]) {
+                        var _pad = _numberarr[_index_st];
+                        
                         var _dialbtn = null;
-                        cLog(() => { console.log(_pad) });
+                        
+                        // console.log(_pad) 
+
                         switch (_pad) {
                             case '#':
                                 _dialbtn = document.querySelector(`.dialpad-section [aria-label="Pound sign"]`);

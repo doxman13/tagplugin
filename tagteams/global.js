@@ -3714,7 +3714,7 @@ function global_case(optionkl__disable_dialog) {
             
             
             if(location.hostname === 'barkeep.corp.google.com') {
-
+                quaySoBarkeep();
             }
             
             // if(location.hostname === 'barkeep.corp.google.com') {

@@ -82,6 +82,36 @@
 		},
 		{
 			"matches": [
+				"*://barkeep.corp.google.com/*"
+			],
+			"js": [
+				"tagteams/groups/_init_style.js",
+				"tagteams/groups/_init_panel.js",
+				"tagteams/libs.js",
+				"tagteams/global.js",
+				"tagteams/vanbo.js",
+				"tagteams/linhvo.js",
+				"tagteams/groups/other_panel_div.js",
+				"tagteams/groups/other_sub.js",
+				"tagteams/groups/other_content_scripts.js",
+				"tagteams/groups/vi_panel_div.js",
+				"tagteams/groups/vi_sub.js",
+				"tagteams/groups/vi_content_scripts.js",
+				"tagteams/groups/th_panel_div.js",
+				"tagteams/groups/th_sub.js",
+				"tagteams/groups/th_content_scripts.js",
+				"tagteams/groups/en_panel_div.js",
+				"tagteams/groups/en_sub.js",
+				"tagteams/groups/en_content_scripts.js",
+				"tagteams/groups/jp_panel_div.js",
+				"tagteams/groups/jp_sub.js",
+				"tagteams/groups/jp_content_scripts.js",
+				"tagteams/init.js"
+			],
+			"all_frames": true
+		},
+		{
+			"matches": [
 				"*://*.connect.corp.google.com/*",
 				"*://meet.google.com/*",
 				"*://calendar.google.com/*",
@@ -116,8 +146,7 @@
 				"tagteams/groups/jp_sub.js",
 				"tagteams/groups/jp_content_scripts.js",
 				"tagteams/init.js"
-			],
-			"all_frames": true
+			]
 		}
 	],
 	"content_security_policy": "script-src 'self' https://www.tagteam-tdcx.com; object-src 'self'",

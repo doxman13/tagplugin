@@ -134,9 +134,9 @@ var tagteamFocusCase = () => {
         
         // Once for All
         if(location.hostname !== 'cases.connect.corp.google.com') return false;
-        if(document.querySelector('.dock-float')) return false;
-
-        cLog(() => {console.log("CODE VAN BO LOAD HAS LOAD ONCE")});
+        
+        
+        cLog(() => {console.log("CODE VAN BO LOAD")});
         
 
         var ntime = 0;
@@ -1311,9 +1311,10 @@ var tagteamFocusCase = () => {
                         btn.setAttribute('href', url);
                     })
                 })
-                waitForElm('.more-less-button:not(.show-more)').then(elem => {
-                    elem.click();
-                })
+                
+                // waitForElm('.more-less-button:not(.show-more)').then(elem => {
+                //     elem.click();
+                // })
 
                 // Tam thoi disable by Linh
                 // waitForElm("span[aria-label='View hidden phone number']").then(elem => {
@@ -1334,19 +1335,18 @@ var tagteamFocusCase = () => {
                         caseSumary = elm.value.slice(0, updatedAtIdx);
                     } else caseSumary = elm.value;
                 })
-                
-                
-
-                
-                renderDock()
             }
         };
         
-        // observeOnce((elm) => {
-        //     if(!document.querySelector('.dock-float')) {
-        //         execFocusCase();
-        //     }
-        // });
+        observeOnce((elm) => {
+            if(document.querySelector('.read-card.focused')) {
+                if(!document.querySelector('.dock-float')) {
+                    renderDock();
+                }
+            }
+        });
+        
+        
         execFocusCase();
 
         /**Function utility */
@@ -1401,8 +1401,35 @@ var tagteamFocusCase = () => {
         }
 
         function adsICS() {
+            
             var adsUrl = 'https://adwords.corp.google.com/aw/go?cid=' + cid;
+            
+            
+            if(window.dataCase.customer_ocid) {
+                window.dataCase.customer_ocid.split(',').forEach((item) => {
+                    var _int = item.trim();
+                    adsUrl = `https://adwords.corp.google.com/aw/conversions?ocid=${_int}`;
+                    window.open(adsUrl, '_blank').focus();
+                })
+                
+                return true;
+            }
+            
+            
+            if(window.dataCase.customer_adsid) {
+                
+                adsUrl = `https://adwords.corp.google.com/aw/go?external_cid=${window.dataCase.customer_adsid}`;
+                window.open(adsUrl, '_blank').focus();
+                
+                return true;
+            }
+            
+            
             window.open(adsUrl, '_blank').focus();
+            return false;            
+            
+            
+            
         }
 
         function gearloose() {
@@ -1411,6 +1438,20 @@ var tagteamFocusCase = () => {
         }
 
         function ogtDashboard() {
+            
+            if(window.dataCase.customer_ocid) {
+                window.dataCase.customer_ocid.split(',').forEach((item) => {
+                    var _int = item.trim();
+                    var ogtauditUrl = 'https://dashboards.corp.google.com/view/_a186557f_a4ad_4e9b_b1f0_fc360bc3143e?f=customer_id:in:' + _int;
+                    var ogtTechsolURL = 'https://dashboards.corp.google.com/view/_7f750f18_1d9b_4f6e_82b8_70e37c1e992a?f=customer_id:eq:'+ _int;
+                    window.open(ogtauditUrl, '_blank').focus();
+                    window.open(ogtTechsolURL, '_blank');
+                })
+                
+                return true;
+            }
+            
+            
             var ogtauditUrl = 'https://dashboards.corp.google.com/view/_a186557f_a4ad_4e9b_b1f0_fc360bc3143e?f=customer_id:in:' + cid;
             var ogtTechsolURL = 'https://dashboards.corp.google.com/view/_7f750f18_1d9b_4f6e_82b8_70e37c1e992a?f=customer_id:eq:'+cid
             window.open(ogtauditUrl, '_blank').focus();
@@ -1418,6 +1459,17 @@ var tagteamFocusCase = () => {
         }
 
         function ecDashboard() {
+            if(window.dataCase.customer_ocid) {
+                window.dataCase.customer_ocid.split(',').forEach((item) => {
+                    var _int = item.trim();
+                    var ecUrl = 'https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:' + _int;
+                    window.open(ecUrl, '_blank').focus();
+                })
+                
+                return true;
+            }
+            
+            
             var ecUrl = 'https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:' + cid;
             window.open(ecUrl, '_blank').focus();
         }
@@ -1606,3 +1658,23 @@ var tagteamFocusCase = () => {
     }
 
 };
+
+if(location.hostname == 'cases.connect.corp.google.com') {
+    console.log('okela')
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.message === "hahahahaa") {
+        console.log('jajajajajajajaa')
+    }
+    });
+}
+if(location.hostname == 'meet.google.com') {
+    console.log('vanbomeet')
+    console.log(chrome.tabs)
+    chrome.tabs.query({ url: "*://cases.connect.corp.google.com/*" }, function(tabs) {
+    if (tabs.length > 0) {
+        console.log('vanbomeet sendmessage')
+        var tabId = tabs[0].id;
+        chrome.tabs.sendMessage(tabId, { message: "hahahahaa" });
+    }
+    });
+}

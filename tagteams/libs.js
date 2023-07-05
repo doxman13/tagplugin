@@ -1318,7 +1318,7 @@ function readPoolCase() {
 
         
         
-        var is_live = window.result.optionkl__modecase != "Development" ? true : false;
+        var is_live = window.tagteamoption.optionkl__modecase != "Development" ? true : false;
         var untouch_over_10_days = '';
         var email_due_reply_24hrs = '';
 
@@ -4055,7 +4055,7 @@ function quaySoBarkeep(){
 
 
 function connectAppointment(caseid = null){
-    if(caseid == null) {
+    if(typeof caseid !== 'string' ) {
         if(document.querySelector('.case-id')) {
             caseid = document.querySelector('.case-id').innerText;
         }

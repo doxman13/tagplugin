@@ -22,7 +22,7 @@ javascript: (function () {
             }
           }
           if (index == el.length - 1) {
-            var para = document.querySelector('[class*="mat-mdc-paginator connect-paginator"]');
+            var para = document.querySelector('[class="mat-mdc-paginator connect-paginator"]');
             if (Agent.agent != undefined) {
               var agentName = Agent.agent;
               var link = 'https://cases.connect.corp.google.com' + '?agent=' + encodeURIComponent(agentName) + '/#/queues/bookmark/caseid:' + encodeURIComponent(Agent.case.toString().match(/[0-9]{1}-[0-9]{13}/g).join(' OR caseid:'));
@@ -50,7 +50,7 @@ javascript: (function () {
 
 
     clearBtn.addEventListener("click", function () {
-      const element = document.querySelectorAll('[class*="mat-mdc-paginator connect-paginator"] p');
+      const element = document.querySelectorAll('[class="mat-mdc-paginator connect-paginator"] p');
       for (let index = 0; index < element.length; index++) {
         element[index].remove();
       }
@@ -75,4 +75,4 @@ javascript: (function () {
     }
     setInterval(showAll, 2000);
   
-  })();
+})();

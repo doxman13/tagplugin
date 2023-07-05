@@ -12,13 +12,6 @@ var addShortCutBtn = () => {
         if(dock_container) {
             var strhtml = `<div class="dock-container _panel_btnshortcut">`;
 
-            // if(window.tagteamoption.optionkl__disable_dialog === false) {
-            //     strhtml += `<div class="material-button _panel_shortcut_toggleopenmain_withoutsave"  >
-            //             <div class="content">
-            //                 <img src="${window.dataTagteam.assets_url_img}/355037/google.svg">
-            //             </div>
-            //         </div>`;
-            // }
 
             strhtml += `
                 <div class="material-button _panel_shortcut_openemailtemplate"  >

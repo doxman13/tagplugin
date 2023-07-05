@@ -60,15 +60,17 @@ function en_tagTeamTDCXLoad() {
         optionkl__inputyourshortname: "Your shortname",
         optionkl__inputyourname: "Your name",
         optionkl__disable_dialog: false,
+        optionkl__enable_sf_helper: false,
         optionkl__disable_focuscase: false,
         optionkl__disable_autofixemail: false,
     }, function (result) {
+        window.result = result;
+        window.tagteamoption = result;
         window.tagteamoption.optionkl__modecase = result.optionkl__modecase;
         window.tagteamoption.optionkl__inputyourshortname = result.optionkl__inputyourshortname;
         window.tagteamoption.optionkl__inputyourname = result.optionkl__inputyourname;
         window.tagteamoption.optionkl__disable_dialog = result.optionkl__disable_dialog;
-        window.tagteamoption.optionkl__disable_focuscase = result.optionkl__disable_focuscase;
-        window.tagteamoption.optionkl__disable_autofixemail = result.optionkl__disable_autofixemail;
+        window.tagteamoption.optionkl__enable_sf_helper = result.optionkl__enable_sf_helper;
     });
 
     // ============

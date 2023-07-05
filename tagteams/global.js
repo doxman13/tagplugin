@@ -1,11 +1,12 @@
 function global_case(optionkl__disable_dialog) {
     if(optionkl__disable_dialog) return false;
-    console.log('global_case START', );
+    cLog(() => { console.log('global_case START'); })
 
 
 
     window.dataCase = window.dataCase || {};
     window.dataMeetLink = window.dataMeetLink || {};
+    window.dataMeetLinkAll = window.dataMeetLinkAll || [];
     window.caseCurrent = window.caseCurrent || {};
     window.isdongtest = localStorage.getItem("dongtest") || false;
     window.linkenable = localStorage.getItem("linkenable") || false;
@@ -888,28 +889,34 @@ function global_case(optionkl__disable_dialog) {
             
             if(_elmappend) {
                 _contenthtml = _TrustScript(_contenthtml);
-
+                
                 var _elm_prev = document.querySelector('[debug-id="case-summary-input"]')
+                
                 if(document.querySelector('#dock_order_1')) {
                     _elm_prev = document.querySelector('#dock_order_1');
                 }
-
-                _elm_prev.insertAdjacentHTML("afterEnd", _contenthtml);
                 
                 
-                var _panel = _elmappend.querySelector('._casecalendar_info');
+                if(_elm_prev) {
+                    _elm_prev.insertAdjacentHTML("afterEnd", _contenthtml);
+                }
+                                
+                var _panel = document.querySelector('._casecalendar_info');
                 
-                loadCaseStorageByID(_caseid, (response) => {
-                    if(!response.value) return false;
-                    var _data = response.value;
-                    
-                    if(_data.case_id) {
-                        console.log('__DONG v5', _data);
-                        // Display content
-                        templateDisplay(_panel, _data);
-                        _panel.classList.remove('_hidden');
-                    }
-                });
+                if(_panel) {
+                    loadCaseStorageByID(_caseid, (response) => {
+                        if(!response.value) return false;
+                        var _data = response.value;
+                        
+                        if(_data.case_id) {
+                            console.log('__DONG v5', _data);
+                            // Display content
+                            templateDisplay(_panel, _data);
+                            _panel.classList.remove('_hidden');
+                        }
+                    });    
+                }
+                
                 
                 
                 
@@ -2102,7 +2109,16 @@ function global_case(optionkl__disable_dialog) {
                     cLog(() => {
                         console.log('cdtx debug - window - dataCase ', window.dataCase);
                         console.log('cdtx debug - window - dataMeetLink ', window.dataMeetLink);
+                        
+                        
                         console.log('cdtx debug - window - loadgooglesheetpublish ', window.loadgooglesheetpublish);
+                        
+                        
+                        getChromeStorage("cdtx_listmeetlink_all", (response) => {
+                            var casesmeet = response.value || {};
+                            console.log('cdtx debug - window - dataMeetLinkAll ', casesmeet);    
+                            
+                        });
                         getChromeStorage("cdtx_caseidcurrentmeet_pspeakeasy_caseid", (response) => {
                             var _list_rs = response.value || [];
                             console.log('cdtx debug - window - cdtx_caseidcurrentmeet_pspeakeasy_caseid ', _list_rs);
@@ -2786,6 +2802,7 @@ function global_case(optionkl__disable_dialog) {
 
                 
                 getChromeStorage("cdtx_listmeetlink_all", (response) => {
+                    
                     var casesmeet = response.value || {};
                     document.querySelectorAll('[jslog][data-eventid]').forEach(function(elm){
                         var jslog = elm.getAttribute('jslog');
@@ -2815,8 +2832,10 @@ function global_case(optionkl__disable_dialog) {
 
                     }); 
                     // end loop
-
+                    
+                    
                     setChromeStorage("cdtx_listmeetlink_all", casesmeet, () => {
+                        
                         cLog(() => { console.log("Has update meet all link!", casesmeet); });
                     });
                 });
@@ -3457,8 +3476,6 @@ function global_case(optionkl__disable_dialog) {
                     // ===========
                         // Load button
                         addShortCutBtn();
-                        // Load code vanbo
-                        tagteamFocusCase();
                         // add infocase
                         addInfoCase2CaseConnect(_caseid);
                         // Add button reset version
@@ -3579,9 +3596,7 @@ function global_case(optionkl__disable_dialog) {
 
                         // Add Apoiment Icon
                         // pPTZAe
-                        if(!document.querySelector('.cdtx_opencaseconnect')) {
-                            
-                            
+                        if(!document.querySelector('.cdtx_opencaseconnect')) {    
                             var _contenthtml = `<span class="cdtx_opencaseconnect" data-btnclk="open_connectappointment" data-text="${_caseid}" ></span> `;
                             _contenthtml = _TrustScript(_contenthtml);
                             document.querySelector('.pPTZAe').insertAdjacentHTML("afterBegin", _contenthtml);
@@ -4105,4 +4120,6 @@ function global_case(optionkl__disable_dialog) {
     openGAdsbyAdsID();
     initQplusLoad();
     uiOnCallPanel();
+    // Load code vanbo
+    tagteamFocusCase();
 }

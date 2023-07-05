@@ -10,6 +10,7 @@ function save_options() {
   var optionkl__inputyourname = document.getElementById('optionkl__inputyourname').value || "";
   var optionkl__inputyourshortname = document.getElementById('optionkl__inputyourshortname').value || "";
   var optionkl__disable_dialog = document.getElementById('optionkl__disable-dialog').checked || false;
+  var optionkl__enable_sf_helper = document.getElementById('optionkl__enable-sf-helper').checked || false;
 
   if(country == "Vietnam") {
 		
@@ -58,6 +59,7 @@ function save_options() {
     optionkl__inputyourname: optionkl__inputyourname,
     optionkl__inputyourshortname: optionkl__inputyourshortname,
     optionkl__disable_dialog: optionkl__disable_dialog,
+    optionkl__enable_sf_helper: optionkl__enable_sf_helper,
   }, function() {
     // Update status to let user know options were saved.
     var status = document.getElementById('status');
@@ -123,9 +125,7 @@ function restore_options() {
     optionkl__inputyourshortname: "",
     optionkl__inputyourname: "",
     optionkl__disable_dialog: false,
-    optionkl__disable_focuscase: false,
-    optionkl__disable_stylebytheme: false,
-    optionkl__disable_autofixemail: false,
+    optionkl__enable_sf_helper: false,
   }, function(items) {
     console.log(items);
 	console.log('why not here ' + items.myInjector + ' ' +items.gtmToDo);
@@ -138,6 +138,7 @@ function restore_options() {
 	document.getElementById('optionkl__inputyourshortname').value = items.optionkl__inputyourshortname;
 	document.getElementById('optionkl__inputyourname').value = items.optionkl__inputyourname;
 	document.getElementById('optionkl__disable-dialog').checked = items.optionkl__disable_dialog;
+	document.getElementById('optionkl__enable-sf-helper').checked = items.optionkl__enable_sf_helper;
 
 
 	console.log(items.ouremail);

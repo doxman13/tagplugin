@@ -66,7 +66,25 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                     <tbody>
                                         <tr>
-                                            <td align="left" style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 2px;">Giải pháp kỹ thuật của Google</td>
+                                            <td align="left" style="font-size: 16px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 2px;">
+                                            
+                                            
+                                            
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%">Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+                                            
+                                            
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -132,8 +150,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -208,8 +243,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -277,8 +329,29 @@
               <tbody>
                 <tr>
                   <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                  <span data-infosetting="your-name"></span><br>
-                  <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                  
+                    
+
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
+
+
                   </td>
                 </tr>
                 <tr>
@@ -442,8 +515,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -518,8 +608,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -600,8 +707,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -678,8 +802,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -766,8 +907,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -864,8 +1022,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -945,8 +1120,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -1026,8 +1218,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -1116,8 +1325,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -1195,8 +1421,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -1303,8 +1546,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -1374,8 +1634,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         
@@ -1445,8 +1722,25 @@
                                     <tbody>
                                         <tr>
                                             <td align="left" style="font-size: 20px; line-height: 24px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 8px;">
-                                                <span data-infosetting="your-name"></span><br>
-                                                <span style="font-size: 16px;"><i>Đội giải pháp kỹ thuật</i><br><i>TDCX đại diện của Google</i></span>
+                                                
+
+
+<table>
+<tr>
+<td>
+<img src="https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ" />
+</td>
+<td width=10px>
+</td>
+<td>
+<span style="font-size: 80%"><span data-infosetting="your-name"></span> <br/> Technical Solutions Team <br />  TDCX, on behalf of Google</span>
+</td>
+</tr>
+</table>
+
+
+
+
                                             </td>
                                         </tr>
                                         

@@ -1,15 +1,20 @@
-
-
 chrome.storage.sync.get({
     mycountry: "thailand",
     ouremail: "xxx@google.com",
     optionkl__modecase: "Auto",
     optionkl__disable_dialog: false,
+    optionkl__enable_sf_helper: false,
+    optionkl__inputyourshortname: false,
+    optionkl__inputyourname: false,
 },
     function (result) {
 
         window.result = result;
+        window.tagteamoption = result;
 
+        
+
+        
         var _default_action = () => {
             window.dataTagteam.language = other_language;
             window.dataTagteam.panel_div = other_panel_div;

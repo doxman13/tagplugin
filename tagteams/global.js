@@ -2166,6 +2166,7 @@ function global_case(optionkl__disable_dialog) {
 
                 if(_action === 'resetdata') {
                     if (confirm("You sure reupdate")) {
+                        elm.innerHTML = "Loading...";
                         var _arrlistkey = [
                             'cdtx_scriptsync_auto', 
                             'cdtx_loadgooglesheetpublish_timesave', 
@@ -2186,7 +2187,23 @@ function global_case(optionkl__disable_dialog) {
                             });
                         });
                         
-                        location.reload();
+                        
+                        // Start load crawl
+                        loadGoogleSheetOnlineWebPublics();
+                        
+                        // Check before reload page
+                        setInterval(() => {
+                            getChromeStorage("cdtx_loadgooglesheetpublish", (response2) => {
+                                var _rs = response2.value || 0;
+                                
+                                if(_rs) {
+                                    location.reload();
+                                }
+                            });
+                        }, 2000);
+                        
+                        
+                        
                     }
                     
                 }
@@ -3949,33 +3966,33 @@ function global_case(optionkl__disable_dialog) {
                 // loadCopyDianumber
                 try {
                     if(document.querySelector('.vFzkO')) {
-                        if(!document.querySelector('.vFzkO .cdtx_copydial_1')) {
-                            var _elm = document.querySelector('.vFzkO .iMP6zc + [jsname="zQ0Yjb"]');
-                            if(_elm) {
-                                var _textview = _elm.innerText.trim();
-                                if(_textview) {
-                                    _textview = _textview.replace(/[^\d#+]/g, '');
-                                    var _html = `<span class="cdtx_copydial cdtx_copydial_1" data-btnclk="copy_textattr_and_dial" data-text="${_textview}" >COPY</span>`;
-                                    _html = _TrustScript(_html);
-                                    _elm.insertAdjacentHTML("afterEnd", _html);
-                                }
-                            }
-                        }
 
-                        
-                        if(!document.querySelector('.vFzkO .cdtx_copydial_2')) {
-                            _elm = document.querySelector('.vFzkO .iMP6zc + [jsname="pCHCHe"]');
-                            if(_elm) {
-                                var _textview = _elm.innerText.trim();
-                                if(_textview) {
-                                    _textview = _textview.replace(/[^\d#+]/g, '');
-                                    var _html = `<span class="cdtx_copydial cdtx_copydial_2" data-btnclk="copy_textattr_and_dial" data-text="${_textview}" >COPY</span>`;
-                                    _html = _TrustScript(_html);
-                                    _elm.insertAdjacentHTML("afterEnd", _html);
+                        var _meet_dial_copy = (_primary, _search_pos, _id_button) => {
+                            if(!document.querySelector(_primary)) {
+                                var _str_elm = _search_pos;
+                                var _elm = document.querySelector(_str_elm);
+                                if(_elm) {
+                                    var _textview = _elm.innerText.trim();
+                                    if(_textview) {                
+                                        const _copydial_number = document.createElement("span");
+                                        _copydial_number.className  = 'cdtx_copydial';
+                                        _copydial_number.innerText = 'COPY';
+                                        _copydial_number.id = _id_button;
+                            
+                                        _elm.insertAdjacentElement('afterEnd', _copydial_number);
+                                        _copydial_number.addEventListener('click', () => {
+                                            _textview = _elm.innerText.trim().replace(/[^\d#+]/g, '');
+                                            copyTextToClipboard(_textview);
+                                        })
+                                        
+                                    }
                                 }
                             }
-                            
                         }
+                        _meet_dial_copy ('.vFzkO #cdtx_copydial_1', ".vFzkO .iMP6zc + [jsname='zQ0Yjb']",  "cdtx_copydial_1");
+                        _meet_dial_copy ('.vFzkO #cdtx_copydial_2', ".vFzkO .iMP6zc + [jsname='pCHCHe']",  "cdtx_copydial_2");
+
+
                     }
                 
                 

@@ -303,6 +303,58 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
 
                 
                 cLog(() => {console.log("eie --- START Wait - is_gcc_external ", is_gcc_external  ); });
+                
+                
+                
+                // AM Function
+                var am_function = () => {
+                    var elm_area = () => { return elm_parentheader.querySelector(".input.cc"); }
+                        if (is_gcc_external) {
+                            elm_area = () => { return elm_parentheader.querySelector(".input.bcc"); }
+                        }
+                        
+                        var elm_input = elm_area().querySelector("input");
+                        if(elm_area().innerText.trim().includes('@') === false && is_exclude_am_emaildfa === false) {
+                            // cLog(() => { console.log('eie 1checkandfix Add AM EMAIL ** 2 => START', 'is GCC', is_gcc_external); })
+                            elm_input.value = caseload.am_email;
+                
+                            elm_input.dispatchEvent(new Event('input'));
+                            elm_input.dispatchEvent(new Event('enter'));
+                            elm_input.dispatchEvent(new Event('change'));
+            
+                            // var n_time = 0;
+                            // var time_input_key = setInterval(function () {
+
+                            //     elm_input.dispatchEvent(new Event('blur'));
+                            //     var elm_technical = document.querySelector('email-address-content [debug-id="email"]');
+                            //     if (elm_technical) {
+                            //         if(elm_technical.innerText.includes(caseload.am_email)) {
+                            //             elm_technical.click();
+                            //         }
+                            //     }
+
+                            //     cLog(() => {  console.log('eie', elm_area().querySelectorAll('user-chip').length, caseload.am_email.split(',').length, elm_area().querySelectorAll('user-chip').length === caseload.am_email.split(',').length ); });
+                            //     if(elm_area().querySelectorAll('user-chip').length === caseload.am_email.split(',').length) {
+                            //         clearInterval(time_input_key);
+                            //     }
+
+                            //     if (n_time > 10) {
+                            //         cLog(() => { console.log('eie 1checkandfix Add AM EMAIL ** 2 => STOP ACTION '); })
+                            //         clearInterval(time_input_key);
+                            //         elm_input.dispatchEvent(new Event('blur'));
+                            //     }
+                            //     n_time++;
+                
+                            // }, 500);
+
+                            return false;
+                        }
+                }
+                
+                
+                
+                
+                
                 if(caseload) {
                     // Case ID is match
                     var _caseid_elm = document.querySelector('[debug-id="case-id"] .case-id');
@@ -336,6 +388,8 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                         var elm_parentheader = document.querySelector(`[data-eieid="${timekey}"]`);
                         elm_parentheader.classList.add("finished");
                         elm_parentheader.classList.add("finished-reply");
+                        
+                        am_function();
 
                         return false;
                     }
@@ -2008,6 +2062,19 @@ function replaceKeyHTMLByCaseID(_elm, _key, _value, _data = {}) {
         new Date().getFullYear(),
     ];
 
+
+    var _date_key_v2 = [
+        new Date().getHours()," giờ ",
+        new Date().getMinutes()," phút ",
+        (new Date().getHours() > 11 ? "chiều": "sáng"),
+        ", ngày ",
+        ("0" + new Date().getDate()).slice(-2), "/",
+        ("0" + (new Date().getMonth() + 1)).slice(-2), "/",
+        new Date().getFullYear(),
+    ];
+
+
+
     var _date_key_japan = [
         new Date().getFullYear(),"/",
         ("0" + (new Date().getMonth() + 1)).slice(-2),"/",
@@ -2042,6 +2109,29 @@ function replaceKeyHTMLByCaseID(_elm, _key, _value, _data = {}) {
             elm.innerText = _date_key_japan.join('');
         }
     });
+    
+    // v2 
+        _elm.querySelectorAll('[data-infocase="info_example_1stemail"]').forEach(function(elm){
+            // var _date_strreplace = '%0:%1 <span data-highlight="need_recheck">%5</span>%2-%3-%4';
+            var _date_strreplace = elm.getAttribute('data-templ') || '';
+            var _date_key_v2 = [
+                new Date().getHours(),
+                new Date().getMinutes(),
+                ("0" + new Date().getDate()).slice(-2),
+                ("0" + (new Date().getMonth() + 1)).slice(-2),        new Date().getFullYear(),
+                (new Date().getHours() > 11 ? "PM": "AM"),
+            ];
+            
+            
+            
+            _date_key_v2.forEach((_ite, _index) => {
+                _date_strreplace = _date_strreplace.replace('%' + _index, _ite);
+            });
+            
+            elm.innerHTML = _date_strreplace;
+
+        });
+    
     
     // div, span
     _elm.querySelectorAll('[data-infocase="' + _key + '"]').forEach(function(elm){
@@ -2495,6 +2585,8 @@ function getGooglesheetPublish(_callback) {
 }
 
 function updateMeetContentBySheet(_panel) {
+    if(!_panel) return false;
+
     try {
         if(window.loadgooglesheetpublish) {
             if(window.loadgooglesheetpublish['email varabiles']['sheettab']) {
@@ -2503,10 +2595,12 @@ function updateMeetContentBySheet(_panel) {
                         if(item['Attribute']) {
                             // console.log('GOOGLE SHEET', window.dataCase.customer_gmeet, item[window.keylanguage], window.keylanguage, item);        
                             if(window.dataCase.customer_gmeet){
-                                _panel.querySelectorAll(`[${item['Attribute']}]`).forEach(function(__elm){
-                                    __elm.innerHTML = item[window.keylanguage];
-                                });
-                                replaceAllHtmlElement(_panel, window.dataCase);
+                                if(_panel.querySelector(`[${item['Attribute']}]`)) {
+                                    _panel.querySelectorAll(`[${item['Attribute']}]`).forEach(function(__elm){
+                                        __elm.innerHTML = item[window.keylanguage];
+                                    });
+                                    replaceAllHtmlElement(_panel, window.dataCase);
+                                }
                             }
                         }
                     }
@@ -2522,12 +2616,15 @@ function toolEditorEmailTemplate4Dev() {
     try {
         
         var _load = () => {
+            
             const dom_editor = document.createElement("div");
             dom_editor.id = 'editor_email';
             dom_editor.className = 'editor_email';
             dom_editor.style.display = 'block';
-            dom_editor.style.height = '600px';
-            document.querySelector('.read-card.focused .section.header:first-child').insertAdjacentElement('afterEnd', dom_editor);
+            dom_editor.style.height = '100%';
+            
+            // document.querySelector('read-deck .read-cards-wrapper').insertAdjacentHTML('beforeEnd', );
+            document.querySelector('read-deck .read-cards-wrapper').insertAdjacentElement('beforeEnd', dom_editor);
 
             var editor = ace.edit("editor_email");
             editor.setTheme("ace/theme/monokai");
@@ -2564,12 +2661,23 @@ function toolEditorEmailTemplate4Dev() {
             if(typeof ace === 'object') {
                 _load();
             }
+            
+            var html_combie = '';
             loadFetchText("https://cdnjs.cloudflare.com/ajax/libs/ace/1.19.0/ace.min.js", (rs) => {
-                eval(rs);
-                if(typeof ace === 'object') {
-                    _load();
-                }          
-            })
+                html_combie += rs;
+                loadFetchText("https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/theme-monokai-css.min.js", (rs) => {
+                    html_combie += rs;
+                    eval(html_combie);
+                    
+                    if(typeof ace === 'object') {
+                        _load();
+                    }          
+                });
+            });
+        } else {
+            if(editor_email = document.querySelector('#editor_email')) {
+                editor_email.remove();
+            }
         }
     
     } catch (error) {
@@ -2704,8 +2812,6 @@ function timeLeftGoogleCalendar() {
     }
 
 
-
-
     // Stop if ready
     var drawerMiniMonthNavigatorElm = document.querySelector('#drawerMiniMonthNavigator');
     // if(drawerMiniMonthNavigatorElm) return false;
@@ -2715,13 +2821,14 @@ function timeLeftGoogleCalendar() {
     var kim_realtime = document.querySelector(`.H3tRZe`);
     if(!kim_realtime) return false;
     
+
     // Isset button appointment @group.calendar.google.com
-    var btn_appointment = document.querySelectorAll(`[role="gridcell"] [jslog*="@group.calendar.google.com"]`);
-    var btn_tasks = document.querySelectorAll(`[role="gridcell"] [data-eventid^="tasks_"]`);
+    // var btn_appointment = document.querySelectorAll(`[role="gridcell"] [jslog*="@group.calendar.google.com"]`);
+    // var btn_tasks = document.querySelectorAll(`[role="gridcell"] [data-eventid^="tasks_"]`);
     
     // cLog(() => { console.log('wcout', btn_appointment.length, btn_tasks.length) })
     
-    if(btn_appointment.length === 0 && btn_tasks.length === 0) return false;
+    // if(btn_appointment.length === 0) return false;
     
 
     // seach tablist
@@ -2729,10 +2836,13 @@ function timeLeftGoogleCalendar() {
     if(!calendar_tablist) return false;
     
 
+
+
     var btn_reminder = () => {
         return calendar_tablist.querySelector('.panel_info-btnrunremide');
     };
     if(btn_reminder()) return false;
+    
     
 
     if(calendar_tablist) {
@@ -2950,10 +3060,19 @@ function timeLeftGoogleCalendar() {
                                 };
                                 _data.push(_temp_info);
                                 if(_minute_timeleft < 6) {
-                                    window.caseNotiOnce = window.caseNotiOnce || _get_caseid;
-                                    if(window.caseNotiOnce !== _get_caseid) {
+                                    // debugger;
+                                    if(localStorage.getItem('__calendar_caseidopen') !== _get_caseid) {
+                                        // Once
+                                        localStorage.setItem('__calendar_caseidopen', _get_caseid) ;
+
+
+                                        // ACTION
                                         notificationCaseChrome(_get_caseid, _minute_timeleft);
-                                        window.caseNotiOnce = _get_caseid;
+
+                                        window.open('https://appointments.connect.corp.google.com/appointmentDetails?caseId='+ _get_caseid,
+                                            'window',
+                                            'fullscreen'
+                                        );
                                     }
                                 }
                                 
@@ -3029,7 +3148,7 @@ function timeLeftGoogleCalendar() {
         setInterval(() => {
             getInfoQPlus();
             calendarGetInfoRealtime();
-        }, 1000 * 60)
+        }, 1000 * 40)
     }
     
     if(localStorage.getItem('show_calendarview')) {
@@ -3992,21 +4111,26 @@ function callPhoneDefaultNumber() {
 
 function quaySoBarkeep(){
     
-    if(!document.querySelector('[data-quayso_input]')) {
+    if(!document.querySelector('[data-quayso_submit]')) {
                     
         cLog(() => { console.log('barkeep.corp.google.com - Start') });
         
         if(document.querySelector('.dialpad-section dialpad')) {
-            var _html = `<div style="display: flex;font-size: 13px; justify-content: center;flex-wrap: wrap;outline: none;margin: 5px;"><span data-quayso_input="1" contenteditable="plaintext-only" data-disnewline="1" style="padding: 6px 10px;background: #fcfcfc;border: 1px solid #ccc;outline: 0;min-width: 70%;box-sizing: border-box;border-radius: 5px 0 0 5px;margin: 0;flex-basis: 0;flex-grow: 1;max-width: calc(100% - 64px);"><span style="color: rgb(32, 33, 36); font-family: consolas, &quot;lucida console&quot;, &quot;courier new&quot;, monospace; font-size: 12px; letter-spacing: normal; white-space-collapse: preserve; background-color: rgb(255, 255, 255);"></span></span> <span style="/* padding: 5px 10px; */background: #1a73e8;border-radius: 0 5px 5px 0;border: 1px solid #1a73e8;cursor: pointer;color: #fff;user-select: none;width: 30%;text-align: center;flex-basis: 0;flex-grow: 1;max-width: 100%;line-height: 28px;height: 28px;font-size: 12px;max-width: 64px;" data-quayso_submit="1">Dial now</span></div>`;
+            var _html = `<div style="display: flex;font-size: 13px; justify-content: center;flex-wrap: wrap;outline: none;margin: 5px;"><span style="background: #1a73e8;border-radius: 5px;border: 1px solid #1a73e8;cursor: pointer;color: #fff;user-select: none;width: 30%;text-align: center;flex-basis: 0;flex-grow: 1;max-width: 100%;line-height: 28px;height: 28px;font-size: 12px;max-width: 64px;" data-quayso_submit="1">Dial now</span></div>`;
             
             _html = _TrustScript(_html);
 
             
             document.querySelector('.dialpad-section').insertAdjacentHTML('beforeBegin', _html);
             
-            
+
             document.querySelector('[data-quayso_submit]').addEventListener("click", function(){
-                var _number = document.querySelector('[data-quayso_input]').innerText;
+                
+                var _number = prompt("Enter dial number ", "");
+                if (!(_number != null && _number != "")) return false
+
+                // console.log('quayso')
+                // var _number = dataquayso_input.innerText;
                 _number = _number.replace(/[^\d#*]+/g, '');
                 var _numberarr = _number.split('');
     
@@ -4019,7 +4143,7 @@ function quaySoBarkeep(){
                         
                         var _dialbtn = null;
                         
-                        // console.log(_pad) 
+
 
                         switch (_pad) {
                             case '#':
@@ -4038,15 +4162,17 @@ function quaySoBarkeep(){
                         }
                         
                         if(_dialbtn) {
+                            console.log('quayso', _numberarr[_index_st]);
                             // _dialbtn.style.backgroundColor = _color_act;
-                            _dialbtn.click();
+                            // _dialbtn.click();
+                            _dialbtn.dispatchEvent(new Event('click'));
                         }
     
                     } else {
                         clearInterval(_myTime);
                     }
                     _index_st = _index_st + 1;
-                }, 100);
+                }, 350);
             })
         }
     }

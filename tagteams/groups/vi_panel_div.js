@@ -49,7 +49,7 @@
                                             <td align="left" style="font-size: 16px; line-height: 26px; font-family: Roboto, Arial, sans-serif; color: rgb(60, 64, 67); padding-bottom: 18px;">
                                                 <p>Cảm ơn bạn đã đặt lịch hẹn với Nhóm giải pháp kỹ thuật của Google. Người đại diện của Google đã thay mặt bạn đặt lịch hẹn này và chúng tôi sẽ hỗ trợ bạn theo Mã yêu cầu <span data-infocase="case_id">0-00000000000000</span> cho <span data-infocase="customer_website">customer_website.com</span>.&nbsp;</p>
                                                 <p>Vui lòng kiểm tra hộp thư đến trong email của bạn để tìm lời mời trên lịch cho cuộc hẹn sắp tới với chúng tôi, và làm theo hướng dẫn được trình bày trong thư để xác nhận việc bạn sẽ tham dự cuộc hẹn. Để chuẩn bị cho cuộc gọi, vui lòng xem và hoàn tất những Việc cần làm được nêu <a href="https://support.google.com/google-ads/answer/11605860" rel="noopener" target="_blank" class="ignore-globals" style="color: rgb(26, 115, 232); text-decoration-line: none;">tại đây</a>.</p>
-                                                <p dir="auto" data-infocase="linkgooglemeet_section"></p>
+                                                <p dir="auto" data-infocase="linkgooglemeet_section" style=" padding: 10px; background: #e8ffe2;" ></p>
                                                 <p>Nếu bạn có câu hỏi trước khi tham gia cuộc gọi hoặc muốn thêm những người tham dự khác, vui lòng cho chúng tôi biết bằng cách trả lời email này hoặc liên hệ với Người đại diện bán hàng của Google. Chúng tôi rất mong được làm việc với bạn! Cảm ơn bạn.</p>
                                             </td>
                                         </tr>

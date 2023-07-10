@@ -55,20 +55,21 @@ try {
                 if(new Date().getHours() > 19) clearInterval(notifyTime)
             }
             function notifyTime(){
-                let time = new Date()
-                console.log(time)
-                Object.keys(events).forEach(evt => {
-                    let nearEvent = events[evt]
-                    let caseid = evt
-                    if(nearEvent.getHours() == time.getHours() && nearEvent.getMinutes() == time.getMinutes()){
-                    console.log('vanbo anoucement: your case '+caseid+' is comming')
-                        window.open('https://appointments.connect.corp.google.com/appointmentDetails?caseId='+caseid,
-                        'window',
-                        'fullscreen'
-                        );
-                    }
-                })
-                if(time.getHours() > 19) clearInterval(notifyTime)
+                // Tạm thời tắt để theo dõi
+                // let time = new Date()
+                // console.log(time)
+                // Object.keys(events).forEach(evt => {
+                //     let nearEvent = events[evt]
+                //     let caseid = evt
+                //     if(nearEvent.getHours() == time.getHours() && nearEvent.getMinutes() == time.getMinutes()){
+                //     console.log('vanbo anoucement: your case '+caseid+' is comming')
+                //         window.open('https://appointments.connect.corp.google.com/appointmentDetails?caseId='+caseid,
+                //         'window',
+                //         'fullscreen'
+                //         );
+                //     }
+                // })
+                // if(time.getHours() > 19) clearInterval(notifyTime)
             }
             var events = {};
             detectTime();
@@ -695,6 +696,8 @@ var tagteamFocusCase = () => {
         // loadingCustom.classList.add('lds-dual-ring');
         // document.querySelector('.is-top iswirte .editor').appendChild(loadingCustom);
         function renderDock() {
+            if(!document.querySelector('[debug-id="case-summary-input"]')) return false;
+            
             var dock_float_html = `<div class="dock-float">
                 <div class="dock-float-container">
                     <li class="li-2 open-email">

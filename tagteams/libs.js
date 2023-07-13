@@ -2877,7 +2877,7 @@ function timeLeftGoogleCalendar() {
         if(drawerMiniMonthNavigatorElm) {
             var _contentsub = '', _contentsub_item = '',  _contentsub_tasks = '';
             _data.forEach(item => {
-                _contentsub_item += `<p><a href="https://appointments.connect.corp.google.com/appointmentDetails?caseId=${item.caseid}" target="_blank"  >${item.caseid}</a>: <span class="hour">${toHoursAndMinutes(item.timeleft)}</span> left</p>`
+                _contentsub_item += `<p><a href="https://cases.connect.corp.google.com/#/case/${item.caseid}" target="_blank"  >${item.caseid}</a>: <span class="hour">${toHoursAndMinutes(item.timeleft)}</span> left</p>`
             });
 
 
@@ -3117,12 +3117,40 @@ function timeLeftGoogleCalendar() {
                     new Date().getFullYear(),
                 ];
 
+
+
+                var _convertmmddyyyy2Date = (_str) => {
+                    // var _str = '01/06/2023';
+                    var _arr_str = _str.split('/');
+                    _arr_str.reverse();
+    
+                    return new Date(_arr_str.join('/'));
+                }
+            
+                var _get_diffday = (str_date) => {
+                    const date1 = _convertmmddyyyy2Date(str_date);
+                    const date2 = new Date();
+                    const diffTime = Math.abs(date2 - date1);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                    var _str = 0;
+                    
+                    if(diffDays > 0) {
+                        _str = diffDays;
+                        if(date2 > date1) {
+                            _str = '-' + diffDays;
+                        }
+                    }
+                    return parseInt(_str);
+                }
+                
+                
                 var _ntoday = 0;
                 for (const [key, value] of Object.entries(window.qlus_datalist.list_bycaseid)) {
                     if(!value[0].followUpCase) continue;
                     _lst_arr_followup.push(value[0]);
  
-                    if(value[0].followUpCase.includes(_date_key.join('/'))) {
+                    // console.log(_get_diffday(_date_key.join('/')));
+                    if(_get_diffday(value[0].followUpCase) < 0 ) {
                         _ntoday++;
                     }
                 }
@@ -3432,8 +3460,9 @@ function initQplusLoad() {
                             for (const value of _lst_arr_followup) {
 
                                 _tr += `<tr>
-                                            <td>${value.case_id}</td>
+                                            <td style="white-space: nowrap">${value.case_id}</td>
                                             <td>${getDomainOnlyURL(value.customer_website)}</td>
+                                            <td>${value.customer_adsid}</td>
                                             <td>${value.status_case}</td>
                                             <td><span data-btnclk="ui-qplus-addtrviewdetail" data-caseidhere="${value.case_id}" >View</span></td>
                                         </tr>`;
@@ -3444,6 +3473,7 @@ function initQplusLoad() {
                                     <tr>
                                         <th>Case ID</th>
                                         <th>Website</th>
+                                        <th>Ads ID</th>
                                         <th>Status</th>
                                         <th class="uiqplus-act"><span data-btnclk="ui-qplus-addtrviewall" >View all</span></th>
                                     </tr>
@@ -3548,7 +3578,39 @@ function initQplusLoad() {
                 
                 uiOverview();
 
+                var _animation = () => {
+                    const card = document.querySelector(".uiqplus_inner");
+                    const motionMatchMedia = window.matchMedia("(prefers-reduced-motion)");
+                    const THRESHOLD = 14;
+                    
+                    /*
+                     * Read the blog post here:
+                     * https://letsbuildui.dev/articles/a-3d-hover-effect-using-css-transforms
+                     */
+                    function handleHover(e) {
+                      const { clientX, clientY, currentTarget } = e;
+                      const { clientWidth, clientHeight, offsetLeft, offsetTop } = currentTarget;
+                    
+                      const horizontal = (clientX - offsetLeft) / clientWidth;
+                      const vertical = (clientY - offsetTop) / clientHeight;
+                      const rotateX = (THRESHOLD / 2 - horizontal * THRESHOLD).toFixed(2);
+                      const rotateY = (vertical * THRESHOLD - THRESHOLD / 2).toFixed(2);
+                    
+                      card.style.transform = `perspective(${clientWidth}px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) scale3d(1, 1, 1)`;
+                    }
+                    
+                    function resetStyles(e) {
+                      card.style.transform = `perspective(${e.currentTarget.clientWidth}px) rotateX(0deg) rotateY(0deg)`;
+                    }
+                    
+                    if (!motionMatchMedia.matches) {
+                      card.addEventListener("mousemove", handleHover);
+                      card.addEventListener("mouseleave", resetStyles);
+                    }
 
+                }
+                
+                _animation();
 
                 // crawl by iframe
                 var _crawbyframe_storage = () => {
@@ -4110,6 +4172,28 @@ function callPhoneDefaultNumber() {
 }
 
 function quaySoBarkeep(){
+    
+    // Auto dial
+    var _checkDialPad = () => {
+        dialpad = null
+        if(dialpad = document.querySelector('.dialpad-section dialpad'))  {
+            return dialpad;
+        }
+
+        return dialpad;
+    }
+
+    if(_checkDialPad()) {
+        console.log('_D2');
+        getChromeStorage('_pinmeet_temp', (response) => {
+            console.log('_D3');
+            cLog(() => { console.log('__D2', response) });
+            
+            // Reset Null
+            setChromeStorage('_pinmeet_temp', '');
+            return false;
+        });
+    }
     
     if(!document.querySelector('[data-quayso_submit]')) {
                     

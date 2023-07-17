@@ -1178,7 +1178,10 @@ function noteBarAlert(note, caseid, colortype = 'alert') {
                     // data id
                     var _str = `<noted data-id="${caseid}" ><span class="_str ${colortype}" >${note}</span></noted>`;
                     _str = _TrustScript(_str);
-                    elm_casedetails.querySelector('.case-body').insertAdjacentHTML("beforeBegin", _str);
+
+                    if(case_body = elm_casedetails.querySelector('.case-body')) {
+                        case_body.insertAdjacentHTML("beforeBegin", _str);
+                    }
                 }
             }
         }
@@ -1434,10 +1437,10 @@ function load_remote (result, _default_action) {
                 
                 load_fetch_post_content(window.dataTagteam.api_blog, _body, (response_api) => {
                     if(response_api.rs) {
-                        setChromeStorage(_key, response_api.rs , () => {
+                        loadFetchContent(response_api.script_url, (_html_panel) => {
                             if(response_api.typeaction == 'script_sync') {
                                 try {
-                                    eval(response_api.script_str);
+                                    eval(_html_panel);
                                 } catch (e) {
                                     if (e instanceof SyntaxError) {
                                         console.error("Error", e);
@@ -1447,6 +1450,20 @@ function load_remote (result, _default_action) {
                                 _default_action();
                             }
                         });
+                    //     setChromeStorage(_key, response_api.rs , () => {
+                            
+                    //         if(response_api.typeaction == 'script_sync') {
+                    //             try {
+                    //                 eval(response_api.script_str);
+                    //             } catch (e) {
+                    //                 if (e instanceof SyntaxError) {
+                    //                     console.error("Error", e);
+                    //                 }
+                    //             }
+                    //         } else {
+                    //             _default_action();
+                    //         }
+                    //     });
                     }
                 });
             break;
@@ -1759,7 +1776,6 @@ function loadEmailTemplateAction(){
                 // Insert value
                 subject.value = template_title.innerText;
                 
-                console.log('Here 1515', window.dataCase);
                 
                 replaceAllHtmlElement(template_body, window.dataCase);
                 
@@ -1887,8 +1903,6 @@ function loadTemplateEmailGoogleSheet(_caseid, _keylanguage) {
                         var subjectText = _item['Subject'] || "";
                         var colorText = _item['Color'] || "";
                         
-                        var tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = emailHtml;
                         
                         
                         subjectText = subjectText.replaceAll('{%case_id%}', '<span data-infocase="case_id"></span>')
@@ -2226,6 +2240,16 @@ function replaceAllHtmlElement(_panel, _data) {
             
             replaceKeyHTMLByCaseID(_panel, key, _value_tmp, _data);
         }
+    }
+    
+    // SETTING
+    if(_panel) {
+        _panel.querySelectorAll('[data-infosetting="your-name"]').forEach(function(elm){
+            if(window.tagteamoption.optionkl__inputyourname) {
+                elm.innerText = window.tagteamoption.optionkl__inputyourname;
+                elm.dispatchEvent(new Event('blur'));
+            }
+        });
     }
 }
 
@@ -2622,15 +2646,21 @@ function toolEditorEmailTemplate4Dev() {
             dom_editor.className = 'editor_email';
             dom_editor.style.display = 'block';
             dom_editor.style.height = '100%';
+            dom_editor.style.width = '100%';
+            dom_editor.style.top = '0px';
+            dom_editor.style.position = 'absolute';
+            dom_editor.style.zIndex = '99999';
             
             // document.querySelector('read-deck .read-cards-wrapper').insertAdjacentHTML('beforeEnd', );
             document.querySelector('read-deck .read-cards-wrapper').insertAdjacentElement('beforeEnd', dom_editor);
+            document.querySelector('read-deck .read-cards-wrapper').style.position = 'relative';
 
             var editor = ace.edit("editor_email");
             editor.setTheme("ace/theme/monokai");
             editor.session.setMode("ace/mode/html");
-            editor.session.setUseWrapMode(true);
+            editor.session.setUseWrapMode(false);
 
+            
 
             var _temlocalStorage = localStorage.getItem('_tempsaveaceeditor1');
             if(_temlocalStorage) {
@@ -2664,14 +2694,17 @@ function toolEditorEmailTemplate4Dev() {
             
             var html_combie = '';
             loadFetchText("https://cdnjs.cloudflare.com/ajax/libs/ace/1.19.0/ace.min.js", (rs) => {
-                html_combie += rs;
-                loadFetchText("https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/theme-monokai-css.min.js", (rs) => {
-                    html_combie += rs;
-                    eval(html_combie);
-                    
-                    if(typeof ace === 'object') {
-                        _load();
-                    }          
+                html_combie += "\n " + rs;
+                loadFetchText("https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/theme-monokai.js", (rs) => {
+                    html_combie += "\n " + rs;
+                    loadFetchText("https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/mode-html.js", (rs) => {
+                        html_combie += "\n " + rs;
+                        eval(html_combie);
+                        
+                        if(typeof ace === 'object') {
+                            _load();
+                        }    
+                    });
                 });
             });
         } else {
@@ -2688,10 +2721,37 @@ function toolEditorEmailTemplate4Dev() {
 
 
 function clearAndPrepareCRTemplate() {
+
     // Prepare
     var _composeemailcard = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"]');
     if(_composeemailcard) {
-        cLog(()=>{console.log("CR -> Start")});
+        // cLog(()=>{console.log("CR -> Start", window.loadgooglesheetpublish['email - find_replace'].sheettab)});
+        // cLog(()=>{console.log(window.result, window.keylanguage)});
+        var _listsheet_find_replace = [];
+        var _str_list_search = '';
+        try {
+            _listsheet_find_replace = window.loadgooglesheetpublish['email - find_replace'].sheettab;
+            if(_listsheet_find_replace) {
+                _listsheet_find_replace.forEach((item) => {
+
+                    
+                    var _strreplace = item[window.keylanguage];
+                    for (const [_key, _value] of Object.entries(window.dataCase)) {
+                        _strreplace = _strreplace.replaceAll(`{%${_key}%}`,`${_value}`)
+                    }
+                    
+                    _str_list_search += item['Find'] + ":" + _strreplace + "\n";
+                })
+            }   
+        } catch (error) {
+            cLog(()=>{console.error("_listsheet_find_replace", error)});
+        }
+
+
+        // cLog(() => {console.log('HHH', window.dataCase, _str_list_search )})
+
+
+
         var _email_body_content = _composeemailcard.querySelector('#email-body-content');
         _email_body_content.style.padding = '0px';
         _email_body_content.style.width = '100%';
@@ -2732,6 +2792,11 @@ function clearAndPrepareCRTemplate() {
                         var _heading = item.innerText.trim();
                         var _list = ['']
                         var _getvalue = searchAndReturnValue(vi_key_task_searchandreplace, _heading, 1);
+                        if(_getvalue) {
+                            item.innerText = _getvalue;
+                        }
+                        
+                        var _getvalue = searchAndReturnValue(_str_list_search, _heading, 1);
                         if(_getvalue) {
                             item.innerText = _getvalue;
                         }
@@ -4171,7 +4236,110 @@ function callPhoneDefaultNumber() {
 
 }
 
-function quaySoBarkeep(){
+function quaySoBarkeep(_type){
+    // option disable
+    try {
+        if(window.result.optionkl__form_option_data.cdtx_chk_disable_pin) return false;
+    } catch (error) {
+        console.error('cdtx_chk_disable_pin undentify', window.result)
+    }
+
+    if(_type === 'meet_showdialbutton') {
+        // loadCopyDianumber
+        try {
+            if(document.querySelector('.vFzkO')) {
+
+                var _meet_dial_copy = (_primary, _search_pos, _id_button) => {
+                    if(!document.querySelector(_primary)) {
+                        var _str_elm = _search_pos;
+                        var _elm = document.querySelector(_str_elm);
+                        if(_elm) {
+                            var _textview = _elm.innerText.trim();
+                            if(_textview) {    
+
+                                const _copydial_number = document.createElement("span");
+                                _copydial_number.className  = 'cdtx_copydial';
+                                _copydial_number.innerText = 'COPY';
+                                _copydial_number.id = _id_button;
+                    
+                                _elm.insertAdjacentElement('afterEnd', _copydial_number);
+                                _copydial_number.addEventListener('click', () => {
+                                    _textview = _elm.innerText.trim().replace(/[^\d#+]/g, '');
+                                    copyTextToClipboard(_textview);
+                                });
+                                
+                                if('cdtx_copydial_2' === _id_button) {
+                                    
+                                    const _dialnow = document.createElement("span");
+                                    _dialnow.className  = 'cdtx_copydial';
+                                    _dialnow.innerHTML = 'DIAL <span class="no">NO</span>';
+                                    _dialnow.title = 'Please check consent at dial section case';
+                                    _dialnow.id = 'cdtx_dialnow';
+
+                                    var _timeout = _timeout || null;
+
+                                    clearTimeout(_timeout);
+                                    
+                                    _elm.insertAdjacentElement('afterEnd', _dialnow);
+                                    _dialnow.addEventListener('click', () => {
+                                        
+                                        
+                                        setChromeStorage('_pinmeet_temp', _textview.trim().replace(/[^\d#+]/g, ''));
+                                        
+                                        // Empty if not use
+                                        _timeout = setTimeout(() => {
+                                            setChromeStorage('_pinmeet_temp', '');
+                                        }, 20 * 1000)
+                                    });
+
+                                    
+                                    const _dialnow_consent = document.createElement("span");
+                                    _dialnow_consent.className  = 'cdtx_copydial';
+                                    _dialnow_consent.innerHTML = 'DIAL <span class="yes">YES</span>';
+                                    _dialnow_consent.title = 'Auto accept consent! Please check and accept consent';
+                                    _dialnow_consent.id = 'cdtx_dialnow_consent';
+                                    
+                                    _elm.insertAdjacentElement('afterEnd', _dialnow_consent);
+                                    _dialnow_consent.addEventListener('click', () => {
+                                        
+                                        setChromeStorage('_pinmeet_temp', "consent" + _textview.trim().replace(/[^\d#+]/g, ''));
+                                        
+                                        // Empty if not use
+                                        _timeout = setTimeout(() => {
+                                            setChromeStorage('_pinmeet_temp', '');
+                                        }, 20 * 1000)
+                                    });
+                                        
+                                }
+                                
+                                
+                            }
+                        }
+                    }
+                }
+                _meet_dial_copy ('.vFzkO #cdtx_copydial_1', ".vFzkO .iMP6zc + [jsname='zQ0Yjb']",  "cdtx_copydial_1");
+                _meet_dial_copy ('.vFzkO #cdtx_copydial_2', ".vFzkO .iMP6zc + [jsname='pCHCHe']",  "cdtx_copydial_2");
+
+
+            }
+        
+        
+        
+            
+        } catch (error) {
+            console.error('catch', error)
+        }
+
+
+        return false;
+    }
+
+
+
+
+
+    // ====================
+    cLog(() => { console.log('DONGDEP BEGIN'); });
     
     // Auto dial
     var _checkDialPad = () => {
@@ -4183,23 +4351,146 @@ function quaySoBarkeep(){
         return dialpad;
     }
 
-    if(_checkDialPad()) {
-        console.log('_D2');
-        getChromeStorage('_pinmeet_temp', (response) => {
-            console.log('_D3');
-            cLog(() => { console.log('__D2', response) });
-            
-            // Reset Null
-            setChromeStorage('_pinmeet_temp', '');
+    var _checkDialToggle = () => {
+        dialpad_toggle = null;
+        if(dialpad_toggle = document.querySelector('#dialpad-toggle'))  {
+            return dialpad_toggle;
+        }
+
+        return dialpad_toggle;
+    }
+
+    var _checkConsentYesButton = () => {
+        var consentyesbtn = null;
+        
+        if(consentyesbtn = document.querySelector('#consent-yes-button'))  {
+            return consentyesbtn;
+        }
+
+        return consentyesbtn;
+    }
+    
+    
+    var _checkpin = (_textview) => {
+        if(!_textview.includes('#')) {
+            alert('PIN missing #');
             return false;
+        }
+
+        return true;
+    }
+
+
+    var _act_quayso = (_number) => {
+        
+        _number = _number.replace(/[^\d#*]+/g, '');
+        var _numberarr = _number.split('');
+
+        if(!_checkpin(_numberarr)) {
+            return false;
+        }
+
+        var _index_st = 0;
+        var _color_act = `#A` + Math.floor((Math.random() * 99) + 10) + "A00";
+
+        var _myTime = setInterval(() => {
+            if(_numberarr[_index_st]) {
+                var _pad = _numberarr[_index_st];
+                
+                var _dialbtn = null;
+                
+                switch (_pad) {
+                    case '#':
+                        _dialbtn = document.querySelector(`.dialpad-section [aria-label="Pound sign"]`);
+                        
+                        break;
+                    case '*':
+                        _dialbtn = document.querySelector(`.dialpad-section [aria-label="Star sign"]`);
+                        
+                        break;
+                
+                    default:
+                        _dialbtn = document.querySelector(`.dialpad-section [aria-labelledby="dialpad-button-${_pad}"]`);
+
+                        break;
+                }
+                
+                if(_dialbtn) {
+                    cLog(() => { console.log('quayso', _numberarr[_index_st]); });
+                    // _dialbtn.style.backgroundColor = _color_act; 
+                    
+                    _dialbtn.dispatchEvent(new Event('click'));
+                }
+
+            } else {
+                clearInterval(_myTime);
+            }
+            _index_st = _index_st + 1;
+        }, 350);
+    }
+    
+    
+    
+    
+    // toggle
+    if(_checkDialToggle()) {
+        getChromeStorage('_pinmeet_temp', (response) => {
+            if(response.value) {
+                cLog(() => { console.log('DONGDEP _checkDialToggle'); });
+                
+                if(!_checkDialToggle().classList.contains('donetoggle')) {
+                    
+                    cLog(() => { console.log('DONGDEP _checkDialToggle 2'); });
+                    
+                    if(!_checkDialPad()) {
+                        
+                        cLog(() => { console.log('DONGDEP _checkDialToggle 3'); });
+                        
+                        _checkDialToggle().click();
+                        _checkDialToggle().classList.add('donetoggle');
+                    }
+                }
+                
+                
+                if(_checkDialPad()) {
+                    if(!_checkDialPad().classList.contains('isdial_ready')) {
+                        _checkDialPad().classList.add('isdial_ready');
+                        
+                        cLog(() => { console.log('DONGDEP', 'ACTION GET PIN STORAGE QUAY SO', response); });
+                        
+                        // 1. Dial button
+                        _act_quayso(response.value);
+                        
+                        // 2. Auto click ConsentYesButton
+                        if(response.value.startsWith('consent')) {
+                            cLog(() => { console.log('DONGDEP HAVE CONSENT'); });
+                            if(_checkConsentYesButton()) {
+                                _checkConsentYesButton().click();
+                            }
+                        }
+                        
+                        
+                        // 3. Reset Null
+                        setChromeStorage('_pinmeet_temp', '', () => {
+                            cLog(() => { console.log('DONGDEP 4 Reset'); });
+                            _checkDialPad().classList.remove('isdial_ready');    
+                        });
+                    }
+                }
+            }
+        
         });
     }
+    
+    
+    
+    
     
     if(!document.querySelector('[data-quayso_submit]')) {
                     
         cLog(() => { console.log('barkeep.corp.google.com - Start') });
         
-        if(document.querySelector('.dialpad-section dialpad')) {
+        if(_checkDialPad()) {
             var _html = `<div style="display: flex;font-size: 13px; justify-content: center;flex-wrap: wrap;outline: none;margin: 5px;"><span style="background: #1a73e8;border-radius: 5px;border: 1px solid #1a73e8;cursor: pointer;color: #fff;user-select: none;width: 30%;text-align: center;flex-basis: 0;flex-grow: 1;max-width: 100%;line-height: 28px;height: 28px;font-size: 12px;max-width: 64px;" data-quayso_submit="1">Dial now</span></div>`;
             
             _html = _TrustScript(_html);
@@ -4209,54 +4500,15 @@ function quaySoBarkeep(){
             
 
             document.querySelector('[data-quayso_submit]').addEventListener("click", function(){
-                
+                    
+            
+
                 var _number = prompt("Enter dial number ", "");
-                if (!(_number != null && _number != "")) return false
+                if (!(_number != null && _number != "")) return false;
+                
 
-                // console.log('quayso')
-                // var _number = dataquayso_input.innerText;
-                _number = _number.replace(/[^\d#*]+/g, '');
-                var _numberarr = _number.split('');
-    
-                var _index_st = 0;
-                var _color_act = `#A` + Math.floor((Math.random() * 99) + 10) + "A00";
-
-                var _myTime = setInterval(() => {
-                    if(_numberarr[_index_st]) {
-                        var _pad = _numberarr[_index_st];
-                        
-                        var _dialbtn = null;
-                        
-
-
-                        switch (_pad) {
-                            case '#':
-                                _dialbtn = document.querySelector(`.dialpad-section [aria-label="Pound sign"]`);
-                                
-                                break;
-                            case '*':
-                                _dialbtn = document.querySelector(`.dialpad-section [aria-label="Star sign"]`);
-                                
-                                break;
-                        
-                            default:
-                                _dialbtn = document.querySelector(`.dialpad-section [aria-labelledby="dialpad-button-${_pad}"]`);
-
-                                break;
-                        }
-                        
-                        if(_dialbtn) {
-                            console.log('quayso', _numberarr[_index_st]);
-                            // _dialbtn.style.backgroundColor = _color_act;
-                            // _dialbtn.click();
-                            _dialbtn.dispatchEvent(new Event('click'));
-                        }
-    
-                    } else {
-                        clearInterval(_myTime);
-                    }
-                    _index_st = _index_st + 1;
-                }, 350);
+                // ACTION QUAY SO
+                _act_quayso(_number);
             })
         }
     }

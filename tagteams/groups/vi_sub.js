@@ -153,7 +153,33 @@ var vi_clearAndPrepareCRTemplate = () => {
     // Prepare
     var _composeemailcard = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"]');
     if(_composeemailcard) {
-        cLog(()=>{console.log("CR -> Start")});
+        // cLog(()=>{console.log("CR -> Start", window.loadgooglesheetpublish['email - find_replace'].sheettab)});
+        // cLog(()=>{console.log(window.result, window.keylanguage)});
+        var _listsheet_find_replace = [];
+        var _str_list_search = '';
+        try {
+            _listsheet_find_replace = window.loadgooglesheetpublish['email - find_replace'].sheettab;
+            if(_listsheet_find_replace) {
+                _listsheet_find_replace.forEach((item) => {
+
+                    
+                    var _strreplace = item[window.keylanguage];
+                    for (const [_key, _value] of Object.entries(window.dataCase)) {
+                        _strreplace = _strreplace.replaceAll(`{%${_key}%}`,`${_value}`)
+                    }
+                    
+                    _str_list_search += item['Find'] + ":" + _strreplace + "\n";
+                })
+            }   
+        } catch (error) {
+            cLog(()=>{console.error("_listsheet_find_replace", error)});
+        }
+
+
+        // cLog(() => {console.log('HHH', window.dataCase, _str_list_search )})
+
+
+
         var _email_body_content = _composeemailcard.querySelector('#email-body-content');
         _email_body_content.style.padding = '0px';
         _email_body_content.style.width = '100%';
@@ -194,6 +220,11 @@ var vi_clearAndPrepareCRTemplate = () => {
                         var _heading = item.innerText.trim();
                         var _list = ['']
                         var _getvalue = searchAndReturnValue(vi_key_task_searchandreplace, _heading, 1);
+                        if(_getvalue) {
+                            item.innerText = _getvalue;
+                        }
+                        
+                        var _getvalue = searchAndReturnValue(_str_list_search, _heading, 1);
                         if(_getvalue) {
                             item.innerText = _getvalue;
                         }

@@ -1945,7 +1945,7 @@ var loadpanelcaseconnect = (is_reload = false) => {
                         // 3. Show  by dock
 
                             onClickElm(`#cr-list li`, `click`, (elm, e) => {
-                                vi_clearAndPrepareCRTemplate();
+                                clearAndPrepareCRTemplate();
                             });
 
 

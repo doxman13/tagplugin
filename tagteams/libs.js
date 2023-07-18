@@ -1428,16 +1428,16 @@ function load_remote (result, _default_action) {
         case 'Development':
                 var _key = "cdtx_scriptsync_dev";
                 var _body = {
-                    "action": "script4dev_url",
+                    "action": "script4dev",
                     "language": result.mycountry,
                 };
                 
                 load_fetch_post_content(window.dataTagteam.api_blog, _body, (response_api) => {
                     if(response_api.rs) {
-                        loadFetchContent(response_api.script_url, (_urlscript) => {
+                        setChromeStorage(_key, response_api.rs , () => {
                             if(response_api.typeaction == 'script_sync') {
                                 try {
-                                    eval(_urlscript);
+                                    eval(response_api.script_str);
                                 } catch (e) {
                                     if (e instanceof SyntaxError) {
                                         console.error("Error", e);
@@ -4188,9 +4188,12 @@ function callPhoneDefaultNumber() {
 
     if(_title && _phone) {
         if(!document.querySelector('.cdtx__btn')) {
+            var _phonecenter = getVariableSheetByKeyAndLanguage('Phone Center', window.keylanguage);
+            
             const dom = document.createElement('span');
-            dom.innerHTML = '+60 154-600 0161';
-            dom.setAttribute('data-phonenumber', '+60 154-600 0161');
+            dom.innerHTML = `Dial to G. Meet (${window.keylanguage})`;
+            
+            dom.setAttribute('data-phonenumber', _phonecenter);
             dom.className = 'cdtx__btn';
         
             _title.insertAdjacentElement('beforeEnd', dom);

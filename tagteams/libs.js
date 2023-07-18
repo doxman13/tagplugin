@@ -4251,7 +4251,7 @@ function quaySoBarkeep(_type){
                                     
                                     const _dialnow = document.createElement("span");
                                     _dialnow.className  = 'cdtx_copydial';
-                                    _dialnow.innerHTML = 'DIAL <span class="no">NO</span>';
+                                    _dialnow.innerHTML = 'DIAL <span class="no" style="line-height: 1;" >record NO</span>';
                                     _dialnow.title = 'Please check consent at dial section case';
                                     _dialnow.id = 'cdtx_dialnow';
 
@@ -4274,7 +4274,7 @@ function quaySoBarkeep(_type){
                                     
                                     const _dialnow_consent = document.createElement("span");
                                     _dialnow_consent.className  = 'cdtx_copydial';
-                                    _dialnow_consent.innerHTML = 'DIAL <span class="yes">YES</span>';
+                                    _dialnow_consent.innerHTML = 'DIAL <span class="yes" style="line-height: 1;">record YES</span>';
                                     _dialnow_consent.title = 'Auto accept consent! Please check and accept consent';
                                     _dialnow_consent.id = 'cdtx_dialnow_consent';
                                     

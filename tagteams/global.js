@@ -1629,6 +1629,7 @@ function global_case(optionkl__disable_dialog) {
                                 <p dir="auto"><b>Tags Implemented:&nbsp;&nbsp;</b></p>
                                 <p dir="auto"><b><span class="cdtx__uioncall_control-flchoice">Screenshots: Attach</span></b></p>
                                 <p dir="auto"><b>Multiple CIDs:&nbsp;&nbsp;</b>NA</p>
+                                <p dir="auto"><b>On Call Screenshot:&nbsp;&nbsp;</b> </p>
                                 <p dir="auto"><b><span class="cdtx__uioncall_control-flchoice">On Call Screenshot: Attach</span></b></p>
                             </div>
                         </div>

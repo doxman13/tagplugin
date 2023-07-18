@@ -19,13 +19,13 @@ getChromeStorageHelper("cdtx_loadgooglesheetpublish", (response2) => {
         var sheettab = linhvo_WFM_helper.sheettab;
         
         
-                console.log('linh', sheettab);
+                // console.log('linh', sheettab);
                 // get the webhook value
                  var webhook_incoming = [];
                 sheettab.forEach((item) => {
                     webhook_incoming.push(item['Incoming webhooks'])
                 });
-                console.log('linh webhook_incoming', webhook_incoming); // print the result to Console
+                // console.log('linh webhook_incoming', webhook_incoming); // print the result to Console
 
                 // ldap blocked from the trix
                 var _list_blocked_lap = [];
@@ -33,7 +33,7 @@ getChromeStorageHelper("cdtx_loadgooglesheetpublish", (response2) => {
                     _list_blocked_lap.push(item['Blocked Ldap'])
                 });
                 
-                console.log('linh _list_blocked_lap', _list_blocked_lap); // print the result to Console
+                // console.log('linh _list_blocked_lap', _list_blocked_lap); // print the result to Console
 
                 // ldap English team
                 var english_Ldap = [];
@@ -42,7 +42,7 @@ getChromeStorageHelper("cdtx_loadgooglesheetpublish", (response2) => {
                     english_Ldap.push(item['English'])
                     }
                 });
-                console.log('linh english_Ldap', english_Ldap); // print the result to Console
+                // console.log('linh english_Ldap', english_Ldap); // print the result to Console
                 // Timer
                 var Timer = [];
                 sheettab.forEach((item) => {
@@ -50,7 +50,7 @@ getChromeStorageHelper("cdtx_loadgooglesheetpublish", (response2) => {
                     Timer.push(item['Timer'])
                     }
                 });
-                console.log('linh Timer', Timer); // print the result to Console
+                // console.log('linh Timer', Timer); // print the result to Console
         
     }
 });    

@@ -6,6 +6,7 @@ chrome.storage.sync.get({
     optionkl__enable_sf_helper: false,
     optionkl__inputyourshortname: false,
     optionkl__inputyourname: false,
+    optionkl__form_option_data: false,
 },
     function (result) {
 

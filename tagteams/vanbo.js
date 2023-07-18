@@ -400,7 +400,6 @@ var tagteamFocusCase = () => {
         
         .dock-float {
             width: auto;
-            height: 60px;
             border-radius: 16px;
             display: flex;
             justify-content: center;
@@ -410,12 +409,39 @@ var tagteamFocusCase = () => {
         }
         
         .dock-float .dock-float-container {
-            padding: 3px;
             height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-bottom: 2px dashed #ccc;
+            margin-bottom: 10px;
+        }
+
+
+        .dock_order_1_pin_status .dock-float .dock-float-container  {
+            border-bottom: 0;
+            margin-bottom: 0;
+        }
+
+
+        .dock_order_vertical {
+            margin-top: 20px
+        }
+        
+
+        .dock_order_vertical .dock-float .dock-float-container {
+            justify-content: flex-start;
+            border-bottom: 0 dashed #ccc;
+            flex-direction: column;
+            height: auto;
+        }
+        
+        .dock_order_vertical .dock-float .dock-float-container li:not(:last-child) {
+            margin-bottom: 12px;
+        }
+        
+        .dock_order_vertical .dock-float .dock-float-container li .ico {
+            height: 24px;
         }
         
         .dock-float .dock-float-container .li-bin {
@@ -681,6 +707,16 @@ var tagteamFocusCase = () => {
                 transform: rotate(360deg);
             }
         }
+
+        .dock_order_1_pin_status .li-16 {
+            background-color: #e2e0e0;
+            border-radius: 50%;
+        }
+
+        .dock_order_1_pin_status .li-16 .ico {
+            transform: rotate(-45deg);
+        }
+        
         `;
         var head = document.head || document.getElementsByTagName('head')[0];
         var style = document.createElement('style');
@@ -702,7 +738,7 @@ var tagteamFocusCase = () => {
                 <div class="dock-float-container">
                     <li class="li-2 open-email">
                         <img class="ico" src="data:image/svg+xml,%0A%3Csvg id='Layer_1' data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 792.77 634.22'%3E%3Ctitle%3Email (2)%3C/title%3E%3Cpath d='M160.9,82.89H639.1c17.39,0,32.39,0,44.81.85,13.07.89,26.15,2.85,39.07,8.2a118.9,118.9,0,0,1,64.35,64.36c5.36,12.92,7.32,26,8.21,39.07.85,12.42.85,27.42.85,44.81V559.82c0,17.39,0,32.39-.85,44.81-.89,13.07-2.85,26.15-8.21,39.07A118.9,118.9,0,0,1,723,708.06c-12.92,5.35-26,7.31-39.07,8.21-12.42.84-27.42.84-44.81.84H160.9c-17.39,0-32.39,0-44.81-.84-13.07-.9-26.15-2.86-39.07-8.21A118.92,118.92,0,0,1,12.66,643.7c-5.35-12.92-7.31-26-8.2-39.07-.85-12.42-.85-27.42-.85-44.81V240.18c0-17.39,0-32.39.85-44.81.89-13.07,2.85-26.15,8.2-39.07A118.92,118.92,0,0,1,77,91.94c12.92-5.35,26-7.31,39.07-8.2C128.51,82.89,143.51,82.89,160.9,82.89ZM95.47,173.18a39.64,39.64,0,0,1,55.94-3.73L373.9,364.13a39.65,39.65,0,0,0,52.2,0L648.59,169.45a39.64,39.64,0,0,1,52.21,59.66L478.31,423.79a118.92,118.92,0,0,1-156.62,0L99.2,229.11A39.64,39.64,0,0,1,95.47,173.18Z' transform='translate(-3.61 -82.89)' fill='%23a8046d' fill-rule='evenodd'/%3E%3C/svg%3E"
-                            style="height: 25px; top: 4px; opacity: 0.7;"
+                            style="height: 20px; top: 4px; opacity: 0.7;"
                             alt="">
                     </li>
                     <li class="li-5 open-note">
@@ -733,67 +769,117 @@ var tagteamFocusCase = () => {
                     <li class="li-14">
                         <img class="ico connect-appointment"
                             src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%232196f3' viewBox='0 0 180.31 160.67'%3E%3Ctitle%3Ecase_apoinmentAsset 1%3C/title%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpath d='M141.41,8.44,178,71.9a16.84,16.84,0,0,1,0,16.87l-36.63,63.46a16.89,16.89,0,0,1-14.62,8.44H53.51a16.87,16.87,0,0,1-14.61-8.44L2.26,88.77a16.89,16.89,0,0,1,0-16.87L38.9,8.44A16.87,16.87,0,0,1,53.51,0h73.28A16.89,16.89,0,0,1,141.41,8.44Z' fill='%23fff'/%3E%3Cpath d='M126.79,4a12.91,12.91,0,0,1,11.15,6.44L174.58,73.9a12.91,12.91,0,0,1,0,12.87S47.39,155.17,46.42,154.53a12.88,12.88,0,0,1-4.06-4.3L5.72,86.77a12.91,12.91,0,0,1,0-12.87L42.36,10.44A12.93,12.93,0,0,1,53.51,4h73.28m0-4H53.51A16.87,16.87,0,0,0,38.9,8.44L2.26,71.9a16.89,16.89,0,0,0,0,16.87L38.9,152.23a16.87,16.87,0,0,0,14.61,8.44h73.28a16.89,16.89,0,0,0,14.62-8.44L178,88.77a16.84,16.84,0,0,0,0-16.87L141.41,8.44A16.89,16.89,0,0,0,126.79,0Z' fill='%232196f3'/%3E%3Crect x='25.78' y='57.8' width='22.35' height='22.35' fill='%232196f3'/%3E%3Crect x='52.59' y='57.8' width='22.35' height='22.35' fill='%232196f3'/%3E%3Crect x='79.92' y='57.8' width='22.35' height='22.35' fill='%232196f3'/%3E%3Crect x='107.35' y='57.8' width='22.35' height='22.35' fill='%232196f3'/%3E%3Crect x='79.92' y='85.71' width='22.35' height='22.35' fill='%232196f3'/%3E%3Crect x='52.59' y='85.71' width='22.35' height='22.35' fill='%232196f3'/%3E%3Crect x='25.01' y='85.71' width='22.35' height='22.35' fill='%232196f3'/%3E%3Crect x='107.9' y='30.84' width='22.35' height='22.35' fill='%232196f3'/%3E%3Crect x='80.33' y='30.84' width='22.35' height='22.35' fill='%232196f3'/%3E%3Crect x='52.59' y='30.84' width='22.35' height='22.35' fill='%232196f3'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"
-                            style="height: 26px;"
+                            style="height: 20px;"
+                        >
+                    </li>
+                    
+                    <li class="li-15">
+                        <img class="ico voice_call_ui"
+                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800px' height='800px' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M14.5562 15.5477L14.1007 16.0272C14.1007 16.0272 13.0181 17.167 10.0631 14.0559C7.10812 10.9448 8.1907 9.80507 8.1907 9.80507L8.47752 9.50311C9.18407 8.75924 9.25068 7.56497 8.63424 6.6931L7.37326 4.90961C6.61028 3.8305 5.13596 3.68795 4.26145 4.60864L2.69185 6.26114C2.25823 6.71766 1.96765 7.30945 2.00289 7.96594C2.09304 9.64546 2.81071 13.259 6.81536 17.4752C11.0621 21.9462 15.0468 22.1239 16.6763 21.9631C17.1917 21.9122 17.6399 21.6343 18.0011 21.254L19.4217 19.7584C20.3806 18.7489 20.1102 17.0182 18.8833 16.312L16.9728 15.2123C16.1672 14.7486 15.1858 14.8848 14.5562 15.5477Z' fill='%232196f3'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M22 7C22 9.76142 19.7614 12 17 12C16.2002 12 15.4442 11.8122 14.7738 11.4783C14.5956 11.3895 14.392 11.36 14.1997 11.4114L13.0867 11.7092C12.6035 11.8385 12.1615 11.3965 12.2908 10.9133L12.5886 9.80031C12.64 9.60803 12.6105 9.4044 12.5217 9.22624C12.1878 8.55582 12 7.79984 12 7C12 4.23858 14.2386 2 17 2C19.7614 2 22 4.23858 22 7ZM17 4.8125C17.5178 4.8125 17.9375 5.23223 17.9375 5.75V6.0625H18.25C18.7678 6.0625 19.1875 6.48223 19.1875 7C19.1875 7.51777 18.7678 7.9375 18.25 7.9375H17.9375V8.25C17.9375 8.76777 17.5178 9.1875 17 9.1875C16.4822 9.1875 16.0625 8.76777 16.0625 8.25V7.9375H15.75C15.2322 7.9375 14.8125 7.51777 14.8125 7C14.8125 6.48223 15.2322 6.0625 15.75 6.0625H16.0625V5.75C16.0625 5.23223 16.4822 4.8125 17 4.8125Z' fill='%23ff0000'/%3E%3C/svg%3E"
+                            style="height: 30px;"
+                        >
+                    </li>
+
+                    <li class="li-16">
+                        <img class="ico dock_order_1_pin_icon"
+                            src="data:image/svg+xml,%3Csvg fill='%23009688' width='800px' height='800px' viewBox='0 0 1920 1920' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1154.976 0 988.342 166.52c-60.448 60.447-63.436 153.418-15.4 220.646L670.359 689.751c-4.022 4.022-6.55 8.964-9.079 13.79-147.212-61.022-328.671-34.246-444.626 81.709l-98.027 98.141 418.31 418.195-520.129 520.129c-22.41 22.409-22.41 58.724 0 81.248 11.262 11.147 25.972 16.778 40.682 16.778s29.42-5.63 40.567-16.778l520.128-520.129 418.195 418.31 98.142-98.142c75.962-75.847 117.793-176.862 117.793-284.313 0-56.195-12.067-110.208-33.787-160.198 2.758-1.839 5.861-2.988 8.275-5.516l303.963-303.964c29.19 21.145 63.896 33.097 100.67 33.097 46.083 0 89.293-17.928 121.93-50.565L1920 764.909 1154.976 0Z' fill-rule='evenodd'/%3E%3C/svg%3E"
+                            style=" height: 18px; "
                         >
                     </li>
             
                 </div>
             </div>`;
+
             var dock_float = document.createElement('div');
             dock_float.id = "dock_order_1";
             dock_float.innerHTML = dock_float_html;
             
-            document.querySelector('[debug-id="case-summary-input"]').insertAdjacentElement("afterEnd", dock_float);
+            var _area = document.querySelector('[debug-id="case-summary-input"]');
+            if(localStorage.getItem('dock_order_1_pin')) {
+                _area = document.body;
+                dock_float.style.bottom = `6px`;
+                dock_float.style.left = `50%`;
+                dock_float.style.zIndex = `9999`;
+                dock_float.style.position = `fixed`;
+                dock_float.classList.add(`dock_order_1_pin_status`);
+                dock_float.style.transform = `scale(1.1) translateX(-50%)`;
+                dock_float.style.transformOrigin = `bottom center`;
+                dock_float.style.background = `#cccccc47`;
+                dock_float.style.padding = ` 0 6px`;
+                dock_float.style.padding = ` 0 6px`;
+                dock_float.style.borderRadius = `30px`;
+            }
+            
+            if(_area) {
+                _area.insertAdjacentElement("afterEnd", dock_float);
 
-            const focus = (elem, index) => {
-                let previous = index - 1;
-                let previous1 = index - 2;
-                let next = index + 1;
-                let next2 = index + 2;
+                const focus = (elem, index) => {
+                    let previous = index - 1;
+                    let previous1 = index - 2;
+                    let next = index + 1;
+                    let next2 = index + 2;
+    
+                    if (previous == -1) {
+                        // console.log("first element");
+                        elem.style.transform = "scale(1.5)  translateY(-10px)";
+                    } else if (next == icons.length) {
+                        elem.style.transform = "scale(1.5)  translateY(-10px)";
+                        // console.log("last element");
+                    } else {
+                        elem.style.transform = "scale(1.5)  translateY(-10px)";
+                        if(icons[previous]) {
+                            icons[previous].style.transform = "scale(1.2) translateY(-6px)";
+                        }
+                        if(icons[previous1]) {
+                            icons[previous1].style.transform = "scale(1.1)";
+                        }
+                        if(icons[next]) {
+                            icons[next].style.transform = "scale(1.2) translateY(-6px)";
+                        }
+                        if(icons[next2]) {
+                            icons[next2].style.transform = "scale(1.1)";
+                        }
+                    }
+                };
+    
+                let icons = document.querySelectorAll(".ico");
+                let length = icons.length;
+    
+                // icons.forEach((item, index) => {
+                //     item.addEventListener("mouseover", (e) => {
+                //         focus(e.target, index);
+                //     });
+                //     item.addEventListener("mouseleave", (e) => {
+                //         icons.forEach((item) => {
+                //             item.style.transform = "scale(1)  translateY(0px)";
+                //         });
+                //     });
+                // });
+                document.querySelector('.open-email').addEventListener('click', openEmail);
+                document.querySelector('.open-note').addEventListener('click', openNote)
+                document.querySelector('.ads-ics').addEventListener('click', adsICS)
+                document.querySelector('.open-gearloose').addEventListener('click', gearloose)
+                document.querySelector('.ogt-dashboard').addEventListener('click', ogtDashboard)
+                document.querySelector('.ec-dashboard').addEventListener('click', ecDashboard)
+                document.querySelector('.connect-appointment').addEventListener('click', connectAppointment)
+                document.querySelector('.voice_call_ui').addEventListener('click', (e) => {
+                    document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
+                    if(document.querySelector('.themeable.phone')) {
+                        document.querySelector('.themeable.phone').click();
+                    }
+                });
 
-                if (previous == -1) {
-                    // console.log("first element");
-                    elem.style.transform = "scale(1.5)  translateY(-10px)";
-                } else if (next == icons.length) {
-                    elem.style.transform = "scale(1.5)  translateY(-10px)";
-                    // console.log("last element");
-                } else {
-                    elem.style.transform = "scale(1.5)  translateY(-10px)";
-                    if(icons[previous]) {
-                        icons[previous].style.transform = "scale(1.2) translateY(-6px)";
+                document.querySelector('.dock_order_1_pin_icon').addEventListener('click', (e) => {
+                    if(localStorage.getItem('dock_order_1_pin')) {
+                        localStorage.removeItem('dock_order_1_pin');
+                    } else {
+                        localStorage.setItem('dock_order_1_pin', '123');
                     }
-                    if(icons[previous1]) {
-                        icons[previous1].style.transform = "scale(1.1)";
-                    }
-                    if(icons[next]) {
-                        icons[next].style.transform = "scale(1.2) translateY(-6px)";
-                    }
-                    if(icons[next2]) {
-                        icons[next2].style.transform = "scale(1.1)";
-                    }
-                }
-            };
+                    dock_float.remove();
+                })
+            }
+            
 
-            let icons = document.querySelectorAll(".ico");
-            let length = icons.length;
-
-            // icons.forEach((item, index) => {
-            //     item.addEventListener("mouseover", (e) => {
-            //         focus(e.target, index);
-            //     });
-            //     item.addEventListener("mouseleave", (e) => {
-            //         icons.forEach((item) => {
-            //             item.style.transform = "scale(1)  translateY(0px)";
-            //         });
-            //     });
-            // });
-            document.querySelector('.open-email').addEventListener('click', openEmail);
-            document.querySelector('.open-note').addEventListener('click', openNote)
-            document.querySelector('.ads-ics').addEventListener('click', adsICS)
-            document.querySelector('.open-gearloose').addEventListener('click', gearloose)
-            document.querySelector('.ogt-dashboard').addEventListener('click', ogtDashboard)
-            document.querySelector('.ec-dashboard').addEventListener('click', ecDashboard)
-            document.querySelector('.connect-appointment').addEventListener('click', connectAppointment)
         }
 
         var modalHtml = `
@@ -1672,12 +1758,15 @@ if(location.hostname == 'cases.connect.corp.google.com') {
 }
 if(location.hostname == 'meet.google.com') {
     console.log('vanbomeet')
-    console.log(chrome.tabs)
-    chrome.tabs.query({ url: "*://cases.connect.corp.google.com/*" }, function(tabs) {
-    if (tabs.length > 0) {
-        console.log('vanbomeet sendmessage')
-        var tabId = tabs[0].id;
-        chrome.tabs.sendMessage(tabId, { message: "hahahahaa" });
+    console.log('vanbomeet', chrome.tabs)
+        if(chrome.tabs) {
+        chrome.tabs.query({ url: "*://cases.connect.corp.google.com/*" }, function(tabs) {
+        if (tabs.length > 0) {
+            console.log('vanbomeet sendmessage')
+            var tabId = tabs[0].id;
+            chrome.tabs.sendMessage(tabId, { message: "hahahahaa" });
+        }
+        });        
     }
-    });
+
 }

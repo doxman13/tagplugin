@@ -442,7 +442,14 @@ function global_case(optionkl__disable_dialog) {
             <div class="content">
                 <img src="data:image/svg+xml,%3Csvg fill='%23000000' width='800px' height='800px' viewBox='0 0 24 24' role='img' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.42 10.05c-.18-.16-.46-.23-.84-.23H6l.02 2.44.04 2.45.56-.02c.41 0 .63-.07.83-.26.24-.24.26-.36.26-2.2 0-1.91-.02-1.96-.29-2.18zM0 4.94v14.12h24V4.94H0zM8.56 15.3c-.44.58-1.06.77-2.53.77H4.71V8.53h1.4c1.67 0 2.16.18 2.6.9.27.43.29.6.32 2.57.05 2.23-.02 2.73-.47 3.3zm5.09-5.47h-2.47v1.77h1.52v1.28l-.72.04-.75.03v1.77l1.22.03 1.2.04v1.28h-1.6c-1.53 0-1.6-.01-1.87-.3l-.3-.28v-3.16c0-3.02.01-3.18.25-3.48.23-.31.25-.31 1.88-.31h1.64v1.3zm4.68 5.45c-.17.43-.64.79-1 .79-.18 0-.45-.15-.67-.39-.32-.32-.45-.63-.82-2.08l-.9-3.39-.45-1.67h.76c.4 0 .75.02.75.05 0 .06 1.16 4.54 1.26 4.83.04.15.32-.7.73-2.3l.66-2.52.74-.04c.4-.02.73 0 .73.04 0 .14-1.67 6.38-1.8 6.68z'/%3E%3C/svg%3E">
             </div>
-        </div>`;
+        </div>
+        
+        <div class="material-button _fordevmode" data-btnclk="test_meetpin" >
+            <div class="content">
+                Test PIN
+            </div>
+        </div>
+        `;
 
 
         // For Dev
@@ -892,9 +899,9 @@ function global_case(optionkl__disable_dialog) {
                 
                 var _elm_prev = document.querySelector('[debug-id="case-summary-input"]')
                 
-                if(document.querySelector('#dock_order_1')) {
-                    _elm_prev = document.querySelector('#dock_order_1');
-                }
+                // if(document.querySelector('#dock_order_1')) {
+                //     _elm_prev = document.querySelector('#dock_order_1');
+                // }
                 
                 
                 if(_elm_prev) {
@@ -979,15 +986,6 @@ function global_case(optionkl__disable_dialog) {
                 <div class="_infocase_byme-row mb_20px" data-area="btn-shortcutcase" ></div>
                 <div class="_infocase_byme-row" data-area="btn-shortcutcase_temp" ></div>
                 
-                
-                <div class="_infocase_byme-row" data-area="forsetting" >
-                    <div class="_infocase_byme-col" >
-                        <div class="_infocase_byme-field _infocase_byme-setting--yourname" data-title="Your Name" data-infosetting="your-name" contenteditable="plaintext-only" ></div>
-                    </div>
-                    <div class="_infocase_byme-col" >
-                        <div class="_infocase_byme-field _infocase_byme-setting--yourshortname" data-title="Short name" data-infosetting="your-shortname" contenteditable="plaintext-only" ></div>
-                    </div>
-                </div>
             </div>`;
             
             if(!document.querySelector('._infocase_byme')) {
@@ -1036,7 +1034,6 @@ function global_case(optionkl__disable_dialog) {
                     var _elmbtnsave = _infocase_bymeelm.querySelector('[data-btnsave]');
                     var __elm_btnsave = _target.getAttribute('data-btnsave');
                     var __disnewline = _target.getAttribute('data-disnewline');
-                    var __key_seting = _target.getAttribute('data-infosetting');
                     var __key = _target.getAttribute('data-infocase');
                     var __value = _target.innerText.trim();
                     
@@ -1070,11 +1067,6 @@ function global_case(optionkl__disable_dialog) {
                                 var _nsave = 0;
                                 var _nsave_saved = 0;
                                 var _temp = {};
-                                _infocase_bymeelm.querySelectorAll('[data-infosetting]').forEach((_item) => {
-                                    const _key = _item.getAttribute('data-infosetting');
-                                    const _value = _item.innerText.trim();
-                                    _temp[_key] = _value;
-                                })
                                 // cLog(() => { console.log('wsave', _temp); });
                                 
                                 var is_complete_updated = function(callback) {
@@ -1090,26 +1082,6 @@ function global_case(optionkl__disable_dialog) {
                                     }
                                 }
 
-                                _nsave++;
-                                updateAllFieldsSetting2Storage(_temp, (rs) => {
-                                    cLog(() => { console.log(`Saved setting ${_caseid()}!!!`, _temp); });
-                                    // Toastify({
-                                    //     text: `Setting Saved!!!`,
-                                    //     duration: 2000,
-                                    //     callback: function(){
-                                    //         this.remove();
-                                    //     }
-                                    // }).showToast();
-                                    
-                                    for (const [key, value] of Object.entries(rs)) {
-                                        document.querySelectorAll(`#_panel_div [data-infosetting="${key}"]`).forEach(function(elm){
-                                            elm.innerText = value;
-                                        });
-                                    }
-
-                                    _nsave_saved++;
-                                    is_complete_updated((rs) => {})
-                                });
                             
                             
                             
@@ -1246,31 +1218,6 @@ function global_case(optionkl__disable_dialog) {
                 _checkload(_iload_done);
             });
 
-                
-            _iload++;
-            getFieldSetting2Storage((rs) => {
-                for (const [key, value] of Object.entries(rs)) {
-                    document.querySelectorAll(`#_infocase_byme [data-infosetting="${key}"]`).forEach(function(elm){
-                        elm.innerText = value;
-                    });
-
-                    if(key === 'your-name') {
-                        document.querySelectorAll('[data-infosetting="your-name"]').forEach(function(elm){
-                            if(elm.innerText.trim() === '') {
-                                if(typeof window.tagteamoption !== 'undefined') {
-                                    if(typeof window.tagteamoption.optionkl__inputyourname !== 'undefined') {
-                                        elm.innerText = window.tagteamoption.optionkl__inputyourname;
-                                        elm.dispatchEvent(new Event('blur'));
-                                    }
-                                }
-                            }
-                        });
-                    }
-                }
-                
-                _iload_done++;
-                _checkload(_iload_done);
-            });
         
         }
     }
@@ -1669,46 +1616,20 @@ function global_case(optionkl__disable_dialog) {
                         'btn_text': 'On Call UI',
                         'content_insert' : `
                         <div class="cdtx__uioncall">
-                            <div class="cdtx__uioncall-item"><b>Sub-status:&nbsp;&nbsp; <span class="_sub_i" data-btnclk="choice_status_list" data-infocase="status_case" >Click Choice</span></b></div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b><span data-btnclk="choice_substatusreason">Sub-status Reason</span>:</b>&nbsp;&nbsp;
+                            <div class="cdtx__uioncall_control">
+                                <span class="cdtx__uioncall_control-save" data-text="Save" ></span>
+                                <span class="cdtx__uioncall_control-load" data-text="Load" ></span>
                             </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b><span data-btnclk="choice_followup">Follow Up</span>:&nbsp;&nbsp;</b> NA
-                            </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b><span data-btnclk="choice_speakeasyid">Speakeasy ID</span>:&nbsp;&nbsp;</b>
-                            </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b>On Call Comments:</b>&nbsp;&nbsp; Like "Sub-status Reason" above
-                            </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b>Tags Implemented:&nbsp;&nbsp;</b>
-                            </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b>Screenshots:&nbsp;&nbsp;</b> Attachment
-                            </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b>Multiple CIDs:&nbsp;&nbsp;</b>NA
-                            </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b>On Call Screenshot:&nbsp;&nbsp;</b> Attachment
+                            <div class="cdtx__uioncall_outer">
+                                <p dir="auto"><b>Sub-status:&nbsp;&nbsp;<span class="_sub_i" data-btnclk="choice_status_list" data-infocase="status_case" >Click Choice</span></b> </p>
+                                <p dir="auto"><b>Sub-status Reason:</b>&nbsp;&nbsp; </p>
+                                <p dir="auto"><span class="cdtx__uioncall_control-flchoice">FL: NA</span></p>
+                                <p dir="auto"><b>Speakeasy ID:&nbsp;&nbsp;</b> </p>
+                                <p dir="auto"><b>On Call Comments:</b>&nbsp;&nbsp; </p>
+                                <p dir="auto"><b>Tags Implemented:&nbsp;&nbsp;</b></p>
+                                <p dir="auto"><b><span class="cdtx__uioncall_control-flchoice">Screenshots: Attach</span></b></p>
+                                <p dir="auto"><b>Multiple CIDs:&nbsp;&nbsp;</b>NA</p>
+                                <p dir="auto"><b><span class="cdtx__uioncall_control-flchoice">On Call Screenshot: Attach</span></b></p>
                             </div>
                         </div>
                         `
@@ -1871,30 +1792,12 @@ function global_case(optionkl__disable_dialog) {
 
         updateMeetContentBySheet(document.querySelector('#_panel_div'));
 
-        getFieldSetting2Storage((rs) => {
-            for (const [key, value] of Object.entries(rs)) {
-                document.querySelectorAll(`#_panel_div [data-infosetting="${key}"]`).forEach(function(elm){
-                    elm.innerText = value;
-                });
-                document.querySelectorAll(`#_infocase_byme [data-infosetting="${key}"]`).forEach(function(elm){
-                    elm.innerText = value;
-                });
-
-                if(key === 'your-name') {
-                    document.querySelectorAll('[data-infosetting="your-name"]').forEach(function(elm){
-                        if(elm.innerText.trim() === '') {
-                            if(typeof window.tagteamoption !== 'undefined') {
-                                if(typeof window.tagteamoption.optionkl__inputyourname !== 'undefined') {
-                                    elm.innerText = window.tagteamoption.optionkl__inputyourname;
-                                    elm.dispatchEvent(new Event('blur'));
-                                }
-                            }
-                        }
-                    });
-                }
-            }
+        // Uu tien load your name
+        document.querySelectorAll('[data-infosetting="your-name"]').forEach(function(elm){
+            elm.innerText = window.tagteamoption.optionkl__inputyourname;
+            elm.dispatchEvent(new Event('blur'));
         });
-        
+                
 
         // ******************
         // Replace all panel
@@ -2086,8 +1989,13 @@ function global_case(optionkl__disable_dialog) {
                     toolEditorEmailTemplate4Dev();
                 }
                 
+                if(_action === 'test_meetpin') {
+                    setChromeStorage('_pinmeet_temp', '1'+ new Date().getSeconds());
+                }
+                
                 if(_action === 'open_panelnote') {
                     
+
                     // Add noted
                     var _caseid = document.querySelector('[debug-id="case-id"] .case-id').innerText.trim();
                     
@@ -2189,7 +2097,7 @@ function global_case(optionkl__disable_dialog) {
                         
                         
                         // Start load crawl
-                        loadGoogleSheetOnlineWebPublics();
+                        loadGoogleSheetOnlineWebPublics(() => {});
                         
                         // Check before reload page
                         setInterval(() => {
@@ -3746,7 +3654,7 @@ function global_case(optionkl__disable_dialog) {
             
             
             if(location.hostname === 'barkeep.corp.google.com') {
-                quaySoBarkeep();
+                quaySoBarkeep('');
             }
             
             // if(location.hostname === 'barkeep.corp.google.com') {
@@ -3962,45 +3870,7 @@ function global_case(optionkl__disable_dialog) {
                     }
                 }
 
-
-                // loadCopyDianumber
-                try {
-                    if(document.querySelector('.vFzkO')) {
-
-                        var _meet_dial_copy = (_primary, _search_pos, _id_button) => {
-                            if(!document.querySelector(_primary)) {
-                                var _str_elm = _search_pos;
-                                var _elm = document.querySelector(_str_elm);
-                                if(_elm) {
-                                    var _textview = _elm.innerText.trim();
-                                    if(_textview) {                
-                                        const _copydial_number = document.createElement("span");
-                                        _copydial_number.className  = 'cdtx_copydial';
-                                        _copydial_number.innerText = 'COPY';
-                                        _copydial_number.id = _id_button;
-                            
-                                        _elm.insertAdjacentElement('afterEnd', _copydial_number);
-                                        _copydial_number.addEventListener('click', () => {
-                                            _textview = _elm.innerText.trim().replace(/[^\d#+]/g, '');
-                                            copyTextToClipboard(_textview);
-                                        })
-                                        
-                                    }
-                                }
-                            }
-                        }
-                        _meet_dial_copy ('.vFzkO #cdtx_copydial_1', ".vFzkO .iMP6zc + [jsname='zQ0Yjb']",  "cdtx_copydial_1");
-                        _meet_dial_copy ('.vFzkO #cdtx_copydial_2', ".vFzkO .iMP6zc + [jsname='pCHCHe']",  "cdtx_copydial_2");
-
-
-                    }
-                
-                
-                
-                    
-                } catch (error) {
-                    console.error('catch', error)
-                }
+                quaySoBarkeep('meet_showdialbutton')
 
             }
             
@@ -4020,7 +3890,7 @@ function global_case(optionkl__disable_dialog) {
     
     
 
-    function loadGoogleSheetOnlineWebPublics() {
+    function loadGoogleSheetOnlineWebPublics(_callback_ready) {
         function GoogleSheetOnline(_htmlelm, _callback) {
             function decodeHTMLEntities(text) {
                 var textArea = document.createElement('textarea');
@@ -4097,6 +3967,9 @@ function global_case(optionkl__disable_dialog) {
                         setChromeStorage("cdtx_loadgooglesheetpublish", _sheetobj, () => {
                             if(_sheetobj) {
                                 window.loadgooglesheetpublish = _sheetobj;
+
+                                cLog(() => { console.log("LOADSHEET --- DONE "); });
+                                _callback_ready();
                             }
                             
                             setChromeStorage("cdtx_loadgooglesheetpublish_timesave", minuteDateTime(), () => {
@@ -4115,6 +3988,8 @@ function global_case(optionkl__disable_dialog) {
             
             if(_rs) {
                 window.loadgooglesheetpublish = _rs;
+                cLog(() => { console.log("LOADSHEET --- DONE 2 "); });
+                _callback_ready();
             }
         });
     }
@@ -4126,17 +4001,18 @@ function global_case(optionkl__disable_dialog) {
 
 
     // LOAD
-    loadGoogleSheetOnlineWebPublics();
-    loadStyle();
-    loadRealtime();
-    autoUpdatelistLinkCalendar(true);
-    clickAction();
-    loadEmailTemplateAction();
-    panelAddShortcutLink();
-    crSubjectByHotKeyEmail();
-    openGAdsbyAdsID();
-    initQplusLoad();
-    uiOnCallPanel();
-    // Load code vanbo
-    tagteamFocusCase();
+    loadGoogleSheetOnlineWebPublics(() => {
+        loadStyle();
+        loadRealtime();
+        autoUpdatelistLinkCalendar(true);
+        clickAction();
+        loadEmailTemplateAction();
+        panelAddShortcutLink();
+        crSubjectByHotKeyEmail();
+        openGAdsbyAdsID();
+        initQplusLoad();
+        uiOnCallPanel();
+        // Load code vanbo
+        tagteamFocusCase();
+    });
 }

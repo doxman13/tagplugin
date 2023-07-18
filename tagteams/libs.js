@@ -4,10 +4,6 @@ window.dataTagteam.extension_id = chrome.runtime.id;
 window.dataTagteam.assets_url_img = 'chrome-extension://' + window.dataTagteam.extension_id + '/assets/img';
 window.dataTagteam.api_blog = 'https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/api.php';
 
-if(new Date().getSeconds() % 3 === 0) {
-    window.dataTagteam.api_blog = 'https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/api_backup.php';
-}
-
 
 // ==== LIB ====
 function loadCaseDatabaseByID(case_id) {
@@ -1080,7 +1076,8 @@ function loadFetchText(url, _callback) {
 
 function loadFetchContent(url, _callback) {
     fetch(url, {
-        method: 'GET'
+        method: 'GET',
+        cache: "force-cache"
     })
         .then(function(response) {
             return response.text();
@@ -1178,7 +1175,10 @@ function noteBarAlert(note, caseid, colortype = 'alert') {
                     // data id
                     var _str = `<noted data-id="${caseid}" ><span class="_str ${colortype}" >${note}</span></noted>`;
                     _str = _TrustScript(_str);
-                    elm_casedetails.querySelector('.case-body').insertAdjacentHTML("beforeBegin", _str);
+
+                    if(case_body = elm_casedetails.querySelector('.case-body')) {
+                        case_body.insertAdjacentHTML("beforeBegin", _str);
+                    }
                 }
             }
         }
@@ -1759,7 +1759,6 @@ function loadEmailTemplateAction(){
                 // Insert value
                 subject.value = template_title.innerText;
                 
-                console.log('Here 1515', window.dataCase);
                 
                 replaceAllHtmlElement(template_body, window.dataCase);
                 
@@ -1887,8 +1886,6 @@ function loadTemplateEmailGoogleSheet(_caseid, _keylanguage) {
                         var subjectText = _item['Subject'] || "";
                         var colorText = _item['Color'] || "";
                         
-                        var tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = emailHtml;
                         
                         
                         subjectText = subjectText.replaceAll('{%case_id%}', '<span data-infocase="case_id"></span>')
@@ -2226,6 +2223,16 @@ function replaceAllHtmlElement(_panel, _data) {
             
             replaceKeyHTMLByCaseID(_panel, key, _value_tmp, _data);
         }
+    }
+    
+    // SETTING
+    if(_panel) {
+        _panel.querySelectorAll('[data-infosetting="your-name"]').forEach(function(elm){
+            if(window.tagteamoption.optionkl__inputyourname) {
+                elm.innerText = window.tagteamoption.optionkl__inputyourname;
+                elm.dispatchEvent(new Event('blur'));
+            }
+        });
     }
 }
 
@@ -2622,15 +2629,21 @@ function toolEditorEmailTemplate4Dev() {
             dom_editor.className = 'editor_email';
             dom_editor.style.display = 'block';
             dom_editor.style.height = '100%';
+            dom_editor.style.width = '100%';
+            dom_editor.style.top = '0px';
+            dom_editor.style.position = 'absolute';
+            dom_editor.style.zIndex = '99999';
             
             // document.querySelector('read-deck .read-cards-wrapper').insertAdjacentHTML('beforeEnd', );
             document.querySelector('read-deck .read-cards-wrapper').insertAdjacentElement('beforeEnd', dom_editor);
+            document.querySelector('read-deck .read-cards-wrapper').style.position = 'relative';
 
             var editor = ace.edit("editor_email");
             editor.setTheme("ace/theme/monokai");
             editor.session.setMode("ace/mode/html");
-            editor.session.setUseWrapMode(true);
+            editor.session.setUseWrapMode(false);
 
+            
 
             var _temlocalStorage = localStorage.getItem('_tempsaveaceeditor1');
             if(_temlocalStorage) {
@@ -2649,12 +2662,13 @@ function toolEditorEmailTemplate4Dev() {
                 // editor.getValue(); // or session.getValue
                 var _ebc = document.querySelector('.write-cards-wrapper:not([style*="none"]) .editor #email-body-content');
 
-                _ebc.innerHTML = editor.getValue();
-                replaceAllHtmlElement(_ebc, window.dataCase);
-                updateMeetContentBySheet(_ebc);
+                if(_ebc) {
+                    _ebc.innerHTML = editor.getValue();
+                    replaceAllHtmlElement(_ebc, window.dataCase);
+                    updateMeetContentBySheet(_ebc);
 
-                localStorage.setItem('_tempsaveaceeditor1', editor.getValue());
-
+                    localStorage.setItem('_tempsaveaceeditor1', editor.getValue());
+                }
             });
         }
         if(!document.querySelector('#editor_email.ace_editor')) {
@@ -2664,15 +2678,15 @@ function toolEditorEmailTemplate4Dev() {
             
             var html_combie = '';
             loadFetchText("https://cdnjs.cloudflare.com/ajax/libs/ace/1.19.0/ace.min.js", (rs) => {
-                html_combie += rs;
-                loadFetchText("https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/theme-monokai-css.min.js", (rs) => {
-                    html_combie += rs;
-                    eval(html_combie);
-                    
-                    if(typeof ace === 'object') {
-                        _load();
-                    }          
-                });
+                html_combie += "\n " + rs;
+                    loadFetchText("https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/mode-html.js", (rs) => {
+                        html_combie += "\n " + rs;
+                        eval(html_combie);
+                        
+                        if(typeof ace === 'object') {
+                            _load();
+                        }    
+                    });
             });
         } else {
             if(editor_email = document.querySelector('#editor_email')) {
@@ -2688,10 +2702,37 @@ function toolEditorEmailTemplate4Dev() {
 
 
 function clearAndPrepareCRTemplate() {
+
     // Prepare
     var _composeemailcard = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"]');
     if(_composeemailcard) {
-        cLog(()=>{console.log("CR -> Start")});
+        // cLog(()=>{console.log("CR -> Start", window.loadgooglesheetpublish['email - find_replace'].sheettab)});
+        // cLog(()=>{console.log(window.result, window.keylanguage)});
+        var _listsheet_find_replace = [];
+        var _str_list_search = '';
+        try {
+            _listsheet_find_replace = window.loadgooglesheetpublish['email - find_replace'].sheettab;
+            if(_listsheet_find_replace) {
+                _listsheet_find_replace.forEach((item) => {
+                    var _strreplace = item[window.keylanguage];
+                    if(window.dataCase.case_id) {
+                        for (const [_key, _value] of Object.entries(window.dataCase)) {
+                            _strreplace = _strreplace.replaceAll(`{%${_key}%}`,`${_value}`)
+                        }
+                    }
+                    
+                    _str_list_search += item['Find'] + ":" + _strreplace + "\n";
+                })
+            }   
+        } catch (error) {
+            cLog(()=>{console.error("_listsheet_find_replace", error)});
+        }
+
+
+        cLog(() => {console.log('HHH', window.dataCase, _str_list_search )})
+
+
+
         var _email_body_content = _composeemailcard.querySelector('#email-body-content');
         _email_body_content.style.padding = '0px';
         _email_body_content.style.width = '100%';
@@ -2718,7 +2759,7 @@ function clearAndPrepareCRTemplate() {
                 if(_tdcellist.length) {
                     _tdcellist.forEach((item) => {
                         var _heading = item.innerText.trim();
-                        var _getvalue = searchAndReturnValue(vi_heading_searchandreplace, _heading, 1);
+                        var _getvalue = searchAndReturnValue(_str_list_search, _heading, 1);
                         if(_getvalue) {
                             item.innerText = _getvalue;
                         }
@@ -2730,8 +2771,8 @@ function clearAndPrepareCRTemplate() {
                 if(_tdcellist.length) {
                     _tdcellist.forEach((item) => {
                         var _heading = item.innerText.trim();
-                        var _list = ['']
-                        var _getvalue = searchAndReturnValue(vi_key_task_searchandreplace, _heading, 1);
+                        
+                        var _getvalue = searchAndReturnValue(_str_list_search, _heading, 1);
                         if(_getvalue) {
                             item.innerText = _getvalue;
                         }
@@ -2877,7 +2918,7 @@ function timeLeftGoogleCalendar() {
         if(drawerMiniMonthNavigatorElm) {
             var _contentsub = '', _contentsub_item = '',  _contentsub_tasks = '';
             _data.forEach(item => {
-                _contentsub_item += `<p><a href="https://appointments.connect.corp.google.com/appointmentDetails?caseId=${item.caseid}" target="_blank"  >${item.caseid}</a>: <span class="hour">${toHoursAndMinutes(item.timeleft)}</span> left</p>`
+                _contentsub_item += `<p><a href="https://cases.connect.corp.google.com/#/case/${item.caseid}" target="_blank"  >${item.caseid}</a>: <span class="hour">${toHoursAndMinutes(item.timeleft)}</span> left</p>`
             });
 
 
@@ -2893,12 +2934,12 @@ function timeLeftGoogleCalendar() {
                 <div class="panel_info-inner" >
                     ${_contentsub_item}
                 </div>
-                <hr>
-                <p class="panel_info-qplus">
-                    <span data-btnclk="qplus-rescan" data-qplus_status="Q+"></span>
-                </p>      
                 `;
                 
+                // <hr>
+                // <p class="panel_info-qplus">
+                //     <span data-btnclk="qplus-rescan" data-qplus_status="Q+"></span>
+                // </p>      
                 // <p class="panel_info-daysnext">
                 //     Next 14days: <span class="slall">${dayNextByCustom(14)}</span><br>
                 //     Next 07days: <span class="slall">${dayNextByCustom(7)}</span><br>
@@ -3117,12 +3158,40 @@ function timeLeftGoogleCalendar() {
                     new Date().getFullYear(),
                 ];
 
+
+
+                var _convertmmddyyyy2Date = (_str) => {
+                    // var _str = '01/06/2023';
+                    var _arr_str = _str.split('/');
+                    _arr_str.reverse();
+    
+                    return new Date(_arr_str.join('/'));
+                }
+            
+                var _get_diffday = (str_date) => {
+                    const date1 = _convertmmddyyyy2Date(str_date);
+                    const date2 = new Date();
+                    const diffTime = Math.abs(date2 - date1);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                    var _str = 0;
+                    
+                    if(diffDays > 0) {
+                        _str = diffDays;
+                        if(date2 > date1) {
+                            _str = '-' + diffDays;
+                        }
+                    }
+                    return parseInt(_str);
+                }
+                
+                
                 var _ntoday = 0;
                 for (const [key, value] of Object.entries(window.qlus_datalist.list_bycaseid)) {
                     if(!value[0].followUpCase) continue;
                     _lst_arr_followup.push(value[0]);
  
-                    if(value[0].followUpCase.includes(_date_key.join('/'))) {
+                    // console.log(_get_diffday(_date_key.join('/')));
+                    if(_get_diffday(value[0].followUpCase) < 0 ) {
                         _ntoday++;
                     }
                 }
@@ -3144,9 +3213,9 @@ function timeLeftGoogleCalendar() {
         _oncerun++;
 
         calendarGetInfoRealtime();
-        getInfoQPlus();
+        // getInfoQPlus();
         setInterval(() => {
-            getInfoQPlus();
+            // getInfoQPlus();
             calendarGetInfoRealtime();
         }, 1000 * 40)
     }
@@ -3432,8 +3501,9 @@ function initQplusLoad() {
                             for (const value of _lst_arr_followup) {
 
                                 _tr += `<tr>
-                                            <td>${value.case_id}</td>
+                                            <td style="white-space: nowrap">${value.case_id}</td>
                                             <td>${getDomainOnlyURL(value.customer_website)}</td>
+                                            <td>${value.customer_adsid}</td>
                                             <td>${value.status_case}</td>
                                             <td><span data-btnclk="ui-qplus-addtrviewdetail" data-caseidhere="${value.case_id}" >View</span></td>
                                         </tr>`;
@@ -3444,6 +3514,7 @@ function initQplusLoad() {
                                     <tr>
                                         <th>Case ID</th>
                                         <th>Website</th>
+                                        <th>Ads ID</th>
                                         <th>Status</th>
                                         <th class="uiqplus-act"><span data-btnclk="ui-qplus-addtrviewall" >View all</span></th>
                                     </tr>
@@ -3548,7 +3619,39 @@ function initQplusLoad() {
                 
                 uiOverview();
 
+                var _animation = () => {
+                    const card = document.querySelector(".uiqplus_inner");
+                    const motionMatchMedia = window.matchMedia("(prefers-reduced-motion)");
+                    const THRESHOLD = 14;
+                    
+                    /*
+                     * Read the blog post here:
+                     * https://letsbuildui.dev/articles/a-3d-hover-effect-using-css-transforms
+                     */
+                    function handleHover(e) {
+                      const { clientX, clientY, currentTarget } = e;
+                      const { clientWidth, clientHeight, offsetLeft, offsetTop } = currentTarget;
+                    
+                      const horizontal = (clientX - offsetLeft) / clientWidth;
+                      const vertical = (clientY - offsetTop) / clientHeight;
+                      const rotateX = (THRESHOLD / 2 - horizontal * THRESHOLD).toFixed(2);
+                      const rotateY = (vertical * THRESHOLD - THRESHOLD / 2).toFixed(2);
+                    
+                      card.style.transform = `perspective(${clientWidth}px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) scale3d(1, 1, 1)`;
+                    }
+                    
+                    function resetStyles(e) {
+                      card.style.transform = `perspective(${e.currentTarget.clientWidth}px) rotateX(0deg) rotateY(0deg)`;
+                    }
+                    
+                    if (!motionMatchMedia.matches) {
+                      card.addEventListener("mousemove", handleHover);
+                      card.addEventListener("mouseleave", resetStyles);
+                    }
 
+                }
+                
+                _animation();
 
                 // crawl by iframe
                 var _crawbyframe_storage = () => {
@@ -4085,9 +4188,12 @@ function callPhoneDefaultNumber() {
 
     if(_title && _phone) {
         if(!document.querySelector('.cdtx__btn')) {
+            var _phonecenter = getVariableSheetByKeyAndLanguage('Phone Center', window.keylanguage);
+            
             const dom = document.createElement('span');
-            dom.innerHTML = '+60 154-600 0161';
-            dom.setAttribute('data-phonenumber', '+60 154-600 0161');
+            dom.innerHTML = `Dial to G. Meet (${window.keylanguage})`;
+            
+            dom.setAttribute('data-phonenumber', _phonecenter);
             dom.className = 'cdtx__btn';
         
             _title.insertAdjacentElement('beforeEnd', dom);
@@ -4109,13 +4215,261 @@ function callPhoneDefaultNumber() {
 
 }
 
-function quaySoBarkeep(){
+function quaySoBarkeep(_type){
+    // option disable
+    try {
+        if(window.result.optionkl__form_option_data.cdtx_chk_disable_pin) return false;
+    } catch (error) {
+        console.error('cdtx_chk_disable_pin undentify', window.result)
+    }
+
+    if(_type === 'meet_showdialbutton') {
+        // loadCopyDianumber
+        try {
+            if(document.querySelector('.vFzkO')) {
+
+                var _meet_dial_copy = (_primary, _search_pos, _id_button) => {
+                    if(!document.querySelector(_primary)) {
+                        var _str_elm = _search_pos;
+                        var _elm = document.querySelector(_str_elm);
+                        if(_elm) {
+                            var _textview = _elm.innerText.trim();
+                            if(_textview) {    
+
+                                const _copydial_number = document.createElement("span");
+                                _copydial_number.className  = 'cdtx_copydial';
+                                _copydial_number.innerText = 'COPY';
+                                _copydial_number.id = _id_button;
+                    
+                                _elm.insertAdjacentElement('afterEnd', _copydial_number);
+                                _copydial_number.addEventListener('click', () => {
+                                    _textview = _elm.innerText.trim().replace(/[^\d#+]/g, '');
+                                    copyTextToClipboard(_textview);
+                                });
+                                
+                                if('cdtx_copydial_2' === _id_button) {
+                                    
+                                    const _dialnow = document.createElement("span");
+                                    _dialnow.className  = 'cdtx_copydial';
+                                    _dialnow.innerHTML = 'DIAL <span class="no">NO</span>';
+                                    _dialnow.title = 'Please check consent at dial section case';
+                                    _dialnow.id = 'cdtx_dialnow';
+
+                                    var _timeout = _timeout || null;
+
+                                    clearTimeout(_timeout);
+                                    
+                                    _elm.insertAdjacentElement('afterEnd', _dialnow);
+                                    _dialnow.addEventListener('click', () => {
+                                        
+                                        
+                                        setChromeStorage('_pinmeet_temp', _textview.trim().replace(/[^\d#+]/g, ''));
+                                        
+                                        // Empty if not use
+                                        _timeout = setTimeout(() => {
+                                            setChromeStorage('_pinmeet_temp', '');
+                                        }, 20 * 1000)
+                                    });
+
+                                    
+                                    const _dialnow_consent = document.createElement("span");
+                                    _dialnow_consent.className  = 'cdtx_copydial';
+                                    _dialnow_consent.innerHTML = 'DIAL <span class="yes">YES</span>';
+                                    _dialnow_consent.title = 'Auto accept consent! Please check and accept consent';
+                                    _dialnow_consent.id = 'cdtx_dialnow_consent';
+                                    
+                                    _elm.insertAdjacentElement('afterEnd', _dialnow_consent);
+                                    _dialnow_consent.addEventListener('click', () => {
+                                        
+                                        setChromeStorage('_pinmeet_temp', "consent" + _textview.trim().replace(/[^\d#+]/g, ''));
+                                        
+                                        // Empty if not use
+                                        _timeout = setTimeout(() => {
+                                            setChromeStorage('_pinmeet_temp', '');
+                                        }, 20 * 1000)
+                                    });
+                                        
+                                }
+                                
+                                
+                            }
+                        }
+                    }
+                }
+                _meet_dial_copy ('.vFzkO #cdtx_copydial_1', ".vFzkO .iMP6zc + [jsname='zQ0Yjb']",  "cdtx_copydial_1");
+                _meet_dial_copy ('.vFzkO #cdtx_copydial_2', ".vFzkO .iMP6zc + [jsname='pCHCHe']",  "cdtx_copydial_2");
+
+
+            }
+        
+        
+        
+            
+        } catch (error) {
+            console.error('catch', error)
+        }
+
+
+        return false;
+    }
+
+
+
+
+
+    // ====================
+    cLog(() => { console.log('DONGDEP BEGIN'); });
+    
+    // Auto dial
+    var _checkDialPad = () => {
+        dialpad = null
+        if(dialpad = document.querySelector('.dialpad-section dialpad'))  {
+            return dialpad;
+        }
+
+        return dialpad;
+    }
+
+    var _checkDialToggle = () => {
+        dialpad_toggle = null;
+        if(dialpad_toggle = document.querySelector('#dialpad-toggle'))  {
+            return dialpad_toggle;
+        }
+
+        return dialpad_toggle;
+    }
+
+    var _checkConsentYesButton = () => {
+        var consentyesbtn = null;
+        
+        if(consentyesbtn = document.querySelector('#consent-yes-button'))  {
+            return consentyesbtn;
+        }
+
+        return consentyesbtn;
+    }
+    
+    
+    var _checkpin = (_textview) => {
+        if(!_textview.includes('#')) {
+            alert('PIN missing #');
+            return false;
+        }
+
+        return true;
+    }
+
+
+    var _act_quayso = (_number) => {
+        
+        _number = _number.replace(/[^\d#*]+/g, '');
+        var _numberarr = _number.split('');
+
+        if(!_checkpin(_numberarr)) {
+            return false;
+        }
+
+        var _index_st = 0;
+        var _color_act = `#A` + Math.floor((Math.random() * 99) + 10) + "A00";
+
+        var _myTime = setInterval(() => {
+            if(_numberarr[_index_st]) {
+                var _pad = _numberarr[_index_st];
+                
+                var _dialbtn = null;
+                
+                switch (_pad) {
+                    case '#':
+                        _dialbtn = document.querySelector(`.dialpad-section [aria-label="Pound sign"]`);
+                        
+                        break;
+                    case '*':
+                        _dialbtn = document.querySelector(`.dialpad-section [aria-label="Star sign"]`);
+                        
+                        break;
+                
+                    default:
+                        _dialbtn = document.querySelector(`.dialpad-section [aria-labelledby="dialpad-button-${_pad}"]`);
+
+                        break;
+                }
+                
+                if(_dialbtn) {
+                    cLog(() => { console.log('quayso', _numberarr[_index_st]); });
+                    // _dialbtn.style.backgroundColor = _color_act; 
+                    
+                    _dialbtn.dispatchEvent(new Event('click'));
+                }
+
+            } else {
+                clearInterval(_myTime);
+            }
+            _index_st = _index_st + 1;
+        }, 350);
+    }
+    
+    
+    
+    
+    // toggle
+    if(_checkDialToggle()) {
+        getChromeStorage('_pinmeet_temp', (response) => {
+            if(response.value) {
+                cLog(() => { console.log('DONGDEP _checkDialToggle'); });
+                
+                if(!_checkDialToggle().classList.contains('donetoggle')) {
+                    
+                    cLog(() => { console.log('DONGDEP _checkDialToggle 2'); });
+                    
+                    if(!_checkDialPad()) {
+                        
+                        cLog(() => { console.log('DONGDEP _checkDialToggle 3'); });
+                        
+                        _checkDialToggle().click();
+                        _checkDialToggle().classList.add('donetoggle');
+                    }
+                }
+                
+                
+                if(_checkDialPad()) {
+                    if(!_checkDialPad().classList.contains('isdial_ready')) {
+                        _checkDialPad().classList.add('isdial_ready');
+                        
+                        cLog(() => { console.log('DONGDEP', 'ACTION GET PIN STORAGE QUAY SO', response); });
+                        
+                        // 1. Dial button
+                        _act_quayso(response.value);
+                        
+                        // 2. Auto click ConsentYesButton
+                        if(response.value.startsWith('consent')) {
+                            cLog(() => { console.log('DONGDEP HAVE CONSENT'); });
+                            if(_checkConsentYesButton()) {
+                                _checkConsentYesButton().click();
+                            }
+                        }
+                        
+                        
+                        // 3. Reset Null
+                        setChromeStorage('_pinmeet_temp', '', () => {
+                            cLog(() => { console.log('DONGDEP 4 Reset'); });
+                            _checkDialPad().classList.remove('isdial_ready');    
+                        });
+                    }
+                }
+            }
+        
+        });
+    }
+    
+    
+    
+    
     
     if(!document.querySelector('[data-quayso_submit]')) {
                     
         cLog(() => { console.log('barkeep.corp.google.com - Start') });
         
-        if(document.querySelector('.dialpad-section dialpad')) {
+        if(_checkDialPad()) {
             var _html = `<div style="display: flex;font-size: 13px; justify-content: center;flex-wrap: wrap;outline: none;margin: 5px;"><span style="background: #1a73e8;border-radius: 5px;border: 1px solid #1a73e8;cursor: pointer;color: #fff;user-select: none;width: 30%;text-align: center;flex-basis: 0;flex-grow: 1;max-width: 100%;line-height: 28px;height: 28px;font-size: 12px;max-width: 64px;" data-quayso_submit="1">Dial now</span></div>`;
             
             _html = _TrustScript(_html);
@@ -4125,54 +4479,15 @@ function quaySoBarkeep(){
             
 
             document.querySelector('[data-quayso_submit]').addEventListener("click", function(){
-                
+                    
+            
+
                 var _number = prompt("Enter dial number ", "");
-                if (!(_number != null && _number != "")) return false
+                if (!(_number != null && _number != "")) return false;
+                
 
-                // console.log('quayso')
-                // var _number = dataquayso_input.innerText;
-                _number = _number.replace(/[^\d#*]+/g, '');
-                var _numberarr = _number.split('');
-    
-                var _index_st = 0;
-                var _color_act = `#A` + Math.floor((Math.random() * 99) + 10) + "A00";
-
-                var _myTime = setInterval(() => {
-                    if(_numberarr[_index_st]) {
-                        var _pad = _numberarr[_index_st];
-                        
-                        var _dialbtn = null;
-                        
-
-
-                        switch (_pad) {
-                            case '#':
-                                _dialbtn = document.querySelector(`.dialpad-section [aria-label="Pound sign"]`);
-                                
-                                break;
-                            case '*':
-                                _dialbtn = document.querySelector(`.dialpad-section [aria-label="Star sign"]`);
-                                
-                                break;
-                        
-                            default:
-                                _dialbtn = document.querySelector(`.dialpad-section [aria-labelledby="dialpad-button-${_pad}"]`);
-
-                                break;
-                        }
-                        
-                        if(_dialbtn) {
-                            console.log('quayso', _numberarr[_index_st]);
-                            // _dialbtn.style.backgroundColor = _color_act;
-                            // _dialbtn.click();
-                            _dialbtn.dispatchEvent(new Event('click'));
-                        }
-    
-                    } else {
-                        clearInterval(_myTime);
-                    }
-                    _index_st = _index_st + 1;
-                }, 350);
+                // ACTION QUAY SO
+                _act_quayso(_number);
             })
         }
     }

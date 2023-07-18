@@ -4,10 +4,6 @@ window.dataTagteam.extension_id = chrome.runtime.id;
 window.dataTagteam.assets_url_img = 'chrome-extension://' + window.dataTagteam.extension_id + '/assets/img';
 window.dataTagteam.api_blog = 'https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/api.php';
 
-if(new Date().getSeconds() % 3 === 0) {
-    window.dataTagteam.api_blog = 'https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/api_backup.php';
-}
-
 
 // ==== LIB ====
 function loadCaseDatabaseByID(case_id) {
@@ -1080,7 +1076,8 @@ function loadFetchText(url, _callback) {
 
 function loadFetchContent(url, _callback) {
     fetch(url, {
-        method: 'GET'
+        method: 'GET',
+        cache: "force-cache"
     })
         .then(function(response) {
             return response.text();
@@ -1431,16 +1428,16 @@ function load_remote (result, _default_action) {
         case 'Development':
                 var _key = "cdtx_scriptsync_dev";
                 var _body = {
-                    "action": "script4dev",
+                    "action": "script4dev_url",
                     "language": result.mycountry,
                 };
                 
                 load_fetch_post_content(window.dataTagteam.api_blog, _body, (response_api) => {
                     if(response_api.rs) {
-                        loadFetchContent(response_api.script_url, (_html_panel) => {
+                        loadFetchContent(response_api.script_url, (_urlscript) => {
                             if(response_api.typeaction == 'script_sync') {
                                 try {
-                                    eval(_html_panel);
+                                    eval(_urlscript);
                                 } catch (e) {
                                     if (e instanceof SyntaxError) {
                                         console.error("Error", e);
@@ -1450,20 +1447,6 @@ function load_remote (result, _default_action) {
                                 _default_action();
                             }
                         });
-                    //     setChromeStorage(_key, response_api.rs , () => {
-                            
-                    //         if(response_api.typeaction == 'script_sync') {
-                    //             try {
-                    //                 eval(response_api.script_str);
-                    //             } catch (e) {
-                    //                 if (e instanceof SyntaxError) {
-                    //                     console.error("Error", e);
-                    //                 }
-                    //             }
-                    //         } else {
-                    //             _default_action();
-                    //         }
-                    //     });
                     }
                 });
             break;
@@ -2695,8 +2678,6 @@ function toolEditorEmailTemplate4Dev() {
             var html_combie = '';
             loadFetchText("https://cdnjs.cloudflare.com/ajax/libs/ace/1.19.0/ace.min.js", (rs) => {
                 html_combie += "\n " + rs;
-                loadFetchText("https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/theme-monokai.js", (rs) => {
-                    html_combie += "\n " + rs;
                     loadFetchText("https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/mode-html.js", (rs) => {
                         html_combie += "\n " + rs;
                         eval(html_combie);
@@ -2705,7 +2686,6 @@ function toolEditorEmailTemplate4Dev() {
                             _load();
                         }    
                     });
-                });
             });
         } else {
             if(editor_email = document.querySelector('#editor_email')) {
@@ -2733,11 +2713,11 @@ function clearAndPrepareCRTemplate() {
             _listsheet_find_replace = window.loadgooglesheetpublish['email - find_replace'].sheettab;
             if(_listsheet_find_replace) {
                 _listsheet_find_replace.forEach((item) => {
-
-                    
                     var _strreplace = item[window.keylanguage];
-                    for (const [_key, _value] of Object.entries(window.dataCase)) {
-                        _strreplace = _strreplace.replaceAll(`{%${_key}%}`,`${_value}`)
+                    if(window.dataCase.case_id) {
+                        for (const [_key, _value] of Object.entries(window.dataCase)) {
+                            _strreplace = _strreplace.replaceAll(`{%${_key}%}`,`${_value}`)
+                        }
                     }
                     
                     _str_list_search += item['Find'] + ":" + _strreplace + "\n";
@@ -2748,7 +2728,7 @@ function clearAndPrepareCRTemplate() {
         }
 
 
-        // cLog(() => {console.log('HHH', window.dataCase, _str_list_search )})
+        cLog(() => {console.log('HHH', window.dataCase, _str_list_search )})
 
 
 
@@ -2778,7 +2758,7 @@ function clearAndPrepareCRTemplate() {
                 if(_tdcellist.length) {
                     _tdcellist.forEach((item) => {
                         var _heading = item.innerText.trim();
-                        var _getvalue = searchAndReturnValue(vi_heading_searchandreplace, _heading, 1);
+                        var _getvalue = searchAndReturnValue(_str_list_search, _heading, 1);
                         if(_getvalue) {
                             item.innerText = _getvalue;
                         }
@@ -2790,11 +2770,6 @@ function clearAndPrepareCRTemplate() {
                 if(_tdcellist.length) {
                     _tdcellist.forEach((item) => {
                         var _heading = item.innerText.trim();
-                        var _list = ['']
-                        var _getvalue = searchAndReturnValue(vi_key_task_searchandreplace, _heading, 1);
-                        if(_getvalue) {
-                            item.innerText = _getvalue;
-                        }
                         
                         var _getvalue = searchAndReturnValue(_str_list_search, _heading, 1);
                         if(_getvalue) {
@@ -2958,12 +2933,12 @@ function timeLeftGoogleCalendar() {
                 <div class="panel_info-inner" >
                     ${_contentsub_item}
                 </div>
-                <hr>
-                <p class="panel_info-qplus">
-                    <span data-btnclk="qplus-rescan" data-qplus_status="Q+"></span>
-                </p>      
                 `;
                 
+                // <hr>
+                // <p class="panel_info-qplus">
+                //     <span data-btnclk="qplus-rescan" data-qplus_status="Q+"></span>
+                // </p>      
                 // <p class="panel_info-daysnext">
                 //     Next 14days: <span class="slall">${dayNextByCustom(14)}</span><br>
                 //     Next 07days: <span class="slall">${dayNextByCustom(7)}</span><br>
@@ -3237,9 +3212,9 @@ function timeLeftGoogleCalendar() {
         _oncerun++;
 
         calendarGetInfoRealtime();
-        getInfoQPlus();
+        // getInfoQPlus();
         setInterval(() => {
-            getInfoQPlus();
+            // getInfoQPlus();
             calendarGetInfoRealtime();
         }, 1000 * 40)
     }

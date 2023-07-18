@@ -400,7 +400,6 @@ var tagteamFocusCase = () => {
         
         .dock-float {
             width: auto;
-            height: 60px;
             border-radius: 16px;
             display: flex;
             justify-content: center;
@@ -410,13 +409,20 @@ var tagteamFocusCase = () => {
         }
         
         .dock-float .dock-float-container {
-            padding: 3px;
             height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-bottom: 2px dashed #ccc;
+            margin-bottom: 10px;
         }
+
+
+        .dock_order_1_pin_status .dock-float .dock-float-container  {
+            border-bottom: 0;
+            margin-bottom: 0;
+        }
+
 
         .dock_order_vertical {
             margin-top: 20px
@@ -701,6 +707,16 @@ var tagteamFocusCase = () => {
                 transform: rotate(360deg);
             }
         }
+
+        .dock_order_1_pin_status .li-16 {
+            background-color: #e2e0e0;
+            border-radius: 50%;
+        }
+
+        .dock_order_1_pin_status .li-16 .ico {
+            transform: rotate(-45deg);
+        }
+        
         `;
         var head = document.head || document.getElementsByTagName('head')[0];
         var style = document.createElement('style');
@@ -763,66 +779,99 @@ var tagteamFocusCase = () => {
                             style="height: 30px;"
                         >
                     </li>
+
+                    <li class="li-16">
+                        <img class="ico dock_order_1_pin_icon"
+                            src="data:image/svg+xml,%3Csvg fill='%23009688' width='800px' height='800px' viewBox='0 0 1920 1920' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1154.976 0 988.342 166.52c-60.448 60.447-63.436 153.418-15.4 220.646L670.359 689.751c-4.022 4.022-6.55 8.964-9.079 13.79-147.212-61.022-328.671-34.246-444.626 81.709l-98.027 98.141 418.31 418.195-520.129 520.129c-22.41 22.409-22.41 58.724 0 81.248 11.262 11.147 25.972 16.778 40.682 16.778s29.42-5.63 40.567-16.778l520.128-520.129 418.195 418.31 98.142-98.142c75.962-75.847 117.793-176.862 117.793-284.313 0-56.195-12.067-110.208-33.787-160.198 2.758-1.839 5.861-2.988 8.275-5.516l303.963-303.964c29.19 21.145 63.896 33.097 100.67 33.097 46.083 0 89.293-17.928 121.93-50.565L1920 764.909 1154.976 0Z' fill-rule='evenodd'/%3E%3C/svg%3E"
+                            style=" height: 18px; "
+                        >
+                    </li>
             
                 </div>
             </div>`;
 
             var dock_float = document.createElement('div');
             dock_float.id = "dock_order_1";
-            dock_float.className = "dock_order_vertical";
             dock_float.innerHTML = dock_float_html;
             
-            document.querySelector('material-fab-speed-dial material-fab').insertAdjacentElement("afterEnd", dock_float);
+            var _area = document.querySelector('[debug-id="case-summary-input"]');
+            if(localStorage.getItem('dock_order_1_pin')) {
+                _area = document.body;
+                dock_float.style.bottom = `6px`;
+                dock_float.style.left = `50%`;
+                dock_float.style.zIndex = `9999`;
+                dock_float.style.position = `fixed`;
+                dock_float.classList.add(`dock_order_1_pin_status`);
+                dock_float.style.transform = `translateX(-50%)`;
+                dock_float.style.background = `#cccccc47`;
+                dock_float.style.padding = ` 0 6px`;
+                dock_float.style.padding = ` 0 6px`;
+                dock_float.style.borderRadius = `30px`;
+            }
+            
+            if(_area) {
+                _area.insertAdjacentElement("afterEnd", dock_float);
 
-            const focus = (elem, index) => {
-                let previous = index - 1;
-                let previous1 = index - 2;
-                let next = index + 1;
-                let next2 = index + 2;
+                const focus = (elem, index) => {
+                    let previous = index - 1;
+                    let previous1 = index - 2;
+                    let next = index + 1;
+                    let next2 = index + 2;
+    
+                    if (previous == -1) {
+                        // console.log("first element");
+                        elem.style.transform = "scale(1.5)  translateY(-10px)";
+                    } else if (next == icons.length) {
+                        elem.style.transform = "scale(1.5)  translateY(-10px)";
+                        // console.log("last element");
+                    } else {
+                        elem.style.transform = "scale(1.5)  translateY(-10px)";
+                        if(icons[previous]) {
+                            icons[previous].style.transform = "scale(1.2) translateY(-6px)";
+                        }
+                        if(icons[previous1]) {
+                            icons[previous1].style.transform = "scale(1.1)";
+                        }
+                        if(icons[next]) {
+                            icons[next].style.transform = "scale(1.2) translateY(-6px)";
+                        }
+                        if(icons[next2]) {
+                            icons[next2].style.transform = "scale(1.1)";
+                        }
+                    }
+                };
+    
+                let icons = document.querySelectorAll(".ico");
+                let length = icons.length;
+    
+                // icons.forEach((item, index) => {
+                //     item.addEventListener("mouseover", (e) => {
+                //         focus(e.target, index);
+                //     });
+                //     item.addEventListener("mouseleave", (e) => {
+                //         icons.forEach((item) => {
+                //             item.style.transform = "scale(1)  translateY(0px)";
+                //         });
+                //     });
+                // });
+                document.querySelector('.open-email').addEventListener('click', openEmail);
+                document.querySelector('.open-note').addEventListener('click', openNote)
+                document.querySelector('.ads-ics').addEventListener('click', adsICS)
+                document.querySelector('.open-gearloose').addEventListener('click', gearloose)
+                document.querySelector('.ogt-dashboard').addEventListener('click', ogtDashboard)
+                document.querySelector('.ec-dashboard').addEventListener('click', ecDashboard)
+                document.querySelector('.connect-appointment').addEventListener('click', connectAppointment)
+                document.querySelector('.dock_order_1_pin_icon').addEventListener('click', (e) => {
+                    if(localStorage.getItem('dock_order_1_pin')) {
+                        localStorage.removeItem('dock_order_1_pin');
+                    } else {
+                        localStorage.setItem('dock_order_1_pin', '123');
+                    }
+                    dock_float.remove();
+                })
+            }
+            
 
-                if (previous == -1) {
-                    // console.log("first element");
-                    elem.style.transform = "scale(1.5)  translateY(-10px)";
-                } else if (next == icons.length) {
-                    elem.style.transform = "scale(1.5)  translateY(-10px)";
-                    // console.log("last element");
-                } else {
-                    elem.style.transform = "scale(1.5)  translateY(-10px)";
-                    if(icons[previous]) {
-                        icons[previous].style.transform = "scale(1.2) translateY(-6px)";
-                    }
-                    if(icons[previous1]) {
-                        icons[previous1].style.transform = "scale(1.1)";
-                    }
-                    if(icons[next]) {
-                        icons[next].style.transform = "scale(1.2) translateY(-6px)";
-                    }
-                    if(icons[next2]) {
-                        icons[next2].style.transform = "scale(1.1)";
-                    }
-                }
-            };
-
-            let icons = document.querySelectorAll(".ico");
-            let length = icons.length;
-
-            // icons.forEach((item, index) => {
-            //     item.addEventListener("mouseover", (e) => {
-            //         focus(e.target, index);
-            //     });
-            //     item.addEventListener("mouseleave", (e) => {
-            //         icons.forEach((item) => {
-            //             item.style.transform = "scale(1)  translateY(0px)";
-            //         });
-            //     });
-            // });
-            document.querySelector('.open-email').addEventListener('click', openEmail);
-            document.querySelector('.open-note').addEventListener('click', openNote)
-            document.querySelector('.ads-ics').addEventListener('click', adsICS)
-            document.querySelector('.open-gearloose').addEventListener('click', gearloose)
-            document.querySelector('.ogt-dashboard').addEventListener('click', ogtDashboard)
-            document.querySelector('.ec-dashboard').addEventListener('click', ecDashboard)
-            document.querySelector('.connect-appointment').addEventListener('click', connectAppointment)
         }
 
         var modalHtml = `

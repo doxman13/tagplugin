@@ -1616,46 +1616,20 @@ function global_case(optionkl__disable_dialog) {
                         'btn_text': 'On Call UI',
                         'content_insert' : `
                         <div class="cdtx__uioncall">
-                            <div class="cdtx__uioncall-item"><b>Sub-status:&nbsp;&nbsp; <span class="_sub_i" data-btnclk="choice_status_list" data-infocase="status_case" >Click Choice</span></b></div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b><span data-btnclk="choice_substatusreason">Sub-status Reason</span>:</b>&nbsp;&nbsp;
+                            <div class="cdtx__uioncall_control">
+                                <span class="cdtx__uioncall_control-save" data-text="Save" ></span>
+                                <span class="cdtx__uioncall_control-load" data-text="Load" ></span>
                             </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b><span data-btnclk="choice_followup">Follow Up</span>:&nbsp;&nbsp;</b> NA
-                            </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b><span data-btnclk="choice_speakeasyid">Speakeasy ID</span>:&nbsp;&nbsp;</b>
-                            </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b>On Call Comments:</b>&nbsp;&nbsp; Like "Sub-status Reason" above
-                            </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b>Tags Implemented:&nbsp;&nbsp;</b>
-                            </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b>Screenshots:&nbsp;&nbsp;</b> Attachment
-                            </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b>Multiple CIDs:&nbsp;&nbsp;</b>NA
-                            </div>
-                            <div class="cdtx__uioncall-item">
-                                <br>
-                                <span data-btnclk="cdtx__uioncall_choice_removeitem" class="cdtx__uioncall-remove"></span>
-                                <b>On Call Screenshot:&nbsp;&nbsp;</b> Attachment
+                            <div class="cdtx__uioncall_outer">
+                                <p dir="auto"><b>Sub-status:&nbsp;&nbsp;<span class="_sub_i" data-btnclk="choice_status_list" data-infocase="status_case" >Click Choice</span></b> </p>
+                                <p dir="auto"><b>Sub-status Reason:</b>&nbsp;&nbsp; </p>
+                                <p dir="auto"><span class="cdtx__uioncall_control-flchoice">FL: NA</span></p>
+                                <p dir="auto"><b>Speakeasy ID:&nbsp;&nbsp;</b> </p>
+                                <p dir="auto"><b>On Call Comments:</b>&nbsp;&nbsp; </p>
+                                <p dir="auto"><b>Tags Implemented:&nbsp;&nbsp;</b></p>
+                                <p dir="auto"><b><span class="cdtx__uioncall_control-flchoice">Screenshots: Attach</span></b></p>
+                                <p dir="auto"><b>Multiple CIDs:&nbsp;&nbsp;</b>NA</p>
+                                <p dir="auto"><b><span class="cdtx__uioncall_control-flchoice">On Call Screenshot: Attach</span></b></p>
                             </div>
                         </div>
                         `

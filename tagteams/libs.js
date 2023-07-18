@@ -2662,12 +2662,13 @@ function toolEditorEmailTemplate4Dev() {
                 // editor.getValue(); // or session.getValue
                 var _ebc = document.querySelector('.write-cards-wrapper:not([style*="none"]) .editor #email-body-content');
 
-                _ebc.innerHTML = editor.getValue();
-                replaceAllHtmlElement(_ebc, window.dataCase);
-                updateMeetContentBySheet(_ebc);
+                if(_ebc) {
+                    _ebc.innerHTML = editor.getValue();
+                    replaceAllHtmlElement(_ebc, window.dataCase);
+                    updateMeetContentBySheet(_ebc);
 
-                localStorage.setItem('_tempsaveaceeditor1', editor.getValue());
-
+                    localStorage.setItem('_tempsaveaceeditor1', editor.getValue());
+                }
             });
         }
         if(!document.querySelector('#editor_email.ace_editor')) {

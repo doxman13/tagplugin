@@ -802,7 +802,8 @@ var tagteamFocusCase = () => {
                 dock_float.style.zIndex = `9999`;
                 dock_float.style.position = `fixed`;
                 dock_float.classList.add(`dock_order_1_pin_status`);
-                dock_float.style.transform = `translateX(-50%)`;
+                dock_float.style.transform = `scale(1.1) translateX(-50%)`;
+                dock_float.style.transformOrigin = `bottom center`;
                 dock_float.style.background = `#cccccc47`;
                 dock_float.style.padding = ` 0 6px`;
                 dock_float.style.padding = ` 0 6px`;
@@ -862,7 +863,10 @@ var tagteamFocusCase = () => {
                 document.querySelector('.ec-dashboard').addEventListener('click', ecDashboard)
                 document.querySelector('.connect-appointment').addEventListener('click', connectAppointment)
                 document.querySelector('.voice_call_ui').addEventListener('click', (e) => {
-                    
+                    document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
+                    if(document.querySelector('.themeable.phone')) {
+                        document.querySelector('.themeable.phone').click();
+                    }
                 });
 
                 document.querySelector('.dock_order_1_pin_icon').addEventListener('click', (e) => {

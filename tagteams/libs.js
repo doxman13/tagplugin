@@ -2778,6 +2778,19 @@ function clearAndPrepareCRTemplate() {
                         }
                     })
                 }
+                
+                // replace heading search td table and replace heading
+                var _tdcellist = _email_body_content_top_content.querySelectorAll(".field");
+                if(_tdcellist.length) {
+                    _tdcellist.forEach((item) => {
+                        var _heading = item.innerText.trim();
+                        
+                        var _getvalue = searchAndReturnValue(_str_list_search, _heading, 1);
+                        if(_getvalue) {
+                            item.innerText = _getvalue;
+                        }
+                    })
+                }
 
                 // remove text
                 var _tr = _email_body_content_top_content.querySelectorAll("tr");

@@ -4002,18 +4002,29 @@ function global_case(optionkl__disable_dialog) {
 
 
     // LOAD
+    var _once_load = 0;
     loadGoogleSheetOnlineWebPublics(() => {
-        loadStyle();
-        loadRealtime();
-        autoUpdatelistLinkCalendar(true);
-        clickAction();
-        loadEmailTemplateAction();
-        panelAddShortcutLink();
-        crSubjectByHotKeyEmail();
-        openGAdsbyAdsID();
-        initQplusLoad();
-        uiOnCallPanel();
-        // Load code vanbo
-        tagteamFocusCase();
+        
+        cLog(() => { console.log("Once Load"); });
+        
+        if(_once_load === 0) {
+            _once_load = _once_load + 1;
+            
+            cLog(() => { console.log("Once Load 2"); });
+            
+            loadStyle();
+            loadRealtime();
+            autoUpdatelistLinkCalendar(true);
+            clickAction();
+            loadEmailTemplateAction();
+            panelAddShortcutLink();
+            crSubjectByHotKeyEmail();
+            openGAdsbyAdsID();
+            initQplusLoad();
+            uiOnCallPanel();
+            // Load code vanbo
+            tagteamFocusCase();    
+        }
+        
     });
 }

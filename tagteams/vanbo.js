@@ -717,6 +717,10 @@ var tagteamFocusCase = () => {
             transform: rotate(-45deg);
         }
         
+        body.dock_order_1_havepin {
+            max-height: calc(100vh - 64px);
+        }
+        
         `;
         var head = document.head || document.getElementsByTagName('head')[0];
         var style = document.createElement('style');
@@ -796,6 +800,7 @@ var tagteamFocusCase = () => {
             
             var _area = document.querySelector('[debug-id="case-summary-input"]');
             if(localStorage.getItem('dock_order_1_pin')) {
+                document.body.classList.add('dock_order_1_havepin');
                 _area = document.body;
                 dock_float.style.bottom = `6px`;
                 dock_float.style.left = `50%`;
@@ -808,6 +813,7 @@ var tagteamFocusCase = () => {
                 dock_float.style.padding = ` 0 6px`;
                 dock_float.style.padding = ` 0 6px`;
                 dock_float.style.borderRadius = `30px`;
+                
             }
             
             if(_area) {
@@ -870,10 +876,13 @@ var tagteamFocusCase = () => {
                 });
 
                 document.querySelector('.dock_order_1_pin_icon').addEventListener('click', (e) => {
+                    document.body.classList.remove('dock_order_1_havepin')
                     if(localStorage.getItem('dock_order_1_pin')) {
                         localStorage.removeItem('dock_order_1_pin');
                     } else {
                         localStorage.setItem('dock_order_1_pin', '123');
+                        document.body.classList.add('dock_order_1_havepin');
+                        
                     }
                     dock_float.remove();
                 })

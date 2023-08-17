@@ -443,18 +443,18 @@ function global_case(optionkl__disable_dialog) {
                 <img src="data:image/svg+xml,%3Csvg fill='%23000000' width='800px' height='800px' viewBox='0 0 24 24' role='img' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.42 10.05c-.18-.16-.46-.23-.84-.23H6l.02 2.44.04 2.45.56-.02c.41 0 .63-.07.83-.26.24-.24.26-.36.26-2.2 0-1.91-.02-1.96-.29-2.18zM0 4.94v14.12h24V4.94H0zM8.56 15.3c-.44.58-1.06.77-2.53.77H4.71V8.53h1.4c1.67 0 2.16.18 2.6.9.27.43.29.6.32 2.57.05 2.23-.02 2.73-.47 3.3zm5.09-5.47h-2.47v1.77h1.52v1.28l-.72.04-.75.03v1.77l1.22.03 1.2.04v1.28h-1.6c-1.53 0-1.6-.01-1.87-.3l-.3-.28v-3.16c0-3.02.01-3.18.25-3.48.23-.31.25-.31 1.88-.31h1.64v1.3zm4.68 5.45c-.17.43-.64.79-1 .79-.18 0-.45-.15-.67-.39-.32-.32-.45-.63-.82-2.08l-.9-3.39-.45-1.67h.76c.4 0 .75.02.75.05 0 .06 1.16 4.54 1.26 4.83.04.15.32-.7.73-2.3l.66-2.52.74-.04c.4-.02.73 0 .73.04 0 .14-1.67 6.38-1.8 6.68z'/%3E%3C/svg%3E">
             </div>
         </div>
-        
-        <div class="material-button _fordevmode" data-btnclk="test_meetpin" >
-            <div class="content">
-                Test PIN
-            </div>
-        </div>
         `;
 
 
         // For Dev
         if(window.isdongtest) {
             _contenthtml += `
+            
+        <div class="material-button" data-btnclk="dashboard_chklst_sop" title="check EC, OGT, ...." >
+            <div class="content">
+                <img src="${assets_img_checklist}" alt="" >
+            </div>
+        </div>
             <div class="material-button _fordevmode" data-btnclk="tool_mail_test" >
                 <div class="content">
                     Mail test
@@ -533,17 +533,28 @@ function global_case(optionkl__disable_dialog) {
             var _data_pair_content = document.querySelectorAll('card.read-card home-data-item');
             var _internal_user_info_email = document.querySelectorAll('card.read-card internal-user-info');
             var _contact_email_field = document.querySelectorAll('card.read-card contact-email-field');
+            var _c2d_phone_field = document.querySelectorAll('card.read-card c2d-phone-field');
+            
+            
+            if(_cuf_form_field.length > 5 ) {
+                _n_isok++;
+            } else {
+                if(targetinput = document.querySelector('target-selector .target-input input')) {
+                    if(targetinput.value.trim()) {
+                        _n_isok++;
+                    }
+                }
+
+            }
             
             _list_elem.push(_cuf_form_field);
             _list_elem.push(_data_pair_content);
             _list_elem.push(_internal_user_info_email);
             _list_elem.push(_contact_email_field);
+            _list_elem.push(_c2d_phone_field);
             
             
 
-            if(_cuf_form_field.length > 5 ) {
-                _n_isok++;
-            }
             
             
             
@@ -966,7 +977,6 @@ function global_case(optionkl__disable_dialog) {
                         <div class="_infocase_byme-field" data-title="Is External" data-infocase="is_external" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Is GCC" data-infocase="is_gcc" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Is Ads Enhanced Conversions" data-infocase="is_ads_enhanced_conversions" data-disnewline="1" contenteditable="plaintext-only" ></div>
-                        <div class="_infocase_byme-field" data-title="Your call quality" data-iscenter="1" data-infocase="self_assessment_call_quality" data-disnewline="1" contenteditable="plaintext-only" data-select="7,6,5,4,3,2,1,∞" data-btnclk="note_select" >∞</div>
                     </div>
                     <div class="_infocase_byme-col" >
                         <span class="_btn_stall mb_20px disable" data-btnsave="1" data-caseid="${_caseid}" >Save</span>
@@ -1609,34 +1619,31 @@ function global_case(optionkl__disable_dialog) {
                 };
                 _arr_btnlist.push(_temp_oncall);
 
-
-                if(localStorage.getItem('dongtest_local')) {
-                    var _temp_oncall = {
-                        'id' : 'cdtx__uioncall--btn',
-                        'btn_text': 'On Call UI',
-                        'content_insert' : `
-                        <div class="cdtx__uioncall">
-                            <div class="cdtx__uioncall_control">
-                                <span class="cdtx__uioncall_control-save" data-text="Save" ></span>
-                                <span class="cdtx__uioncall_control-load" data-text="Load" ></span>
-                            </div>
-                            <div class="cdtx__uioncall_outer">
-                                <p dir="auto"><b>Sub-status:&nbsp;&nbsp;<span class="_sub_i" data-btnclk="choice_status_list" data-infocase="status_case" >Click Choice</span></b> </p>
-                                <p dir="auto"><b>Sub-status Reason:</b>&nbsp;&nbsp; </p>
-                                <p dir="auto"><span class="cdtx__uioncall_control-flchoice">FL: NA</span></p>
-                                <p dir="auto"><b>Speakeasy ID:&nbsp;&nbsp;</b> </p>
-                                <p dir="auto"><b>On Call Comments:</b>&nbsp;&nbsp; </p>
-                                <p dir="auto"><b>Tags Implemented:&nbsp;&nbsp;</b></p>
-                                <p dir="auto"><b><span class="cdtx__uioncall_control-flchoice">Screenshots: Attach</span></b></p>
-                                <p dir="auto"><b>Multiple CIDs:&nbsp;&nbsp;</b>NA</p>
-                                <p dir="auto"><b>On Call Screenshot:&nbsp;&nbsp;</b> </p>
-                                <p dir="auto"><b><span class="cdtx__uioncall_control-flchoice">On Call Screenshot: Attach</span></b></p>
-                            </div>
+                var _temp_oncall = {
+                    'id' : 'cdtx__uioncall--btn',
+                    'btn_text': 'On Call (beta)',
+                    'content_insert' : `
+                    <div class="cdtx__uioncall">
+                        <div class="cdtx__uioncall_control" contenteditable="false" >
+                            <span class="cdtx__uioncall_control-load" data-text="List" data-btnclk="oncall_templ_act_load" >&nbsp;</span>
+                            <span class="cdtx__uioncall_control-save" data-text="Save template" data-btnclk="oncall_templ_act_save" >&nbsp;</span>
+                            <span class="cdtx__uioncall_control-remove" data-text="Remove" data-btnclk="oncall_templ_act_remove" >&nbsp;</span>
                         </div>
-                        `
-                    };
-                    _arr_btnlist.push(_temp_oncall);
-                }
+                        <div class="cdtx__uioncall_outer">
+                            <p dir="auto"><b>Sub-status:&nbsp;&nbsp;<span class="_sub_i" data-btnclk="choice_status_list" data-infocase="status_case" >Click Choice</span></b> </p>
+                            <p dir="auto"><b>Sub-status Reason:</b>&nbsp;&nbsp; </p>
+                            <p dir="auto"><b data-btnclk="oncall_templ_act_flchoice" data-dateformat="d/m/Y" >FL:&nbsp;&nbsp;</b><span data-text="oncall_templ_act_flchoice-text" >NA</span></p>
+                            <p dir="auto"><b>Speakeasy ID:&nbsp;&nbsp;</b> Call log</p>
+                            <p dir="auto"><b>On Call Comments:&nbsp;&nbsp; </b>Like Sub-status Reason</p>
+                            <p dir="auto"><b data-btnclk="oncall_templ_act_taskchoice">Tags Implemented:&nbsp;&nbsp;</b><span data-text="oncall_templ_act_taskchoice-text" ></span></p>
+                            <p dir="auto"><b><span class="cdtx__uioncall_control-flchoice">Screenshots: Attach</span></b></p>
+                            <p dir="auto"><b>Multiple CIDs:&nbsp;&nbsp;</b>NA</p>
+                            <p dir="auto"><b><span class="cdtx__uioncall_control-flchoice">On Call Screenshot: Attach</span></b></p>
+                        </div>
+                    </div>
+                    `
+                };
+                _arr_btnlist.push(_temp_oncall);
 
 
 
@@ -1656,7 +1663,8 @@ function global_case(optionkl__disable_dialog) {
                             var _caseid = document.querySelector('[debug-id="case-id"] span.case-id').innerText;
                             
 
-                            console.log("cdtx - major - precall", window.dataCase);
+                            cLog(() => { console.log("cdtx - major - precall", window.dataCase); });
+                            
                             // is_ads_enhanced_conversions
                             if(typeof window.dataCase !== 'undefined') {
                                 
@@ -1723,6 +1731,46 @@ function global_case(optionkl__disable_dialog) {
         }
     }
 
+
+    // mailTemplate
+    var mailTemplateControl = () => {
+        
+        window.ncreate = window.ncreate || 1;
+        observeOnce((elm) => {
+            
+            if(window.result.optionkl__form_option_data) {
+                if(!window.result.optionkl__form_option_data.cdtx_chk_enable_emailcontrol) return false;
+            }
+            
+            var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"]`);
+            if(_istopelm) {
+                if(email_topcontent = _istopelm.querySelector('#email-body-content-top')) {
+                    if(email_body_header = _istopelm.querySelector('#email-body-header')) {
+                        var _elmcontrol = () => {
+                            return _istopelm.querySelector('.cdtx__uiemailtempcontrol');
+                        }
+                        if(!_elmcontrol()) {
+                            if(window.ncreate > 10) return false; window.ncreate++; console.log("DONGMAI", _elmcontrol())
+                            
+                            const dom = document.createElement("span");
+                            dom.className = 'cdtx__uiemailtempcontrol';
+                            dom.setAttribute('contenteditable', false)
+                            dom.innerHTML = `
+                                <span class="cdtx__uiemailtempcontrol-load" data-text="List" data-btnclk="mail_templ_act_load" >&nbsp;</span>
+                                <span class="cdtx__uiemailtempcontrol-save" data-text="Save template" data-btnclk="mail_templ_act_save" >&nbsp;</span>
+                                <span class="cdtx__uiemailtempcontrol-remove" data-text="Empty" data-btnclk="mail_templ_act_remove" >&nbsp;</span>
+                            `;
+    
+                            email_body_header.insertAdjacentElement('afterEnd', dom);
+    
+                        }        
+                    }
+                }
+                
+            }
+            
+        });
+    }
 
     // reupdateForAll
     // Disable reupdate a special - Exclude: panelnotecase
@@ -1815,6 +1863,44 @@ function global_case(optionkl__disable_dialog) {
     
 
     function clickAction() {
+        
+        var _sub_modal = () => {
+            return document.querySelector('._sub_modal');
+        }
+
+        var _sub_modal_remove = () => {
+            if(_sub_modal()) {
+                _sub_modal().innerHTML = '';
+                _sub_modal().classList.remove('show');
+            }
+        }
+
+        if(!_sub_modal()) {
+            
+            var _dom = document.createElement('span');
+            _dom.className = '_sub_modal';
+            
+            var _act_close_modal = (elm) => {
+                if(elm.classList.contains('_sub_modal')) {
+                    _sub_modal().classList.remove('show');
+                    _sub_modal().innerHTML = '';
+                }
+            }
+            _dom.addEventListener("click", (e2) => {
+                _act_close_modal(e2.target);
+                
+                if(e2.target.matches('._sub_modal_close')) {
+                    _act_close_modal(e2.target.closest('._sub_modal'));
+                }
+            });
+            
+
+            document.body.insertAdjacentElement('afterEnd', _dom);
+            
+        }
+
+        // ==== ONCLICK
+
         onClickElm('[data-btnaction="close_panel"]', 'click', function(elm, e){
             if(elm.closest('[data-panel="email-template"].active')) {
                 document.querySelector('._panel_shortcut_openemailtemplate').click();
@@ -1832,6 +1918,10 @@ function global_case(optionkl__disable_dialog) {
         });
         
         
+        onClickElm(`#cr-list li`, `click`, (elm, e) => {
+            clearAndPrepareCRTemplate();
+        });
+
         onClickElm('[debug-id]', 'mouseup', function(elm, e){
             
             try {
@@ -1860,6 +1950,533 @@ function global_case(optionkl__disable_dialog) {
                 var _action = elm.getAttribute("data-btnclk");
                 cLog(() => { console.log('cdtx', _action); })
 
+
+                // XXXXX
+                if(_action === 'mail_templ_act_load') {
+
+                    var _parent = elm.closest('#email-body-container');
+                    var _emailbodycontenttop = _parent.querySelector('#email-body-content-top');
+                    var _emailbodycontent = _parent.querySelector('#email-body-content');
+
+                    getChromeStorage("mail_templ_list", (response) => {
+                        var rs_list = response.value || [];
+                        
+
+                        // Filter lại danh sách đã xóa
+                        rs_list = rs_list.filter((e, _i) => {
+                            if(e.remove === 1) {
+                                return false;
+                            }
+                            return true;
+                        });
+                        
+
+                        
+                        _sub_modal().insertAdjacentHTML('beforeEnd', `
+                            <div class="cdtx__uioncall_control-list_templ" contenteditable="false">
+                                <span class="cdtx__uioncall_control-searchtempl" contenteditable="plaintext-only"></span>
+                                <ul>
+                                </ul>
+                            </div>
+                        `);
+
+                        _sub_modal().classList.add('show');
+
+
+                        rs_list.forEach((value, index) => {
+                            // `<li><span data-btnclk="oncall_templ_clickchoice">SO - Vui</span><span data-btnclk="oncall_templ_clickdelete">Del</span></li>`
+                            // elm_list += `<li data-id="${index}"><span data-btnclk="oncall_templ_clickchoice">${elm.text}</span><span data-btnclk="oncall_templ_clickdelete" >Del</span></li>`
+                            var _li = document.createElement('li');
+                                _li.setAttribute('data-id', index);
+                                _li.innerHTML = `<span class="cdtx__uioncall_templ_clickchoice" >${value.text}</span>
+                                <span class="gr">
+                                    <span class="cdtx__uioncall_templ_clickdelete" >Del</span>
+                                    <span class="cdtx__uioncall_templ_clickpin" >${1 === rs_list[index].pin ? 'Unpin': 'Pin'}</span>
+                                </span>
+                                `;
+                                _li.classList.toggle(`${1 === rs_list[index].pin ? 'pin': 'unpin'}`);
+
+                                _li.querySelector('.cdtx__uioncall_templ_clickchoice').addEventListener('click', () => {
+                                    
+                                    var _caseid = () => {
+                                        if(document.querySelector('[debug-id="case-id"] span.case-id')) {
+                                            return document.querySelector('[debug-id="case-id"] span.case-id').innerText;
+                                        }
+                                        return '';
+                                    };
+
+                                    if(_caseid() !== window.dataCase.case_id) {
+                                        if(!window.confirm("Data case not ready your sure is load?")) {
+                                            return false;
+                                        }
+                                    }
+
+                                    _emailbodycontenttop.innerHTML = value.content_outer;
+                                    
+                                    replaceAllHtmlElement(_emailbodycontenttop, window.dataCase);
+                                    
+                                    _emailbodycontent.style.padding = '0px';
+                                    _emailbodycontent.style.width = '100%';
+                                    
+                                    _sub_modal_remove();
+                                    _reupdate_outer();
+                                });
+                            
+
+
+                                // REMOVE
+                                _li.querySelector('.cdtx__uioncall_templ_clickdelete').addEventListener('click', () => {
+                                    if(!window.confirm("Your sure del this?")) return;
+                                    _parent.classList.add('isloading');
+
+                                    rs_list[index].remove = 1;
+
+                                    setChromeStorage("mail_templ_list", rs_list, (response) => {
+                                        _li.remove();
+                                        _parent.classList.remove('isloading');
+                                    });   
+                                });
+
+                                _li.querySelector('.cdtx__uioncall_templ_clickpin').addEventListener('click', (e) => {
+                                    _li.classList.remove('pin');
+                                    _li.classList.remove('unpin');
+
+                                    if(1 === rs_list[index].pin) {
+                                        rs_list[index].pin = 0;
+                                        e.target.innerText = 'Pin';
+                                        
+                                        _li.classList.add('unpin');
+                                    } else {
+                                        rs_list[index].pin = 1;
+                                        e.target.innerText = 'Unpin';
+
+                                        _li.classList.add('pin');
+                                    }
+                                    
+                                    // console.log(rs_list);
+                                    setChromeStorage("mail_templ_list", rs_list, (response) => {
+                                        // console.log(response)
+                                    });   
+                                });
+                            
+                                _sub_modal().querySelector('.cdtx__uioncall_control-list_templ ul').insertAdjacentElement('afterBegin', _li);
+                            
+                            
+                            
+                            
+
+                            _sub_modal().querySelector('.cdtx__uioncall_control-searchtempl').addEventListener('keyup', function(e){
+                                // console.log(e.target.innerText);
+                                var status_search = (str_search) => {
+                                    // Reset
+                                    _sub_modal().querySelectorAll('.cdtx__uioncall_control-list_templ li').forEach((__elm) => {
+                                        __elm.style.display = "";
+                                    });
+
+                                    // Only > 0
+                                    if(!(str_search.trim().length > 0)) return false;
+
+                                    
+                                    rs_list.forEach((value, index) => {
+                                        var _stritem = value.text + value.content_outer;
+                                        if(!_stritem.toLowerCase().includes(str_search.toLowerCase())) {
+                                            _sub_modal().querySelector(`.cdtx__uioncall_control-list_templ li[data-id="${index}"]`).style.display = 'none';
+                                        }
+                                    })
+                                };
+
+                                status_search(e.target.innerText)
+                            })
+                        });
+                    });
+                    
+                }
+                if(_action === 'mail_templ_act_save') {
+                    var _parent = elm.closest('#email-body-container');
+                    var _emailbodycontenttop = _parent.querySelector('#email-body-content-top');
+
+                    if(!_emailbodycontenttop) { alert("not isset"); return false }
+
+                    if(_emailbodycontenttop) {
+                        var _contenthtml = _emailbodycontenttop.innerHTML;
+    
+                        var _text = prompt("Enter keyword for save ", "");
+                        if(_text) {
+                            var _content_outer = _contenthtml.trim();
+    
+                            var _this_time = new Date();
+                            
+                            getChromeStorage("mail_templ_list", (response) => {
+                                var rs_list = response.value || [];
+    
+                                rs_list.push({
+                                    'text': _text,
+                                    'content_outer': _content_outer,
+                                    'this_time': _this_time,
+                                });
+    
+                                
+                                setChromeStorage("mail_templ_list", rs_list, (response) => {
+                                    
+                                });   
+                            });   
+                        } 
+                    }
+                }
+                
+                
+                if(_action === 'dashboard_chklst_sop') {
+                    
+                    var iframe_dashboard_chklst_sop = 'https://app.bsd.education/share/o/zxnmpa42/';
+                    if(iframe_dash_here = getVariableSheetByKeyAndLanguage('dashboard_chklst_sop', window.keylanguage)) {
+                        iframe_dashboard_chklst_sop = iframe_dash_here;
+                    }
+                    
+                    _sub_modal().insertAdjacentHTML('beforeEnd', `
+                    <style>
+                        .dashboard_chklst_sop {
+                            width: 100%;
+                            background: #ccc;
+                            max-width: calc(100% - 100px);
+                            margin: 0 auto;
+                            top: 45px;
+                            overflow: auto;
+                            height: 100%;
+                            max-height: calc(100vh - 100px);
+                            position: absolute;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            box-shadow: 0 0 20px #55555547;
+                            border-radius: 10px;
+                            padding: 0;
+                            margin: 0;
+                            font-size: 0;
+                            background: #fff url(https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ) no-repeat center
+                        }
+                        
+                        .dashboard_chklst_sop iframe {
+                            width: 100%;
+                            border: 0;
+                            height: 100%;
+                            margin: 0;
+                            background: #fff;
+                        }
+                        
+                        </style>
+                        <span class="_sub_modal_close" style='position: absolute;right: 10px;top: 10px;height: 40px;width: 40px; z-index: 9;    border-radius: 50%;    font-size: 0; display: flex; background-color: #fff; align-items: center; align-content: center; justify-content: center;    box-shadow: 0 0 10px #ccc; overflow: hidden; cursor: pointer '>
+                        <img src="${assets_img_removeicon}" style=" height: 80%; object-fit: contain; object-position: center; background: transparent; pointer-events: none; " /></span>
+                        <div class="dashboard_chklst_sop" >
+                            <iframe src="${iframe_dashboard_chklst_sop}"></iframe>
+                        </div>
+                    `);
+
+                    _sub_modal().classList.add('show');
+                }
+                        
+                if(_action === 'mail_templ_act_remove') {
+                    var _parent = elm.closest('#email-body-container');
+                    var _emailbodycontenttop = _parent.querySelector('#email-body-content-top');
+                    if(_emailbodycontenttop) {
+                        _emailbodycontenttop.innerHTML = "";
+                    }
+                }
+
+                // XXXXX
+                if(_action === 'oncall_templ_act_flchoice') {
+                    var _parent = elm.closest('.cdtx__uioncall') || elm.closest('div');
+                    var _textreplace = _parent.querySelector('[data-text="oncall_templ_act_flchoice-text"]');
+                    var _dateformat = elm.getAttribute('data-dateformat');
+
+
+                    var _span = document.createElement('div');
+                        _span.className = 'cdtx__uioncall--datechoice';
+                        _span.innerHTML = `
+                        <ul ><li data-thischoice="3 days" title="work in days" ></li><li data-thischoice="6 days" title="work in days" ></li><li data-thischoice="9 days" title="work in days" ></li><li data-thischoice="14 days" title="days" ></li><li data-thischoice="N/A" ></li></ul>
+                        <hr>
+                        <div class="cdtx__uioncall--datechoice-outer"><span class="cdtx__uioncall--datepicker">Choice Date</span><input id="datepicker" type="date" min="${formatDate(new Date())}" value=""></div>
+                        `;
+                    
+
+                    _sub_modal().insertAdjacentElement('afterBegin', _span);
+                    
+                    _sub_modal().classList.add('show');
+
+                    setTimeout(() => {
+                        _sub_modal().querySelector('#datepicker').showPicker();
+                    }, 500)
+                    _sub_modal().querySelector('.cdtx__uioncall--datepicker').addEventListener('click', (e2) => {
+                        _sub_modal().querySelector('#datepicker').showPicker();
+                    });
+                    
+                    _sub_modal().querySelector('#datepicker').addEventListener('change', (e2) => {
+                        const _datechoice = e2.target.value;
+                        const _dateobj = new Date(_datechoice);
+                        
+                        const diffTime = Math.abs(_dateobj - new Date());
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                        
+                        var _datestr = formatDate(_dateobj, _dateformat ? _dateformat : 'd/m/Y');
+
+                        _textreplace.innerHTML = _datestr;
+
+                        _sub_modal_remove();
+                    });
+
+                    
+
+                    _span.querySelectorAll('[data-thischoice]').forEach((item) => {
+                        item.addEventListener('click', (e) => {
+                            var _thischoice = e.target.getAttribute('data-thischoice');
+                            switch (_thischoice) {
+                                case '3 days':
+                                    _textreplace.innerHTML = dayNextByCustom(3) + ` (${_thischoice})`;
+                                    
+                                    break;
+                            
+                                case '6 days':
+                                    _textreplace.innerHTML = dayNextByCustom(6) + ` (${_thischoice})`;
+                                    
+                                    break;
+                
+                                case '9 days':
+                                    _textreplace.innerHTML = dayNextByCustom(9) + ` (${_thischoice})`;
+                                    
+                                    break;
+            
+                                case '14 days':
+                                    _textreplace.innerHTML = dayNextByCustom(14, '', false) + ` (${_thischoice})`;
+                                    
+                                    break;
+                                    
+                                case 'N/A':
+                                    _textreplace.innerHTML = 'N/A'
+                                    
+                                    break;
+
+                                default:
+                                    _textreplace.innerHTML = 'N/A'
+                                    break;
+                            }
+
+                            _sub_modal_remove();
+                            _reupdate_outer();
+                        })
+                    });
+
+                    elm.dispatchEvent(new Event('input'));
+                    elm.dispatchEvent(new Event('focus'));
+                    elm.dispatchEvent(new Event('click'));
+                    _reupdate_outer();
+                }
+
+                if(_action === 'oncall_templ_act_taskchoice') {
+                    var _parent = elm.closest('.cdtx__uioncall');
+                    var _textreplace = () => {
+                        return _parent.querySelector('[data-text="oncall_templ_act_taskchoice-text"]');
+                    }
+
+                    // reset
+                    var oncall_templ_act_taskchoice_lst = null;
+                    if(oncall_templ_act_taskchoice_lst = _parent.querySelector('[data-name="oncall_templ_act_taskchoice_lst"]')) {
+                        oncall_templ_act_taskchoice_lst.remove();
+                        return;
+                    }
+
+                    var _span = document.createElement('span');
+                        _span.setAttribute('data-name', 'oncall_templ_act_taskchoice_lst');
+                        _span.innerHTML = `<div class="cdtx__uioncall--block">
+                            <ul class="oncall_templ_act_taskchoice_lst"></ul>
+                        </div>`;
+
+                    var arrlsttask = ['NA','Ads Conversion Tracking Troubleshooting','Ads Conversion Tracking','Shopping Feed Optimization','GA4 Migration','Shopping Onboarding','Ads Remarketing','Ads Dynamic Remarketing','Ads Enhanced Conversions','Analytics Cross Domain Tracking','Analytics Dynamic Remarketing','Analytics E-Commerce Tracking','Analytics Enhanced E-Commerce Tracking','Analytics Event Tracking','Analytics Health Check','Analytics Remarketing','Analytics Setup','Analytics Troubleshooting','Consent Mode','Fix Sitewide Tagging (OGT & CT)','Site Wide Tag - Conversion Tracking Fix(OGT & CT)','GA4 E-Commerce Migration','Google Tag Manager Installation','Ads Conversion Code','Website Call Conversion','GA Destination Tracking','GA Event Tracking','GA Smart Goals','Dynamic Remarketing - Retail','Dynamic Remarketing - X (Non-Retail)','Google Analytics Dynamic Remarketing (Non-Retail)','Google Analytics Dynamic Remarketing (Retail)','Google Analytics Health Check','GA Starter Pack','Google Analytics Troubleshooting','Offline Conversion Tracking','ReCaptcha Implementation','Cross Domain Tracking','Lead Form Ad Extension','Enhanced Conversions','Ads Website Call Conversion'];
+
+                    arrlsttask.forEach(value => {
+                        var _li = document.createElement('li');
+                        _li.setAttribute('data-text', value);
+                        _li.addEventListener('click', () => {
+                            if(!_textreplace()) {
+                                elm.insertAdjacentHTML('afterEnd', '<span data-text="oncall_templ_act_taskchoice-text"></span>')
+                            } 
+                            
+                            _textreplace().insertAdjacentHTML('beforeEnd', value + ", ");
+                            _span.remove(); 
+                            _sub_modal_remove();
+                            _reupdate_outer();
+                        });
+
+                        if(window.dataCase.tasks) {
+                            if(window.dataCase.tasks.includes(value)) {
+                                _li.setAttribute('data-istop', 1);
+                            }    
+                        }
+
+                        _span.querySelector('ul').insertAdjacentElement('beforeEnd', _li);
+                    });
+                    
+                    _sub_modal().insertAdjacentElement('afterBegin', _span);
+                    
+                    _sub_modal().classList.add('show');
+
+                    
+                    elm.dispatchEvent(new Event('input'));
+                    elm.dispatchEvent(new Event('focus'));
+                    elm.dispatchEvent(new Event('click'));
+                    _reupdate_outer();
+                }
+
+                if(_action === 'oncall_templ_act_remove') {
+                    elm.closest('.cdtx__uioncall').remove();
+                    _reupdate_outer();
+                }
+
+                if(_action === 'oncall_templ_act_save') {
+                    var _text = prompt("Enter keyword for save ", "");
+                    if(_text) {
+                        var _parent = elm.closest('.cdtx__uioncall');
+                        var _content_outer = _parent.querySelector('.cdtx__uioncall_outer').innerHTML;
+                        _content_outer = _content_outer.trim();
+
+                        var _this_time = new Date();
+                        
+                        getChromeStorage("oncall_templ_list", (response) => {
+                            var rs_list = response.value || [];
+
+                            rs_list.push({
+                                'text': _text,
+                                'content_outer': _content_outer,
+                                'this_time': _this_time,
+                            });
+
+                            
+                            setChromeStorage("oncall_templ_list", rs_list, (response) => {
+                                
+                            });   
+                        });   
+                    } 
+ 
+                    
+                }
+                if(_action === 'oncall_templ_act_load') {
+
+                    
+
+                    var _parent = elm.closest('.cdtx__uioncall');
+                    
+                    getChromeStorage("oncall_templ_list", (response) => {
+                        var rs_list = response.value || [];
+                        
+
+                        // Filter lại danh sách đã xóa
+                        rs_list = rs_list.filter((e, _i) => {
+                            if(e.remove === 1) {
+                                return false;
+                            }
+                            return true;
+                        });
+                        
+
+                        
+                        _sub_modal().insertAdjacentHTML('beforeEnd', `
+                            <div class="cdtx__uioncall_control-list_templ" contenteditable="false">
+                                <span class="cdtx__uioncall_control-searchtempl" contenteditable="plaintext-only"></span>
+                                <ul>
+                                </ul>
+                            </div>
+                        `);
+
+                        _sub_modal().classList.add('show');
+
+
+                        rs_list.forEach((value, index) => {
+                            // `<li><span data-btnclk="oncall_templ_clickchoice">SO - Vui</span><span data-btnclk="oncall_templ_clickdelete">Del</span></li>`
+                            // elm_list += `<li data-id="${index}"><span data-btnclk="oncall_templ_clickchoice">${elm.text}</span><span data-btnclk="oncall_templ_clickdelete" >Del</span></li>`
+                            var _li = document.createElement('li');
+                                _li.setAttribute('data-id', index);
+                                _li.innerHTML = `<span class="cdtx__uioncall_templ_clickchoice" >${value.text}</span>
+                                <span class="gr">
+                                    <span class="cdtx__uioncall_templ_clickdelete" >Del</span>
+                                    <span class="cdtx__uioncall_templ_clickpin" >${1 === rs_list[index].pin ? 'Unpin': 'Pin'}</span>
+                                </span>
+                                `;
+                                _li.classList.toggle(`${1 === rs_list[index].pin ? 'pin': 'unpin'}`);
+
+                                _li.querySelector('.cdtx__uioncall_templ_clickchoice').addEventListener('click', () => {
+                                    _parent.querySelector('.cdtx__uioncall_outer').innerHTML = value.content_outer;
+                                    _sub_modal_remove();
+                                });
+                            
+
+
+                                // REMOVE
+                                _li.querySelector('.cdtx__uioncall_templ_clickdelete').addEventListener('click', () => {
+                                    if(!window.confirm("Your sure del this?")) return;
+                                    _parent.classList.add('isloading');
+
+                                    rs_list[index].remove = 1;
+
+                                    setChromeStorage("oncall_templ_list", rs_list, (response) => {
+                                        _li.remove();
+                                        _parent.classList.remove('isloading');
+                                    });   
+                                });
+
+                                _li.querySelector('.cdtx__uioncall_templ_clickpin').addEventListener('click', (e) => {
+                                    _li.classList.remove('pin');
+                                    _li.classList.remove('unpin');
+
+                                    if(1 === rs_list[index].pin) {
+                                        rs_list[index].pin = 0;
+                                        e.target.innerText = 'Pin';
+                                        
+                                        _li.classList.add('unpin');
+                                    } else {
+                                        rs_list[index].pin = 1;
+                                        e.target.innerText = 'Unpin';
+
+                                        _li.classList.add('pin');
+                                    }
+                                    
+                                    // console.log(rs_list);
+                                    setChromeStorage("oncall_templ_list", rs_list, (response) => {
+                                        // console.log(response)
+                                    });   
+                                });
+                            
+                                _sub_modal().querySelector('.cdtx__uioncall_control-list_templ ul').insertAdjacentElement('afterBegin', _li);
+                            
+                            
+                            
+                            
+
+                            _sub_modal().querySelector('.cdtx__uioncall_control-searchtempl').addEventListener('keyup', function(e){
+                                // console.log(e.target.innerText);
+                                var status_search = (str_search) => {
+                                    // Reset
+                                    _sub_modal().querySelectorAll('.cdtx__uioncall_control-list_templ li').forEach((__elm) => {
+                                        __elm.style.display = "";
+                                    });
+
+                                    // Only > 0
+                                    if(!(str_search.trim().length > 0)) return false;
+
+                                    
+                                    rs_list.forEach((value, index) => {
+                                        var _stritem = value.text + value.content_outer;
+                                        if(!_stritem.toLowerCase().includes(str_search.toLowerCase())) {
+                                            _sub_modal().querySelector(`.cdtx__uioncall_control-list_templ li[data-id="${index}"]`).style.display = 'none';
+                                        }
+                                    })
+                                };
+
+                                status_search(e.target.innerText)
+                            })
+                        });
+                    });
+                    
+                    
+                    
+                }
+
                 // XXXXX
                 if(_action === 'open_connectappointment') {
                     var _case_id_here = elm.getAttribute('data-text');
@@ -1873,7 +2490,7 @@ function global_case(optionkl__disable_dialog) {
                     var _casenote_editor = _casenote + ` .editor[contenteditable="true"]`;
                     var _casenote_precall = _casenote + ` #pre-call`;
                     
-
+  
                     var ntime = 0;
                     var myTime = setInterval(() => {
 
@@ -1990,9 +2607,6 @@ function global_case(optionkl__disable_dialog) {
                     toolEditorEmailTemplate4Dev();
                 }
                 
-                if(_action === 'test_meetpin') {
-                    setChromeStorage('_pinmeet_temp', '1'+ new Date().getSeconds());
-                }
                 
                 if(_action === 'open_panelnote') {
                     
@@ -2084,32 +2698,35 @@ function global_case(optionkl__disable_dialog) {
                             'cdtx_caseid_' + document.querySelector('[debug-id="case-id"] .case-id').innerText,
                         ];
                         
-                        _arrlistkey.forEach(key => {
-                            removeChromeStorage(key, () => {
-                                Toastify({
-                                    text: `Clear ${key} success!!!`,
-                                    duration: 3000,
-                                    callback: function(){
-                                        this.remove();
-                                    }
-                                }).showToast();
-                            });
-                        });
-                        
                         
                         // Start load crawl
-                        loadGoogleSheetOnlineWebPublics(() => {});
-                        
-                        // Check before reload page
-                        setInterval(() => {
+                        loadGoogleSheetOnlineWebPublics(() => {
+                            
+                            
                             getChromeStorage("cdtx_loadgooglesheetpublish", (response2) => {
                                 var _rs = response2.value || 0;
                                 
+                                
                                 if(_rs) {
+                                    
+                            
+                                    _arrlistkey.forEach(key => {
+                                        removeChromeStorage(key, () => {
+                                            Toastify({
+                                                text: `Clear ${key} success!!!`,
+                                                duration: 3000,
+                                                callback: function(){
+                                                    this.remove();
+                                                }
+                                            }).showToast();
+                                        });
+                                    });
+                                    
                                     location.reload();
                                 }
                             });
-                        }, 2000);
+                        });
+                        
                         
                         
                         
@@ -2123,29 +2740,6 @@ function global_case(optionkl__disable_dialog) {
                     elm.closest('._note_add_precall').remove();
                 }
                 
-                if(_action === 'note_select') {
-                    var _dataselect = elm.getAttribute('data-select');
-                    var data_filter = _dataselect.split(',');
-                    data_filter = data_filter.filter(n => n);
-                    
-
-                    if(!elm.querySelector('#note_select_lstchoice')) {
-                        var dom = document.createElement("span");
-                        dom.id = 'note_select_lstchoice';
-                        elm.appendChild(dom);
-                        data_filter.forEach((item) => {
-                            dom.insertAdjacentHTML('beforeEnd', `<span>${item}</span>`);
-                        });
-
-                        dom.querySelectorAll('span').forEach((__elm) => {
-                            __elm.addEventListener('click', function(e) {
-                                elm.innerHTML = e.target.innerText;
-                                dom.remove();
-                                elm.dispatchEvent(new Event('blur'));
-                            });
-                        })
-                    }
-                }
                 
                 if(_action === '_infocase_byme-openact') {
                     // Lưu lại
@@ -2154,7 +2748,7 @@ function global_case(optionkl__disable_dialog) {
                     if(_save_button) {
                         _save_button.dispatchEvent(new Event('mouseup'));
                     }
-
+                    
 
                     // Close popup
                     elm.closest('._infocase_byme').classList.toggle('open');
@@ -2449,6 +3043,7 @@ function global_case(optionkl__disable_dialog) {
                                     });
                                 }
                                 _sub_i_outer_elm.remove();
+                                _reupdate_outer();
                             })
                         });
                     }
@@ -2487,6 +3082,32 @@ function global_case(optionkl__disable_dialog) {
                         elm.click();
                     })
                 }
+                
+                
+                // xxxx
+                if(_action === 'ui-qplus-addtrdelete') {
+                    if(window.confirm("Your sure del this?")) {
+                        var _idcase = elm.getAttribute('data-caseidhere');
+                        getChromeStorage("cdtx_qlus_detail_list_case", (response) => {
+                            var _lst_case = response.value;
+                            
+                            cLog(() => { console.log(_lst_case.length); });
+                            var filteredArray = _lst_case.filter(e => e.item.caseID !== _idcase)
+                            cLog(() => { console.log(filteredArray.length); });
+                            
+                            setChromeStorage("cdtx_qlus_detail_list_case", filteredArray, (response) => {
+                                elm.closest('tr').remove();
+                            });    
+                            
+                            setChromeStorage("cdtx_qlus_detail_list_case_lastupdate", new Date(), (response) => {
+    
+                            })
+                            
+                        });
+                    }
+                }
+                
+                
                 
                 // xxxx
                 if(_action === 'ui-qplus-addtrviewdetail') {
@@ -3071,7 +3692,6 @@ function global_case(optionkl__disable_dialog) {
                 <span class="_casecalendar_info-100per" data-title="Date Install:" data-infocase="appointment_time" ></span>
                 <span class="_casecalendar_info-100per" data-title="Qplus status:"  >
                     <span data-infocase="qplus_status" ></span>
-                    <span data-infocase="status_case" style="opacity: 0.8; font-size: 80%" data-title="status on note:" ></span>
                 </span>
                 <span class="_casecalendar_info-100per" data-title="Note:" data-notearea="1">
                     <span data-btnclk="note_edit"></span>
@@ -3109,7 +3729,7 @@ function global_case(optionkl__disable_dialog) {
                     _datatmp.customer_email = _data.customer_email;
                     _datatmp.customer_contact = _data.customer_contact;
                     _datatmp.customer_website = _data.customer_website;
-                    _datatmp.customer_website = _data.customer_website.replace(/\s+|\n/gm, "");
+                    _datatmp.customer_website = (_data.customer_website ? _data.customer_website.replace(/\s+|\n/gm, "") : "");
                     _datatmp.customer_ua_ga = _data.customer_ua_ga;
                     _datatmp.customer_adsid = _data.customer_adsid;
                     _datatmp.request = _data.request;
@@ -3969,7 +4589,7 @@ function global_case(optionkl__disable_dialog) {
                             if(_sheetobj) {
                                 window.loadgooglesheetpublish = _sheetobj;
 
-                                cLog(() => { console.log("LOADSHEET --- DONE "); });
+                                cLog(() => { console.log("LOADSHEET --- DONE ", window.loadgooglesheetpublish); });
                                 _callback_ready();
                             }
                             
@@ -4001,6 +4621,8 @@ function global_case(optionkl__disable_dialog) {
     }
 
 
+    
+    
     // LOAD
     var _once_load = 0;
     loadGoogleSheetOnlineWebPublics(() => {
@@ -4011,6 +4633,10 @@ function global_case(optionkl__disable_dialog) {
             _once_load = _once_load + 1;
             
             cLog(() => { console.log("Once Load 2"); });
+            
+            
+            
+            
             
             loadStyle();
             loadRealtime();
@@ -4024,6 +4650,7 @@ function global_case(optionkl__disable_dialog) {
             uiOnCallPanel();
             // Load code vanbo
             tagteamFocusCase();    
+            mailTemplateControl();    
         }
         
     });

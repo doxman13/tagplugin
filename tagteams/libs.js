@@ -36,13 +36,19 @@ function getDomainOnlyURL(_argurl) {
     return _url;
 }
 // Display day next exclude 7,8 
-function dayNextByCustom(_daynext) {
+function dayNextByCustom(_daynext, format="d/m/Y", _isworkinday = true) {
     function calcWorkingDays(fromDate, days) {
         var count = 0;
         while (count < days) {
             fromDate.setDate(fromDate.getDate() + 1);
-            if (fromDate.getDay() != 0 && fromDate.getDay() != 6) 
+
+            // work in days
+            if(_isworkinday) {
+                if (fromDate.getDay() != 0 && fromDate.getDay() != 6) 
+                    count++;
+            } else {
                 count++;
+            }
         }
         return fromDate;
     }; 
@@ -50,14 +56,18 @@ function dayNextByCustom(_daynext) {
     /* var _date_14day = (calcWorkingDays(new Date("2023/05/23"), 14)); */ 
     var _date_nextday = (calcWorkingDays(new Date(), _daynext));
 
-    // dd/mm/yyyy
-    var _date_key_format = [
-        ("0" + _date_nextday.getDate()).slice(-2),
-        ("0" + (_date_nextday.getMonth() + 1)).slice(-2),
-        _date_nextday.getFullYear(),
-    ];
+    // d/m/Y
+    _dateformat = format ? format : 'd/m/Y';
+    var _replace = _dateformat.replace('d', ("0" + _date_nextday.getDate()).slice(-2));
+    _replace = _replace.replace('m', ("0" + (_date_nextday.getMonth() + 1)).slice(-2));
+    _replace = _replace.replace('Y', _date_nextday.getFullYear());
+    // var _date_key_format = [
+    //     ("0" + _date_nextday.getDate()).slice(-2),
+    //     ("0" + (_date_nextday.getMonth() + 1)).slice(-2),
+    //     _date_nextday.getFullYear(),
+    // ];
     
-    return _date_key_format.join('/');
+    return _replace;
 }
 function fallbackCopyTextToClipboard(text) {
     var textArea = document.createElement("textarea");
@@ -131,7 +141,7 @@ function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
 }
 
-function formatDate(date) {
+function formatDateTime(date) {
     return [
         date.getFullYear(),
         padTo2Digits(date.getMonth() + 1),
@@ -141,6 +151,15 @@ function formatDate(date) {
         padTo2Digits(date.getMinutes()),
         padTo2Digits(date.getSeconds())
     ].join(':');
+}
+
+function formatDate(date, format = 'Y-m-d') {
+    _dateformat = format ? format : 'd/m/Y';
+    var _replace = _dateformat.replace('d', ("0" + date.getDate()).slice(-2));
+    _replace = _replace.replace('m', ("0" + (date.getMonth() + 1)).slice(-2));
+    _replace = _replace.replace('Y', date.getFullYear());
+
+    return _replace;
 }
 
 
@@ -164,7 +183,7 @@ function getDataTimeFormat(_datestring) {
             console.log(_datestring_regex[0], date.toLocaleString());
 
             // return dateTimeZone.toISOString();
-            return formatDate(date);
+            return formatDateTime(date);
             // return _datestring[0];
         }
 
@@ -487,20 +506,20 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                                 // *******************
                                 // 1. EMAIL FROM
                                 // *******************
-                                if(_email_input_from.innerText.trim().includes('technical-solutions@google.com') === false) {
-                                    cLog(() => { console.log('eie 1checkandfix CLEAR EMAIL INPUT => START'); })
+                                // if(_email_input_from.innerText.trim().includes('technical-solutions@google.com') === false) {
+                                //     cLog(() => { console.log('eie 1checkandfix CLEAR EMAIL INPUT => START'); })
                                     
-                                    cLog(() => { console.log('eie 1checkandfix _email_input_from: NG: ', _email_input_from.innerText.trim()); })
+                                //     cLog(() => { console.log('eie 1checkandfix _email_input_from: NG: ', _email_input_from.innerText.trim()); })
 
-                                    document.querySelector(str_elmparent + ".input.from material-dropdown-select material-icon").click();
+                                //     document.querySelector(str_elmparent + ".input.from material-dropdown-select material-icon").click();
 
-                                    wait4Elem('[id="email-address-id--technical-solutions@google.com"]').then((_caseid_elm) => {
-                                        _caseid_elm.click();
-                                        recheck_fix_alert(_callback, "1checkandfix", elm_parentheader);
-                                    })
+                                //     wait4Elem('[id="email-address-id--technical-solutions@google.com"]').then((_caseid_elm) => {
+                                //         _caseid_elm.click();
+                                //         recheck_fix_alert(_callback, "1checkandfix", elm_parentheader);
+                                //     })
 
-                                    return false;
-                                }
+                                //     return false;
+                                // }
 
 
                                 
@@ -764,16 +783,17 @@ function checkInputEmailInbox(){
         
                                     
                                     var n_err = 0;
-                                    if(_email_input_from.innerText.includes('technical-solutions@google.com') === false) {
-                                        if(_email_input_from.closest('.header')) {
-                                            _email_input_from.closest('.header').setAttribute("data-type", "_chk_email_agains");
-                                        }
-                                        _email_input_from.classList.add("_chk_email_from_wrong");
+                                    
+                                    // if(_email_input_from.innerText.includes('technical-solutions@google.com') === false) {
+                                    //     if(_email_input_from.closest('.header')) {
+                                    //         _email_input_from.closest('.header').setAttribute("data-type", "_chk_email_agains");
+                                    //     }
+                                    //     _email_input_from.classList.add("_chk_email_from_wrong");
             
-                                        noteBarAlert('Mail From => wrong', caseload.case_id);
-                                        n_err++;
+                                    //     noteBarAlert('Mail From => wrong', caseload.case_id);
+                                    //     n_err++;
                                         
-                                    }
+                                    // }
                                     
                                     if(_email_input_to.innerText.includes(caseload.customer_email) === false) {
                                         if(_email_input_to.closest('.header')) {
@@ -1029,9 +1049,16 @@ function cLog(callback) {
 }
 
 
-function d_load_script(url, callback) {
+function d_load_script(url, callback,   _id = null) {
+    if ( _id) {
+        if(document.querySelector('#' + _id)) {
+            callback();
+            return;
+        };
+    }
     var script = document.createElement("script");
     script.type = "text/javascript";
+    script.id = _id;
     if (script.readyState) {
         script.onreadystatechange = function () {
             if (script.readyState == "loaded" || script.readyState == "complete") {
@@ -1862,6 +1889,12 @@ function loadEmailTemplateAction(){
     // });
 }
 
+function sCaseId() {
+    if(document.querySelector('[debug-id="case-id"] span.case-id')) {
+        return document.querySelector('[debug-id="case-id"] span.case-id').innerText;
+    }
+    return '';
+};
 // Load List Template Mail From Google Sheet
 function loadTemplateEmailGoogleSheet(_caseid, _keylanguage) {
     try {
@@ -1888,7 +1921,7 @@ function loadTemplateEmailGoogleSheet(_caseid, _keylanguage) {
                         
                         
                         
-                        subjectText = subjectText.replaceAll('{%case_id%}', '<span data-infocase="case_id"></span>')
+                        subjectText = subjectText.replaceAll('{%case_id%}', '<span data-infocase="case_id">' + sCaseId() + '</span>')
 
                         var item_html = `<div class="_emailtemp-item" data-type="${_item['CR Name']}">
                             <span class="_panel_btn _panel_btn--small _panel_btn--addtemplate" data-key="${_item['Key']}"  >Insert</span>
@@ -2719,7 +2752,11 @@ function clearAndPrepareCRTemplate() {
                         for (const [_key, _value] of Object.entries(window.dataCase)) {
                             _strreplace = _strreplace.replaceAll(`{%${_key}%}`,`${_value}`)
                         }
-                    }
+                    } 
+                    
+                    
+                    // Other replace 
+                    _strreplace = _strreplace.replaceAll(`{%case_id%}`,`${sCaseId()}`)
                     
                     _str_list_search += item['Find'] + ":" + _strreplace + "\n";
                 })
@@ -2846,7 +2883,9 @@ function getVariableSheetByKeyAndLanguage(_columnname, _keylanguage) {
         }
             
     } catch (error) {
-        console.error('getVariableSheetByKeyAndLanguage', error)
+        cLog(() => {
+            console.error('getVariableSheetByKeyAndLanguage', _columnname, _keylanguage, error)
+        })
     }
 
     return false;
@@ -2947,18 +2986,13 @@ function timeLeftGoogleCalendar() {
                 <div class="panel_info-inner" >
                     ${_contentsub_item}
                 </div>
+                <hr>
+                <p class="panel_info-qplus">
+                    <span data-btnclk="qplus-rescan" data-qplus_status="Q+"></span>
+                </p>      
+                
                 `;
                 
-                // <hr>
-                // <p class="panel_info-qplus">
-                //     <span data-btnclk="qplus-rescan" data-qplus_status="Q+"></span>
-                // </p>      
-                // <p class="panel_info-daysnext">
-                //     Next 14days: <span class="slall">${dayNextByCustom(14)}</span><br>
-                //     Next 07days: <span class="slall">${dayNextByCustom(7)}</span><br>
-                //     Next 05days: <span class="slall">${dayNextByCustom(5)}</span><br>
-                //     Next 03days: <span class="slall">${dayNextByCustom(3)}</span>
-                // </p>
 
             var _tempHtml = `
             <div class="panel_info _r" >
@@ -3155,6 +3189,17 @@ function timeLeftGoogleCalendar() {
                 break;
             }
             
+            
+            if(!element.querySelector('.H3tRZe')) {
+                if(panel_info = document.querySelector('.panel_info')) {
+                    var _elmpause = panel_info.querySelector('.pause');
+                    if(_elmpause) _elmpause.remove();
+                    
+                    panel_info.insertAdjacentHTML('beforeEnd', _TrustScript('<span class="pause" style="color: red">Pause - not found today (auto refresh 1 min)</span>'));    
+                }
+                
+            }
+            
         }
     }
 
@@ -3226,9 +3271,9 @@ function timeLeftGoogleCalendar() {
         _oncerun++;
 
         calendarGetInfoRealtime();
-        // getInfoQPlus();
+        getInfoQPlus();
         setInterval(() => {
-            // getInfoQPlus();
+            getInfoQPlus();
             calendarGetInfoRealtime();
         }, 1000 * 40)
     }
@@ -3413,20 +3458,24 @@ function initQplusLoad() {
                     cLog(() => { console.log('cdtx window.qlus_datalist', window.qlus_datalist); });
     
                     //  for Last submit
+                        var _lst_case_haveqplus = [];
+                        var _lst_case_qplus_new = [];
                         var _temp = (_value) => {
                             return `<tr>
                                 <td><a href="${_value.linkEvaluationDetails}" target="_blank">${_value.caseID}</a> q+</td>
                                 <td>${_value.statusCase}</td>
                                 <td>${_value.dateReview}</td>
                                 <td>${_value.followUpCase + `${_value.followUpCase ? ` (${_get_diffday(_value.followUpCase)})` : "" }`}</td>
-                                <td>
+                                <td class="uiqplus_inner-action" >
                                     <span data-btnclk="ui-qplus-addtrviewdetail" data-caseidhere="${_value.caseID}" >View</span>
+                                    <span data-btnclk="ui-qplus-addtrdelete" data-caseidhere="${_value.caseID}" >Delete</span>
                                 </td>
                             </tr>`;
                         }
                         var _tr = ``;
                         for (const [key, value] of Object.entries(window.qlus_datalist.list_bycaseid)) {
-                            
+                            _lst_case_haveqplus.push(value[0].caseID);
+                            _lst_case_qplus_new.push(value[0]);
                             _tr += _temp(value[0])
                         }
                         
@@ -3466,7 +3515,7 @@ function initQplusLoad() {
     
                         var _tr = ``;
                         
-                        cLog(() => { console.log('CHECK', _lst_arr_followup) });
+                        cLog(() => { console.log('CHECK', _lst_case_qplus_new, _lst_arr_followup) });
                         for (const value of _lst_arr_followup) {
                             _tr += _temp(value);
                         }
@@ -3496,15 +3545,14 @@ function initQplusLoad() {
                             
                             var _lst_arr_followup = [];
                             for (const value of listcase) {
-                                if(!value.status_case) continue;
+                                // if(!value.status_case) continue;
                                 _lst_arr_followup.push(value);
                             }
 
                             _lst_arr_followup.sort((a,b) => {
-                                if(!(
-                                    a.status_case.includes('SO -')
-                                    || a.status_case.includes('IN -')
-                                )) {
+                                if(
+                                    _lst_case_haveqplus.includes(a.case_id)
+                                ) {
                                     return -1;
                                 }
                                 return 0;
@@ -3632,8 +3680,10 @@ function initQplusLoad() {
                 
                 uiOverview();
 
+
                 var _animation = () => {
                     const card = document.querySelector(".uiqplus_inner");
+                    card.classList.add('uiqplus_inner_animation');
                     const motionMatchMedia = window.matchMedia("(prefers-reduced-motion)");
                     const THRESHOLD = 14;
                     
@@ -3664,7 +3714,9 @@ function initQplusLoad() {
 
                 }
                 
-                _animation();
+                if(localStorage.getItem('uiqplus_inner_animation')) {
+                    _animation();
+                }
 
                 // crawl by iframe
                 var _crawbyframe_storage = () => {
@@ -4164,14 +4216,14 @@ function getQlusDetailListCase(callback) {
             }
         });
 
-        console.log('qplus', _listbycaseid)
+        cLog(() => { console.log('qplus', _listbycaseid) });
 
         var _temp = {
             'list_rs': _list_rs,
             'list_bycaseid': _listbycaseid,
         }
 
-        console.log('qplus ', _temp);
+        cLog(() => { console.log('qplus ', _temp); });
 
         window.qlus_datalist = _temp;
 
@@ -4229,9 +4281,12 @@ function callPhoneDefaultNumber() {
 }
 
 function quaySoBarkeep(_type){
+    
     // option disable
     try {
-        if(window.result.optionkl__form_option_data.cdtx_chk_disable_pin) return false;
+        if(window.result.optionkl__form_option_data) {
+            if(window.result.optionkl__form_option_data.cdtx_chk_disable_pin) return false;
+        }
     } catch (error) {
         console.error('cdtx_chk_disable_pin undentify', window.result)
     }
@@ -4331,7 +4386,6 @@ function quaySoBarkeep(_type){
 
 
     // ====================
-    cLog(() => { console.log('DONGDEP BEGIN'); });
     
     // Auto dial
     var _checkDialPad = () => {
@@ -4519,3 +4573,408 @@ function connectAppointment(caseid = null){
     setTimeout(function() { popupwin.close();}, 5000);
 }
 
+
+
+function _reupdate_outer() {
+    var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"])`);
+    var _elm_content = _istopelm.querySelector(`.editor [contenteditable="true"]`);
+    _elm_content.dispatchEvent(new Event('input'));
+    _elm_content.dispatchEvent(new Event('focus'));
+    _elm_content.dispatchEvent(new Event('click'));
+}
+
+
+function testCrawCase() {
+    if (!localStorage.getItem('longtest')) return;
+    if (location.host !== 'cases.connect.corp.google.com') return false;
+
+
+    if(!document.querySelector('[debugid="cases-app-bar"]')) {
+        setTimeout(() => {
+            testCrawCase();
+        }, 2000);
+        return false;
+    }
+    
+    getChromeStorage('cdtx_lstcaseinfo_long', (response_begin) => {
+        console.log('LONG', 'RS', response_begin.value);
+
+
+
+
+
+        var _arr_begin = response_begin.value || {};
+
+        // Textarea
+        var _contentarea = [];
+        Object.keys(_arr_begin).forEach(__key => {
+            // console.log('Long', __key, _arr_begin[__key]);
+
+            _contentarea.push(`${__key}&#9;${_arr_begin[__key]}`);
+        });
+        
+        console.log("LONG total", _contentarea.length);
+
+        if (___elmidcase = document.querySelector(`#product_forgmc`)) {
+            ___elmidcase.remove();
+        }
+
+        var _textarea = `<textarea id="product_forgmc" onclick="this.focus();this.select()" readonly="readonly" style=" width: 100%; 
+            height: 56px;
+            min-height: 56px;
+            max-height: 56px;
+            position: relative; z-index: 999999999; font-family: monospace;">` + _contentarea.join("\n") + '</textarea>';
+
+
+        document.body.insertAdjacentHTML("beforeBegin", _textarea);
+
+        var _text = prompt("Enter lst case ", "");
+        if (_text) {
+            var _arr = _text.split("\n");
+            // Unique
+            _arr = [...new Set(_arr)];
+
+            console.log("LONG count", _arr.length);
+
+            var _dq = (_index) => {
+                
+                if(!_arr[_index]) {
+                    return false;
+                }
+                
+                document.querySelectorAll('tab:not(.selected) .close-button').forEach((elm) => {
+                    elm.click()
+                });
+                
+                console.clear();
+                
+                var caseid =  _arr[_index].trim() ;
+
+                if (_arr_begin[caseid]) {
+                    console.log("LONG isset case", caseid);
+
+                    _dq(_index + 1);
+                    return false;
+                }
+
+
+                var _id = `case_${caseid}`;
+
+                if (___elmidcase = document.querySelector(`.onlyonecase`)) {
+                    ___elmidcase.remove();
+                }
+
+                var _html = `<a href="https://cases.connect.corp.google.com/#/case/${caseid}" class="onlyonecase" id="${_id}">${caseid}</a>`;
+                document.querySelector('[debugid="cases-app-bar"]').insertAdjacentHTML("afterBegin", _html);
+
+                document.querySelector(`#${_id}`).click();
+
+
+
+                var ntime = 0;
+                var myTime = setInterval(() => {
+                    ntime++;
+
+                    var _type = 0
+                    // LOAI 0
+                    // Access redistrict
+                    if (document.querySelectorAll('empty-state').length) {
+                        clearInterval(myTime);
+                        console.log('LONG 1', 'EMPTY');
+                        getChromeStorage('cdtx_lstcaseinfo_long', (response) => {
+                            var _lst = response.value || {};
+                            _lst[caseid] = 'Access restricted';
+                            // console.log('LONG', response);
+                            setChromeStorage('cdtx_lstcaseinfo_long', _lst, (response2) => {
+                                // console.log('LONG', response2);    
+                                _dq(_index + 1);
+                            })
+                        });
+
+                        // Stop
+                        return true;
+                    }
+
+                    // LOAI 1
+                    // TIM THAY CASE ID and wait
+                    if (document.querySelectorAll('[debug-id="case-id"] span.case-id').length) {
+                        _type = 1;
+                        var _caseidelm = document.querySelectorAll('[debug-id="case-id"] span.case-id')[0];
+
+                        if (_caseidelm.innerText.trim().includes(caseid)) {
+                            console.log('LONG 1', 'HAVE CASE ID', caseid);
+                            var _text = ''
+                            document.querySelectorAll('home-data-item').forEach(elm => {
+                                if (elm.innerText.includes('Google Ads External Customer ID')) {
+                                    clearInterval(myTime);
+
+                                    _text = elm.innerText.trim().split('Google Ads External Customer ID')[1].replace(/[^\d]+/g, '');
+
+                                    getChromeStorage('cdtx_lstcaseinfo_long', (response) => {
+                                        var _lst = response.value || {};
+                                        _lst[caseid] = _text;
+                                        console.log('LONG 1 OKOK CO Ext ID', _text);
+                                        // console.log('LONG', response);
+                                        setChromeStorage('cdtx_lstcaseinfo_long', _lst, (response2) => {
+                                            // console.log('LONG', response2);    
+                                            _dq(_index + 1);
+                                            
+                                            return;
+                                        })
+                                    });
+                                }
+                            });
+                        }
+
+
+                    }
+
+                    var _limit = 30
+                    if (_type === 1) {
+                        _limit = 20;
+                    }
+                    if (ntime > _limit) {
+                        clearInterval(myTime);
+
+
+                        if (_type === 1) {
+                            getChromeStorage('cdtx_lstcaseinfo_long', (response) => {
+                                var _lst = response.value || {};
+                                _lst[caseid] = (_type === 1 ? 'empty GAds Ext ID' : 'NULL');
+                                // console.log('LONG', response);
+                                setChromeStorage('cdtx_lstcaseinfo_long', _lst, (response2) => {
+                                    // console.log('LONG', response2);    
+                                    _dq(_index + 1);
+                                })
+                            });
+                        } else {
+                            _dq(_index);
+                        }
+
+                        return false;
+                    }
+                }, 500)
+            }
+
+            var nindex = 0;
+            _dq(nindex);
+        }
+
+    });
+}
+
+
+
+
+function testCrawCasev2() {
+    if (!localStorage.getItem('longtestv2')) return;
+    
+    var longtest = localStorage.getItem('longtestv2');
+    
+    if (location.host !== 'cases.connect.corp.google.com') return false;
+    
+    if(!document.querySelector('[debugid="cases-app-bar"]')) {
+        setTimeout(() => {
+            console.log("LONG RELOAD")
+            testCrawCasev2();
+        }, 2000);
+        return false;
+    }
+    getChromeStorage('cdtx_lstcaseinfo_long', (response_begin) => {
+        console.log('LONG', 'RS', response_begin.value);
+
+        var _arr_begin = response_begin.value || {};
+
+        // Textarea
+        var _contentarea = [];
+        Object.keys(_arr_begin).forEach(__key => {
+            // console.log('Long', __key, _arr_begin[__key]);
+
+            _contentarea.push(`${__key}&#9;${_arr_begin[__key]}`);
+        });
+        
+        console.log("LONG total", _contentarea.length);
+
+        if (___elmidcase = document.querySelector(`#product_forgmc`)) {
+            ___elmidcase.remove();
+        }
+
+        var _textarea = `<textarea id="product_forgmc" onclick="this.focus();this.select()" readonly="readonly" style=" width: 100%; 
+            height: 56px;
+            min-height: 56px;
+            max-height: 56px;
+            position: relative; z-index: 999999999; font-family: monospace;">` + _contentarea.join("\n") + '</textarea>';
+
+
+        document.body.insertAdjacentHTML("beforeBegin", _textarea);
+        
+        var _text = prompt("Enter lst case ", "");
+        if (_text) {
+            var _arr = _text.split("\n");
+            // Unique
+            _arr = [...new Set(_arr)];
+
+            console.log("LONG count", _arr.length);
+
+            var _dq = (_index) => {
+                
+                
+                if(!_arr[_index]) {
+                    return false;
+                }
+                
+                if(document.querySelectorAll('tab .close-button').length > 3) {
+                    document.querySelectorAll('tab:not(.selected) .close-button').forEach((elm) => {
+                        elm.click()
+                    });
+                }
+                
+                console.clear();
+                
+                var caseid =  _arr[_index].trim() ;
+
+                if (_arr_begin[caseid] && longtest != '2') {
+                    console.log("LONG isset case", caseid);
+
+                    _dq(_index + 1);
+                    return false;
+                }
+
+
+                var _id = `case_${caseid}`;
+
+                if (___elmidcase = document.querySelector(`.onlyonecase`)) {
+                    ___elmidcase.remove();
+                }
+
+                var _html = `<a href="https://cases.connect.corp.google.com/#/case/${caseid}" class="onlyonecase" id="${_id}">${caseid}</a>`;
+                document.querySelector('[debugid="cases-app-bar"]').insertAdjacentHTML("afterBegin", _html);
+
+                document.querySelector(`#${_id}`).click();
+
+
+
+                var ntime = 0;
+                var myTime = setInterval(() => {
+                    ntime++;
+
+                    var _type = 0
+                    // LOAI 0
+                    // Access redistrict
+                    if (document.querySelectorAll('empty-state').length) {
+                        clearInterval(myTime);
+                        console.log('LONG 1', 'EMPTY');
+                        getChromeStorage('cdtx_lstcaseinfo_long', (response) => {
+                            var _lst = response.value || {};
+                            _lst[caseid] = 'Access restricted';
+                            // console.log('LONG', response);
+                            setChromeStorage('cdtx_lstcaseinfo_long', _lst, (response2) => {
+                                // console.log('LONG', response2);    
+                                _dq(_index + 1);
+                            })
+                        });
+
+                        // Stop
+                        return true;
+                    }
+
+                    // LOAI 1
+                    // TIM THAY CASE ID and wait
+                    if (document.querySelectorAll('[debug-id="case-id"] span.case-id').length) {
+                        _type = 1;
+                        var _caseidelm = document.querySelectorAll('[debug-id="case-id"] span.case-id')[0];
+
+                        if (_caseidelm.innerText.trim().includes(caseid)) {
+                            console.log('LONG 1', 'HAVE CASE ID 2', caseid, document.querySelectorAll('home-data-item').length);
+                            var _text = '';
+
+                            if(document.querySelectorAll('home-data-item').length > 0) {
+                                
+                                
+                                document.querySelectorAll('home-data-item').forEach(elm => {
+                                    if (elm.innerText.includes('Google Ads External Customer ID')) {
+                                        
+                                        _text = elm.innerText.trim().split('Google Ads External Customer ID')[1].replace(/[^\d]+/g, '');
+                                        
+                                    }
+                                });
+                                
+                                // console.log('LONG 1 2', _text);
+                                
+                                var _text2 = '';
+                                if(_text == '') {
+                                    if(__targetinput = document.querySelector('[debug-id="target-input"] input')) {
+                                        if(__targetinput.value.trim()) {
+                                            _text2 = __targetinput.value;    
+                                        }
+                                        
+                                    }
+                                }
+                                
+                                if(_text != '' || _text2 != '') {
+                                    
+                                    clearInterval(myTime);
+                                    
+                                    getChromeStorage('cdtx_lstcaseinfo_long', (response) => {
+                                        var _lst = response.value || {};
+                                        
+                                        var _internal_id = '';
+                                        if(__targetinput = document.querySelector('[debug-id="target-input"] input')) {
+                                            _internal_id = '| i' + __targetinput.value;
+                                        }
+                                        
+                                        _lst[caseid] = _text + _internal_id;
+                                        // console.log('LONG 1 OKOK CO Ext ID', _text, );
+                                        // console.log('LONG', response);
+                                        setChromeStorage('cdtx_lstcaseinfo_long', _lst, (response2) => {
+                                            // console.log('LONG', response2);    
+                                            _dq(_index + 1);
+                                            
+                                        })
+                                    });
+                                    
+                                    return;
+                                }    
+                            }
+                            
+                            
+                            
+                                    
+                        }
+
+
+                    }
+
+                    var _limit = 30
+                    if (_type === 1) {
+                        _limit = 20;
+                    }
+                    if (ntime > _limit) {
+                        clearInterval(myTime);
+
+
+                        if (_type === 1) {
+                            getChromeStorage('cdtx_lstcaseinfo_long', (response) => {
+                                var _lst = response.value || {};
+                                _lst[caseid] = (_type === 1 ? 'empty GAds Ext ID' : 'NULL');
+                                // console.log('LONG', response);
+                                setChromeStorage('cdtx_lstcaseinfo_long', _lst, (response2) => {
+                                    // console.log('LONG', response2);    
+                                    _dq(_index + 1);
+                                })
+                            });
+                        } else {
+                            _dq(_index);
+                        }
+
+                        return false;
+                    }
+                }, 500)
+            }
+
+            var nindex = 0;
+            _dq(nindex);
+        }
+
+    });
+}

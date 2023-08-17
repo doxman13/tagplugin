@@ -13,8 +13,9 @@ chrome.storage.sync.get({
         window.result = result;
         window.tagteamoption = result;
 
-        
-
+        cLog(() => {
+            console.log("DONGMAI", "INIT START", location.hostname, window.result)
+        });
         
         var _default_action = () => {
             window.dataTagteam.language = other_language;

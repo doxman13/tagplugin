@@ -1939,11 +1939,6 @@ var loadpanelcaseconnect = (is_reload = false) => {
 
                         // 2. toggleShow content
 
-                        // 3. Show  by dock
-
-                            onClickElm(`#cr-list li`, `click`, (elm, e) => {
-                                th_clearAndPrepareCRTemplate();
-                            });
 
 
                         // Action noted card

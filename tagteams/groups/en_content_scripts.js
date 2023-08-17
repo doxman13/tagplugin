@@ -51,27 +51,6 @@ function en_tagTeamTDCXLoad() {
         });    
     }
     
-    chrome.storage.sync.get({ 
-        mycountry: 'Thailand',
-        ouremail: 'xxx@google.com', 
-        myInjector: 'gtm-xxx',
-        gtmToDo: 'notStart',
-        optionkl__modecase: "Your shortname",
-        optionkl__inputyourshortname: "Your shortname",
-        optionkl__inputyourname: "Your name",
-        optionkl__disable_dialog: false,
-        optionkl__enable_sf_helper: false,
-        optionkl__disable_focuscase: false,
-        optionkl__disable_autofixemail: false,
-    }, function (result) {
-        window.result = result;
-        window.tagteamoption = result;
-        window.tagteamoption.optionkl__modecase = result.optionkl__modecase;
-        window.tagteamoption.optionkl__inputyourshortname = result.optionkl__inputyourshortname;
-        window.tagteamoption.optionkl__inputyourname = result.optionkl__inputyourname;
-        window.tagteamoption.optionkl__disable_dialog = result.optionkl__disable_dialog;
-        window.tagteamoption.optionkl__enable_sf_helper = result.optionkl__enable_sf_helper;
-    });
 
     // ============
     // FUNCTION
@@ -1950,12 +1929,6 @@ var loadpanelcaseconnect = (is_reload = false) => {
                             });
 
                         // 2. toggleShow content
-
-                        // 3. Show  by dock
-
-                            onClickElm(`#cr-list li`, `click`, (elm, e) => {
-                                en_clearAndPrepareCRTemplate();
-                            });
 
 
                         // Action noted card

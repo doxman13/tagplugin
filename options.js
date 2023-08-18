@@ -7,9 +7,11 @@ function save_options() {
     chrome.runtime.sendMessage({ message: country });
 
     var cdtx_option_form = document.getElementById('cdtx_option_form');
-    var formData = new FormData(cdtx_option_form);
-    const formDataObj = {};
-    formData.forEach((value, key) => (formDataObj[key] = value));
+    var formDataObj = {};
+    if(formData) {
+        var formData = new FormData(cdtx_option_form);
+        formData.forEach((value, key) => (formDataObj[key] = value));
+    }
     
 
     var optionkl__modecase = document.getElementById('optionkl__modecase').value || "";
@@ -129,13 +131,15 @@ function restore_options() {
         cdtx_loadgooglesheetpublish: {},
     }, function(result) {
         var _systemlst = false;
-        if(_systemlst = result.cdtx_loadgooglesheetpublish['System'].sheettab) {
-            console.log(_systemlst)
-            _systemlst.forEach((_item) => {
-                if(_item['Key'] === 'form_option') {
-                    document.querySelector('[data-formdata="form_option"]').innerHTML = _item['Value'];
-                }
-            })
+        if(result.cdtx_loadgooglesheetpublish['System']) {
+            if(_systemlst = result.cdtx_loadgooglesheetpublish['System'].sheettab) {
+                console.log(_systemlst)
+                _systemlst.forEach((_item) => {
+                    if(_item['Key'] === 'form_option') {
+                        document.querySelector('[data-formdata="form_option"]').innerHTML = _item['Value'];
+                    }
+                })
+            }
         }
     });
 
@@ -171,6 +175,13 @@ function restore_options() {
                 document.querySelector(`form [name="${key}"]`).checked = false;
                 if(value) {
                     document.querySelector(`form [name="${key}"]`).checked = true;
+                }
+            }
+            
+            if(key.startsWith('cdtx_text')) {
+                document.querySelector(`form [name="${key}"]`).value = "";
+                if(value) {
+                    document.querySelector(`form [name="${key}"]`).value = value;
                 }
             }
         }

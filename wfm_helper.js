@@ -1,4 +1,5 @@
-javascript: (function () {
+
+  javascript: (function () {
     function linkToAgent() {
       var el = document.querySelectorAll('.profile-name');
       var values = [];
@@ -56,23 +57,69 @@ javascript: (function () {
       }
     });
 
-    function showAll() {
-      var caseList = document.querySelectorAll('calendar-event [aria-describedby]');
-      for (let i = 0; i < caseList.length; i++) {
-        elementCase = caseList[i].getAttribute('aria-describedby');
-        task = caseList[i].innerText.split('').shift() + ' - ';
-        if (document.getElementById(elementCase)) {
-          var status = document.getElementById(elementCase).innerHTML.replace(/Standard\s|Appointment\s/g, '');
-          caseList[i].textContent = task + status;
-          caseList[i].style.fontSize = '11px';
-          if ((status.indexOf('Rescheduled') != -1) || (status.indexOf('Additional Appointment') != -1)) {
-            caseList[i].style.backgroundColor = "#d97aff"
-          } else if (status.indexOf('Call Not Started') != -1) {
-            caseList[i].style.backgroundColor = "#f73c1b"
-          }
-        } else false
+  function showAll() {
+  var caseList = document.querySelectorAll('calendar-event [aria-describedby]');
+  for (let i = 0; i < caseList.length; i++) {
+    elementCase = caseList[i].getAttribute('aria-describedby');
+    task = caseList[i].innerText.split('').shift() + ' - ';
+    if (document.getElementById(elementCase)) {
+      var status = document.getElementById(elementCase).innerHTML.replace(/Standard\s|Appointment\s/g, '');
+      caseList[i].textContent = task + status;
+      caseList[i].style.fontSize = '11px';
+      if ((status.indexOf('Rescheduled') != -1) || (status.indexOf('Additional Appointment') != -1)) {
+        caseList[i].style.backgroundColor = "#d97aff"
+      } else if (status.indexOf('Call Not Started') != -1) {
+        caseList[i].style.backgroundColor = "#f73c1b"
+      } else if (status.indexOf('Call Started') != -1) {
+        caseList[i].style.backgroundColor = "#1df753"
       }
-    }
-    setInterval(showAll, 2000);
+    } else false
+  }
+}
+
+var country = {
+  COUNTRY:"NA",
+  JP:"JP",
+  KR:"KO",
+  ID:"ID",
+  VN:"VI",
+  CN:"ZH"
+}
+
+var show = function(e){
+    var a = e.target.value;
+    if (a == "COUNTRY") {
+      document.querySelectorAll(".rotate").forEach(function(e){e.parentNode.click()});
+    } else {
+    //console.log("hide all");
+    document.querySelectorAll(".rotate").forEach(function(e){e.parentNode.click()});
+    //console.log("open JP");
+    document.querySelectorAll('[class="pool-name"]').forEach(function (name) {
+      name.parentNode.parentNode.parentNode.parentNode.style.display='none';
+      name.innerText.includes(country[a]) && name.click();
+    });
+    //console.log("open all calendar");
+    document.querySelectorAll('[class="availability-name"]').forEach(function (name) {
+      name.parentNode.parentNode.parentNode.parentNode.style.display='none';
+      name.previousSibling.classList.contains("rotate")&&name.click();
+      name.innerText.includes("KL - S&T - "+a)&&!name.previousSibling.classList.contains("rotate")&&name.click();
+    });
+  }
+    setTimeout(showAll,1000);
+}
+
+ori = document.querySelector(".timezone");
+sel = document.createElement("select");
+sel.addEventListener("change", show);
+
+Object.keys(country).forEach(function(i) {
+  var option = document.createElement("option");
+  option.text = i;
+  option.value = i;
+  sel.appendChild(option);
+});
+
+ori.parentNode.insertBefore(sel,ori);
   
 })();
+

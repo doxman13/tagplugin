@@ -2403,6 +2403,7 @@ function global_case(optionkl__disable_dialog) {
                                 _li.querySelector('.cdtx__uioncall_templ_clickchoice').addEventListener('click', () => {
                                     _parent.querySelector('.cdtx__uioncall_outer').innerHTML = value.content_outer;
                                     _sub_modal_remove();
+                                    _reupdate_outer();
                                 });
                             
 

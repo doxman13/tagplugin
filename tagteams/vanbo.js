@@ -1703,28 +1703,16 @@ var tagteamFocusCase = () => {
             });
 
             waitForElm('email-address-dropdown material-dropdown-select .address').then(elm => {
-                elm.click();
-                waitForElm('[id*=email-address-id--technical-solutions]').then(elm => {
-                    elm.click();
-
-                    // waitForElm('[aria-label="Insert canned response"]').then(crBtn => {
-                    //     crBtn.addEventListener('click', function() {
-                    //         waitForElm('material-dialog footer').then(dialog => {
-                    //             if (!document.querySelector('#cr-list')) { prepareCR() };
-                    //         });
-                    //     });
-                    // });
-                    if (isGCC) {
-                        var emailCC = document.evaluate('//span[contains(text(),"CC")]//following-sibling::email-address-input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                        var emailBCC = document.evaluate('//span[contains(text(),"BCC")]//following-sibling::email-address-input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                        emailBCC.querySelector('input').value = document.querySelector('material-input.action-input.input-email .input').value;
-                        emailBCC.querySelector('input').dispatchEvent(new Event('input'));
-                        if (emailCC) emailCC.querySelector('.remove').click();
-                        waitForElm('focus-trap [debug-id="email"]').then(item => {
-                            item.click();
-                        });
-                    }
-                });
+                if (isGCC) {
+                    var emailCC = document.evaluate('//span[contains(text(),"CC")]//following-sibling::email-address-input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                    var emailBCC = document.evaluate('//span[contains(text(),"BCC")]//following-sibling::email-address-input', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                    emailBCC.querySelector('input').value = document.querySelector('material-input.action-input.input-email .input').value;
+                    emailBCC.querySelector('input').dispatchEvent(new Event('input'));
+                    if (emailCC) emailCC.querySelector('.remove').click();
+                    waitForElm('focus-trap [debug-id="email"]').then(item => {
+                        item.click();
+                    });
+                }
             });
         }
 

@@ -630,7 +630,7 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
 
 
                                 // ******************
-                                // Add AM EMAIL
+                                // Add AM EMAILx
                                 // ******************
                                 var elm_area = () => { return elm_parentheader.querySelector(".input.cc"); }
                                 if (is_gcc_external) {
@@ -657,11 +657,19 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                                             }
                                         }
 
-                                        cLog(() => {  console.log('eie', elm_area().querySelectorAll('user-chip').length, caseload.am_email.split(',').length, elm_area().querySelectorAll('user-chip').length === caseload.am_email.split(',').length ); });
-                                        if(elm_area().querySelectorAll('user-chip').length === caseload.am_email.split(',').length) {
-                                            clearInterval(time_input_key);
-                                            recheck_fix_alert(_callback, "1checkandfix", elm_parentheader);   
+                                        
+                                        try {
+                                            // cLog(() => {  console.log('eie', elm_area().querySelectorAll('user-chip').length, caseload.am_email.split(',').length, elm_area().querySelectorAll('user-chip').length === caseload.am_email.split(',').length ); });
+                                            if(caseload.am_email) {
+                                                if(elm_area().querySelectorAll('user-chip').length === caseload.am_email.split(',').length) {
+                                                    clearInterval(time_input_key);
+                                                    recheck_fix_alert(_callback, "1checkandfix", elm_parentheader);   
+                                                }    
+                                            }
+                                        } catch(error) {
+                                            console.error(error)
                                         }
+                                        
 
                                         if (n_time > 10) {
                                             cLog(() => { console.log('eie 1checkandfix Add AM EMAIL ** 2 => STOP ACTION '); })
@@ -966,23 +974,30 @@ function textAreaAdjust(elm) {
 }
 
 function tagteam_showGTMID() {
-    // If has => make recheck interval
-    wait4Elem("gtm-container-public-id").then((elm) => {
-        var is_copy = () => {
-            var gtmpublish = document.querySelector(".gtm-container-public-id");
-            var gtmclone = document.querySelector(".gtm-clone");
-            if(gtmpublish && !gtmclone) {
-                var gtm_id = gtmpublish.innerText.trim();
-                gtmpublish.insertAdjacentHTML("afterEnd", `<span class="gtm-clone" style="font-size: 14px;border: 1px solid #ccc;margin: 10px;padding: 10px;background: #fff;box-shadow: 0 0 17px #ccc;display: inline-block;line-height: 1;text-align: left;"><small style="user-select: none; display: block; color: #888; font-size: 70%; ">Copy below</small><span style=" user-select: all; margin: 7px 0; display: block; color: #888; ">${gtm_id}</span></span>`)
-            }
-        }
-
-        is_copy();
-        setInterval(() => {
-            is_copy();
-        }, 3000);
-    });
+    var callback = () => {
+        if(!(location.hostname === 'tagmanager.google.com' || location.hostname === 'tagmanager-ics.corp.google.com')) return false;
     
+        if(gtmpublish = document.querySelector('header .gtm-container-public-id')) {
+            if(!(gtmclone = document.querySelector(".gtm-clone"))) {
+                // if(gtmpublish.classList.contains('done')) return;
+                // gtmpublish.classList.add('done')
+                
+                cLog(() => {console.log("tagteam_showGTMID", "start")});
+                
+                // START
+                var is_copy = () => {
+                    var gtm_id = gtmpublish.innerText.trim();
+                    gtmpublish.insertAdjacentHTML("afterEnd", `<span class="gtm-clone" style="font-size: 14px;border: 1px solid #ccc;margin: 10px;padding: 10px;background: #fff;box-shadow: 0 0 17px #ccc;display: inline-block;line-height: 1;text-align: left;"><small style="user-select: none; display: block; color: #888; font-size: 70%; ">Copy below</small><span style=" user-select: all; margin: 7px 0; display: block; color: #888; ">${gtm_id}</span></span>`)
+    
+                }
+            
+                is_copy();    
+            }
+            
+        }    
+    }
+    
+    observeOnce(callback);
 }
 
 // Support click all elem visbile anytime - like jQuery(document).on("click", "classElemString", function(){   });
@@ -2218,6 +2233,7 @@ function replaceKeyHTMLByCaseID(_elm, _key, _value, _data = {}) {
         });
     }
     
+    
     if(_key == 'customer_adsid') {
         _elm.querySelectorAll('[data-infocase="customer_adsid_format"]').forEach(function(elm){
             elm.innerHTML = reformatAdsId(_value);
@@ -2232,6 +2248,18 @@ function replaceKeyHTMLByCaseID(_elm, _key, _value, _data = {}) {
             }
             
         });
+    }
+    
+    if(_key == 'customer_ocid') {    
+        if(_data.customer_ocid) {
+            if(_data.customer_ocid.trim()) {
+                
+                _elm.querySelectorAll('[data-infocase_link="customer_ocid"]').forEach(function(elm){
+                    elm.innerHTML = _data.customer_ocid;
+                    elm.setAttribute("href", `https://adwords.corp.google.com/aw/conversions?ocid=${_data.customer_ocid}`);
+                });
+            } 
+        }
     }
     if(_key == 'case_id') {
         _elm.querySelectorAll('[data-infocase="case_id"]').forEach(function(elm){
@@ -2352,8 +2380,8 @@ function panelAddShortcutLink() {
                         <span class="tool_shortlink_btn" data-btnsclick="add_shortlink" >+ Add shortlink</span>
                         <div class="tool_shortlink_row">
                             <div class="tool_shortlink_gr-row tool_shortlink_gr-content" >
-                                <span class="tool_shortlink_gr-url" data-tttip="U" title="URL" contenteditable="plaintext-only"></span>
-                                <span class="tool_shortlink_gr-text" data-tttip="N" title="Name" contenteditable="plaintext-only"></span>
+                                <span class="tool_shortlink_gr-url" data-tttip="Url" title="URL" contenteditable="plaintext-only"></span>
+                                <span class="tool_shortlink_gr-text" data-tttip="Name" title="Name" contenteditable="plaintext-only"></span>
                                 <span class="tool_shortlink_btn" data-btnsclick="save" >Save</span>
                                 <span class="tool_shortlink_btn" data-btnsclick="close" >Close</span>
                             </div>
@@ -2869,6 +2897,7 @@ function getVariableSheetByKeyAndLanguage(_columnname, _keylanguage) {
         if(window.loadgooglesheetpublish) {
             var _rs = window.loadgooglesheetpublish;
             var _targetarr = _rs['Variable'].sheettab;
+            // cLog(() => { console.log('xxx', window.loadgooglesheetpublish) });;
             for (let index = 0; index < _targetarr.length; index++) {
                 const _item = _targetarr[index];
                 
@@ -2885,7 +2914,9 @@ function getVariableSheetByKeyAndLanguage(_columnname, _keylanguage) {
     } catch (error) {
         cLog(() => {
             console.error('getVariableSheetByKeyAndLanguage', _columnname, _keylanguage, error)
-        })
+        });
+        
+        return false;
     }
 
     return false;
@@ -4248,10 +4279,17 @@ function uiOnCallPanel() {
 function callPhoneDefaultNumber() {
     // if(!IS_DEBUG) return;
 
-    var _title = document.querySelector('.dialog-with-notification h1');
-    var _phone = document.querySelector('.dialog-with-notification input.input.input-area');
+    var _dialog_noti = document.querySelector('.dialog-with-notification');
+    if(!_dialog_noti) return false;
 
-    if(_title && _phone) {
+    
+    var _title = _dialog_noti.querySelector('h1');
+    var _phone = _dialog_noti.querySelector('input.input.input-area');
+    var _call_button = _dialog_noti.querySelector('[debug-id="call-button"]');
+
+    // debug-id="call-button"
+
+    if(_title && _phone && _call_button) {
         if(!document.querySelector('.cdtx__btn')) {
             var _phonecenter = getVariableSheetByKeyAndLanguage('Phone Center', window.keylanguage);
             
@@ -4265,10 +4303,9 @@ function callPhoneDefaultNumber() {
             _title.classList.add('cdtx__havephonenumber');
             
             dom.addEventListener('click', function(){
-                
+
                 _phone.value = dom.getAttribute('data-phonenumber').replace(/[^\d+]+/g, '');
                 _phone.dispatchEvent(new Event('input'));
-                
 
                 setTimeout(() => {
                     document.querySelector('.dialog-with-notification [debug-id="call-button"]').click();
@@ -4581,6 +4618,7 @@ function _reupdate_outer() {
     _elm_content.dispatchEvent(new Event('input'));
     _elm_content.dispatchEvent(new Event('focus'));
     _elm_content.dispatchEvent(new Event('click'));
+    console.log('DONG', 'HELLO');
 }
 
 
@@ -4978,3 +5016,119 @@ function testCrawCasev2() {
 
     });
 }
+
+function __case_id() {
+    if(_caseidelm = document.querySelector('[debug-id="case-id"] span.case-id')) {
+        return _caseidelm.innerText;
+    }
+    
+    return false;
+}
+
+
+
+function extractEmails(text) {
+    // Regular expression to match emails
+    const emailRegex = /([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+)/;
+
+    // Create a mutable array to store the emails
+    const emails = [];
+
+    // Split the text string on spaces
+    var words = text.replace(/(\r\n|\r|\n)/g, ' ');
+    words_arr = words.split(" ");
+
+    // Iterate over the words array
+    for (const word of words_arr) {
+        // Match the email regex on the current word
+        const match = emailRegex.exec(word);
+
+        // If there is a match, add the email to the array
+        if (match) {
+            emails.push(match[1]);
+        }
+    }
+
+    // Return the array of emails
+    return emails;
+}
+
+function reFormatPhone(phoneNumber, prefix_phone = "84") {
+
+    var validatePhoneNumber = function(phoneNumber) {
+        const regex = /^\d{10}$|^\d{11}$|^(\+\d{1,3})?\d{10,11}$/;
+        return regex.test(phoneNumber);
+    }
+
+    phoneNumber = phoneNumber.replace(/[^\d+]+/g, '');
+    var list = [
+        '^0(\\d+)',
+        prefix_phone + "(\\d+)",
+        "\\" + prefix_phone + "0(\\d+)",
+        "\\(\\+" + prefix_phone + "\\)0(\\d+)\\s(\\d+)\\s(\\d+)",
+        "\\(\\+" + prefix_phone + "\\)(\\d+)",
+        "\\+" + prefix_phone + "0(\\d+)",
+        "\\+" + prefix_phone + "(\\d+)",
+        "(\\+0)\\s([()])\\d+([()])\\s\\d+-\\d+",
+    ];
+    
+    var _numer = phoneNumber;
+    list.forEach(function(ite) {
+        var _str_regex = new RegExp(ite);
+        
+        if(rs = _numer.match(_str_regex)) {
+            if(rs[1]) {
+                _numer = rs[1];
+            }
+            
+        }
+        
+    });
+    var rs = false;
+
+    var _numer_here = "+" + prefix_phone + _numer;
+    if(validatePhoneNumber(_numer_here)) {
+        rs = _numer_here;
+    }
+
+    return rs;
+}
+
+
+function extractUrls(text) {
+    // Regular expression to match URLs
+    const urlRegex = /(https?:\/\/[^\s,]+)/;
+
+    // Create a mutable array to store the URLs
+    const urls = [];
+
+    // Split the text string on commas
+    var words = text.replace(/(\r\n|\r|\n)/g, ' ');
+    words_arr = words.split(" ");
+    
+
+    // Iterate over the words array
+    for (const word of words_arr) {
+        // Match the URL regex on the current word
+        const match = urlRegex.exec(word);
+
+        // If there is a match, add the URL to the array
+        if (match) {
+            urls.push(match[1]);
+        }
+    }
+
+    // Return the array of URLs
+    return urls;
+}
+
+
+function stripHtml(html) {
+   let tmp = document.createElement("DIV");
+   html = html.replace(/<br\s*[\/]?>/gi, "\n");
+   tmp.innerHTML = html;
+   return tmp.textContent || tmp.innerText || "";
+}
+
+
+

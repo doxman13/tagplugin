@@ -357,10 +357,6 @@ function vi_tagTeamTDCXLoad() {
                 var _action = this.getAttribute("data-btntoolaction");
                 panel_div.setAttribute("data-btntoolaction_status", _action);
                 
-                // open main
-                if(_action === 'extract_gtm_id') {
-                    tagteam_showGTMID();
-                }
             });
         });
     };
@@ -2035,33 +2031,12 @@ function autoLoadCode(keyaction) {
             _object = _datatemp;
         }
 
-        switch (keyaction) {
-
-            case 'auto_loadgtmid':
-                if(typeof _datatemp.auto_loadcode_vanbo === "undefined") {
-                    tagteam_showGTMID();
-                }
-                break;
-        
-            default:
-                break;
-        }
     });
 }
 
 
 function loadInit() {
 
-
-    // 0.0
-    // Load GTM ID
-        if(
-            window.location.hostname === "tagmanager.google.com" || 
-            window.location.hostname === "tagmanager-ics.corp.google.com" 
-        ) {
-            autoLoadCode('auto_loadgtmid');
-        }
-    
     // 0.1 Load panel
         loadpanelcaseconnect();
     

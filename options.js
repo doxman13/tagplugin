@@ -8,17 +8,25 @@ function save_options() {
 
     var cdtx_option_form = document.getElementById('cdtx_option_form');
     var formDataObj = {};
+    var formData = new FormData(cdtx_option_form);
     if(formData) {
-        var formData = new FormData(cdtx_option_form);
         formData.forEach((value, key) => (formDataObj[key] = value));
     }
     
-
     var optionkl__modecase = document.getElementById('optionkl__modecase').value || "";
     var optionkl__inputyourname = document.getElementById('optionkl__inputyourname').value || "";
     var optionkl__inputyourshortname = document.getElementById('optionkl__inputyourshortname').value || "";
-    var optionkl__disable_dialog = document.getElementById('optionkl__disable-dialog').checked || false;
-    var optionkl__enable_sf_helper = document.getElementById('optionkl__enable-sf-helper').checked || false;
+
+    var optionkl__disable_dialog = false;
+    if(chkelm = document.getElementById('optionkl__disable-dialog')) {
+        optionkl__disable_dialog = chkelm.checked;
+    }
+
+    var optionkl__enable_sf_helper = false;
+    if(chkelm = document.getElementById('optionkl__enable-sf-helper')) {
+        optionkl__enable_sf_helper = chkelm.checked;
+    }
+    
     var optionkl__form_option_data = formDataObj || {};
 
     if (country == "Vietnam") {
@@ -165,12 +173,20 @@ function restore_options() {
         document.getElementById('optionkl__modecase').value = items.optionkl__modecase;
         document.getElementById('optionkl__inputyourshortname').value = items.optionkl__inputyourshortname;
         document.getElementById('optionkl__inputyourname').value = items.optionkl__inputyourname;
-        document.getElementById('optionkl__disable-dialog').checked = items.optionkl__disable_dialog;
-        document.getElementById('optionkl__enable-sf-helper').checked = items.optionkl__enable_sf_helper;
 
+        if(elm = document.getElementById('optionkl__disable-dialog')) {
+            elm.checked = items.optionkl__disable_dialog;
+        }
+
+        if(elm = document.getElementById('optionkl__enable-sf-helper')) {
+            elm.checked = items.optionkl__enable_sf_helper;
+        }
+        
         
         for (const [key, value] of Object.entries(items.optionkl__form_option_data)) {
             // console.log(`${key}: ${value}`);
+            // if(!document.querySelector(`form [name="${key}"]`)) return;
+
             if(key.startsWith('cdtx_chk')) {
                 document.querySelector(`form [name="${key}"]`).checked = false;
                 if(value) {
@@ -215,6 +231,41 @@ document.getElementById('country').addEventListener('change', function (e) {
 
 
 });
+
+
+
+if(optionkl__databtnclk_resetdata = document.querySelector('[data-btnclk="resetdata"]')) {
+    optionkl__databtnclk_resetdata.addEventListener('click', function(e) {
+        elm = e.target;
+        if (confirm("You sure reupdate")) {
+            elm.innerText = 'LOADING';
+            elm.style.opacity = '0.2';
+            var _arrlistkey = [
+                'cdtx_scriptsync_auto', 
+                'cdtx_loadgooglesheetpublish_timesave', 
+                'cdtx_loadgooglesheetpublish', 
+                'stylecasebytheme', 
+            ];
+            
+            var _n_finish = 0;
+            _arrlistkey.forEach(key => {
+                chrome.runtime.sendMessage({method: 'fe2bg_chromestorage_remove', key: key}, (response) => {
+                    console.log('remove ' + key + ' => DONE');
+
+                    _n_finish++;
+                    if(_n_finish === _arrlistkey.length) {
+                        elm.innerText = 'RESET';
+                        elm.style.opacity = '1';
+                    }
+                });
+            });
+
+            
+            
+        }
+    })
+}
+
 $('#startGTM').click(inject_options);
 $('#stopGTM').click(stop_injector);
 

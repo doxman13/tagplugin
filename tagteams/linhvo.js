@@ -138,8 +138,8 @@ try {
                         var _id = `cdtx_navylink${_index}`;
                         var _navi_html = `<a href="${_item.link}" id="${_id}" class="nav-item cdtx_navylink" 
                             style="margin: 10px 24px;
-                            font-weight: bold;
-                            color: #9C27B0;
+                            font-weight: 500;
+                            color: #673AB7;
                             display: block;
                         "
                         

@@ -873,7 +873,7 @@ var tagteamFocusCase = () => {
                 document.querySelector('.ec-dashboard').addEventListener('click', ecDashboard)
                 // document.querySelector('.connect-appointment').addEventListener('click', connectAppointment)
                 document.querySelector('.voice_call_ui').addEventListener('click', (e) => {
-                    document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
+                    // document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
                     if(document.querySelector('.themeable.phone')) {
                         document.querySelector('.themeable.phone').click();
                     }
@@ -1571,9 +1571,50 @@ var tagteamFocusCase = () => {
                 return true;
             }
             
+            var _myTimeout = null;
             
-            var ecUrl = 'https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:' + cid;
-            window.open(ecUrl, '_blank').focus();
+            // Load input hide
+            if(!document.querySelector('.selected-target .field .value')) {
+                document.querySelector('.target-input').dispatchEvent(new Event('mouseover'));
+            }
+
+            wait4Elem('.selected-target .field .value').then((_elm) => {
+                document.querySelectorAll('.selected-target .field').forEach((elm) => {
+                    var _label = () => {
+                        return elm.querySelector('.label');
+                    }
+
+                    if(_label()) {
+                        var _n = 0;
+                        var _myInterval = setInterval(() => {
+                            // console.log('vanbo 2', _myTimeout, _label().innerText, _label().innerText.toLowerCase().includes('internal'));
+
+                            var _is_ok = false;
+                            if(_label().innerText.toLowerCase().includes('internal')) {
+                                if(_label().innerText.trim()) {
+                                    var _value = elm.querySelector('.value');
+                                    var _ocid = _value.innerText.trim();
+                                    _is_ok = true; 
+                                    var ecUrl = 'https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:' + _ocid;
+                                    window.open(ecUrl, '_blank').focus();
+                                }
+                            }
+
+                            if(_n > 5 || _is_ok) {
+                                clearInterval(_myInterval);
+                                clearTimeout(_myTimeout);
+                            }
+                            _n++;
+                        }, 500);
+                    }
+                });
+            });
+                
+            _myTimeout = setTimeout(() => {
+                var ecUrl = 'https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:' + cid;
+                window.open(ecUrl, '_blank').focus();
+            }, 2000)
+            
         }
 
         function prepareCR() {
@@ -1752,16 +1793,16 @@ var tagteamFocusCase = () => {
 };
 
 if(location.hostname == 'cases.connect.corp.google.com') {
-    console.log('okela')
+    // console.log('okela')
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.message === "hahahahaa") {
-        console.log('jajajajajajajaa')
+        // console.log('jajajajajajajaa')
     }
     });
 }
 if(location.hostname == 'meet.google.com') {
-    console.log('vanbomeet')
-    console.log('vanbomeet', chrome.tabs)
+    // console.log('vanbomeet')
+    // console.log('vanbomeet', chrome.tabs)
         if(chrome.tabs) {
         chrome.tabs.query({ url: "*://cases.connect.corp.google.com/*" }, function(tabs) {
         if (tabs.length > 0) {

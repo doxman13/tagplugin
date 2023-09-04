@@ -2048,17 +2048,6 @@ function autoLoadCode(keyaction) {
 
 
 function loadInit() {
-
-
-    // 0.0
-    // Load GTM ID
-        if(
-            window.location.hostname === "tagmanager.google.com" || 
-            window.location.hostname === "tagmanager-ics.corp.google.com" 
-        ) {
-            autoLoadCode('auto_loadgtmid');
-        }
-    
     // 0.1 Load panel
         loadpanelcaseconnect();
     

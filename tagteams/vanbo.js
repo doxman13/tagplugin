@@ -873,10 +873,18 @@ var tagteamFocusCase = () => {
                 document.querySelector('.ec-dashboard').addEventListener('click', ecDashboard)
                 // document.querySelector('.connect-appointment').addEventListener('click', connectAppointment)
                 document.querySelector('.voice_call_ui').addEventListener('click', (e) => {
-                    // document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
-                    if(document.querySelector('.themeable.phone')) {
-                        document.querySelector('.themeable.phone').click();
+                    var _themeablephone = () => {
+                        return document.querySelector('.themeable.phone');
+                    };
+                    
+                    if(!_themeablephone()) {
+                        document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
+                    } 
+                    
+                    if(_themeablephone()) {
+                        _themeablephone().click();    
                     }
+                    
                 });
 
                 document.querySelector('.dock_order_1_pin_icon').addEventListener('click', (e) => {

@@ -2493,7 +2493,13 @@ function global_case(optionkl__disable_dialog) {
 
                     
                     if(btnok = _sub_modal().querySelector('.oncall_templ_act_taskchoice_btnok')) {
+                        
+                        if(!_textreplace()) {
+                            elm.insertAdjacentHTML('afterEnd', '<span data-text="oncall_templ_act_taskchoice-text"></span>');
+                        }
+                            
                         btnok.addEventListener('click', () => {
+                            
                             _textreplace().innerText = arr_chk_input().join(', ');
 
                             update2db(_textreplace().innerText);
@@ -5158,11 +5164,14 @@ function global_case(optionkl__disable_dialog) {
     
             // Phone
             var _phone = '';
+            var _lowertext = '';
             _lst_value.forEach(item => {
+                _lowertext = item.toLowerCase()
                 if(
                     !(
-                        item.startsWith('adsid:') ||
-                        item.startsWith('ocid:')
+                        _lowertext.startsWith('adsid:') ||
+                        _lowertext.startsWith('ocid:') ||
+                        _lowertext.startsWith('cid:')
                     )
                 ) {
                     if(_phone_get = reFormatPhone(item)) {
@@ -5173,13 +5182,18 @@ function global_case(optionkl__disable_dialog) {
             })
             
             // Phone
-            var _ocid = '', _external_id = '';
+            var _ocid = '', _external_id = '', _lowertext = '';
             _lst_value.forEach(item => {
-                if(item.startsWith('ocid:')) {
+                _lowertext = item.toLowerCase()
+                
+                if(_lowertext.startsWith('ocid:')) {
                     _ocid = item.replace(/[^\d]+/g, '');
                 }
                 
-                if(item.startsWith('adsid:')) {
+                if(
+                    _lowertext.startsWith('adsid:') ||
+                    _lowertext.startsWith('cid:')
+                ) {
                     _external_id = item.replace(/[^\d]+/g, '');
                 }
             })
@@ -5334,6 +5348,9 @@ function global_case(optionkl__disable_dialog) {
             
             
             // Open all button editor
+            document.querySelectorAll('[debug-id="add-email-button"]').forEach(elm => {
+                elm.click()
+            });
             document.querySelectorAll('[debug-id="edit-button"]').forEach(elm => {
                 elm.click()
             });

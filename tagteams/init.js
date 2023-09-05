@@ -27,7 +27,7 @@ chrome.storage.sync.get({
 
             other_tagTeamTDCXLoad(window);
             globalForAll(window);
-            global_case(result.optionkl__disable_dialog);
+            global_case(window.result.optionkl__disable_dialog);
             vanBoCodeHere();
             linhvoLoader();
         }
@@ -43,7 +43,7 @@ chrome.storage.sync.get({
 
                 vi_tagTeamTDCXLoad(window);
                 globalForAll(window);
-                global_case(result.optionkl__disable_dialog);
+                global_case(window.result.optionkl__disable_dialog);
                 vanBoCodeHere();
                 linhvoLoader();
             }
@@ -62,7 +62,7 @@ chrome.storage.sync.get({
 
                 th_tagTeamTDCXLoad(window);
                 globalForAll(window);
-                global_case(result.optionkl__disable_dialog);
+                global_case(window.result.optionkl__disable_dialog);
                 vanBoCodeHere();
                 linhvoLoader();
             }
@@ -79,7 +79,7 @@ chrome.storage.sync.get({
 
                 en_tagTeamTDCXLoad(window);
                 globalForAll(window);
-                global_case(result.optionkl__disable_dialog);
+                global_case(window.result.optionkl__disable_dialog);
                 vanBoCodeHere();
                 linhvoLoader();
             }
@@ -97,7 +97,7 @@ chrome.storage.sync.get({
 
                 jp_tagTeamTDCXLoad(window);
                 globalForAll(window);
-                global_case(result.optionkl__disable_dialog);
+                global_case(window.result.optionkl__disable_dialog);
                 vanBoCodeHere();
                 linhvoLoader();
             }

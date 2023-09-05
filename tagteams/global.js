@@ -1,6 +1,6 @@
 function global_case(optionkl__disable_dialog) {
     if(optionkl__disable_dialog) return false;
-    cLog(() => { console.log('global_case START'); })
+    cLog(() => { console.log('global_case START', optionkl__disable_dialog); })
 
 
 

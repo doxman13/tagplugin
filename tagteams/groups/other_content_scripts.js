@@ -933,27 +933,7 @@ function is_readycaseconnect(_callback) {
             }
         });
 
-        // Recheck pre call?
-        // Is Precall?
-        if(window.location.hostname === "cases.connect.corp.google.com" && window.location.href.indexOf("#/case/") > - 1) {
-            var is_precall = false;
-            document.querySelectorAll(".case-log-container.active-case-log-container case-message-view").forEach(function(elm){
-                if(elm.innerText.includes("Emails or feedback from Advertiser")) {
-                        is_precall = true;
-                }
-            });
-            
-            if(is_precall === false) {
-                Toastify({
-                    text: 'Not Precall',
-                    duration: 6000,
-                    class: "error",
-                    callback: function(){
-                        this.remove();
-                    }
-                }).showToast();
-            }
-        }
+        
     });
 
     

@@ -425,6 +425,26 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                     }
         
                     
+                    
+                        
+                    // Repair
+                        var _email_input_from = elm_parentheader.querySelector('email-address-dropdown.input.from');
+                        var _email_input_to = () => {
+                            return elm_parentheader.querySelector('email-address-input.input.to');
+                        };
+                        var _email_input_cc = () => {
+                            return elm_parentheader.querySelector('email-address-input.input.cc');
+                        };
+                        
+                        var _email_input_bcc = () => { 
+                            return elm_parentheader.querySelector('email-address-input.input.bcc');
+                        };
+                    
+                    
+                    
+                    
+                        
+                    
                     var recheck_fix_alert = (_callback, n_step = "0unmark", elm_parentheader) => {
                         
                         cLog(() => { console.log("eie - recheck_fix_alert - step: ", n_step, window.hasClkReply) });
@@ -439,17 +459,29 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
 
                         n_oncedequi++;
         
-                        // Repair
-                            var _email_input_from = elm_parentheader.querySelector('email-address-dropdown.input.from');
-                            var _email_input_to = () => {
-                                return elm_parentheader.querySelector('email-address-input.input.to');
-                            };
-                            var _email_input_cc = elm_parentheader.querySelector('email-address-input.input.cc');
-                            var _email_input_bcc = elm_parentheader.querySelector('email-address-input.input.bcc');
-                        
-
                         // START
-                        if(_email_input_from && _email_input_to() && _email_input_cc && _email_input_bcc) {
+                        
+                        // ****
+                        // MAJOR: Recheck input , False => reset function again.
+                        // ****
+                        
+                            if(!(_email_input_cc() && _email_input_bcc())) {
+                                if(elmexpand = elm_parentheader.querySelector('[debug-id="expand-button"]')) {
+                                    elmexpand.click();    
+                                }
+                                
+                                
+                                // return for recheck
+                                setTimeout(() => {
+                                    recheck_fix_alert(_callback, n_step, elm_parentheader);
+                                }, 500);
+                                
+                                return false;
+                            }
+                                
+                        
+                        // BEGIN
+                        if(_email_input_from && _email_input_to() && _email_input_cc() && _email_input_bcc()) {
                             cLog(() => { console.log('eie 1checkandfix', window.dataCase); })
                             
 
@@ -501,7 +533,7 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                             }
 
                             if(n_step === '1checkandfix') {
-                                // debugger;
+                                
                                 
                                 // *******************
                                 // 1. EMAIL FROM
@@ -522,6 +554,7 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                                 // }
 
 
+                                
                                 
 
 
@@ -784,10 +817,23 @@ function checkInputEmailInbox(){
                             
                             var _email_input_from = document.querySelector(str_elmparent + 'email-address-dropdown.input.from');
                             var _email_input_to = document.querySelector(str_elmparent + 'email-address-input.input.to');
-                            var _email_input_cc = document.querySelector(str_elmparent + 'email-address-input.input.cc');
-                            var _email_input_bcc = document.querySelector(str_elmparent + 'email-address-input.input.bcc');
+                            var _email_input_cc = () => { 
+                                return document.querySelector(str_elmparent + 'email-address-input.input.cc');
+                            };
+                            var _email_input_bcc = () => {
+                                return document.querySelector(str_elmparent + 'email-address-input.input.bcc');
+                            };
         
-                            if(_email_input_from && _email_input_to && _email_input_cc && _email_input_bcc) {
+        
+                            if(!(_email_input_cc() && _email_input_bcc())) {
+                                if(elmexpand = elm_parentheader.querySelector('[debug-id="expand-button"]')) {
+                                    elmexpand.click();    
+                                }
+                                
+                                return false;
+                            }
+                                
+                            if(_email_input_from && _email_input_to && _email_input_cc() && _email_input_bcc()) {
         
                                     
                                     var n_err = 0;
@@ -814,22 +860,22 @@ function checkInputEmailInbox(){
                                     }
                                 
                                     if(caseload.am_isgcc_external) {
-                                        if(_email_input_bcc.innerText.includes(caseload.am_email) === false) {
-                                            if(_email_input_bcc.closest('.header')) {
-                                                _email_input_bcc.closest('.header').setAttribute("data-type", "_chk_email_agains");
+                                        if(_email_input_bcc().innerText.includes(caseload.am_email) === false) {
+                                            if(_email_input_bcc().closest('.header')) {
+                                                _email_input_bcc().closest('.header').setAttribute("data-type", "_chk_email_agains");
                                             }
-                                            _email_input_bcc.classList.add("_chk_email_bcc_wrong");
+                                            _email_input_bcc().classList.add("_chk_email_bcc_wrong");
                                         
                                             noteBarAlert('Is BCC => BCC => wrong / missing', caseload.case_id);
                                             n_err++;
                                         }
                                     } else {
                                         
-                                        if(_email_input_cc.innerText.includes(caseload.am_email) === false) {
-                                            if(_email_input_cc.closest('.header')) {
-                                                _email_input_cc.closest('.header').setAttribute("data-type", "_chk_email_agains");
+                                        if(_email_input_cc().innerText.includes(caseload.am_email) === false) {
+                                            if(_email_input_cc().closest('.header')) {
+                                                _email_input_cc().closest('.header').setAttribute("data-type", "_chk_email_agains");
                                             }
-                                            _email_input_cc.classList.add("_chk_email_cc_wrong");
+                                            _email_input_cc().classList.add("_chk_email_cc_wrong");
                                             noteBarAlert('Mail CC => wrong / missing', caseload.case_id);
                                             n_err++;
                                         }
@@ -882,7 +928,7 @@ function globalForAll(window) {
     if(
         window.location.hostname === "analytics-ics.corp.google.com" || 
         window.location.hostname === "tagmanager-ics.corp.google.com" 
-        ) {
+    ) {
 
         try {
         
@@ -974,9 +1020,9 @@ function textAreaAdjust(elm) {
 }
 
 function tagteam_showGTMID() {
+    if(!(location.hostname === 'tagmanager.google.com' || location.hostname === 'tagmanager-ics.corp.google.com')) return false;
+
     var callback = () => {
-        if(!(location.hostname === 'tagmanager.google.com' || location.hostname === 'tagmanager-ics.corp.google.com')) return false;
-    
         if(gtmpublish = document.querySelector('header .gtm-container-public-id')) {
             if(!(gtmclone = document.querySelector(".gtm-clone"))) {
                 // if(gtmpublish.classList.contains('done')) return;
@@ -2395,9 +2441,8 @@ function panelAddShortcutLink() {
 
                     setTimeout(() => {
                         var _tool_shortlink = document.querySelector('.tool_shortlink');
-                        var _case_idelm = document.querySelector('[debug-id="case-id"] .case-id');
-                        if(_case_idelm) {
-                            var _caseid = _case_idelm.innerText.trim();
+                        if(__case_id()) {
+                            var _caseid = __case_id();
                             window._caseid_toolscript = window._caseid_toolscript || '';
 
                             if(_caseid !== window._caseid_toolscript) {
@@ -2650,6 +2695,36 @@ function getGooglesheetPublish(_callback) {
     });
     
     return false;
+}
+
+
+function getValueByKeyInSheetname(key, sheetname, callback) {
+    try {
+        getGooglesheetPublish((result) => {
+            var _systemlst = false;
+            // console.log('getValueByKeyInSheetname', result);
+            if(result[sheetname]) {
+                if(_systemlst = result[sheetname].sheettab) {
+                    var rs = '';
+                    _systemlst.forEach((_item) => {
+                        if(_item['Key'] == key) {
+                            // console.log('xxxx', _item, _item['Value']);
+                            rs = _item['Value'];
+                            // document.querySelector('[data-formdata="form_option"]').innerHTML = _item['Value'];
+                        }
+                    });
+
+                    callback(rs)
+                    
+                    return rs;
+                }
+            }
+            return false;
+        });
+            
+    } catch (error) {
+        return false;        
+    }
 }
 
 function updateMeetContentBySheet(_panel) {
@@ -3021,6 +3096,9 @@ function timeLeftGoogleCalendar() {
                 <p class="panel_info-qplus">
                     <span data-btnclk="qplus-rescan" data-qplus_status="Q+"></span>
                 </p>      
+                
+                <div class="panel_info-listbtn">
+                </div>      
                 
                 `;
                 
@@ -3510,7 +3588,7 @@ function initQplusLoad() {
                             _tr += _temp(value[0])
                         }
                         
-                        var _lst_table = `<table>
+                        var _lst_table = `<table class="uiqplus_table">
                                 <thead>
                                     <tr>
                                         <th>Case ID</th>
@@ -3551,7 +3629,7 @@ function initQplusLoad() {
                             _tr += _temp(value);
                         }
                         
-                        var _lst_table = `<table>
+                        var _lst_table = `<table class="uiqplus_table">
                                 <thead>
                                     <tr>
                                         <th>Case ID</th>
@@ -3601,7 +3679,7 @@ function initQplusLoad() {
                                         </tr>`;
                             }                            
                         
-                            var _lst_table = `<table>
+                            var _lst_table = `<table class="uiqplus_table">
                                 <thead>
                                     <tr>
                                         <th>Case ID</th>
@@ -4104,7 +4182,8 @@ function initQplusLoad() {
                         var ndown = second;
                         var _myCountDown = setInterval(() => {
                             ndown--;
-                            elm_barinfo.setAttribute('data-barinfo', `REFRESH ${ndown}s (${Math.round(ndown / 60)}min)` )
+                            elm_barinfo.setAttribute('data-barinfo', `REFRESH ${ndown}s (${Math.round(ndown / 60)}min)` );
+                            document.title = `${ndown}s left`;
                             elm_barinfo.style.width = (ndown * 100  / second) + "%";
 
                             if(ndown < 0) {
@@ -5025,6 +5104,14 @@ function __case_id() {
     return false;
 }
 
+function ___casecalendar_elm() {
+    if(elm = document.querySelector('._casecalendar_info')) {
+        return elm;
+    }
+    
+    return false;
+}
+
 
 
 function extractEmails(text) {
@@ -5053,45 +5140,31 @@ function extractEmails(text) {
     return emails;
 }
 
-function reFormatPhone(phoneNumber, prefix_phone = "84") {
+var reFormatPhone = function(phoneNumber, prefix_phone) {
+    prefix_phone = prefix_phone || "84";
 
+    phoneNumber = phoneNumber.replace(/[^\d+]+/g, '');
+
+    
     var validatePhoneNumber = function(phoneNumber) {
         const regex = /^\d{10}$|^\d{11}$|^(\+\d{1,3})?\d{10,11}$/;
         return regex.test(phoneNumber);
-    }
+    };
 
-    phoneNumber = phoneNumber.replace(/[^\d+]+/g, '');
-    var list = [
-        '^0(\\d+)',
-        prefix_phone + "(\\d+)",
-        "\\" + prefix_phone + "0(\\d+)",
-        "\\(\\+" + prefix_phone + "\\)0(\\d+)\\s(\\d+)\\s(\\d+)",
-        "\\(\\+" + prefix_phone + "\\)(\\d+)",
-        "\\+" + prefix_phone + "0(\\d+)",
-        "\\+" + prefix_phone + "(\\d+)",
-        "(\\+0)\\s([()])\\d+([()])\\s\\d+-\\d+",
-    ];
-    
-    var _numer = phoneNumber;
-    list.forEach(function(ite) {
-        var _str_regex = new RegExp(ite);
-        
-        if(rs = _numer.match(_str_regex)) {
-            if(rs[1]) {
-                _numer = rs[1];
-            }
-            
+    if(validatePhoneNumber(phoneNumber)) {
+        if(phoneNumber.startsWith('+')) {
+            return phoneNumber;
         }
-        
-    });
-    var rs = false;
 
-    var _numer_here = "+" + prefix_phone + _numer;
-    if(validatePhoneNumber(_numer_here)) {
-        rs = _numer_here;
+        if(phoneNumber.startsWith(prefix_phone)) {
+            return "+" + phoneNumber;    
+        }
+
+        return "+" + prefix_phone + phoneNumber;
     }
+    
 
-    return rs;
+    return false;
 }
 
 

@@ -111,50 +111,52 @@ try {
     // }
     var linhvoLoader = () => {
 
-        
         // ADD MENU LINK
-        getChromeStorage("cdtx_loadgooglesheetpublish", (response) => {
-            var _lstbtn = [];
-            
-            
-            
-            for (let i = 1; i < 9; i++) {
-                if(_name = getVariableSheetByKeyAndLanguage(`shortcut${i}_name`, window.keylanguage)) {
-                    _lstbtn.push({
-                        'name': _name,
-                        'link': getVariableSheetByKeyAndLanguage(`shortcut${i}_link`, window.keylanguage),
-                    })    
-                }
-            }
-            // console.log('LINHVO ADD MENU LINK 3', location.host, linkchk_10days_name, linkchk_10days_link);
-            
-            
-            observeOnce((elm) => {
-                var _navi = document.querySelectorAll('queues-navigation .section');
-    
-               
-                if(_navi.length > 0) {
-                    _lstbtn.forEach((_item, _index) => {
-                        var _id = `cdtx_navylink${_index}`;
-                        var _navi_html = `<a href="${_item.link}" id="${_id}" class="nav-item cdtx_navylink" 
-                            style="margin: 10px 24px;
-                            font-weight: 500;
-                            color: #673AB7;
-                            display: block;
-                        "
-                        
-                        >${_item.name}</a>`;
+        function addMenuLinkCase() {
+            if(location.hostname !== 'cases.connect.corp.google.com') return false;
+
+            getChromeStorage("cdtx_loadgooglesheetpublish", (response) => {
+                var _lstbtn = [];
                 
-                        if(!_navi[0].querySelector('#' + _id)) {
-                            _navi[0].insertAdjacentHTML('beforeEnd', _navi_html);
-                        }    
-                    })
-                    
+                
+                
+                for (let i = 1; i < 9; i++) {
+                    if(_name = getVariableSheetByKeyAndLanguage(`shortcut${i}_name`, window.keylanguage)) {
+                        _lstbtn.push({
+                            'name': _name,
+                            'link': getVariableSheetByKeyAndLanguage(`shortcut${i}_link`, window.keylanguage),
+                        })    
+                    }
                 }
+                // console.log('LINHVO ADD MENU LINK 3', location.host, linkchk_10days_name, linkchk_10days_link);
+                
+                
+                observeOnce((elm) => {
+                    var _navi = document.querySelectorAll('queues-navigation .section');
+        
+                   
+                    if(_navi.length > 0) {
+                        _lstbtn.forEach((_item, _index) => {
+                            var _id = `cdtx_navylink${_index}`;
+                            var _navi_html = `<a href="${_item.link}" id="${_id}" class="nav-item cdtx_navylink" 
+                                style="margin: 10px 24px;
+                                font-weight: 500;
+                                color: #673AB7;
+                                display: block;
+                            "
+                            
+                            >${_item.name}</a>`;
+                    
+                            if(!_navi[0].querySelector('#' + _id)) {
+                                _navi[0].insertAdjacentHTML('beforeEnd', _navi_html);
+                            }    
+                        })
+                        
+                    }
+                });
             });
-        });
-
-
+        }
+        addMenuLinkCase();
         
         // TOOL RUN
         var _href_run = 'https://spewall-backend-uat.corp.google.com/ssr';

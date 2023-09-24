@@ -464,7 +464,7 @@ function global_case(optionkl__disable_dialog) {
         if(window.isdongtest) {
             _contenthtml += `
             
-            <div class="material-button" data-btnclk="resetdata" >
+            <div class="material-button _fordevmode" data-btnclk="resetdata" >
                 <div class="content">
                     <img src="${assets_img_reseticon}">
                 </div>
@@ -904,7 +904,8 @@ function global_case(optionkl__disable_dialog) {
                 <div class="_connectcase_info--outer ${_getmemory_isopen === 'CLOSE' ? '_none' : ''}">
                     <div class="_casecalendar_info--controls _t_right" >
                     
-                        <span class="_btn_stall _connectcase_info-act_refresh" data-btnclk="_connectcase_info-act_recrawl" title="reupdate case info">💦</span>
+                        <span class="_btn_stall _fordevmode" data-btnclk="add_shortlink_v2" data-btntooltip="Add Quick access link">+ Quicklink</span>
+                        <span class="_btn_stall _connectcase_info-act_refresh" data-btnclk="_connectcase_info-act_recrawl" title="reupdate case info">🗘</span>
                         <span class="_btn_stall _connectcase_info-act_refresh" data-btnclk="_connectcase_info-act_refresh" >⟳</span>
                         <span class="_btn_stall _connectcase_info-act_edit" data-btnclk="_connectcase_info-act_edit" >EDIT</span>
                     </div>
@@ -912,7 +913,7 @@ function global_case(optionkl__disable_dialog) {
                     <div class="_casecalendar_info--consentrecord" >Please Hit SpeakEasy Record Button</div>
                     <div class="_casecalendar_info--inner"  data-isgcc="{%is_gcc%}" data-isexternal="{%is_external%}" data-issilver="{%customer_program%}" >
                         <span class="_casecalendar_info-50per" data-title="Case ID:" >
-                            <a href="https://cases.connect.corp.google.com/#/case/${_caseid}" target="_blank" >${_caseid}</a>
+                            <a href="https://cases.connect.corp.google.com/#/case/${_caseid}" ${location.hostname != 'cases.connect.corp.google.com' ? ` target="_blank" ` : ''} >${_caseid}</a>
                             <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_caseid}" ></span>
                         </span>
                     </div>
@@ -987,7 +988,15 @@ function global_case(optionkl__disable_dialog) {
                     <div class="_infocase_byme-col">
                         <div class="_infocase_byme-note" data-title="Note" data-infocase="note" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Meet link" data-infocase="customer_gmeet" data-disnewline="1" contenteditable="plaintext-only" ></div>
-                        <div class="_infocase_byme-field" data-title="Date install" data-infocase="appointment_time" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                        <div class="_infocase_byme-field" data-title="Date install" data-infocase="appointment_time" 
+                            data-btnclk="oncall_templ_act_flchoice" 
+                            data-dateformat="d/m/Y" 
+                            data-text="oncall_templ_act_flchoice-text" 
+                            data-dispatch_afterchange="keyup" 
+                            data-anytime="true" 
+
+                            data-disnewline="1" contenteditable="plaintext-only" 
+                        ></div>
                         <div class="_infocase_byme-field" data-title="Is External" data-infocase="is_external" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="AM is External" data-infocase="am_isgcc_external" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Is live transfer" data-infocase="is_caselt" data-disnewline="1" contenteditable="plaintext-only" ></div>
@@ -1587,6 +1596,7 @@ function global_case(optionkl__disable_dialog) {
 
     
     var global_btnoncall_precall = (callback) => {
+        
         // on-call, precall button 
         var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top`);
         if(_istopelm) {
@@ -1601,14 +1611,6 @@ function global_case(optionkl__disable_dialog) {
                     'id' : 'cdtx__precallbtn',
                     'btn_text': 'Pre Call',
                     'content_insert' : `
-                        <ul dir="auto">
-                            <li>Emails or feedback from Advertiser/Seller (including seller request to join the call)[C]&nbsp;</li>
-                            <li>Call being made in business hours[C]</li>
-                            <li>Program ,task type (including special instructions),advertiser need and readiness [C]</li>
-                            <li>Related cases [C]</li>
-                            <li>CMS being used [C]</li>
-                            <li>Gtag/GTM/GA already exists [C] (NA applicable only for Shopping or OCT cases)</li>
-                        </ul>
                         <span class="_document_attachurl_i"></span>
                     `
                 };
@@ -1695,10 +1697,10 @@ function global_case(optionkl__disable_dialog) {
                                     // console.log('XDONG', _task_get);
                                     
                                     if(window.dataCase['is_ads_enhanced_conversions'] || _task_get.includes('ads enhanced conversions')) {
-                                        _document_attachurl_elm.insertAdjacentHTML('beforeEnd', `<span class="_document_attachurl_i">DOCUMENT <strong>EC</strong>: <span data-highlight="need_recheck" data-btnclk="popup_add_doc_ec_dfa" >Click Add Document</span></span> `);
+                                        _document_attachurl_elm.insertAdjacentHTML('beforeEnd', `<span class="_document_attachurl_i">DOCUMENT precall <strong>EC</strong>: <span data-highlight="need_recheck" data-btnclk="popup_add_doc_ec_dfa" >Click Add Document</span></span> `);
                                     }
                                     if(window.dataCase['is_external']) {
-                                        _document_attachurl_elm.insertAdjacentHTML('beforeEnd', `<span class="_document_attachurl_i">DOCUMENT <strong>DfA</strong>: <span data-highlight="need_recheck" data-btnclk="popup_add_doc_ec_dfa" >Click Add Document</span></span> `);
+                                        _document_attachurl_elm.insertAdjacentHTML('beforeEnd', `<span class="_document_attachurl_i">DOCUMENT precall <strong>DfA</strong>: <span data-highlight="need_recheck" data-btnclk="popup_add_doc_ec_dfa" >Click Add Document</span></span> `);
                                     }
                                 }
 
@@ -1748,10 +1750,70 @@ function global_case(optionkl__disable_dialog) {
             }
         }
     }
+    
 
+    // realtime checkInfo
+    var recheckInfoCase = () => {
+        // _panel.querySelector('._casecalendar_info--notification').insertAdjacentHTML('afterBegin', '<span style="background-color: #009688">Case Live Transfer!!!</span>');
+        if(window.location.hostname !== 'cases.connect.corp.google.com') return false
 
+        try {
+            window._recheckInfo_Case = 0;
+            observeOnce((elm) => {
+                var panel = () => { return document.querySelector('._casecalendar_info'); };
+                var email_lst = () => { return document.querySelectorAll('internal-user-info .email'); }
+                if(email_lst().length < 1) return; 
+                if(!panel()) return;
+                
+                
+                if(window.dataCase.am_email) {
+                    window._recheckInfo_Case = 1;
+                
+                    // s2
+                    var _isset = false;
+                    email_lst().forEach(elm => {
+                        var email_inui = elm.innerText.trim()
+                        var email_datacase = window.dataCase.am_email.trim();
+                        email_datacase = (email_datacase.includes('@')) ? email_datacase : false;
+                        email_inui = (email_inui.includes('@')) ? email_inui : false;
+                        
+                        
+                        // console.log('recheckInfoCase', email_inui == email_datacase, email_inui, email_datacase);
+                        if(email_inui && email_datacase) {
+                            if(email_datacase.includes(email_inui)) {
+                                
+                                _isset = true
+                            }
+                        }
+                    });
+                    
+                    // s3
+                    // cLog(() => { console.log('recheckInfoCase - ', _isset, email_datacase, email_inui ) })
+                    if(_isset) {
+                        if(panel().classList.contains('am_email_nomatch')) {
+                            panel().classList.remove('am_email_nomatch')
+                        }
+                    } else {
+                        if(!panel().classList.contains('am_email_nomatch')) {
+                            panel().classList.add('am_email_nomatch')
+                        }
+                    }
+                    
+                    
+                    
+                    
+                }
+            })            
+        } catch (e) {
+            console.error(e);    
+        }
+        
+        
+    }
+    
     // mailTemplate
     var mailTemplateControl = () => {
+        if(window.location.hostname !== 'cases.connect.corp.google.com') return false
         
         window.ncreate = window.ncreate || 1;
         observeOnce((elm) => {
@@ -1880,45 +1942,47 @@ function global_case(optionkl__disable_dialog) {
     }
     
 
+    var _sub_modal = () => {
+        return document.querySelector('._sub_modal');
+    }
+    var _sub_modal_close = () => {
+        return document.querySelector('._sub_modal_close');
+    }
+
+    var _sub_modal_remove = () => {
+        if(_sub_modal()) {
+            _sub_modal().innerHTML = '';
+            _sub_modal().classList.remove('show');
+        }
+    }
+
+    if(!_sub_modal()) {
+        
+        var _dom = document.createElement('span');
+        _dom.className = '_sub_modal';
+        
+        var _act_close_modal = (elm) => {
+            if(elm.classList.contains('_sub_modal')) {
+                _sub_modal().classList.remove('show');
+                _sub_modal().setAttribute('data-attr', '');
+                _sub_modal().innerHTML = '';
+            }
+        }
+        _dom.addEventListener("click", (e2) => {
+            _act_close_modal(e2.target);
+            
+            if(e2.target.matches('._sub_modal_close')) {
+                _act_close_modal(e2.target.closest('._sub_modal'));
+            }
+        });
+        
+
+        document.body.insertAdjacentElement('afterEnd', _dom);
+        
+    }
+
     function clickAction() {
         
-        var _sub_modal = () => {
-            return document.querySelector('._sub_modal');
-        }
-        var _sub_modal_close = () => {
-            return document.querySelector('._sub_modal_close');
-        }
-
-        var _sub_modal_remove = () => {
-            if(_sub_modal()) {
-                _sub_modal().innerHTML = '';
-                _sub_modal().classList.remove('show');
-            }
-        }
-
-        if(!_sub_modal()) {
-            
-            var _dom = document.createElement('span');
-            _dom.className = '_sub_modal';
-            
-            var _act_close_modal = (elm) => {
-                if(elm.classList.contains('_sub_modal')) {
-                    _sub_modal().classList.remove('show');
-                    _sub_modal().innerHTML = '';
-                }
-            }
-            _dom.addEventListener("click", (e2) => {
-                _act_close_modal(e2.target);
-                
-                if(e2.target.matches('._sub_modal_close')) {
-                    _act_close_modal(e2.target.closest('._sub_modal'));
-                }
-            });
-            
-
-            document.body.insertAdjacentElement('afterEnd', _dom);
-            
-        }
 
         // ==== ONCLICK
 
@@ -1932,8 +1996,9 @@ function global_case(optionkl__disable_dialog) {
         // Toggle close popup
         onClickElm('.dock-container [debug-id]', 'click', function(elm, e){
             var _panel_closebtn = document.querySelector('._infocase_byme.open [data-btnclk="_infocase_byme-openact"]');
-            if(_panel_closebtn) {
+            if(_panel_closebtn) {                
                 _panel_closebtn.click();
+                
             }
             
         });
@@ -2175,40 +2240,11 @@ function global_case(optionkl__disable_dialog) {
                         iframe_dashboard_chklst_sop = iframe_dash_here;
                     }
                     
+                    _sub_modal().setAttribute('data-attr', 'chatbot_dialog');
+
                     _sub_modal().insertAdjacentHTML('beforeEnd', `
-                    <style>
-                        .dashboard_chklst_sop {
-                            width: 100%;
-                            background: #ccc;
-                            max-width: 700px;
-                            margin: 0 auto;
-                            top: 45px;
-                            overflow: auto;
-                            height: 100%;
-                            max-height: calc(100vh - 100px);
-                            position: absolute;
-                            left: 50%;
-                            transform: translateX(-50%);
-                            box-shadow: 0 0 20px #55555547;
-                            border-radius: 10px;
-                            padding: 0;
-                            margin: 0;
-                            font-size: 0;
-                            background: #fff url(https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ) no-repeat center
-                        }
-                        
-                        .dashboard_chklst_sop iframe {
-                            width: 100%;
-                            border: 0;
-                            height: 100%;
-                            margin: 0;
-                            background: #fff;
-                        }
-                        
-                        </style>
-                        <span class="_sub_modal_close" style='position: absolute;right: 10px;top: 10px;height: 40px;width: 40px; z-index: 9;    border-radius: 50%;    font-size: 0; display: flex; background-color: #fff; align-items: center; align-content: center; justify-content: center;    box-shadow: 0 0 10px #ccc; overflow: hidden; cursor: pointer '>
-                        <img src="${assets_img_removeicon}" style=" height: 80%; object-fit: contain; object-position: center; background: transparent; pointer-events: none; " /></span>
-                        <div class="dashboard_chklst_sop" >
+                        <span class="_sub_modal_close"></span>
+                        <div class="_sub_modal_container_outer" >
                             <iframe src="${iframe_dashboard_chklst_sop}"></iframe>
                         </div>
                     `);
@@ -2225,39 +2261,8 @@ function global_case(optionkl__disable_dialog) {
                     }
                     
                     _sub_modal().insertAdjacentHTML('beforeEnd', `
-                    <style>
-                        .dashboard_chklst_sop {
-                            width: 100%;
-                            background: #ccc;
-                            max-width: 500px;
-                            margin: 0 auto;
-                            top: 45px;
-                            overflow: auto;
-                            height: 100%;
-                            max-height: calc(100vh - 100px);
-                            position: absolute;
-                            left: 50%;
-                            transform: translateX(-50%);
-                            box-shadow: 0 0 20px #55555547;
-                            border-radius: 10px;
-                            padding: 0;
-                            margin: 0;
-                            font-size: 0;
-                            background: #fff url(https://lh3.googleusercontent.com/9GxhqpQPsXbgoM4KL9bxuDjse1JQiYm2WhdjEi0kErQlJGvHW-xGtFZyyx9KqOpLQHe4peY09T01oqjJcPkfzu6ndHzgynRS5zACkupnW6F7fbdvEWod7MdSlBM-yUJwEp4VKZ8OTLcp9_jTpuu4RQ) no-repeat center
-                        }
-                        
-                        .dashboard_chklst_sop iframe {
-                            width: 100%;
-                            border: 0;
-                            height: 100%;
-                            margin: 0;
-                            background: #fff;
-                        }
-                        
-                        </style>
-                        <span class="_sub_modal_close" style='position: absolute;right: 10px;top: 10px;height: 40px;width: 40px; z-index: 9;    border-radius: 50%;    font-size: 0; display: flex; background-color: #fff; align-items: center; align-content: center; justify-content: center;    box-shadow: 0 0 10px #ccc; overflow: hidden; cursor: pointer '>
-                        <img src="${assets_img_removeicon}" style=" height: 80%; object-fit: contain; object-position: center; background: transparent; pointer-events: none; " /></span>
-                        <div class="dashboard_chklst_sop" >
+                        <span class="_sub_modal_close"></span>
+                        <div class="_sub_modal_container_outer" >
                             <iframe src="${iframe_dashboard_chklst_sop}"></iframe>
                         </div>
                     `);
@@ -2276,11 +2281,12 @@ function global_case(optionkl__disable_dialog) {
                 // XXXXX
                 if(_action === 'oncall_templ_act_flchoice') {
                     var _parent = elm.closest('.cdtx__uioncall') || elm.closest('div');
-                    var _textreplace = _parent.querySelector('[data-text="oncall_templ_act_flchoice-text"]');
+                    var _textreplace = _parent.querySelector('[data-text="oncall_templ_act_flchoice-text"]') || elm;
                     var _dateformat = elm.getAttribute('data-dateformat');
                     var _anytime = elm.getAttribute('data-anytime');
                     var _type = elm.getAttribute('data-type');
                     var _case = elm.getAttribute('data-case');
+                    var _dispatch_afterchange = elm.getAttribute('data-dispatch_afterchange');
                     var _data_infocase = elm.getAttribute('data-infocase');
 
                     var attr_min = _anytime ? '' : `min="${formatDate(new Date())}"`;
@@ -2306,6 +2312,15 @@ function global_case(optionkl__disable_dialog) {
                         _sub_modal().querySelector('#datepicker').showPicker();
                     });
                     
+
+                    var update_dispatchevent = () => {
+                        if(_dispatch_afterchange) {
+                            var lst = _dispatch_afterchange.split(',');
+                            lst.forEach(item => {
+                                _textreplace.dispatchEvent(new Event(item));
+                            })
+                        }
+                    };
 
                     var update2db = (_datestr) => {
                         // date case data
@@ -2342,6 +2357,7 @@ function global_case(optionkl__disable_dialog) {
                         _textreplace.innerHTML = _datestr;
 
                         update2db(_datestr)
+                        update_dispatchevent()
 
                         _sub_modal_remove();
                     });
@@ -2379,6 +2395,7 @@ function global_case(optionkl__disable_dialog) {
                             }
 
                             update2db(_thischoice);
+                            update_dispatchevent();
 
                             _sub_modal_remove();
                             _reupdate_outer();
@@ -2839,6 +2856,22 @@ function global_case(optionkl__disable_dialog) {
                             console.log('cdtx debug - window - dataMeetLinkAll ', casesmeet);    
                             
                         });
+                        
+                        
+                        
+                        getChromeStorage("cdtx_tool_shortlink", (response) => {
+                            var casesmeet = response.value || {};
+                            console.log('cdtx debug - window - cdtx_tool_shortlink ', casesmeet);    
+                            
+                        });
+                        
+                        getChromeStorage("cdtx_tool_shortlink_v2", (response) => {
+                            var casesmeet = response.value || {};
+                            console.log('cdtx debug - window - cdtx_tool_shortlink ', casesmeet);    
+                            
+                        });
+                        
+                        
                         getChromeStorage("cdtx_caseidcurrentmeet_pspeakeasy_caseid", (response) => {
                             var _list_rs = response.value || [];
                             console.log('cdtx debug - window - cdtx_caseidcurrentmeet_pspeakeasy_caseid ', _list_rs);
@@ -2939,9 +2972,15 @@ function global_case(optionkl__disable_dialog) {
                 
                 
                 if(_action === '_infocase_byme-openact') {
+                    if(elmhereb = document.querySelector('._infocase_byme.open [data-btnsave="1"]:not(.disable)')) {
+                        elmhereb.dispatchEvent(new Event('mouseup'));
+                    }
+                    
                     
                     // Close popup
                     elm.closest('._infocase_byme').classList.toggle('open');
+                    
+                    
                     var _isoutsite = elm.closest('.read-cards-wrapper');
                     if(_isoutsite) {
                         _isoutsite.classList.toggle('_infocase_byme_open');
@@ -3262,6 +3301,50 @@ function global_case(optionkl__disable_dialog) {
 
                 }
 
+
+                // xxxx
+                if(_action === 'add_shortlink_v2') {
+                    var _url = prompt("Enter URL:", "");
+                    if(_url) {
+                        var _name = prompt("Enter name:", "");
+                        _name = _name || _url;
+                        if(_name) {
+                            var _caseid = __case_id();
+                            var update_action = (_caseid, _value, _callback) => {
+                                var _key = 'cdtx_tool_shortlink_v2';
+                                getChromeStorage(_key, (response) => {
+                                    var datalist = response.value || {};
+                                    
+                                    var temp = {
+                                        name: _name,
+                                        url: _url,
+                                    };
+                                    // Add
+                                    if(datalist[_caseid]) {
+                                        datalist[_caseid].push(temp);
+                                    } else {
+                                        datalist[_caseid] = [temp];
+                                    }
+                                    
+                                    // Save
+                                    setChromeStorage(_key, datalist, (response2) => {
+                                        _callback(response2);
+                                    });
+                                })
+                                return false;
+                            };
+                            
+                            update_action(_caseid, _url, (rs) => {
+                                cLog(() => {
+                                    console.log("cdtx update_tool_shortlink_v2", rs);
+                                    ___casecalendar_elm().querySelector('[data-btnclk="_connectcase_info-act_refresh"]').click();
+                                });
+                            });
+                        }
+                    }
+                }
+                
+                
                 // xxxx
                 if(_action === '_connectcase_info-act_recrawl') {
                     window.casetype_lt = false;
@@ -3417,7 +3500,7 @@ function global_case(optionkl__disable_dialog) {
                                             <div class="_casecalendar_info--consentrecord" >Please Hit SpeakEasy Record Button</div>
                                             <div class="_casecalendar_info--inner"  data-isgcc="{%is_gcc%}" data-isexternal="{%is_external%}" data-issilver="{%customer_program%}" >
                                                 <span class="_casecalendar_info-50per" data-title="Case ID:" >
-                                                    <a href="https://cases.connect.corp.google.com/#/case/${_caseid}" target="_blank" >${_caseid}</a>
+                                                    <a href="https://cases.connect.corp.google.com/#/case/${_caseid}" ${location.hostname != 'cases.connect.corp.google.com' ? ` target="_blank" ` : ''} >${_caseid}</a>
                                                     <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_caseid}" ></span>
                                                 </span>
                                             </div>
@@ -3706,12 +3789,28 @@ function global_case(optionkl__disable_dialog) {
             var n_limit = 0;
             var myTime = setInterval(() => {
                 n_limit++; if(n_limit > 10) clearInterval(myTime);
+
+
+                var _task_get = window.dataCase['tasks'] || '';
+                _task_get = _task_get.toLocaleLowerCase();
+                if(!(
+                    window.dataCase['is_ads_enhanced_conversions'] 
+                    || _task_get.includes('ads enhanced conversions') 
+                    || window.dataCase['is_external']
+                    )
+                ) return false;
+
+
                 var casemessageview_elm_all = document.querySelectorAll(".case-log-container.active-case-log-container case-message-view");
                 
 
                 if(casemessageview_elm_all.length > 0) {
                     casemessageview_elm_all.forEach(function(elm){
                         // Tối thiểu
+                        if(elm.innerText.includes("DOCUMENT precall")) {
+                            is_precall = true;
+                        }
+                        
                         if(elm.innerText.includes("Emails or feed")) {
                             is_precall = true;
                         }
@@ -3721,10 +3820,87 @@ function global_case(optionkl__disable_dialog) {
                     if(is_precall == false) {
                         var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"])`);
                         if(_istopelm) {
-                            _istopelm.insertAdjacentHTML("beforeBegin", `<span class="_note_add_precall"  title="click add precall" >
-                            <span data-btnclk="add_precall">Missing note precall</span>
-                            <span data-btnclk="remove_this_precall" style="">Close</span>  
-                            </span>`)
+                            var _elm_note_add_precall = () => { return document.querySelector('._note_add_precall[data-caseid="' + __case_id() + '"]'); };
+                            
+                            window.case_haveprecallskip = localStorage.getItem('case_haveprecallskip') || '';
+                            
+                            if(!_elm_note_add_precall()) {
+                                
+                                if(!window.case_haveprecallskip.includes(__case_id())) {
+                                    _istopelm.insertAdjacentHTML("beforeBegin", `<span data-caseid="${__case_id()}" class="_note_add_precall"  title="Memo" >
+                                    <style>
+                                    ._note_add_precall-addprecall {
+                                        background: red;    padding: 7px; color: #fff; border-radius: 0 5px 5px 0; cursor: pointer; display: inline-block;
+                                    }
+                                    ._note_add_precall-closepopup {
+                                        display: inline; position: absolute; top: 106%; background: #000; padding: 3px 8px; color: #fff; left: 0; cursor: pointer;
+                                    }
+        
+                                    </style>
+                                    <span class="_note_add_precall-addprecall">Click add precall</span>
+                                    <span class="_note_add_precall-closepopup" >Skip</span>  
+                                    </span>`);
+                                    
+                                    
+                                    _elm_note_add_precall().querySelector('._note_add_precall-closepopup').addEventListener('click', function(ev){
+                                        localStorage.setItem('case_haveprecallskip', window.case_haveprecallskip + '||' + __case_id());
+                                        _elm_note_add_precall().remove();
+                                    });
+                                    
+                                    _elm_note_add_precall().querySelector('._note_add_precall-addprecall').addEventListener('click', function(ev){
+                                        var this_elm  = ev.target;
+                            
+                                        var _casenote = `.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="case-note"]`;
+                                        var _casenote_editor = _casenote + ` .editor[contenteditable="true"]`;
+                                        var _casenote_precall = _casenote + ` #pre-call`;
+                                        
+                      
+                                        var ntime = 0;
+                                        var myTime = setInterval(() => {
+                    
+                                            if(document.querySelector(_casenote)) {
+                                                console.log('cdtx - log 1')
+                                                if(document.querySelector(_casenote + ` #cdtx__precallbtn`)) {
+                                                    console.log('cdtx - log 2')
+                                                    _casenote_precall = _casenote + ` #cdtx__precallbtn`;   
+                                                }
+                                                if(document.querySelector(_casenote_precall)) {
+                                                    console.log('cdtx - log 3')
+                                                    document.querySelector(_casenote_precall).click();
+                    
+                                                    if(document.querySelector(_casenote_editor).innerText.trim() !== "") {
+                                                        
+                                                        clearInterval(myTime);
+                                                    }
+                                                }
+                                            } else {
+                                                if(!document.querySelector('material-fab.case-note')) {
+                                                    console.log('cdtx - log 1')
+                                                    document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter')); 
+                                                    if(document.querySelector('material-fab.case-note')) {
+                                                        document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter')); 
+                                                        document.querySelector('material-fab.case-note').click();
+                                                    }
+                                                } else {
+                                                    console.log('cdtx - log 1.2')
+                                                    document.querySelector('material-fab.case-note').click();
+                                                }
+                                            }
+                    
+                                            if(ntime > 10) {
+                                                clearInterval(myTime);
+                                            }
+                                            ntime++;
+                                            
+                                        }, 500);
+                    
+                                        this_elm.closest('._note_add_precall').remove();
+                                    });    
+                                }
+                                
+                                
+                            }
+                            
                         }
 
                     }
@@ -3952,21 +4128,21 @@ function global_case(optionkl__disable_dialog) {
             }
             var _contenthtml = `
                 <span class="_casecalendar_info-50per" data-title="Case ID:"  data-info="case_id" >
-                    <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" target="_blank" data-infocase="case_id" ></a><span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.case_id}" ></span>
+                    <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" ${location.hostname != 'cases.connect.corp.google.com' ? ` target="_blank" ` : ''} data-infocase="case_id" ></a><span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.case_id}" ></span>
                     <br>
                     <br>
                     <a href="#" target="_blank" data-linkcasetomeet="1" data-infocase_link="customer_gmeet" ></a>
                 </span>
                 
                 <span class="_casecalendar_info-50per _casecalendar_info-infoadsid" data-title="Ads ID & Adv name:" >
-                    <span>
+                    <span data-customer_adsid="${_data.customer_adsid || ''}">
                         <span style="font-size: 70%">Ads ID:</span> <a href="#" target="_blank" data-infocase="customer_adsid_format" data-infocase_link="customer_adsid_format" ></a>
                         <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.customer_adsid}" ></span>
                     </span>
-                    <br>
-                    <span>
+                    <span data-customer_ocid="${_data.customer_ocid || ''}">
                         <span style="font-size: 70%">OCID:</span> <a href="#" target="_blank" data-infocase="customer_ocid" data-infocase_link="customer_ocid" ></a>
-                        <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.customer_ocid}" ></span>
+                        <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.customer_ocid || ''}" ></span>
+                        <a href="https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:${_data.customer_ocid}" target="_blank" class="_casecalendar_info--dashboardec" ></a>
                     </span>
 
                     <span data-infocase="customer_name" ></span>
@@ -4134,7 +4310,7 @@ function global_case(optionkl__disable_dialog) {
                     
                     if(key === 'case_id') {
                         _htmltemp = `<span class="_casecalendar_info-50per" data-title="Case ID:"  data-interactiontype="{%interaction_type%}" >
-                        <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" target="_blank" data-infocase="case_id" ></a><span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.case_id}" ></span>
+                        <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" ${location.hostname != 'cases.connect.corp.google.com' ? ` target="_blank" ` : ''} data-infocase="case_id" ></a><span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.case_id}" ></span>
                         </span>
                         `;
                     }
@@ -4574,7 +4750,7 @@ function global_case(optionkl__disable_dialog) {
                                 <div class="_casecalendar_info--consentrecord" >Please Hit SpeakEasy Record Button</div>
                                 <div class="_casecalendar_info--inner"  data-isgcc="{%is_gcc%}" data-isexternal="{%is_external%}" data-issilver="{%customer_program%}" >
                                     <span class="_casecalendar_info-50per" data-title="Case ID:" >
-                                        <a href="https://cases.connect.corp.google.com/#/case/${_caseid}" target="_blank" >${_caseid}</a>
+                                        <a href="https://cases.connect.corp.google.com/#/case/${_caseid}" ${location.hostname != 'cases.connect.corp.google.com' ? ` target="_blank" ` : ''} >${_caseid}</a>
                                         <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_caseid}" ></span>
                                     </span>
                                 </div>
@@ -5006,8 +5182,258 @@ function global_case(optionkl__disable_dialog) {
     }
 
 
+    function showListFollowUp() {
+        if(!(
+                window.location.hostname == 'cases.connect.corp.google.com' ||
+                window.location.hostname == 'calendar.google.com'
+            )
+        ) return false
+        
+        var elm_popup_lstcasefl = () => {return document.querySelector('.li-popup_lstcasefl');};
+        
+        var data_case = {};
 
+        try {
+            // Recall data
+            var list_case_havefl = (_callback) => {
+                // console.log(window.isload_once)
+                if(window.isload_once === 1) return;
+                window.isload_once = 1;
+    
+                // START
+                data_case = {
+                    rs: false,
+                };
+                
+                loadAllCaseID((listcase) => {
+                    window.isload_once = 0;
+                    if(typeof listcase !== 'object') return;
+                    // cLog(() => { console.log('showListFollowUp listcase', listcase) });
+    
+                    var n_havedate = 0;
+                    var listcase_havefl = [];
+                    listcase.forEach((item) => {
+                        if(item.appointment_time) {
+                            var [_day,_month,_year] = item.appointment_time.split('/');
+                            if(_day && _month && _year) {
+                                item.appointment_time_datetimeformat = new Date(`${_year}/${_month}/${_day}`);
+                            }
+                        }
+                        
+                        if(item.follow_up_time) {
+                            var [_day,_month,_year] = item.follow_up_time.split('/');
+                            if(_day && _month && _year) {
+                                n_havedate++;
+                                item.follow_up_time_datetimeformat = new Date(`${_year}/${_month}/${_day}`);
+                                listcase_havefl.push(item);
+                            }
+                        }
+                    })
+    
+                    if(n_havedate > 0) {
+                        data_case.rs = true;
+                        data_case.n_havedate = n_havedate;
+                        data_case.listcase_havefl = listcase_havefl;
+            
+                        _callback();
+                    }
+                    
+                });
+            };
+
+            // f caculator diff date
+            var _get_diffday = (str_date) => {
+                if(!str_date) return '';
+
+                const date1 = new Date(str_date);
+                const date2 = new Date();
+                const diffTime = Math.abs(date2 - date1);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                var _str = 'today';
+                if(diffDays > 0) {
+                    _str = diffDays + " days";
+                    if(date2 > date1) {
+                        _str = '-' + diffDays + " days";
+                    }
+                }
+
+                if(formatDate(date1, 'd/m/Y') == formatDate(date2, 'd/m/Y')) {
+                    _str = 'today';
+                }
+
+                return _str;
+            }
+            
+            // update attr status n case
+            var remove_attr_btnshowmodal = () => {
+                elm_popup_lstcasefl().removeAttribute('data-attr');
+            }
+
+            // ui table list
+            var ui_table_list_modal = () => {
+                remove_attr_btnshowmodal();
+
+                
+
+                // reload date and ui
+                list_case_havefl(() => {
+                    
+                    var _html = `<span class="_sub_modal_close"></span>
+                    <div class="cdtx_lstcasefl--container">
+                        <div class="cdtx_lstcasefl--listheader">
+                            <a href="#" class="cdtx_lstcasefl--listheader-a-dboard_qplus _btn_stall" target="_blank">Dashboard Q+</a>
+                        </div>
+                        <div class="cdtx_lstcasefl--tablecontainer">
+                        </div>
+                    </div>`;
+
+
+                    var cdtx_lstcasefl_elm = document.createElement("div");
+                    cdtx_lstcasefl_elm.id = "cdtx_lstcasefl";
+                    cdtx_lstcasefl_elm.className = "cdtx_lstcasefl";
+                    cdtx_lstcasefl_elm.innerHTML = _html;
+                    
+
+                    
+                    getValueByKeyInSheetname(key = 'url_qplus_dashboard_check', 'System' , (rs) => {
+                        if(elm = cdtx_lstcasefl_elm.querySelector('.cdtx_lstcasefl--listheader-a-dboard_qplus')) {
+                            elm.setAttribute('href', rs);
+                            elm.setAttribute('data-url_qplus_dashboard_check', rs);
+                        }
+                    });
+
+                    var _tr = '';
+                    var _lst_arr_followup = [];
+                    for (const item of data_case.listcase_havefl) {
+                        // if(!item.status_case) continue;
+                        item.appointment_time_dmy = item.appointment_time_datetimeformat ? formatDate(item.appointment_time_datetimeformat, 'd/m/Y') + ` (${_get_diffday(item.appointment_time_datetimeformat)})` : '';
+                        item.follow_up_time_dmy = item.follow_up_time_datetimeformat ? formatDate(item.follow_up_time_datetimeformat, 'd/m/Y') : '';
+                        item.follow_up_time_diffday = _get_diffday(item.follow_up_time_datetimeformat);
+                        item.follow_up_time_integer = parseInt(item.follow_up_time_diffday.replace(/[^\d-]+/g, '')) || 0;
+                        console.log(item.follow_up_time_integer);
+                        _lst_arr_followup.push(item);
+                    }
+
+
+                    // sort by condition
+                    var int_number = 0;
+                    _lst_arr_followup.sort((a,b) => {
+
+                        if(a.follow_up_time_integer < b.follow_up_time_integer) {
+                            return -1;
+                        }
+                        
+                        // if(
+                        //     !a.follow_up_time_diffday.startsWith('-')
+                        // ) {
+                        //     return -1;
+                        // }
+
+                        // if(
+                        //     a.follow_up_time_diffday.startsWith('today')
+                        // ) {
+                        //     return -1;
+                        // }
+                        return 0;
+                    });
+
+                    
+                    for (const item of _lst_arr_followup) {
+
+                        _tr += `<tr>
+                                    <td style="white-space: nowrap"><a href="https://cases.connect.corp.google.com/#/case/${item.case_id}" ${location.hostname != 'cases.connect.corp.google.com' ? ` target="_blank" ` : ''}>${item.case_id}</a></td>
+                                    <td style="white-space: nowrap">${item.customer_name}</td>
+                                    <td>${getDomainOnlyURL(item.customer_website)}</td>
+                                    <td style="white-space: nowrap" >
+                                        <span data-dateinstall="${item.appointment_time_dmy}">${item.follow_up_time_dmy + ` <i date-st="${item.follow_up_time_diffday}">${item.follow_up_time_diffday}</i>`}</span>
+                                    </td>
+                                    <td><span data-btnclk="ui-qplus-addtrviewdetail" data-caseidhere="${item.case_id}" >View</span></td>
+                                </tr>`;
+                    }                            
+                
+                    var _lst_table = `<table class="uiqplus_table">
+                        <thead>
+                            <tr>
+                                <th>Case ID</th>
+                                <th>Adv name</th>
+                                <th>Website</th>
+                                <th><span>Date FL (${data_case.n_havedate})</span></th>
+                                <th class="uiqplus-act"><span data-btnclk="ui-qplus-addtrviewall" >View all</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        ${_tr}
+                        </tbody>
+                    </table>`;
+                    cdtx_lstcasefl_elm.querySelector(`.cdtx_lstcasefl--tablecontainer`).innerHTML = _lst_table;
+                    
+    
+                    _sub_modal().insertAdjacentElement('beforeEnd', cdtx_lstcasefl_elm);
+    
+                    _sub_modal().classList.add('show');
+
+                    
+                })
+            };
+            
+            list_case_havefl(() => {
+                if(window.location.hostname == 'cases.connect.corp.google.com') {
+                    observeOnce((elm) => {
+                        if(!document.querySelector('.dock-float-container')) return;
+                
+                        // if have data
+                        if(data_case.rs) {
+                            
+                            if(!elm_popup_lstcasefl()) {
+                                document.querySelector('.dock-float-container li:nth-child(2)').insertAdjacentHTML('afterEnd', `<li class="li-popup_lstcasefl" data-attr="${data_case.n_havedate}" ><span class="ico"></span></li>`)
+                                
+                                
+                                elm_popup_lstcasefl().addEventListener('click', (elm) => {
+                                    ui_table_list_modal();
+                                });
+                            } 
+                        }
+                        
+                
+                    });
+                }
+
+                
+                if(window.location.hostname == 'calendar.google.com') {
+                    console.log('global 6'); 
+                    observeOnce((elm) => {
+                        if(!document.querySelector('.panel_info-listbtn')) return;
+                
+                        // if have data
+                        if(data_case.rs) {
+                            
+                            if(!elm_popup_lstcasefl()) {
+                                document.querySelector('.panel_info-listbtn').insertAdjacentHTML('afterEnd', `<span class="li-popup_lstcasefl" data-attr="${data_case.n_havedate}" ><span class="ico"></span></span>`)
+                                
+                                
+                                elm_popup_lstcasefl().addEventListener('click', (elm) => {
+                                    ui_table_list_modal();
+                                });
+                            } 
+                        }
+                        
+                
+                    });
+                }
+            });
+    
+        
+        } catch (error) {
+            cLog(() => { console.log('list_case_havefl', error) })
+        }
+    
+    
+    }
+
+    
     function popupUpdateLT() {
+        if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
+
         // if(!localStorage.getItem('dongtest_local')) return false;
         
         var _sub_modal = () => {
@@ -5031,19 +5457,25 @@ function global_case(optionkl__disable_dialog) {
         #_contentPopupUpdateLT_input {
             width: 100%; height: 196px;margin: 0 auto;display: block;
             margin-bottom: 20px;
-            padding: 10px;
+            padding: 20px;
+            font-size: 80%;
         }
         #_contentPopupUpdateLT {
             width: 100%;
-            max-width: 550px;
+            max-width: 600px;
             margin: 0 auto;
             top: 92px;
             position: relative;
         }
-        span#_contentPopupUpdateLT_input_submit:after {
+        #_contentPopupUpdateLT_input_count {
+            text-align: center;
+            text-transform: uppercase;
+            color: #555;
+        }
+        #_contentPopupUpdateLT_input_submit:after {
             content: "Update";
         }
-        span#_contentPopupUpdateLT_input_submit {
+        #_contentPopupUpdateLT_input_submit {
             display: inline-block;
             border: 1px solid #bbb7b7;
             line-height: 0;
@@ -5075,23 +5507,63 @@ function global_case(optionkl__disable_dialog) {
         #_contentPopupUpdateLT * {
             box-sizing: border-box;
         }
+
+        #_contentPopupUpdateLT_readmore {            
+            user-select: auto;
+            background: #fffbd3;
+            padding: 10px;
+        }
+
+        #_contentPopupUpdateLT_readmore:not(.open) {
+            max-height: 42px;
+            overflow: hidden;
+            font-style: italic;
+            text-overflow: ellipsis;
+            display: block;
+            cursor: pointer;
+        }
         
         </style>
-        <span class="_sub_modal_close" style="position: absolute;right: 10px;top: 10px;height: 40px;width: 40px; z-index: 9;    border-radius: 50%;    font-size: 0; display: flex; background-color: #fff; align-items: center; align-content: center; justify-content: center;    box-shadow: 0 0 10px #ccc; overflow: hidden; cursor: pointer ">
-            <img src="data:image/svg+xml,%3Csvg width='800px' height='800px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.22566 4.81096C5.83514 4.42044 5.20197 4.42044 4.81145 4.81096C4.42092 5.20148 4.42092 5.83465 4.81145 6.22517L10.5862 11.9999L4.81151 17.7746C4.42098 18.1651 4.42098 18.7983 4.81151 19.1888C5.20203 19.5793 5.8352 19.5793 6.22572 19.1888L12.0004 13.4141L17.7751 19.1888C18.1656 19.5793 18.7988 19.5793 19.1893 19.1888C19.5798 18.7983 19.5798 18.1651 19.1893 17.7746L13.4146 11.9999L19.1893 6.22517C19.5799 5.83465 19.5799 5.20148 19.1893 4.81096C18.7988 4.42044 18.1657 4.42044 17.7751 4.81096L12.0004 10.5857L6.22566 4.81096Z' fill='%23000000'/%3E%3C/svg%3E" style=" height: 80%; object-fit: contain; object-position: center; background: transparent; pointer-events: none; ">
-        </span>
+        <span class="_sub_modal_close"></span>
         <div id="_contentPopupUpdateLT">
-            <div id="_contentPopupUpdateLT_input" placeholder="${
-                `Ex:DONGMX <- ADV Name 1st line\nbichnga@google.com <- AM EMAIL(if has)\nhttps://domainname.com\nhttps://adwords.corp.google.com/aw/conversions/detail?ocid=762568944&ascid=762568944&ctId=766117815&__u=3124867686&__c=9476953456\nhttps://meet.google.com/jna-tgvk-nbb?authuser=0\n84 987654321\nDong ...\ndongmx@gmail.com`
-            }"  contenteditable="" style=" background: #fff; border: 1px dashed #ccc; overflow: auto; " ></div>
+            <div id="_contentPopupUpdateLT_input" contenteditable="" style=" background: #fff; border: 1px dashed #ccc; overflow: auto; " ></div>
             <span id="_contentPopupUpdateLT_input_submit"></span>
-            <pre>New: add prefix:  'adsid:' 'ocid:' set ocid, set adsid</pre>
+            <pre id="_contentPopupUpdateLT_readmore">${
+                ['Ex: copy bellow paste for demo:',
+                    '=========',
+                    'Join Kenedy // ADV Name 1st line',
+                    'https://domainname.com',
+                    '-----------',
+                    'https://adwords.corp.google.com/aw/conversions/detail?ocid=762568944',
+                    'OR',
+                    'ocid:   762568944    // prefix ocid: ',
+                    'OR',
+                    'CID:  162568941 // prefix cid:',
+                    'OR',
+                    'adsid:   162568941 // prefix adsid:',
+                    '-----------',
+                    'https://meet.google.com/jna-tgvk-nbb?authuser=0',
+                    '-----------',
+                    '84 987654321',
+                    'OR',
+                    '+1-212-456-7890',
+                    'OR',
+                    'p:+86987654321',
+                    '-----------',
+                    'Dong ...',
+                    'JoinKenedy@gmail.com',
+                    'amemail@google.com // AM email'
+                ].join('\n')
+            }</pre>
+            <div id="_contentPopupUpdateLT_input_count"></div>
             <div id="_contentPopupUpdateLT_input_rs"></div>
         </div>    
         `);
         var _contentPopupUpdateLT_input = document.querySelector('#_contentPopupUpdateLT_input');
         var _contentPopupUpdateLT_input_rs = document.querySelector('#_contentPopupUpdateLT_input_rs');
         var _contentPopupUpdateLT_input_submit = document.querySelector('#_contentPopupUpdateLT_input_submit');
+        var _contentPopupUpdateLT_readmore = document.querySelector('#_contentPopupUpdateLT_readmore');
+        var _contentPopupUpdateLT_input_count = document.querySelector('#_contentPopupUpdateLT_input_count');
         var _templateCase = {};
     
         
@@ -5179,6 +5651,12 @@ function global_case(optionkl__disable_dialog) {
                     }    
                 }
                 
+                if(
+                    _lowertext.startsWith('p:')
+                ) {
+                    _phone = _phone_get;
+                }
+                
             })
             
             // Phone
@@ -5215,6 +5693,11 @@ function global_case(optionkl__disable_dialog) {
                 _templateCase.customer_website = urls_notgoogle.join(', ');
             }
     
+            if(emails_google.length > 0) {
+                _templateCase.am_email = emails_google.join(', ');
+                _templateCase.am_name = _templateCase.am_email.split('@')[0];
+            }
+
             if(emails_notgoogle.length > 0) {
                 _templateCase.customer_email = emails_notgoogle.join(', ');
     
@@ -5228,16 +5711,16 @@ function global_case(optionkl__disable_dialog) {
                     
                     
                     if(adv_name = document.querySelector('action-bar account-field.input-email material-input input')) {                
-                        adv_name.value = _templateCase.customer_email;
+                        if(_templateCase.am_email) {
+                            adv_name.value = _templateCase.am_email;
+                        } else {
+                            adv_name.value = _templateCase.customer_email;
+                        }
                     }
                 }
             }
     
             
-            if(emails_google.length > 0) {
-                _templateCase.am_email = emails_google.join(', ');
-                _templateCase.am_name = _templateCase.am_email.split('@')[0];
-            }
     
             if(_phone) {
                 _templateCase.customer_contact = _phone;
@@ -5267,8 +5750,20 @@ function global_case(optionkl__disable_dialog) {
                 if(adv_name = document.querySelector('action-bar [debug-id="target-input"] input')) {
                     adv_name.value = input_adsconnect;
                 }
-            }            
-    
+            }        
+
+            
+            // Could
+            var length_temcase = Object.keys(_templateCase).length;
+            var str = length_temcase + ' - normal';
+            if(length_temcase > 4) str = 'normal';
+            if(length_temcase > 7) str = 'good';
+            if(length_temcase > 8) str = 'good+';
+            if(length_temcase > 10) str = 'great';
+            if(!((_templateCase.am_email || _templateCase.customer_email) && _templateCase.customer_website )) str = 'bad';
+
+            _contentPopupUpdateLT_input_count.innerText = `${str} (${length_temcase})`;
+
             _contentPopupUpdateLT_input_rs.innerText = JSON.stringify(_templateCase,null,'\t');
         });
     
@@ -5311,7 +5806,12 @@ function global_case(optionkl__disable_dialog) {
             
             if(_templateCase.customer_email) {
                 if(adv_name = document.querySelector('action-bar account-field.input-email material-input input')) {
-                    adv_name.value = _templateCase.customer_email;
+                    
+                    if(_templateCase.am_email) {
+                        adv_name.value = _templateCase.am_email;
+                    } else {
+                        adv_name.value = _templateCase.customer_email;
+                    }
                     _actevent(adv_name);
                 }
                 
@@ -5410,13 +5910,24 @@ function global_case(optionkl__disable_dialog) {
             
         
         })
+
+        _contentPopupUpdateLT_readmore.addEventListener('click', (e) => {
+            e.target.classList.add('open');
+        })
     
         _sub_modal().classList.add('show');
     }
-
-    var _getOCIDFocus = () => {
-        
-    }
+    
+    var keyupEscAction = () => {
+        document.addEventListener('keyup', function(e) {
+            if('27' == e.keyCode) {
+                if(elm = document.querySelector('._sub_modal.show')) {
+                    elm.innerHTML = '';
+                    elm.classList.remove('show');
+                }
+            }
+        })
+    };
     
     // LOAD
     var _once_load = 0;
@@ -5454,6 +5965,10 @@ function global_case(optionkl__disable_dialog) {
             tagteamFocusCase();    
             mailTemplateControl();    
             tagteam_showGTMID();
+            recheckInfoCase();
+            showListFollowUp();
+            keyupEscAction();
+            
         }
         
     });

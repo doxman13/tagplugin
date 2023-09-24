@@ -33,7 +33,7 @@ try {
                                     } else if (ampm.endsWith('pm')) {
                                         start = Math.floor(start)==12||Math.floor(start)==11 ? start : start+12
                                     }
-                                console.log(start)
+                                // console.log(start)
                                 let tempDate = new Date()
                                 let decimalPart = start- Math.floor(start)
                                 if(decimalPart == 0) {
@@ -1392,11 +1392,13 @@ var tagteamFocusCase = () => {
                             }
                         }
                         if (field == 'Copied to') {
-                            matchingElement.querySelector('.value').className += ' copied-to';
-                            var siblingCopi = matchingElement.nextElementSibling;
-                            while (siblingCopi != null) {
-                                siblingCopi.querySelector('.value').className += ' copied-to';
-                                siblingCopi = siblingCopi.nextElementSibling;
+                            if(matchingElement.querySelector('.value')) {
+                                matchingElement.querySelector('.value').className += ' copied-to';
+                                var siblingCopi = matchingElement.nextElementSibling;
+                                while (siblingCopi != null) {
+                                    siblingCopi.querySelector('.value').className += ' copied-to';
+                                    siblingCopi = siblingCopi.nextElementSibling;
+                                }
                             }
                         }
                         if (field == 'Tasks' || field == 'Task type') {
@@ -1543,7 +1545,20 @@ var tagteamFocusCase = () => {
         }
 
         function gearloose() {
-            var gearlooseUrl = 'https://gearloose.corp.google.com/#/search/merchants?q=awid:' + cid;
+            var url_root = 'https://gearloose.corp.google.com/#/search/merchants?q=awid:';
+            
+            if(window.dataCase.customer_ocid) {
+                window.dataCase.customer_ocid.split(',').forEach((item) => {
+                    var _int = item.trim();
+                    var ecUrl = url_root + _int;
+                    window.open(ecUrl, '_blank').focus();
+                });
+                
+                return true;
+            }
+            
+            var gearlooseUrl = url_root + cid;
+            
             window.open(gearlooseUrl, '_blank').focus();
         }
 
@@ -1569,10 +1584,11 @@ var tagteamFocusCase = () => {
         }
 
         function ecDashboard() {
+            var _ec_urlpath = 'https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:';
             if(window.dataCase.customer_ocid) {
                 window.dataCase.customer_ocid.split(',').forEach((item) => {
                     var _int = item.trim();
-                    var ecUrl = 'https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:' + _int;
+                    var ecUrl = _ec_urlpath + _int;
                     window.open(ecUrl, '_blank').focus();
                 })
                 
@@ -1603,7 +1619,7 @@ var tagteamFocusCase = () => {
                                     var _value = elm.querySelector('.value');
                                     var _ocid = _value.innerText.trim();
                                     _is_ok = true; 
-                                    var ecUrl = 'https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:' + _ocid;
+                                    var ecUrl = _ec_urlpath + _ocid;
                                     window.open(ecUrl, '_blank').focus();
                                 }
                             }
@@ -1619,7 +1635,7 @@ var tagteamFocusCase = () => {
             });
                 
             _myTimeout = setTimeout(() => {
-                var ecUrl = 'https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:' + cid;
+                var ecUrl = _ec_urlpath + cid;
                 window.open(ecUrl, '_blank').focus();
             }, 2000)
             
@@ -1709,18 +1725,23 @@ var tagteamFocusCase = () => {
             });
             document.querySelectorAll('.cr-list li').forEach(function(cr, idx) {
                 cr.addEventListener('click', function() {
+                    // Remove old item
+                    if(oldlistitem = document.querySelector('.suggestion-list .list-item')) {
+                        oldlistitem.remove();
+                    }
+                    
                     var input = document.querySelector('canned-response-dialog search-panel input');
                     var key = this.getAttribute('data-key');
                     input.value = key;
                     input.dispatchEvent(new Event('input'));
-                    input.click();
-                    input.focus();
                     var divLoading = document.createElement('div');
                     divLoading.setAttribute('id', 'cr-loading');
                     divLoading.innerText = 'Loading template..';
                     divLoading.style.textAlign = 'right';
                     divLoading.style.color = 'red';
                     document.querySelector('canned-response-dialog search-panel').appendChild(divLoading);
+                    
+                    
                     waitForElm('.suggestion-list .list-item').then(elm => {
                         elm.click();
                         divLoading.remove();

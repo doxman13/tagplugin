@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' rel='stylesheet'/>
+</head>
+<body>
+	<div class="container" id="dynamicContainer">
+		<div class="gt">
+		  <label for="greenTick">
+				Green tick on Diagnostic UI?
+				<select class="round" id="greenTick">
+					<option value="" disabled selected hidden>Y/N?</option>	
+					<option value="yes">Yes</option>	
+					<option value="no">No</option>	
+				</select>
+				<div class = "eMs" id="errorMsg">Please select green tick status</div>
+			</label><br><br>
+		</div>
+		<div class="dash">
+		  <label for="ecDash">
+				EC Qual dash populated data?
+				<select id="ecDash">
+					<option value="" disabled selected hidden>Y/N?</option>	
+					<option value="yes">Yes</option>	
+					<option value="no">No</option>	
+				</select>
+				<div class = "eMs" id="errorMsg1">Please select EC Qual dash status</div>
+			</label><br><br>
+		</div>
+		<div class="alertMsg">
+			<label for="alertField">
+				Alerts column in EC Qual dash has value?
+				<select id="alertField">
+					<option value="" disabled selected hidden>Y/N?</option>
+					<option value="yes">Yes</option>
+					<option value="no">No</option>
+				</select>
+				<div class="eMs" id="errorMsg6">Please select Alert column status</div>
+			</label>
+		</div>
+		<div class="conversion">
+		  <label for="conversion">
+				Receiving standard conversions?
+				<select id="convAct">
+					<option value="" disabled selected hidden>Y/N</option>	
+					<option value="yes">Yes</option>	
+					<option value="no">No</option>	
+				</select>
+				<div class= "eMs" id="errorMsg5">Please select conversion action status</div>
+			</label><br><br>
+		</div>	
+		<div class="score">
+			<label for="daVa">Data Validity? 
+			<input type="number" id="daVa" name="daVa" placeholder="0.00" max="1" min="0" step="0.01">
+			<div class= "eMs" id="errorMsg2">Please input valid Data Validity</div>
+			</label><br><br>
+			<label for="coRa">Coverage Rate? 
+			<input type="number" id="coRa" name="coRa" placeholder="0.00" max="1" min="0" step="0.01">
+			<div class= "eMs" id="errorMsg3">Please input valid Coverage Rate</div>
+			</label><br><br>
+		</div>
+		<button class="button-17" role="button" type="button" value="Submit" onclick="Validate()">Submit</button>
+		<button class="button-17" role="button" type="reset" value="Reset" onclick="Reset()">Reset</button><br><br>
+		
+		<!-- <div id="action-needed" aria-hidden="true"></div>	 -->
+
+		<!-- After Submit-->
+		<div class='content'>
+			<!--Warning -->
+			<div class="alert alert-warning alert-white rounded">
+				<div class="icon"><i class="fa fa-warning"></i></div>
+			</div>
+			<!--Success -->
+			<div class="alert alert-success alert-white rounded">
+				<div class="icon"><i class="fa fa-check"></i></div>
+			</div>
+			<!--Info -->
+			<div class="alert alert-info alert-white rounded">
+				<div class="icon"><i class="fa fa-info-circle"></i></div>
+			</div>
+			<!--Error -->
+			<div class="alert alert-danger alert-white rounded">
+				<div class="icon"><i class="fa fa-times-circle"></i></div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="script.js"></script>
+</body>
+
+</html>

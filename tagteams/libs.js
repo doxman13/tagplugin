@@ -1147,28 +1147,28 @@ function tagteam_showGTMID() {
 // Support click all elem visbile anytime - like jQuery(document).on("click", "classElemString", function(){   });
 // onClickElm 
 // =====
-function onClickElm(str_selector, eventstr, _callback){
+// function onClickElm(str_selector, eventstr, _callback){
+//     document.addEventListener(eventstr, function(e){
+//         e.target.matches(str_selector)&&_callback(e.target, e)
+//     });
+// }
+
+function onClickElm(str_selector, eventstr, callback){
+    
     document.addEventListener(eventstr, function(e){
-        e.target.matches(str_selector)&&_callback(e.target, e)
+        var str_elm = document.querySelectorAll(str_selector);
+        str_elm.forEach(function(elm){
+            if(elm === e.target) {
+                callback(elm, e);
+            } else {
+                if(e.target.closest(str_selector) === elm ) {
+                    callback(elm, e);
+                }
+            }
+        });
+        
     });
 }
-
-// function onClickElm(str_selector, eventstr, callback){
-    
-    // document.addEventListener(eventstr, function(e){
-    //     var str_elm = document.querySelectorAll(str_selector);
-    //     str_elm.forEach(function(elm){
-    //         if(elm === e.target) {
-    //             callback(elm, e);
-    //         } else {
-    //             if(e.target.closest(str_selector) === elm ) {
-    //                 callback(elm, e);
-    //             }
-    //         }
-    //     });
-        
-    // });
-// }
 
 
 

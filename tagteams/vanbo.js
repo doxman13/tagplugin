@@ -28,10 +28,14 @@ try {
                                     start = start.match(/am|pm/) ? start : start + ampm
                                     let newStart = start.match(/\d+:\d+/) ? start.match(/\d+:\d+/)[0] : start
                                     if(newStart) start = convertHour(newStart)
-                                    if(ampm.endsWith('am')){
-                                        start = convertHour(newStart)
-                                    } else if (ampm.endsWith('pm')) {
-                                        start = Math.floor(start)==12||Math.floor(start)==11 ? start : start+12
+                                    
+                                    if(ampm) {
+                                        if(ampm.endsWith('am')){
+                                            start = convertHour(newStart)
+                                        } else if (ampm.endsWith('pm')) {
+                                            start = Math.floor(start)==12||Math.floor(start)==11 ? start : start+12
+                                        }
+                                        
                                     }
                                 // console.log(start)
                                 let tempDate = new Date()
@@ -73,8 +77,8 @@ try {
             }
             var events = {};
             detectTime();
-            var countEvent = setInterval(detectTime, 1000*60*15)
-            var notifyEvent = setInterval(notifyTime, 1000*60)
+            // var countEvent = setInterval(detectTime, 1000*60*15)
+            // var notifyEvent = setInterval(notifyTime, 1000*60)
             //end code vanbo
         }
 

@@ -13,11 +13,7 @@ function global_case(optionkl__disable_dialog) {
     window.isdongtest_local = localStorage.getItem("dongtest_local") || false;
     window.keylanguage = window.keylanguage || '';
     window.qlus_datalist = window.qlus_datalist || [];
-    
-
-
-    var _url_googlesheet = 'https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vRMxOxerJ3zWV07uTOdTQCaa13ODbTfZVj5SB7-4Q6QlFhFTU8uXA-wsywXAUUqzHtOiGQdGgCYfRmk/pubhtml';
-    
+        
     var _keylanguage = '';
                     
     switch (result.mycountry) {
@@ -360,9 +356,9 @@ function global_case(optionkl__disable_dialog) {
 
 
             cLog(() => { console.log("cdtx - major", "_temp 2", _temp, _tempdataCase); });
-            if(window.loadgooglesheetpublish['Key language'].sheettab) {
-                cLog(() => { console.log("cdtx - major", "Google sheet", window.loadgooglesheetpublish['Key language'].sheettab); });
-            }
+            // if(window.loadgooglesheetpublish['Key language'].sheettab) {
+            //     cLog(() => { console.log("cdtx - major", "Google sheet", window.loadgooglesheetpublish['Key language'].sheettab); });
+            // }
             
             return _tempdataCase;
         } catch (error) {
@@ -393,7 +389,8 @@ function global_case(optionkl__disable_dialog) {
                 
                 // For go Team
                 if (!document.querySelector(`._panel_btnshortcut ._panel_shortcut_go_teamvietnam`)) {
-                    _contenthtml = `<a href="#" target="_blank" class="material-button _panel_shortcut_go_teamvietnam" data-textview="You have not accessed the group link today?" style="display: none" >
+                    // data-textview="You have not accessed the group link today?" 
+                    _contenthtml = `<a href="#" target="_blank" class="material-button _panel_shortcut_go_teamvietnam" style="display: none" >
                             <img src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/jpteam/go_JPdashboard.png">
                     </a>`;
                     _contenthtml = _TrustScript(_contenthtml);
@@ -904,7 +901,6 @@ function global_case(optionkl__disable_dialog) {
                 <div class="_connectcase_info--outer ${_getmemory_isopen === 'CLOSE' ? '_none' : ''}">
                     <div class="_casecalendar_info--controls _t_right" >
                     
-                        <span class="_btn_stall _fordevmode" data-btnclk="add_shortlink_v2" data-btntooltip="Add Quick access link">+ Quicklink</span>
                         <span class="_btn_stall _connectcase_info-act_refresh" data-btnclk="_connectcase_info-act_recrawl" title="reupdate case info">🗘</span>
                         <span class="_btn_stall _connectcase_info-act_refresh" data-btnclk="_connectcase_info-act_refresh" >⟳</span>
                         <span class="_btn_stall _connectcase_info-act_edit" data-btnclk="_connectcase_info-act_edit" >EDIT</span>
@@ -987,7 +983,6 @@ function global_case(optionkl__disable_dialog) {
                 <div class="_infocase_byme-row _infocase_byme-control" >
                     <div class="_infocase_byme-col">
                         <div class="_infocase_byme-note" data-title="Note" data-infocase="note" contenteditable="plaintext-only" ></div>
-                        <div class="_infocase_byme-field" data-title="Meet link" data-infocase="customer_gmeet" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Date install" data-infocase="appointment_time" 
                             data-btnclk="oncall_templ_act_flchoice" 
                             data-dateformat="d/m/Y" 
@@ -1001,6 +996,7 @@ function global_case(optionkl__disable_dialog) {
                         <div class="_infocase_byme-field" data-title="AM is External" data-infocase="am_isgcc_external" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Is live transfer" data-infocase="is_caselt" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Is GCC" data-infocase="is_gcc" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                        
                         <div class="_infocase_byme-field" data-title="Is Ads Enhanced Conversions" data-infocase="is_ads_enhanced_conversions" data-disnewline="1" contenteditable="plaintext-only" ></div>
                     </div>
                     <div class="_infocase_byme-col" >
@@ -1012,6 +1008,7 @@ function global_case(optionkl__disable_dialog) {
                         <div class="_infocase_byme-field" data-title="Customer Ads ID" data-infocase="customer_adsid" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Customer OCID" data-infocase="customer_ocid" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Customer Website" data-infocase="customer_website" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                        <div class="_infocase_byme-field" data-title="Customer Gmeet" data-infocase="customer_gmeet" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="AM email" data-infocase="am_email" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Tasks" data-infocase="tasks" data-disnewline="1" contenteditable="plaintext-only"
                             data-btnclk="oncall_templ_act_taskchoice"
@@ -1611,37 +1608,39 @@ function global_case(optionkl__disable_dialog) {
                     'id' : 'cdtx__precallbtn',
                     'btn_text': 'Pre Call',
                     'content_insert' : `
-                        <span class="_document_attachurl_i"></span>
+                        <span class="_document_attachurl_i" style=" padding: 12px 0; display: block; " >DOCUMENT precall: <span data-highlight="need_recheck" data-btnclk="popup_add_doc_ec_dfa" >Click Add Document</span></span>
                     `
                 };
 
                 _arr_btnlist.push(_temp_precall);
 
 
-                var _temp_oncall = {
-                    'id' : 'cdtx__oncallbtn',
-                    'btn_text': 'On Call',
-                    'content_insert' : `
-                        <p dir="auto"><b>Sub-status:&nbsp;&nbsp;<span class="_sub_i" data-btnclk="choice_status_list" data-infocase="status_case" >Click Choice</span></b> </p>
-                        <p dir="auto"><b>Sub-status Reason:</b>&nbsp;&nbsp; </p>
-                        <p dir="auto"><b>Speakeasy ID:&nbsp;&nbsp;</b> </p>
-                        <p dir="auto"><b>On Call Comments:</b>&nbsp;&nbsp; </p>
-                        <p dir="auto"><b>Tags Implemented:&nbsp;&nbsp;</b></p>
-                        <p dir="auto"><b>Screenshots:&nbsp;&nbsp;</b></p>
-                        <p dir="auto"><b>Multiple CIDs:&nbsp;&nbsp;</b>NA</p>
-                        <p dir="auto"><b>On Call Screenshot:&nbsp;&nbsp;</b> </p>
-                    `
-                };
-                _arr_btnlist.push(_temp_oncall);
+                // var _temp_oncall = {
+                //     'id' : 'cdtx__oncallbtn',
+                //     'btn_text': 'On Call',
+                //     'content_insert' : `
+                //         <p dir="auto"><b>Sub-status:&nbsp;&nbsp;<span class="_sub_i" data-btnclk="choice_status_list" data-infocase="status_case" >Click Choice</span></b> </p>
+                //         <p dir="auto"><b>Sub-status Reason:</b>&nbsp;&nbsp; </p>
+                //         <p dir="auto"><b>Speakeasy ID:&nbsp;&nbsp;</b> </p>
+                //         <p dir="auto"><b>On Call Comments:</b>&nbsp;&nbsp; </p>
+                //         <p dir="auto"><b>Tags Implemented:&nbsp;&nbsp;</b></p>
+                //         <p dir="auto"><b>Screenshots:&nbsp;&nbsp;</b></p>
+                //         <p dir="auto"><b>Multiple CIDs:&nbsp;&nbsp;</b>NA</p>
+                //         <p dir="auto"><b>On Call Screenshot:&nbsp;&nbsp;</b> </p>
+                //     `
+                // };
+                // _arr_btnlist.push(_temp_oncall);
+                // 
+                // <span class="cdtx__uioncall_control-lt_sliptempl" data-text="LT S & T" data-btntooltip="LT SPLIT & TRANSFER" data-btnclk="oncall_templ_lt_template" >&nbsp;</span>
 
                 var _temp_oncall = {
                     'id' : 'cdtx__uioncall--btn',
-                    'btn_text': 'On Call (beta)',
+                    'btn_text': 'On Call (new)',
                     'content_insert' : `
                     <div class="cdtx__uioncall">
                         <div class="cdtx__uioncall_control" contenteditable="false" >
                             <span class="cdtx__uioncall_control-load" data-text="List" data-btnclk="oncall_templ_act_load" >&nbsp;</span>
-                            <span class="cdtx__uioncall_control-save" data-text="Save template" data-btnclk="oncall_templ_act_save" >&nbsp;</span>
+                            <span class="cdtx__uioncall_control-save" data-text="Save" data-btnclk="oncall_templ_act_save" data-btntooltip="Save template Reuse"  >&nbsp;</span>
                             <span class="cdtx__uioncall_control-remove" data-text="Remove" data-btnclk="oncall_templ_act_remove" >&nbsp;</span>
                         </div>
                         <div class="cdtx__uioncall_outer">
@@ -1669,6 +1668,7 @@ function global_case(optionkl__disable_dialog) {
                         const dom = document.createElement("button");
                         dom.innerText = item.btn_text;
                         dom.id = item.id;
+                        
 
                         _elmcasenote.insertAdjacentElement("afterBegin", dom);
 
@@ -1678,66 +1678,13 @@ function global_case(optionkl__disable_dialog) {
                             var _caseid = document.querySelector('[debug-id="case-id"] span.case-id').innerText;
                             
 
-                            cLog(() => { console.log("cdtx - major - precall", window.dataCase); });
                             
-                            // is_ads_enhanced_conversions
-                            if(typeof window.dataCase !== 'undefined') {
-                                
-                                if(window.dataCase.case_id) {
-                                    replaceAllHtmlElement(_paneltext, window.dataCase);
-                                }
-
-
-                                var _document_attachurl_elm = _paneltext.querySelector('._document_attachurl_i');
-                                var _task_i_elm = _paneltext.querySelector('._task_i');
-                                if(_document_attachurl_elm) {
-                                    var _task_get = window.dataCase['tasks'] || '';
-                                    _task_get = _task_get.toLocaleLowerCase();
-                                    
-                                    // console.log('XDONG', _task_get);
-                                    
-                                    if(window.dataCase['is_ads_enhanced_conversions'] || _task_get.includes('ads enhanced conversions')) {
-                                        _document_attachurl_elm.insertAdjacentHTML('beforeEnd', `<span class="_document_attachurl_i">DOCUMENT precall <strong>EC</strong>: <span data-highlight="need_recheck" data-btnclk="popup_add_doc_ec_dfa" >Click Add Document</span></span> `);
-                                    }
-                                    if(window.dataCase['is_external']) {
-                                        _document_attachurl_elm.insertAdjacentHTML('beforeEnd', `<span class="_document_attachurl_i">DOCUMENT precall <strong>DfA</strong>: <span data-highlight="need_recheck" data-btnclk="popup_add_doc_ec_dfa" >Click Add Document</span></span> `);
-                                    }
-                                }
-
-                                if(_task_i_elm) {
-                                    if(window.dataCase['tasks']) {
-                                        _task_i_elm.insertAdjacentHTML('beforeEnd', `${window.dataCase['tasks'].replaceAll("\n", ", ")}`);
-                                    }
-                                }
-                            }
-                            // if(typeof window.dataTagteam !== 'undefined') {
-                            //     if(window.dataTagteam.hasOwnProperty("current_case")) {
-                            //         if(window.dataTagteam.current_case.hasOwnProperty("tasks")) {
-
-                            //             if(window.dataTagteam.current_case.status_case) {
-                            //                 text = text.replace(/<span class="_sub_i">[\s\S]*?<\/span>/g, `<span class="_sub_i">${window.dataTagteam.current_case.status_case}</span>`);
-                            //             }
-
-                            //             if(window.dataTagteam.current_case.tasks) {
-                            //                 text = text.replace(/<span class="_task_i">[\s\S]*?<\/span>/g, `<span class="_task_i">${window.dataTagteam.current_case.tasks}</span>`);
-
-                            //                 var _task_i = window.dataTagteam.current_case.tasks;
-                            //                 if(_task_i.includes("Ads Enhanced Conversions")) {
-                            //                     text = text.replace(/<span class="_document_attachurl_i">[\s\S]*?<\/span>/g, `<span class="_document_attachurl_i">DOCUMENT EC: <span data-infocase="customer_name" data-highlight="need_recheck">ZZZZ</span></span>`);
-                            //                 }
-                            //             }
-
-                            //         }
-                                        
-                            //         if(window.dataTagteam.current_case.interaction_type) {
-                            //             if(window.dataTagteam.current_case.interaction_type.includes("external")) {
-                            //                 text = text.replace(/<span class="_document_attachurl_i">[\s\S]*?<\/span>/g, `<span class="_document_attachurl_i">DOCUMENT DfA: <span data-infocase="customer_name" data-highlight="need_recheck">ZZZZ</span></span>`);
-                            //             }
-                            //         }
-                            //     }
-                            // }
-
+                            
+                            
                             _elm_content = _istopelm.querySelector(`.editor [contenteditable="true"]`);
+                            if(_elm_content.innerText.trim() == '') {
+                                _elm_content.innerHTML = '';
+                            }
                             _elm_content.innerHTML += _paneltext.innerHTML;
                             _elm_content.dispatchEvent(new Event('input'));
                             _elm_content.dispatchEvent(new Event('focus'));
@@ -2041,6 +1988,35 @@ function global_case(optionkl__disable_dialog) {
                 if(_action === 'popup_update_LT') {
                     popupUpdateLT()
                 }
+
+                if(_action === '_clickshow') {
+                    elm.classList.add('__show')
+                }
+                
+                
+                if(_action === 'click2remove') {
+                    elm.remove();
+                }
+                
+                
+                
+                if(_action === 'cdtx_quicklinkbtn--remove') {
+                    if(!window.confirm("You sure remove?")) return;
+
+                    if(elm.nextElementSibling.matches('[data-link]')) {
+                        var _link = elm.nextElementSibling.getAttribute('data-link');
+                        var _parent = elm.closest('.cdtx_quicklinkbtn--gr');
+
+
+                        // DISPLAY Quick link by Case ID
+                        setGetQuickLink(__case_id(), 'remove', _link);
+
+                        console.log(__case_id(), _link);
+                        _parent.remove();
+                    }
+                }
+                
+                
                 
                 // XXXXX
                 if(_action === 'mail_templ_act_load') {
@@ -2332,8 +2308,8 @@ function global_case(optionkl__disable_dialog) {
                                     elm.setAttribute('data-valchoice', _datestr);
 
                                     // Next copy elm
-                                    if(elm.nextElementSibling .matches('.copycaseid')) {
-                                        elm.nextElementSibling .setAttribute('data-copycontent', _datestr)
+                                    if(elm.nextElementSibling.matches('.copycaseid')) {
+                                        elm.nextElementSibling.setAttribute('data-copycontent', _datestr)
                                     }
                                     
                                     cLog(() => { console.log('cdtx', _data_infocase + " " + _datestr + " " + _case + ' update done', response); })
@@ -2569,10 +2545,17 @@ function global_case(optionkl__disable_dialog) {
  
                     
                 }
+                
+                // if(_action === 'oncall_templ_lt_template') {
+                //     var _lt_template = getVariableSheetByKeyAndLanguage('TEMPLATE_SPLIT_TRANSFER_CASE_TO_GCC', window.keylanguage);
+                //     if(_lt_template.trim()) {
+                //         var _parent = elm.closest('.cdtx__uioncall');
+                //         _parent.querySelector('.cdtx__uioncall_outer').innerHTML = _lt_template;
+                //         _reupdate_outer();    
+                //     }
+                // }
+                
                 if(_action === 'oncall_templ_act_load') {
-
-                    
-
                     var _parent = elm.closest('.cdtx__uioncall');
                     
                     getChromeStorage("oncall_templ_list", (response) => {
@@ -2929,34 +2912,19 @@ function global_case(optionkl__disable_dialog) {
                         ];
                         
                         
-                        // Start load crawl
-                        loadGoogleSheetOnlineWebPublics(() => {
-                            
-                            
-                            getChromeStorage("cdtx_loadgooglesheetpublish", (response2) => {
-                                var _rs = response2.value || 0;
-                                
-                                
-                                if(_rs) {
-                                    
-                            
-                                    _arrlistkey.forEach(key => {
-                                        removeChromeStorage(key, () => {
-                                            Toastify({
-                                                text: `Clear ${key} success!!!`,
-                                                duration: 3000,
-                                                callback: function(){
-                                                    this.remove();
-                                                }
-                                            }).showToast();
-                                        });
-                                    });
-                                    
-                                    location.reload();
-                                }
+                        _arrlistkey.forEach(key => {
+                            removeChromeStorage(key, () => {
+                                Toastify({
+                                    text: `Clear ${key} success!!!`,
+                                    duration: 3000,
+                                    callback: function(){
+                                        this.remove();
+                                    }
+                                }).showToast();
                             });
                         });
                         
+                        location.reload();
                         
                         
                         
@@ -3046,7 +3014,7 @@ function global_case(optionkl__disable_dialog) {
                     var _link_ec = getVariableSheetByKeyAndLanguage('EC team folder', window.keylanguage);
                     var _content = '';
                     if(_link_dfa || _link_ec) {
-                        _content = `<small>Access:</small> `;
+                        _content = `<small>Quick access:</small> `;
                         if(_link_dfa) {
                             _content += `<a href="${_link_dfa}" target="_blank">Folder DFA</a>, `;
                         }
@@ -3303,46 +3271,46 @@ function global_case(optionkl__disable_dialog) {
 
 
                 // xxxx
-                if(_action === 'add_shortlink_v2') {
-                    var _url = prompt("Enter URL:", "");
-                    if(_url) {
-                        var _name = prompt("Enter name:", "");
-                        _name = _name || _url;
-                        if(_name) {
-                            var _caseid = __case_id();
-                            var update_action = (_caseid, _value, _callback) => {
-                                var _key = 'cdtx_tool_shortlink_v2';
-                                getChromeStorage(_key, (response) => {
-                                    var datalist = response.value || {};
+                // if(_action === 'add_shortlink_v2') {
+                //     var _url = prompt("Enter URL:", "");
+                //     if(_url) {
+                //         var _name = prompt("Enter name:", "");
+                //         _name = _name || _url;
+                //         if(_name) {
+                //             var _caseid = __case_id();
+                //             var update_action = (_caseid, _value, _callback) => {
+                //                 var _key = 'cdtx_tool_shortlink_v2';
+                //                 getChromeStorage(_key, (response) => {
+                //                     var datalist = response.value || {};
                                     
-                                    var temp = {
-                                        name: _name,
-                                        url: _url,
-                                    };
-                                    // Add
-                                    if(datalist[_caseid]) {
-                                        datalist[_caseid].push(temp);
-                                    } else {
-                                        datalist[_caseid] = [temp];
-                                    }
+                //                     var temp = {
+                //                         name: _name,
+                //                         url: _url,
+                //                     };
+                //                     // Add
+                //                     if(datalist[_caseid]) {
+                //                         datalist[_caseid].push(temp);
+                //                     } else {
+                //                         datalist[_caseid] = [temp];
+                //                     }
                                     
-                                    // Save
-                                    setChromeStorage(_key, datalist, (response2) => {
-                                        _callback(response2);
-                                    });
-                                })
-                                return false;
-                            };
+                //                     // Save
+                //                     setChromeStorage(_key, datalist, (response2) => {
+                //                         _callback(response2);
+                //                     });
+                //                 })
+                //                 return false;
+                //             };
                             
-                            update_action(_caseid, _url, (rs) => {
-                                cLog(() => {
-                                    console.log("cdtx update_tool_shortlink_v2", rs);
-                                    ___casecalendar_elm().querySelector('[data-btnclk="_connectcase_info-act_refresh"]').click();
-                                });
-                            });
-                        }
-                    }
-                }
+                //             update_action(_caseid, _url, (rs) => {
+                //                 cLog(() => {
+                //                     console.log("cdtx update_tool_shortlink_v2", rs);
+                //                     ___casecalendar_elm().querySelector('[data-btnclk="_connectcase_info-act_refresh"]').click();
+                //                 });
+                //             });
+                //         }
+                //     }
+                // }
                 
                 
                 // xxxx
@@ -3469,8 +3437,8 @@ function global_case(optionkl__disable_dialog) {
 
                         var iscreate = false;
                         if(tr.nextElementSibling) {
-                            console.log(tr.nextElementSibling)
-                            console.log(tr.nextElementSibling.getAttribute('data-detailcase'))
+                            // console.log(tr.nextElementSibling)
+                            // console.log(tr.nextElementSibling.getAttribute('data-detailcase'))
                             if(!tr.nextElementSibling.getAttribute('data-detailcase')) {
                                 iscreate = true;
                             }
@@ -3677,71 +3645,107 @@ function global_case(optionkl__disable_dialog) {
 
     function autoUpdatelistLinkCalendar(is_auto = false) {
         if(location.hostname !== 'calendar.google.com') return;
-        try {
-            var is_updatelist_link = () => {
-                getChromeStorage("cdtx_listmeetlink", (response) => {
-                    var casesmeet = response.value || {};
-                    document.querySelectorAll('[jslog][data-eventid]').forEach(function(elm){
-                        var jslog = elm.getAttribute('jslog');
-                        var caseid = elm.innerText.match(/\d-\d+/g);
-                        if(jslog){
-                            var meetid = jslog.match(/\w{3}-\w{4}-\w{3}/g);
-                        }
 
-                        if(caseid && meetid){
-                            casesmeet[caseid[0]] = "https://meet.google.com/" + meetid[0]
-                        }
-                    });
+
+        try {
+            
+            var update_via_click = () => {
+                onClickElm('.w1OTme[href*="//meet.google.com/"]', 'click', (e) => {
+                    var _elm = e.target;
+                    var _parent = _elm.closest('#yDmH0d');
+                    var _url = new URL(_elm.getAttribute('href'));
                     
-                    window.dataMeetLink = casesmeet;
-                    setChromeStorage("cdtx_listmeetlink", casesmeet, () => {
-                        cLog(() => { console.log("Has update meet link!"); });
-                    });
+                    if(caseidelm= _parent.querySelector('[data-infocase="case_id"][data-infocase_value]')) {
+                        var _caseid = caseidelm.getAttribute('data-infocase_value');
+                        
+                        loadCaseStorageByID(_caseid, (response) => {
+                            var caseload = response.value || {};
+                            if(caseload.case_id) {
+                                caseload.customer_gmeet = _url.origin + _url.pathname;
+                                 // ====== END -> SAVE
+                                // saveCase2Storage(caseload, _callback);
+                                saveCase2Storage(caseload, (response) => {
+                                    toastify_act("have update GMeet to case")
+                                });
+                             }
+                
+                            
+                        });
+                    }
                 });
+            };
+            
+            
+            var is_updatelist_link = () => {
+                // getChromeStorage("cdtx_listmeetlink", (response) => {
+                //     var casesmeet = response.value || {};
+                //     document.querySelectorAll('[jslog][data-eventid]').forEach(function(elm){
+                //         var jslog = elm.getAttribute('jslog');
+                //         var caseid = elm.innerText.match(/\d-\d+/g);
+                //         if(jslog){
+                //             var meetid = jslog.match(/\w{3}-\w{4}-\w{3}/g);
+                //         }
+
+                //         if(caseid && meetid){
+                //             casesmeet[caseid[0]] = "https://meet.google.com/" + meetid[0]
+                //         }
+                //     });
+                    
+                //     window.dataMeetLink = casesmeet;
+                //     setChromeStorage("cdtx_listmeetlink", casesmeet, () => {
+                //         cLog(() => { console.log("Has update meet link!"); });
+                //     });
+                // });
 
                 
-                getChromeStorage("cdtx_listmeetlink_all", (response) => {
+                // getChromeStorage("cdtx_listmeetlink_all", (response) => {
                     
-                    var casesmeet = response.value || {};
-                    document.querySelectorAll('[jslog][data-eventid]').forEach(function(elm){
-                        var jslog = elm.getAttribute('jslog');
-                        var caseid = elm.innerText.match(/\d-\d+/g);
-                        if(jslog){
-                            var meetid = jslog.match(/\w{3}-\w{4}-\w{3}/g);
-                        }
+                //     var casesmeet = response.value || {};
+                //     document.querySelectorAll('[jslog][data-eventid]').forEach(function(elm){
+                //         var jslog = elm.getAttribute('jslog');
+                //         var caseid = elm.innerText.match(/\d-\d+/g);
+                //         if(jslog){
+                //             var meetid = jslog.match(/\w{3}-\w{4}-\w{3}/g);
+                //         }
 
-                        if(caseid && meetid){
-                            casesmeet[meetid[0]] = caseid[0];
-                            // var _temp = {
-                            //     meetid: meetid[0],
-                            //     caseid: caseid[0]
-                            // };
+                //         if(caseid && meetid){
+                //             casesmeet[meetid[0]] = caseid[0];
+                //             // var _temp = {
+                //             //     meetid: meetid[0],
+                //             //     caseid: caseid[0]
+                //             // };
                             
-                            // var _issave = true;
-                            // casesmeet.forEach(function(item) {
-                            //     if(item.meetid == _temp.meetid) {
-                            //         _issave = false;
-                            //     }
-                            // })
+                //             // var _issave = true;
+                //             // casesmeet.forEach(function(item) {
+                //             //     if(item.meetid == _temp.meetid) {
+                //             //         _issave = false;
+                //             //     }
+                //             // })
 
-                            // if(_issave) {
-                            //     casesmeet.push(_temp);
-                            // }
-                        }
+                //             // if(_issave) {
+                //             //     casesmeet.push(_temp);
+                //             // }
+                //         }
 
-                    }); 
-                    // end loop
+                //     }); 
+                //     // end loop
                     
                     
-                    setChromeStorage("cdtx_listmeetlink_all", casesmeet, () => {
+                //     setChromeStorage("cdtx_listmeetlink_all", casesmeet, () => {
                         
-                        cLog(() => { console.log("Has update meet all link!", casesmeet); });
-                    });
-                });
+                //         cLog(() => { console.log("Has update meet all link!", casesmeet); });
+                //     });
+                // });
+                
+                // Click to save meetlink to case
+                
             }
+            
 
+            update_via_click();
+            
+            
             is_updatelist_link();
-
             // reUpdate 10mins
             if(is_auto) {
                 setInterval(() => {
@@ -4129,9 +4133,6 @@ function global_case(optionkl__disable_dialog) {
             var _contenthtml = `
                 <span class="_casecalendar_info-50per" data-title="Case ID:"  data-info="case_id" >
                     <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" ${location.hostname != 'cases.connect.corp.google.com' ? ` target="_blank" ` : ''} data-infocase="case_id" ></a><span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.case_id}" ></span>
-                    <br>
-                    <br>
-                    <a href="#" target="_blank" data-linkcasetomeet="1" data-infocase_link="customer_gmeet" ></a>
                 </span>
                 
                 <span class="_casecalendar_info-50per _casecalendar_info-infoadsid" data-title="Ads ID & Adv name:" >
@@ -4149,8 +4150,13 @@ function global_case(optionkl__disable_dialog) {
                     <span data-infocase="customer_email" class="is_hascopyer" data-btnclk="copy_innertext" ></span>
                 </span>
                 
+                
                 <span class="_casecalendar_info-50per" >
                     <span class="is_hascopyer in_block" data-title="Phone (click to copy): " data-infocase="customer_contact" data-btnclk="copy_innertext" ></span>
+                    <br>
+                    <span class="in_block" data-title="Meet link:">
+                        <span data-infocase="customer_gmeet" class="_casecalendar_info--meetlink" data-btnclk="_clickshow" ></span>
+                    </span>
                 </span>
                 <span class="_casecalendar_info-50per" data-title="Website:" data-select ><span data-infocase_listlink="customer_website" ></span></span>
                 <span class="_casecalendar_info-50per" data-title="Request:" >
@@ -4171,7 +4177,11 @@ function global_case(optionkl__disable_dialog) {
                     <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.tasks || ''}" ></span>
                 </span>
                 <span class="_casecalendar_info-50per" data-title="Attribution Model:" data-infocase="customer_attributionmodel" ></span>
-                <span class="_casecalendar_info-50per" data-title="Quicklink:" data-infocase_html="toolshortlink" ></span>
+                <span class="_casecalendar_info-50per" data-title="Quick link:" >
+                    <span data-infocase_html="toolshortlink" ></span>
+                    <span data-infocase_html="toolquicklink" ></span>
+                </span>
+                
                 <span class="_casecalendar_info-100per _casecalendar_info-uidatefl_install" >
                     <div class="_1">
                         <span data-title="Date Install:" 
@@ -4314,10 +4324,6 @@ function global_case(optionkl__disable_dialog) {
                         </span>
                         `;
                     }
-                    if(key === 'customer_gmeet') {
-                        _htmltemp = `<span class="_casecalendar_info-50per" data-title="Meet link:"   ><a href="{%customer_gmeet%}" target="_blank" data-linkcasetomeet="1" data-infocase_link="customer_gmeet"></a></span>
-                        `;
-                    }
                     
                     _ehtml += _htmltemp;
                 }
@@ -4338,6 +4344,7 @@ function global_case(optionkl__disable_dialog) {
                                             data-case="${_data.case_id}" 
                                             data-valchoice="${_data.appointment_time || ''}"
                                         ></span>
+                                        <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.appointment_time || ''}" ></span>
                                     </div>
                                     <div class="_2">
                                         <span data-title="Date Follow up:" 
@@ -4349,6 +4356,9 @@ function global_case(optionkl__disable_dialog) {
                                             data-case="${_data.case_id}" 
                                             data-valchoice="${_data.follow_up_time || ''}"
                                         ></span>
+                                        
+                                        
+                                        <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.follow_up_time || ''}" ></span>
                                         
                                         <span class="_btn_stall" data-btnclk="_connectcase_info-act_push2summary" title="update to case summary">Push</span>
                                     </div>
@@ -4428,6 +4438,29 @@ function global_case(optionkl__disable_dialog) {
             getToolShortlink(_data.case_id, (data) => {
                 if(data) {
                     replaceKeyHTMLByCaseID(_panel, 'toolshortlink', data);
+                }
+                
+                _iload_done++;
+                _checkload(_iload_done);
+            });
+
+            // DISPLAY Quick link by Case ID
+            _iload++;
+            setGetQuickLink(_data.case_id, 'get', (data) => {
+                if(data) {
+                    var _html = '';
+                    var _html_arr = data.split('\n');
+                    _html_arr.forEach(item => {
+                        if(urlget = item.trim()) {
+                            var _name = getNameUrl(urlget);
+                            _html += `<span class="cdtx_quicklinkbtn--gr">
+                                    <span class="cdtx_quicklinkbtn--remove" data-btnclk="cdtx_quicklinkbtn--remove" >X</span>
+                                    <a href="${urlget}" data-keytext="${_name}" data-btntooltip="${urlget}" data-link="${urlget}" target="_blank" class="_btn_stall cdtx_quicklinkbtn">${_name}</a>
+                                </span>
+                                `;
+                        }
+                    })
+                    replaceKeyHTMLByCaseID(_panel, 'toolquicklink', _html);
                 }
                 
                 _iload_done++;
@@ -4532,6 +4565,7 @@ function global_case(optionkl__disable_dialog) {
 
         // RUN
         run_style();
+        styleAllviaSheet();
         observeOnce((elm) => {
             // Add link style head
             run_style();
@@ -4768,10 +4802,6 @@ function global_case(optionkl__disable_dialog) {
                             _elmappend.insertAdjacentHTML("afterEnd", _contenthtml);
                             
 
-                            // Update meetlink now
-                            autoUpdatelistLinkCalendar();
-
-
                             var _panel = () => { return document.querySelector('[jscontroller="dIQ6id"] ._casecalendar_info'); };
 
 
@@ -4992,25 +5022,24 @@ function global_case(optionkl__disable_dialog) {
                         
 
                         var _panel = document.querySelector('.hWX4r ._casecalendar_info');
-                        getChromeStorage("cdtx_listmeetlink_all", (response) => {
-                            var casesmeet = response.value || {};
-                            // if(casesmeet[_object.case_id]) {
-                            for (const [_meetid, _caseid] of Object.entries(casesmeet)) {
-                                if(location.pathname.includes(_meetid)) {
-                                    cLog(() => { console.log('cdtx meet', _caseid, _caseid); })
+                        // getChromeStorage("cdtx_listmeetlink_all", (response) => {
+                        //     var casesmeet = response.value || {};
+                        // });
+                        
+                        
+                        loadAllCaseID((listcase) => {
+                            if(typeof listcase !== 'object') return;
+                            
+                            listcase.forEach((item) => {
+                                if(item.customer_gmeet) {
+                                    const linkmeet = location.origin + location.pathname;
+                                    if(linkmeet == item.customer_gmeet) {
+                                        var _caseid = item.case_id;
 
-                                    loadCaseStorageByID(_caseid, (response) => {
-                                            
-                                            
-                                        cLog(() => { console.log('cdtx response' , response); })
+                                        var _meetid = linkmeet.match(/\w{3}-\w{4}-\w{3}/g);
 
-                                        // case id overwrite
                                         
-
-                                        if(!response.value) return false;
-                                        _data = response.value;
-                                        if(!_data.case_id) return false;
-
+                                        _data = item;
                                         
                                         templateDisplay(_panel, _data);
 
@@ -5037,18 +5066,15 @@ function global_case(optionkl__disable_dialog) {
                                                 if(_data2) {
                                                     _panel.setAttribute('data-consentrecord', 1);
                                                     cLog(() => { console.log('cdtx barkeep load oncall record', _data2); });
-                                                    
                                                 }
                                             });
                                         }, 4000)
-                                        
-                                    });
-
-                                    break;
+                                    }
                                 }
-                            }
-                            // }
-                        });                        
+                            })
+                            
+                        });
+                        //ZZZZZZZZZZZZZZZZ
                     }
                 }
 
@@ -5072,109 +5098,6 @@ function global_case(optionkl__disable_dialog) {
     
     
 
-    function loadGoogleSheetOnlineWebPublics(_callback_ready) {
-        function GoogleSheetOnline(_htmlelm, _callback) {
-            function decodeHTMLEntities(text) {
-                var textArea = document.createElement('textarea');
-                textArea.innerHTML = text;
-                return textArea.value;
-            }
-        
-        
-            function ConvertSheetTable2JsonObject(table) {
-                // var table = document.querySelector('[id="1451083050"] table tbody');
-                // table.querySelector('thead').remove()
-                var header = [];
-                var rows = [];
-                var _innerHTML = '';
-        
-                for (var i = 0; i < table.rows[0].cells.length; i++) {
-                    header.push(table.rows[0].cells[i].innerText);
-                }
-        
-                for (var i = 1; i < table.rows.length; i++) {
-                    var row = {};
-        
-                    // exclude column 0
-                    for (var j = 1; j < table.rows[i].cells.length; j++) {
-                        _innerText = table.rows[i].cells[j].innerText;
-        
-                        // get Result
-                        row[header[j]] = _innerText;
-                    }
-                    rows.push(row);
-                }
-        
-                return rows;
-            }
-        
-            // Giao doan 1: chuyen doi Sheet table -> json
-            var _sheetobj = {};
-            var _objtemp = {};
-            var _id, _text, _rsConvert;
-        
-            _htmlelm.querySelectorAll('#sheet-menu li').forEach((item) => {
-                _objtemp = {};
-                _objtemp.id = item.getAttribute('id').replace('sheet-button-', '');
-                _objtemp.text = item.innerText;
-                _objtemp.sheettab = ConvertSheetTable2JsonObject(_htmlelm.querySelector('[id="' + _objtemp.id + '"] table tbody'));
-                
-                _sheetobj[_objtemp.text] = _objtemp;
-            });
-        
-            _callback(_sheetobj);
-        
-        
-        }
-
-        window.loadgooglesheetpublish = window.loadgooglesheetpublish || {};
-        
-        getChromeStorage("cdtx_loadgooglesheetpublish_timesave", (response) => {
-            var _rs = response.value || 0;
-            var _time_save = parseInt(_rs);
-            var _time_current = parseInt(minuteDateTime());
-
-
-            cLog(() => { console.log('cdtx - google', response.value, _time_current - _time_save); })
-            if((_time_current - _time_save) > 15) {
-                // https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vRMxOxerJ3zWV07uTOdTQCaa13ODbTfZVj5SB7-4Q6QlFhFTU8uXA-wsywXAUUqzHtOiGQdGgCYfRmk/pubhtml#
-                fetch(_url_googlesheet)
-                .then((response) => response.text())
-                .then((data) => {
-                    var tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = data;
-                    
-                    GoogleSheetOnline(tempDiv, (_sheetobj) => {
-                        
-                        setChromeStorage("cdtx_loadgooglesheetpublish", _sheetobj, () => {
-                            if(_sheetobj) {
-                                window.loadgooglesheetpublish = _sheetobj;
-
-                                cLog(() => { console.log("LOADSHEET --- DONE ", window.loadgooglesheetpublish); });
-                                _callback_ready();
-                            }
-                            
-                            setChromeStorage("cdtx_loadgooglesheetpublish_timesave", minuteDateTime(), () => {
-                                cLog(() => { console.log("cdtx - loadgooglesheetpublish at " + minuteDateTime()); })
-                            });
-                        });
-                    })
-            
-                });
-            } 
-        });
-
-        
-        getChromeStorage("cdtx_loadgooglesheetpublish", (response2) => {
-            var _rs = response2.value || 0;
-            
-            if(_rs) {
-                window.loadgooglesheetpublish = _rs;
-                cLog(() => { console.log("LOADSHEET --- DONE 2 "); });
-                _callback_ready();
-            }
-        });
-    }
 
 
     if(window.isdongtest) {
@@ -5194,6 +5117,32 @@ function global_case(optionkl__disable_dialog) {
         var data_case = {};
 
         try {
+            
+
+            // f diff date number
+            var _get_diffday_number = (str_date) => {
+                if(!str_date) return -1;
+
+                const date1 = new Date(str_date);
+                const date2 = new Date();
+                const diffTime = Math.abs(date2 - date1);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                var _str = 'today';
+                if(diffDays > 0) {
+                    _str = parseInt(diffDays);
+                    if(date2 > date1) {
+                        _str = parseInt('-' + diffDays);
+                    }
+                }
+
+                if(formatDate(date1, 'd/m/Y') == formatDate(date2, 'd/m/Y')) {
+                    _str = 0;
+                }
+
+                return _str;
+            }
+            
+            
             // Recall data
             var list_case_havefl = (_callback) => {
                 // console.log(window.isload_once)
@@ -5212,21 +5161,44 @@ function global_case(optionkl__disable_dialog) {
     
                     var n_havedate = 0;
                     var listcase_havefl = [];
+                    var isadd = false;
                     listcase.forEach((item) => {
+                        isadd = false;
                         if(item.appointment_time) {
                             var [_day,_month,_year] = item.appointment_time.split('/');
                             if(_day && _month && _year) {
+                                item.order_datetimeformat = new Date(`${_year}/${_month}/${_day}`);
                                 item.appointment_time_datetimeformat = new Date(`${_year}/${_month}/${_day}`);
+                                
+                                
+                                if(_get_diffday_number(`${_year}/${_month}/${_day}`) > -1) {
+                                    isadd = true;
+                                    
+                                    if(item.follow_up_time) {
+                                        if(item.follow_up_time.includes('Finish')) {
+                                            isadd = false;
+                                        }    
+                                    }
+                                    
+                                }
                             }
                         }
                         
                         if(item.follow_up_time) {
                             var [_day,_month,_year] = item.follow_up_time.split('/');
                             if(_day && _month && _year) {
-                                n_havedate++;
+                                item.order_datetimeformat = new Date(`${_year}/${_month}/${_day}`);
                                 item.follow_up_time_datetimeformat = new Date(`${_year}/${_month}/${_day}`);
-                                listcase_havefl.push(item);
+                                
+                                isadd = true;
                             }
+                        }
+                        
+                        // console.log('compare', isadd, item.follow_up_time, _get_diffday_number(`${_year}/${_month}/${_day}`));
+                                
+                        if(isadd) {
+                            n_havedate++;
+                            listcase_havefl.push(item);
                         }
                     })
     
@@ -5240,7 +5212,7 @@ function global_case(optionkl__disable_dialog) {
                     
                 });
             };
-
+            
             // f caculator diff date
             var _get_diffday = (str_date) => {
                 if(!str_date) return '';
@@ -5310,7 +5282,9 @@ function global_case(optionkl__disable_dialog) {
                         item.follow_up_time_dmy = item.follow_up_time_datetimeformat ? formatDate(item.follow_up_time_datetimeformat, 'd/m/Y') : '';
                         item.follow_up_time_diffday = _get_diffday(item.follow_up_time_datetimeformat);
                         item.follow_up_time_integer = parseInt(item.follow_up_time_diffday.replace(/[^\d-]+/g, '')) || 0;
-                        console.log(item.follow_up_time_integer);
+                        
+                        item.order_datetime_diffday_integer =  parseInt(_get_diffday(item.order_datetimeformat).replace(/[^\d-]+/g, '')) || 0;
+                        
                         _lst_arr_followup.push(item);
                     }
 
@@ -5319,7 +5293,7 @@ function global_case(optionkl__disable_dialog) {
                     var int_number = 0;
                     _lst_arr_followup.sort((a,b) => {
 
-                        if(a.follow_up_time_integer < b.follow_up_time_integer) {
+                        if(a.order_datetime_diffday_integer < b.order_datetime_diffday_integer) {
                             return -1;
                         }
                         
@@ -5342,8 +5316,7 @@ function global_case(optionkl__disable_dialog) {
 
                         _tr += `<tr>
                                     <td style="white-space: nowrap"><a href="https://cases.connect.corp.google.com/#/case/${item.case_id}" ${location.hostname != 'cases.connect.corp.google.com' ? ` target="_blank" ` : ''}>${item.case_id}</a></td>
-                                    <td style="white-space: nowrap">${item.customer_name}</td>
-                                    <td>${getDomainOnlyURL(item.customer_website)}</td>
+                                    <td><strong>${item.customer_name}</strong><br>${getDomainOnlyURL(item.customer_website)}</td>
                                     <td style="white-space: nowrap" >
                                         <span data-dateinstall="${item.appointment_time_dmy}">${item.follow_up_time_dmy + ` <i date-st="${item.follow_up_time_diffday}">${item.follow_up_time_diffday}</i>`}</span>
                                     </td>
@@ -5355,8 +5328,7 @@ function global_case(optionkl__disable_dialog) {
                         <thead>
                             <tr>
                                 <th>Case ID</th>
-                                <th>Adv name</th>
-                                <th>Website</th>
+                                <th>Adv info</th>
                                 <th><span>Date FL (${data_case.n_havedate})</span></th>
                                 <th class="uiqplus-act"><span data-btnclk="ui-qplus-addtrviewall" >View all</span></th>
                             </tr>
@@ -5400,7 +5372,6 @@ function global_case(optionkl__disable_dialog) {
 
                 
                 if(window.location.hostname == 'calendar.google.com') {
-                    console.log('global 6'); 
                     observeOnce((elm) => {
                         if(!document.querySelector('.panel_info-listbtn')) return;
                 
@@ -5454,12 +5425,58 @@ function global_case(optionkl__disable_dialog) {
         
         _sub_modal().insertAdjacentHTML('beforeEnd', `
         <style>
+        #_contentPopupUpdateLT_quicklink,
         #_contentPopupUpdateLT_input {
             width: 100%; height: 196px;margin: 0 auto;display: block;
             margin-bottom: 20px;
             padding: 20px;
             font-size: 80%;
+            background: #fff;
+            border: 1px dashed #cacaca;
+            overflow: auto;
+            position: relative;
+            z-index: 1;
+            
         }
+
+        #_contentPopupUpdateLT_quicklink {
+            height: 40px;
+            padding: 10px;
+        }
+
+        #_contentPopupUpdateLT_input:after,
+        #_contentPopupUpdateLT_quicklink:after {
+            content: "Quick link";
+            pointer-events: none;
+            color: #9C27B0;
+            position: absolute;
+            left: 4px;
+            top: 4px;
+            z-index: -1;
+            font-size: 80%;
+            border: 1px dotted;
+            z-index: 9999;
+            background: #fff;
+            padding: 2px 10px;
+            border-radius: 4px;
+        }
+
+        #_contentPopupUpdateLT_input:after {
+            content: attr(data-tiptitle);
+        }
+
+        #_contentPopupUpdateLT_quicklink.isfocus:after,
+        #_contentPopupUpdateLT_quicklink:focus:after,
+        #_contentPopupUpdateLT_input:focus:after {
+            display: none;
+        }
+        
+        #_contentPopupUpdateLT_quicklink.isfocus,
+        #_contentPopupUpdateLT_quicklink:focus {
+            height: 70px;
+        }
+        
+
         #_contentPopupUpdateLT {
             width: 100%;
             max-width: 600px;
@@ -5522,16 +5539,22 @@ function global_case(optionkl__disable_dialog) {
             display: block;
             cursor: pointer;
         }
+
+        #_contentPopupUpdateLT label[for="_contentPopupUpdateLT_input_chksetquicklink"] {
+            margin-bottom: 10px;
+            display: block;
+        }
         
         </style>
         <span class="_sub_modal_close"></span>
         <div id="_contentPopupUpdateLT">
-            <div id="_contentPopupUpdateLT_input" contenteditable="" style=" background: #fff; border: 1px dashed #ccc; overflow: auto; " ></div>
+            <div id="_contentPopupUpdateLT_input" contenteditable="" data-tiptitle="Update case" ></div>
+            <label for="_contentPopupUpdateLT_input_chksetquicklink" ><input type="checkbox" id="_contentPopupUpdateLT_input_chksetquicklink"/> Set Quick link</label>
             <span id="_contentPopupUpdateLT_input_submit"></span>
             <pre id="_contentPopupUpdateLT_readmore">${
                 ['Ex: copy bellow paste for demo:',
                     '=========',
-                    'Join Kenedy // ADV Name 1st line',
+                    'Join Kenedy // ADV Name 1st line, exclude with prefix: -',
                     'https://domainname.com',
                     '-----------',
                     'https://adwords.corp.google.com/aw/conversions/detail?ocid=762568944',
@@ -5564,17 +5587,26 @@ function global_case(optionkl__disable_dialog) {
         var _contentPopupUpdateLT_input_submit = document.querySelector('#_contentPopupUpdateLT_input_submit');
         var _contentPopupUpdateLT_readmore = document.querySelector('#_contentPopupUpdateLT_readmore');
         var _contentPopupUpdateLT_input_count = document.querySelector('#_contentPopupUpdateLT_input_count');
+        var _contentPopupUpdateLT_input_chksetquicklink = document.querySelector('#_contentPopupUpdateLT_input_chksetquicklink');
         var _templateCase = {};
-    
+        var urls_isquicklink = [];
+        var is_quicklink = false;
+        
         
 
         // Show Input
+        _contentPopupUpdateLT_input_chksetquicklink.addEventListener('change', function(e){
+            _contentPopupUpdateLT_input.dispatchEvent(new Event('keyup'));
+            
+            _contentPopupUpdateLT_input.setAttribute('data-tiptitle', e.target.checked ? 'Quick link': 'Update case');
+            
+        })
         _contentPopupUpdateLT_input.addEventListener('keyup', function(e){
             // var _innerHtml = e.target.innerHTML;
             // _text = stripHtml(_innerHtml);
             // console.log(_text);
             
-            
+            is_quicklink = false;
             var _val = e.target.innerText;
             
             
@@ -5582,6 +5614,7 @@ function global_case(optionkl__disable_dialog) {
             // Extract url
             var urls = extractUrls(_val);
             var urls_notgoogle = [];
+            urls_isquicklink = [];
             var url_meet = '';
             var ocid = '';
     
@@ -5591,8 +5624,10 @@ function global_case(optionkl__disable_dialog) {
                 return _lst_value.indexOf(c) === index;
             });
             
-            
+            var _all_url = [];
             urls.forEach((item) => {
+                _all_url.push(item);
+
                 if(!item.includes('google.com')) {
                     urls_notgoogle.push(item);
                 }
@@ -5605,8 +5640,30 @@ function global_case(optionkl__disable_dialog) {
                     const params = new URL(item).searchParams;
                     ocid = params.get('ocid') || ''; 
                 }
+    
+                if(item.includes('//analytics-ics.corp.google.com')) {
+                    urls_isquicklink.push(item);
+                }
+                
+                if(item.includes('//tagmanager-ics.corp.google.com')) {
+                    urls_isquicklink.push(item);
+                }
+                
+                if(item.includes('//cases.connect.corp.google.com')) {
+                    urls_isquicklink.push(item);
+                }
+                
+                if(item.includes('//mcn-ics.corp.google.com')) {
+                    urls_isquicklink.push(item);
+                }
+
+                if(item.includes('//adwords.corp.google.com')) {
+                    urls_isquicklink.push(item);
+                }
             });
+
             
+
             urls_notgoogle = urls_notgoogle.filter((c, index) => {
                 return urls_notgoogle.indexOf(c) === index;
             });
@@ -5638,28 +5695,33 @@ function global_case(optionkl__disable_dialog) {
             var _phone = '';
             var _lowertext = '';
             _lst_value.forEach(item => {
-                _lowertext = item.toLowerCase()
+                _lowertext = item.toLowerCase();
+                
                 if(
                     !(
                         _lowertext.startsWith('adsid:') ||
                         _lowertext.startsWith('ocid:') ||
                         _lowertext.startsWith('cid:')
                     )
+                    && (
+                        _lowertext.startsWith('p:')
+                        || _lowertext.startsWith('+')
+                        || _lowertext.startsWith('84')
+                    )
                 ) {
+                    
                     if(_phone_get = reFormatPhone(item)) {
                         _phone = _phone_get;
-                    }    
+                    }
                 }
                 
-                if(
-                    _lowertext.startsWith('p:')
-                ) {
-                    _phone = _phone_get;
-                }
                 
-            })
+            });
             
-            // Phone
+            
+            
+            
+            // Ocid, External ID
             var _ocid = '', _external_id = '', _lowertext = '';
             _lst_value.forEach(item => {
                 _lowertext = item.toLowerCase()
@@ -5700,27 +5762,26 @@ function global_case(optionkl__disable_dialog) {
 
             if(emails_notgoogle.length > 0) {
                 _templateCase.customer_email = emails_notgoogle.join(', ');
-    
-    
-                if(_lst_value.length > 0) {
-                    _templateCase.customer_name = _lst_value[0];
-    
-                    if(adv_name = document.querySelector('action-bar [debug-id="name-input"] input')) {                
-                        adv_name.value = _templateCase.customer_name;
-                    }
-                    
-                    
-                    if(adv_name = document.querySelector('action-bar account-field.input-email material-input input')) {                
-                        if(_templateCase.am_email) {
-                            adv_name.value = _templateCase.am_email;
-                        } else {
-                            adv_name.value = _templateCase.customer_email;
-                        }
-                    }
-                }
             }
     
-            
+            // Customer name
+            if(_lst_value.length > 0) {
+                _templateCase.customer_name = _lst_value[0];
+                if(
+                    _lst_value[0].startsWith('-') 
+                    || _lst_value[0].startsWith('http')
+                ) {
+                    delete _templateCase.customer_name;
+                }
+                
+                // if(adv_name = document.querySelector('action-bar account-field.input-email material-input input')) {                
+                //     if(_templateCase.am_email) {
+                //         adv_name.value = _templateCase.am_email;
+                //     } else {
+                //         adv_name.value = _templateCase.customer_email;
+                //     }
+                // }
+            }
     
             if(_phone) {
                 _templateCase.customer_contact = _phone;
@@ -5731,7 +5792,7 @@ function global_case(optionkl__disable_dialog) {
             }
             // Overwrite ocid
                 if(_ocid) {
-                    _templateCase.customer_ocid = ocid;
+                    _templateCase.customer_ocid = _ocid;
                 }
             
             
@@ -5760,11 +5821,19 @@ function global_case(optionkl__disable_dialog) {
             if(length_temcase > 7) str = 'good';
             if(length_temcase > 8) str = 'good+';
             if(length_temcase > 10) str = 'great';
-            if(!((_templateCase.am_email || _templateCase.customer_email) && _templateCase.customer_website )) str = 'bad';
 
             _contentPopupUpdateLT_input_count.innerText = `${str} (${length_temcase})`;
 
             _contentPopupUpdateLT_input_rs.innerText = JSON.stringify(_templateCase,null,'\t');
+
+            if(_contentPopupUpdateLT_input_chksetquicklink.checked || (urls_isquicklink.length > 0 && length_temcase < 3)) {
+                is_quicklink = true; 
+                var _urls_link = _contentPopupUpdateLT_input_chksetquicklink.checked ? _all_url : urls_isquicklink;
+
+                _contentPopupUpdateLT_input_count.innerText = `Quick link internal add to case: ${_urls_link.length}`;
+                _contentPopupUpdateLT_input_rs.innerText = _urls_link.join("\n");
+
+            }
         });
     
     
@@ -5780,7 +5849,6 @@ function global_case(optionkl__disable_dialog) {
         
     
         var _updateinput = () => {
-            
             
             // Ocid
             if(_templateCase.customer_ocid) {
@@ -5833,82 +5901,117 @@ function global_case(optionkl__disable_dialog) {
         // Update
         _contentPopupUpdateLT_input_submit.addEventListener('click', (e) => {
     
-            if(!_templateCase.customer_email) { 
-                Toastify({
-                    text: `Dont have customer email!!!`,
-                    duration: 2000,
-                    callback: function(){
-                        this.remove();
-                    }
-                }).showToast();
+            // if(!_templateCase.customer_email) { 
+            //     Toastify({
+            //         text: `Dont have customer email!!!`,
+            //         duration: 2000,
+            //         callback: function(){
+            //             this.remove();
+            //         }
+            //     }).showToast();
                 
-                return false;
-            };
+            //     return false;
+            // };
             
-            
-            
-            // Open all button editor
-            document.querySelectorAll('[debug-id="add-email-button"]').forEach(elm => {
-                elm.click()
-            });
-            document.querySelectorAll('[debug-id="edit-button"]').forEach(elm => {
-                elm.click()
-            });
-            
-            // Dialog Show 
-            // document.querySelectorAll('[debug-id="edit-button"]').forEach(item => {
-            //     item.click()
-            // })
-            // document.querySelectorAll('[debug-id="add-phone-number-button"]').forEach(item => {
-            //     item.click()
-            // })
-
-            document.querySelector('._casecalendar_info').remove();
-    
-            var _contentPopupUpdateLT_input = document.querySelector('#_contentPopupUpdateLT_input');
-            
-            // var __content = '';
-            // for (const property in _templateCase) {
-            //   __content += (`${property}: ${_templateCase[property]}`) + "\n";
-            // }
-            
-            __content = `${_contentPopupUpdateLT_input.innerText }`;
-            
-            updateNoteCase(_templateCase.case_id, __content, (rs) => {
-                cLog(() => { console.log(`Saved note ${_templateCase.case_id}!!!`, __content); });
-            }); 
-
-    
-            loadCaseStorageByID(_templateCase.case_id, (response) => {
-                var caseload = response.value || {};
-                 
-                // ====== BEGIN
-
-                Object.assign(caseload, _templateCase);
-
-    
-                // ====== END -> SAVE
-                // saveCase2Storage(caseload, _callback);
-                saveCase2Storage(_templateCase, (response) => {
-                    window.dataCase = response;
-                    window.n_start = window.n_start + 1;
-                    window.hasnew_data = "yes";
-                    reupdateForAll(response);
-                    
-                    setTimeout(() => {
-                        _updateinput();
-                    }, 2000)
-                    
-                    if(_sub_modal_close()) {
-                        _sub_modal_close().click();
-                    }
-                    
-        
+            // Update url
+            if(is_quicklink) {
+                setGetQuickLink(__case_id(), urls_isquicklink.join('\n'), (data) => {
+                    cLog(() => { console.log('UPDATE', data) });
                 });
 
-            })
+                // reset
+                _templateCase = {};
+            }
             
+            
+            // If have data
+            if(_templateCase.case_id) {
+                // Open all button editor
+                if(_templateCase.am_email) {
+                    document.querySelectorAll('[debug-id="add-email-button"]').forEach(elm => {
+                        elm.click()
+                    });    
+                }
+                
+                if(_templateCase.customer_email || _templateCase.customer_contact) {
+                    document.querySelectorAll('[debug-id="edit-button"]').forEach(elm => {
+                        elm.click()
+                    });
+                }
+                
+                // Dialog Show 
+                // document.querySelectorAll('[debug-id="edit-button"]').forEach(item => {
+                //     item.click()
+                // })
+                // document.querySelectorAll('[debug-id="add-phone-number-button"]').forEach(item => {
+                //     item.click()
+                // })
+    
+                document.querySelector('._casecalendar_info').remove();
         
+                var _contentPopupUpdateLT_input = document.querySelector('#_contentPopupUpdateLT_input');
+                
+                // var __content = '';
+                // for (const property in _templateCase) {
+                //   __content += (`${property}: ${_templateCase[property]}`) + "\n";
+                // }
+                
+                __content = `${_contentPopupUpdateLT_input.innerText }`;
+                
+                getNoteCase(_templateCase.case_id, (data) => {
+                    if(!data) {
+                        updateNoteCase(_templateCase.case_id, __content, (rs) => {
+                            cLog(() => { console.log(`Saved note ${_templateCase.case_id}!!!`, __content); });
+                        }); 
+                    }
+                });
+    
+        
+                loadCaseStorageByID(_templateCase.case_id, (response) => {
+                    var caseload = response.value || {};
+                     
+                    // ====== BEGIN
+                    if(caseload.is_external) { _templateCase.is_external = '' };
+                    if(caseload.am_isgcc_external) { _templateCase.am_isgcc_external = '' };
+                    
+                    var merge2obj = Object.assign(caseload, _templateCase);
+                    // console.log("compare", caseload, _templateCase, merge2obj);
+    
+        
+                    // ====== END -> SAVE
+                    // saveCase2Storage(caseload, _callback);
+                    saveCase2Storage(merge2obj, (response) => {
+                        window.dataCase = response;
+                        window.n_start = window.n_start + 1;
+                        window.hasnew_data = "yes";
+                        reupdateForAll(response);
+                        
+                        setTimeout(() => {
+                            _updateinput();
+                        }, 2000)
+                        
+            
+                    });
+    
+                })    
+            }
+            
+
+            if(urls_isquicklink.length > 0) {
+                setGetQuickLink(__case_id(), urls_isquicklink.join('\n'), (data) => {
+                    cLog(() => { console.log('UPDATE', data) });
+                });
+            }
+            
+               
+            if(_sub_modal_close()) {
+                _sub_modal_close().click();
+                
+                var elmrefresh = document.querySelector('[data-btnclk="_connectcase_info-act_refresh"]');
+                if(elmrefresh) {
+                    elmrefresh.click();
+                }
+            }
         })
 
         _contentPopupUpdateLT_readmore.addEventListener('click', (e) => {
@@ -5929,7 +6032,22 @@ function global_case(optionkl__disable_dialog) {
         })
     };
     
+            
+            
+            
+    // ======================
+    // INIT
+    // ======================
+    // try {
+    //     popupUpdateLT();    
+    //     cLog(() => { console.log('popupUpdateLT') });
+    // } catch (error) {
+    //     console.log('popupUpdateLT error', error)
+    // }
+    
     // LOAD
+    
+            
     var _once_load = 0;
     loadGoogleSheetOnlineWebPublics(() => {
         
@@ -5938,19 +6056,8 @@ function global_case(optionkl__disable_dialog) {
         if(_once_load === 0) {
             _once_load = _once_load + 1;
             
-            cLog(() => { console.log("Once Load 2"); });
-            
-            
-            
-            
-            // try {
-            //     popupUpdateLT();    
-            //     cLog(() => { console.log('popupUpdateLT') });
-            // } catch (error) {
-            //     console.log('popupUpdateLT error', error)
-            // }
-            
-            
+            cLog(() => { console.log("Once Load", window.loadgooglesheetpublish); });
+            initLoadGroup();
             loadStyle();
             loadRealtime();
             autoUpdatelistLinkCalendar(true);
@@ -5968,8 +6075,7 @@ function global_case(optionkl__disable_dialog) {
             recheckInfoCase();
             showListFollowUp();
             keyupEscAction();
-            
+            chatBotPopup();
         }
-        
-    });
+    })
 }

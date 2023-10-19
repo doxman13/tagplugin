@@ -1,6 +1,5 @@
 function th_tagTeamTDCXLoad() {
-    document.documentElement.setAttribute("data-hostname", window.location.hostname);
-    
+
     // Libs
         // Toastify
         !function(t){var i=function(t){return new i.lib.init(t)};i.lib=i.prototype={toastify:"0.0.1",constructor:i,init:function(t){return t||(t={}),this.options={},this.options.text=t.text||"Hi there!",this.options.duration=t.duration||3e3,this.options.selector=t.selector,this.options.class=t.class || "",this.options.callback=t.callback||function(){},this},buildToast:function(){if(!this.options)throw"Toastify is not initialized";var t=document.createElement("div");return t.className="_panel_toastify on " + this.options.class,t.innerHTML=this.options.text,t.addEventListener("click",this.options.callback),t},showToast:function(){var t,o=this.buildToast();if(!(t=void 0===this.options.selector?document.body:document.getElementById(this.options.selector)))throw"Root element is not defined";return t.insertBefore(o,t.firstChild),i.reposition(),window.setTimeout((function(){o.classList.remove("on"),window.setTimeout((function(){o.remove(),i.reposition()}).bind(this),400)}).bind(this),this.options.duration),this}},i.reposition=function(){for(var t=15,i=document.getElementsByClassName("_panel_toastify"),o=0;o<i.length;o++){var n=i[o].offsetHeight;i[o].style.top=t+"px",t+=n+15}return this},i.lib.init.prototype=i.lib,t.Toastify=i}(window);

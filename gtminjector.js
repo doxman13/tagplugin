@@ -1,12 +1,14 @@
 chrome.storage.sync.get({myInjector: '', gtmToDo: 'notstart'}, function(result) {
 	// console.log('injector id currently is ' + result.myInjector + ' and it will '+ result.gtmToDo);
 	if(result.gtmToDo == "start") {
-		// console.log('injector id currently is ' + result.myInjector + 'in IF ELSE') ;
-		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-		})(window,document,'script','dataLayer',result.myInjector);
+        var inIframe = function () { try { return window.self !== window.top; } catch (e) { return true; } };
+		if(inIframe() == false) {
+			(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+			})(window,document,'script','dataLayer',result.myInjector);
+		}
 	}
 });
 

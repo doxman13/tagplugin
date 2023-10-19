@@ -1,5 +1,4 @@
 function en_tagTeamTDCXLoad() {
-    document.documentElement.setAttribute("data-hostname", window.location.hostname);
     
     // Libs
         // Toastify

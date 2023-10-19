@@ -12,9 +12,9 @@ chrome.storage.sync.get({
 
         window.result = result;
         window.tagteamoption = result;
-
         cLog(() => {
-            console.log("DONGMAI", "INIT START", location.hostname, window.result)
+            console.log("INIT START",  location.hostname, window.result);
+            
         });
         
         var _default_action = () => {
@@ -68,22 +68,6 @@ chrome.storage.sync.get({
             }
         }
 
-        if (result.mycountry == "English") {
-            _default_action = () => {
-                window.dataTagteam.language = en_language;
-                window.dataTagteam.panel_div = en_panel_div;
-                window.dataTagteam.current_case = {};
-
-                // Focus case code vanbo
-                window.dataTagteam.sendFirstEmail = () => { en_sendFirstEmail() };
-
-                en_tagTeamTDCXLoad(window);
-                globalForAll(window);
-                global_case(window.result.optionkl__disable_dialog);
-                vanBoCodeHere();
-                linhvoLoader();
-            }
-        }
 
         // JP
         if (result.mycountry == "Japan") {
@@ -103,6 +87,17 @@ chrome.storage.sync.get({
             }
         }
         
-        load_remote(result, _default_action);
+        // =======================
+        // INIT LOAD
+        // =======================
+        var _once_load = 0;
+        loadGoogleSheetOnlineWebPublics(() => {
+            if(_once_load === 0) {
+                _once_load = _once_load + 1;
+                load_remote(result, _default_action);
+            }
+        });
+
+    
     }
 );

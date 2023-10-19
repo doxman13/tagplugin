@@ -3,7 +3,8 @@ window.dataTagteam = window.dataTagteam || {};
 window.dataTagteam.extension_id = chrome.runtime.id;
 window.dataTagteam.assets_url_img = 'chrome-extension://' + window.dataTagteam.extension_id + '/assets/img';
 window.dataTagteam.api_blog = 'https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/api.php';
-
+window.dataTagteam.urlgooglesheet = 'https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vRMxOxerJ3zWV07uTOdTQCaa13ODbTfZVj5SB7-4Q6QlFhFTU8uXA-wsywXAUUqzHtOiGQdGgCYfRmk/pubhtml';
+window.dataTagteam.dongtest = localStorage.getItem("dongtest") || false; 
 
 // ==== LIB ====
 function loadCaseDatabaseByID(case_id) {
@@ -34,6 +35,22 @@ function getDomainOnlyURL(_argurl) {
     }
     
     return _url;
+}
+
+function getNameUrl(item) {
+    // var _argurl = 'dong.com'
+    if(item.trim()) {
+        var _name = getDomainOnlyURL(item);
+        if(item.includes('//cases.connect.corp.google.com')) { _name = 'cases connect'; }
+        if(item.includes('//analytics.google.com')) { _name = 'analytics'; }
+        if(item.includes('//adwords.corp.google.com')) { _name = 'adwords ics'; }
+        if(item.includes('//analytics-ics.corp.google.com')) { _name = 'analytics-ics'; }
+        if(item.includes('//tagmanager-ics.corp.google.com')) { _name = 'tagmanager-ics'; }
+        if(item.includes('//mcn-ics.corp.google.com')) { _name = 'mcn-ics'; }
+        return _name;
+    }
+
+    return '';
 }
 // Display day next exclude 7,8 
 function dayNextByCustom(_daynext, format="d/m/Y", _isworkinday = true) {
@@ -323,7 +340,38 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                 
                 // AM Function
                 var am_function = () => {
+                    
+                    // Expan cc if not show
+                    window._ntimeexpand = window._ntimeexpand || 0;
+                    if(window._ntimeexpand > 3) {
+                        return false;
+                    }
+                    
+                    var _email_input_cc = () => { 
+                        return document.querySelector(str_elmparent + 'email-address-input.input.cc');
+                    };
+                    var _email_input_bcc = () => {
+                        return document.querySelector(str_elmparent + 'email-address-input.input.bcc');
+                    };
+
+
+                    if(!(_email_input_cc() && _email_input_bcc())) {
+                        if(elmexpand = elm_parentheader.querySelector('[debug-id="expand-button"]')) {
+                            elmexpand.click();    
+                        }
+                        
+                        setTimeout(() => {
+                            am_function();
+                        }, 1000);
+                        
+                        return false;
+                    }
+                    
+                    
+                    
+                    // Start
                     var elm_area = () => { return elm_parentheader.querySelector(".input.cc"); }
+                    
                         if (is_gcc_external) {
                             elm_area = () => { return elm_parentheader.querySelector(".input.bcc"); }
                         }
@@ -336,6 +384,12 @@ function checkInputEmailInboxAndFix(n_once_check = 0){
                             elm_input.dispatchEvent(new Event('input'));
                             elm_input.dispatchEvent(new Event('enter'));
                             elm_input.dispatchEvent(new Event('change'));
+                            
+                            
+                            setTimeout(() => {
+                                elm_input.dispatchEvent(new Event('blur'));
+                            }, 500);
+                            
             
                             // var n_time = 0;
                             // var time_input_key = setInterval(function () {
@@ -932,57 +986,101 @@ function globalForAll(window) {
 
         try {
         
-            var _key = 'cdtx_analytics-ics_listcaseandlink';
             var _datatemp = "";
             var _caseid_indata = "";
             var n_once = 0;
+            var _listcase = [];
             
-            getChromeStorage(_key, (response) => {
-                _datatemp = response.value || "";
-                cLog(() => {console.log("analytics - here started", _datatemp)});
+            var _key = 'cdtx_analytics-ics_listcaseandlink';
+            // getChromeStorage(_key, (response) => {
+            //     _datatemp = response.value || "";
+            //     cLog(() => {console.log("analytics - here started", _datatemp)});
 
-                if(_datatemp) {
-                    var _caseinput = _datatemp.split("|--|");
-                    _caseinput = _caseinput.filter(function(e){return e});
+            //     if(_datatemp) {
+            //         var _caseinput = _datatemp.split("|--|");
+            //         _caseinput = _caseinput.filter(function(e){return e});
                     
-                    _caseinput.forEach((elm) => {
-                        if(elm.includes(location.href)) {
-                            _caseid_indata = elm.split('|-|')[1];
-                        }
-                    });
-                    cLog(() => {console.log("analytics - list", _caseinput)});
+            //         _caseinput.forEach((elm) => {
+            //             if(elm.includes(location.href)) {
+            //                 _caseid_indata = elm.split('|-|')[1];
+            //             }
+            //         });
+            //         cLog(() => {console.log("analytics - list", _caseinput)});
 
-                }
+            //     }
 
-                onClickElm('md-dialog.ics-data-access-reason-dialog button.ics-dialog-confirm', 'click', function(elm, e){
-                    var _parent = elm.closest('md-dialog.ics-data-access-reason-dialog');
-                    var caseid = _parent.querySelector('[name="caseId"]').value;
-                    var _keysave = (location.href + "|-|" + caseid );
-                    if(_datatemp.includes(_keysave) == false) {
-                        _datatemp = _datatemp + "|--|" + _keysave;
-                        setChromeStorage(_key, _datatemp);
+            //     onClickElm('md-dialog.ics-data-access-reason-dialog button.ics-dialog-confirm', 'click', function(elm, e){
+            //         var _parent = elm.closest('md-dialog.ics-data-access-reason-dialog');
+            //         var caseid = _parent.querySelector('[name="caseId"]').value;
+            //         var _keysave = (location.href + "|-|" + caseid );
+            //         if(_datatemp.includes(_keysave) == false) {
+            //             _datatemp = _datatemp + "|--|" + _keysave;
+            //             setChromeStorage(_key, _datatemp);
+            //         }
+            //     });
+            // });
+
+
+            var _key = 'cdtx_tool_quicklink';
+            getChromeStorage(_key, (response) => {
+                _datatemp = response.value || {};
+                cLog(() => {console.info("dongmai - here started", _datatemp)});
+
+
+                
+                Object.entries(_datatemp).forEach(([key, value]) => {
+                    if(value.includes(location.href)) {
+                        _caseid_indata = key;
+                        _listcase.push(key);
                     }
                 });
+                
+                
+                // if(_datatemp) {
+                //     var _caseinput = _datatemp.split("\n");
+                //     _caseinput = _caseinput.filter(function(e){return e});
+                    
+                //     _caseinput.forEach((elm) => {
+                        
+                //     });
+                //     cLog(() => {console.log("dongmai - list", _caseinput)});
+
+                // }
             });
 
 
             observeOnce((elm) => {
                 // on-call, precall button 
                 var _istopelm = document.querySelector(`md-dialog.ics-data-access-reason-dialog [name="caseId"]`);
+                
                 cLog(() => { console.log("analytics - 1") });
                 if(_istopelm) {
-                    cLog(() => { console.log("analytics - 2", _caseid_indata, _datatemp) });
-                    if(_istopelm.value.trim() === '' && _caseid_indata !== '' && n_once === 0) {
+                    if(!_istopelm.classList.contains('is_insert')) {
+                        _istopelm.classList.add('is_insert');
+                        
+                        console.log(_listcase);
+                        cLog(() => { console.log("analytics - 2", _listcase, _caseid_indata, _datatemp) });
+                        
                         _istopelm.value = _caseid_indata;
                         
                         _istopelm.dispatchEvent(new Event('input'));
                         _istopelm.dispatchEvent(new Event('enter'));
                         _istopelm.dispatchEvent(new Event('change'));
-
-                        n_once++;
+                        _istopelm.dispatchEvent(new Event('blur'));
+                        
+                        
+                        if(elm_here = _istopelm.closest('md-input-container')) {
+                            _listcase.forEach(item => {
+                                if(item != _caseid_indata) {
+                                    elm_here.insertAdjacentHTML('beforeEnd', `<span style="user-select: all;padding: 6px 10px;display: inline-block;font-size: 80%;border-bottom: 1px solid #ccc;line-height: 1;white-space: nowrap;border-radius: 5px;margin: 10px 10px 10px 0;">${item}</span>`);    
+                                }
+                                
+                            });
+                            
+                        }
+                        
                     }
-                } else {
-                    n_once = 0;
+                    
                 }
             })
         } catch (error) {
@@ -1049,21 +1147,28 @@ function tagteam_showGTMID() {
 // Support click all elem visbile anytime - like jQuery(document).on("click", "classElemString", function(){   });
 // onClickElm 
 // =====
-function onClickElm(str_selector, eventstr, callback){
+function onClickElm(str_selector, eventstr, _callback){
     document.addEventListener(eventstr, function(e){
-        var str_elm = document.querySelectorAll(str_selector);
-        str_elm.forEach(function(elm){
-            if(elm === e.target) {
-                callback(elm, e);
-            } else {
-                if(e.target.closest(str_selector) === elm ) {
-                    callback(elm, e);
-                }
-            }
-        });
-        
+        e.target.matches(str_selector)&&_callback(e.target, e)
     });
 }
+
+// function onClickElm(str_selector, eventstr, callback){
+    
+    // document.addEventListener(eventstr, function(e){
+    //     var str_elm = document.querySelectorAll(str_selector);
+    //     str_elm.forEach(function(elm){
+    //         if(elm === e.target) {
+    //             callback(elm, e);
+    //         } else {
+    //             if(e.target.closest(str_selector) === elm ) {
+    //                 callback(elm, e);
+    //             }
+    //         }
+    //     });
+        
+    // });
+// }
 
 
 
@@ -2400,6 +2505,179 @@ function getToolShortlink(_caseid, _callback) {
     })
 }
 
+
+function loadGoogleSheetOnlineWebPublics(_callback_ready) {
+    function GoogleSheetOnline(_htmlelm, _callback) {
+        function decodeHTMLEntities(text) {
+            var textArea = document.createElement('textarea');
+            textArea.innerHTML = text;
+            return textArea.value;
+        }
+    
+    
+        function ConvertSheetTable2JsonObject(table) {
+            // var table = document.querySelector('[id="1451083050"] table tbody');
+            // table.querySelector('thead').remove()
+            var header = [];
+            var rows = [];
+            var _innerHTML = '';
+    
+            for (var i = 0; i < table.rows[0].cells.length; i++) {
+                header.push(table.rows[0].cells[i].innerText);
+            }
+    
+            for (var i = 1; i < table.rows.length; i++) {
+                var row = {};
+    
+                // exclude column 0
+                for (var j = 1; j < table.rows[i].cells.length; j++) {
+                    _innerText = table.rows[i].cells[j].innerText;
+    
+                    // get Result
+                    row[header[j]] = _innerText;
+                }
+                rows.push(row);
+            }
+    
+            return rows;
+        }
+    
+        // Giao doan 1: chuyen doi Sheet table -> json
+        var _sheetobj = {};
+        var _objtemp = {};
+        var _id, _text, _rsConvert;
+    
+        _htmlelm.querySelectorAll('#sheet-menu li').forEach((item) => {
+            _objtemp = {};
+            _objtemp.id = item.getAttribute('id').replace('sheet-button-', '');
+            _objtemp.text = item.innerText;
+            _objtemp.sheettab = ConvertSheetTable2JsonObject(_htmlelm.querySelector('[id="' + _objtemp.id + '"] table tbody'));
+            
+            _sheetobj[_objtemp.text] = _objtemp;
+        });
+    
+        _callback(_sheetobj);
+    
+    
+    }
+
+    window.loadgooglesheetpublish = window.loadgooglesheetpublish || {};
+    
+    getChromeStorage("cdtx_loadgooglesheetpublish_timesave", (response) => {
+        var _rs = response.value || 0;
+        var _time_save = parseInt(_rs);
+        var _time_current = parseInt(minuteDateTime());
+
+
+        cLog(() => { console.log('cdtx - google', response.value, _time_current - _time_save); })
+        if((_time_current - _time_save) > 15) {
+            // https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vRMxOxerJ3zWV07uTOdTQCaa13ODbTfZVj5SB7-4Q6QlFhFTU8uXA-wsywXAUUqzHtOiGQdGgCYfRmk/pubhtml#
+            fetch(window.dataTagteam.urlgooglesheet)
+            .then((response) => response.text())
+            .then((data) => {
+                var tempDiv = document.createElement('div');
+                tempDiv.innerHTML = data;
+                
+                GoogleSheetOnline(tempDiv, (_sheetobj) => {
+                    
+                    setChromeStorage("cdtx_loadgooglesheetpublish", _sheetobj, () => {
+                        if(_sheetobj) {
+                            window.loadgooglesheetpublish = _sheetobj;
+
+                            cLog(() => { console.log("LOADSHEET --- DONE ", window.loadgooglesheetpublish); });
+                            _callback_ready();
+                        }
+                        
+                        setChromeStorage("cdtx_loadgooglesheetpublish_timesave", minuteDateTime(), () => {
+                            cLog(() => { console.log("cdtx - loadgooglesheetpublish at " + minuteDateTime()); })
+                        });
+                    });
+                })
+        
+            });
+        } 
+    });
+
+    
+    getChromeStorage("cdtx_loadgooglesheetpublish", (response2) => {
+        var _rs = response2.value || 0;
+        
+        if(_rs) {
+            window.loadgooglesheetpublish = _rs;
+            cLog(() => { console.log("LOADSHEET --- DONE 2 "); });
+            _callback_ready();
+        }
+    });
+}
+
+// setGetQuickLink
+function setGetQuickLink(_caseid, _type, _callback) {
+    var _key = 'cdtx_tool_quicklink';
+    cLog(() =>  { console.log('input', _type); });
+    
+    if(_type == 'remove') {
+        _link = _callback;
+        getChromeStorage(_key, (response) => {
+            var data_notedlist = response.value || {};
+            
+            cLog(() => { console.log('cdtx update_tool_shortlink' , data_notedlist); })
+            
+            var _datalist = data_notedlist[_caseid];
+
+            // replace
+            _datalist = _datalist.replaceAll(_link, '');
+            // slip
+            _datalist_arr = _datalist.split("\n");
+            // filter => remove line empty 
+            _datalist_arr = _datalist_arr.filter(function(e){return e})
+            // join
+            data_notedlist[_caseid] = _datalist_arr.join("\n");
+
+            // SAVE
+            setChromeStorage(_key, data_notedlist, (response2) => {
+                cLog(() => {
+                    console.log("cdtx update_tool_shortlink", response2);
+                });
+            });
+        })
+
+        // Stop
+        return false;
+    }
+
+    if(_type == 'get') {
+        getChromeStorage(_key, (response) => {
+            var data_notedlist = response.value || {};
+            _callback(data_notedlist[_caseid]);
+            return false;
+        })
+        
+        // Stop
+        return false;
+    } else {
+        getChromeStorage(_key, (response) => {
+            var data_notedlist = response.value || {};
+            
+            cLog(() => { console.log('cdtx update_tool_shortlink' , data_notedlist); })
+
+            
+            // data_notedlist[_caseid] =  _type;
+            data_notedlist[_caseid] = data_notedlist[_caseid] ? data_notedlist[_caseid] + "\n" + _type : _type;
+
+            setChromeStorage(_key, data_notedlist, (response2) => {
+                // var datars2 = response2.value || {};
+
+                cLog(() => {
+                    console.log("cdtx update_tool_shortlink", response2);
+                });
+
+                _callback(response2);
+            });
+        })
+    }
+   
+}
+
 // Add more short link 
 function panelAddShortcutLink() {
     if(location.hostname !== 'cases.connect.corp.google.com') return;
@@ -2968,6 +3246,36 @@ function clearAndPrepareCRTemplate() {
 
 
 function getVariableSheetByKeyAndLanguage(_columnname, _keylanguage) {
+    try {
+        if(window.loadgooglesheetpublish) {
+            var _rs = window.loadgooglesheetpublish;
+            var _targetarr = _rs['Variable'].sheettab;
+            // cLog(() => { console.log('xxx', window.loadgooglesheetpublish) });;
+            for (let index = 0; index < _targetarr.length; index++) {
+                const _item = _targetarr[index];
+                
+                if(_item['key'].includes(_keylanguage)) {
+                    // cLog(() => { console.log('xxx',_item[_columnname]) });;
+                    // Load
+                    return _item[_columnname];
+                    break;
+                }
+                
+            }
+        }
+            
+    } catch (error) {
+        cLog(() => {
+            console.error('getVariableSheetByKeyAndLanguage', _columnname, _keylanguage, error)
+        });
+        
+        return false;
+    }
+
+    return false;
+}
+
+function getSystemsSheetByKeyAndLanguage(_columnname, _keylanguage) {
     try {
         if(window.loadgooglesheetpublish) {
             var _rs = window.loadgooglesheetpublish;
@@ -4692,12 +5000,12 @@ function connectAppointment(caseid = null){
 
 
 function _reupdate_outer() {
-    var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"])`);
+    var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) .is-top`);
     var _elm_content = _istopelm.querySelector(`.editor [contenteditable="true"]`);
     _elm_content.dispatchEvent(new Event('input'));
     _elm_content.dispatchEvent(new Event('focus'));
     _elm_content.dispatchEvent(new Event('click'));
-    console.log('DONG', 'HELLO');
+    // console.log('DONG', 'HELLO');
 }
 
 
@@ -5203,5 +5511,113 @@ function stripHtml(html) {
    return tmp.textContent || tmp.innerText || "";
 }
 
+function initLoadGroup() {
+    console.log('initLoadGroup', window.result);
+    document.documentElement.setAttribute("data-hostname", window.location.hostname);
+    document.documentElement.setAttribute("data-setting_mycountry", window.result.mycountry);
+    document.documentElement.setAttribute("data-setting_optionkl__modecase", window.result.optionkl__modecase);
+    
+}
+function styleAllviaSheet(){
+    window._styleallviasheet_once = window._styleallviasheet_once || 0;
 
+    if(window._styleallviasheet_once == 0) {
+        getValueByKeyInSheetname(key = 'style_all', 'System' , (rs) => {
+            window._styleallviasheet_once = 1;
+            document.head.insertAdjacentHTML('beforeEnd',rs);
+        });
+    }
+}
+
+function chatBotPopup(){
+    if(window.dataTagteam.dongtest == false) return;
+    if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
+        
+    var ui = `
+    <style>
+    
+.tr_popupcontact {
+    position: fixed;
+    bottom: 10px;
+    right: auto;
+    left: 10px;
+    left: auto;
+    z-index: 999
+}
+
+.tr_popupcontact__popupinfo {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    background: #fff;
+    width: 320px;
+    max-width: 320px;
+    height: auto;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ccc;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    right: 0
+}
+
+.tr_popupcontact__btn {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: block;
+    background: #fff var(--url-iconcheckbox-call) no-repeat center;
+    background-size: 80%;
+    cursor: pointer
+}
+
+.tr_popupcontact__btn:not(.open)~.tr_popupcontact__popupinfo {
+    display: none!important
+}
+
+.tr_popupcontact__btn.open {
+    background-size: 60%;
+    box-shadow: 0 0 50px #ff671f
+}
+
+.tr_popupcontact [data-type] {
+    padding: 10px;
+    padding-left: 32px;
+    background: var(--url-iconcheckbox-whatsapp) no-repeat left top 10px;
+    background-size: 24px;
+    display: block
+}
+
+.tr_popupcontact [data-type][data-type=whatsapp] {
+    background-image: var(--url-iconcheckbox-whatsapp)
+}
+
+/* DEV */
+html:not([data-setting_optionkl__modecase="Development"]) .tr_popupcontact{
+    display: none;
+}
+
+
+
+    </style>
+    <div class="tr_popupcontact _fordevmode">
+        <span class="tr_popupcontact__btn"></span>
+        <div class="tr_popupcontact__popupinfo">
+        Content
+        </div>
+    </div>`;
+    
+    document.body.insertAdjacentHTML("afterEnd", ui);
+    
+}
+
+function toastify_act(messenger){
+    Toastify({
+        text: messenger,
+        duration: 2000,
+        callback: function(){
+            this.remove();
+        }
+    }).showToast();
+}
 

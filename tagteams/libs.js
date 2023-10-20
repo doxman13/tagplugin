@@ -1154,7 +1154,6 @@ function tagteam_showGTMID() {
 // }
 
 function onClickElm(str_selector, eventstr, callback){
-    
     document.addEventListener(eventstr, function(e){
         var str_elm = document.querySelectorAll(str_selector);
         str_elm.forEach(function(elm){
@@ -1295,17 +1294,30 @@ function setChromeStorage(key, value, _callback = false) {
 
 
 function getChromeStorage(key, _callback = false) {
-    chrome.runtime.sendMessage({method: 'fe2bg_chromestorage_get', key: key}, (response) => {
-        if(_callback !== false) {
-            response = response || {};
-            if(response.value) {
-                if(response.value.case_id) {
-                    // console.log('__DONG get_st', response.value.case_id, response.value);
+    try {
+        chrome.runtime.sendMessage({method: 'fe2bg_chromestorage_get', key: key}, (response) => {
+            if(_callback !== false) {
+                response = response || {};
+                if(response.value) {
+                    if(response.value.case_id) {
+                        // console.log('__DONG get_st', response.value.case_id, response.value);
+                    }
                 }
+                _callback(response);
             }
-            _callback(response);
+        });
+        
+    } catch (error) {
+        window.error_extupdate = window.error_extupdate || 0
+
+        if(window.error_extupdate === 0) {
+            window.error_extupdate = 1;
+            console.log("================================================");
+            console.log("Extension have new version, please reload page!");
+            console.log("================================================");
+            
         }
-    });
+    }
 }
 
 function removeChromeStorage(key, _callback = false) {

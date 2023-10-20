@@ -4816,6 +4816,8 @@ function global_case(optionkl__disable_dialog) {
                                         // Display content
                                         window.calendarCaseNowCaseID = _data.case_id;
                                         templateDisplay(_panel(), _data);
+                                        window.dataCase = _data;
+                                        
                                     }
     
     
@@ -5769,6 +5771,7 @@ function global_case(optionkl__disable_dialog) {
                 _templateCase.customer_name = _lst_value[0];
                 if(
                     _lst_value[0].startsWith('-') 
+                    || _lst_value[0].startsWith('+')
                     || _lst_value[0].startsWith('http')
                 ) {
                     delete _templateCase.customer_name;

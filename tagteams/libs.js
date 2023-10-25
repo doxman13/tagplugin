@@ -246,17 +246,26 @@ function wait4Elem(selector) {
             resolve(el);
             return;
         }
+        let timeoutId = 0;
         new MutationObserver(function (mutationRecords, observer) {
-            setTimeout(() => {
-                console.error('timeout for wait4Elem : ' + selector);
-                reject();
-            }, 15000);
-            // Query for elements matching the specified selector
-            Array.from(document.querySelectorAll(selector)).forEach(function (element) {
-                resolve(element);
-                //Once we have resolved we don't need the observer anymore.
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
                 observer.disconnect();
-            });
+
+                const elem = document.querySelector(selector);
+                if(elem !== null) {
+                    resolve(elem);
+                } else {
+                    reject('timeout for wait4Elem, selector not found: ' + selector);
+                }
+            }, 15000);
+
+            const elem = document.querySelector(selector);
+            if(elem !== null) {
+                clearTimeout(timeoutId);
+                observer.disconnect();
+                resolve(elem);
+            }
         }).observe(document.documentElement, {
             childList: true,
             subtree: true

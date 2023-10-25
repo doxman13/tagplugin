@@ -247,6 +247,10 @@ function wait4Elem(selector) {
             return;
         }
         new MutationObserver(function (mutationRecords, observer) {
+            setTimeout(() => {
+                console.error('timeout for wait4Elem : ' + selector);
+                reject();
+            }, 15000);
             // Query for elements matching the specified selector
             Array.from(document.querySelectorAll(selector)).forEach(function (element) {
                 resolve(element);

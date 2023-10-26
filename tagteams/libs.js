@@ -246,30 +246,31 @@ function wait4Elem(selector) {
             resolve(el);
             return;
         }
+        
         let timeoutId = 0;
-        new MutationObserver(function (mutationRecords, observer) {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => {
-                observer.disconnect();
-
-                const elem = document.querySelector(selector);
-                if(elem !== null) {
-                    resolve(elem);
-                } else {
-                    reject('timeout for wait4Elem, selector not found: ' + selector);
-                }
-            }, 15000);
-
-            const elem = document.querySelector(selector);
+        const observer = new MutationObserver(function (mutationRecords, observer) {
+            const elem = mutationRecords[0].target.querySelector(selector) || document.querySelector(selector);
             if(elem !== null) {
                 clearTimeout(timeoutId);
                 observer.disconnect();
                 resolve(elem);
             }
-        }).observe(document.documentElement, {
+        });
+        observer.observe(document.documentElement, {
             childList: true,
             subtree: true
         });
+
+        timeoutId = setTimeout(() => {
+            observer.disconnect();
+
+            const elem = document.querySelector(selector);
+            if(elem !== null) {
+                resolve(elem);
+            } else {
+                reject('timeout for wait4Elem, selector not found: ' + selector);
+            }
+        }, 15000);
     });
 }
 

@@ -2336,6 +2336,7 @@ function global_case(optionkl__disable_dialog) {
                         update_dispatchevent()
 
                         _sub_modal_remove();
+                        _reupdate_outer();
                     });
 
                     
@@ -5313,17 +5314,21 @@ function global_case(optionkl__disable_dialog) {
                         return 0;
                     });
 
+                    // console.log('window.qlus_datalist', window.qlus_datalist);
+
                     
                     for (const item of _lst_arr_followup) {
-
                         _tr += `<tr>
-                                    <td style="white-space: nowrap"><a href="https://cases.connect.corp.google.com/#/case/${item.case_id}" ${location.hostname != 'cases.connect.corp.google.com' ? ` target="_blank" ` : ''}>${item.case_id}</a></td>
-                                    <td><strong>${item.customer_name}</strong><br>${getDomainOnlyURL(item.customer_website)}</td>
-                                    <td style="white-space: nowrap" >
-                                        <span data-dateinstall="${item.appointment_time_dmy}">${item.follow_up_time_dmy + ` <i date-st="${item.follow_up_time_diffday}">${item.follow_up_time_diffday}</i>`}</span>
-                                    </td>
-                                    <td><span data-btnclk="ui-qplus-addtrviewdetail" data-caseidhere="${item.case_id}" >View</span></td>
-                                </tr>`;
+                            <td style="white-space: nowrap"><a href="https://cases.connect.corp.google.com/#/case/${item.case_id}" ${location.hostname != 'cases.connect.corp.google.com' ? ` target="_blank" ` : ''}>${item.case_id}</a>
+                            ${ item.is_caselt ? `<br> <span class="uiqplus_table-qluslable">LT</span>` : ``}
+                            </td>
+                            <td><strong>${item.customer_name}</strong>
+                            <br>${getDomainOnlyURL(item.customer_website)}</td>
+                            <td style="white-space: nowrap" >
+                                <span data-dateinstall="${item.appointment_time_dmy}">${item.follow_up_time_dmy + ` <i date-st="${item.follow_up_time_diffday}">${item.follow_up_time_diffday}</i>`}</span>
+                            </td>
+                            <td><span data-btnclk="ui-qplus-addtrviewdetail" data-caseidhere="${item.case_id}" >View</span></td>
+                        </tr>`;
                     }                            
                 
                     var _lst_table = `<table class="uiqplus_table">
@@ -6050,35 +6055,37 @@ function global_case(optionkl__disable_dialog) {
     
     // LOAD
     
-            
-    var _once_load = 0;
-    loadGoogleSheetOnlineWebPublics(() => {
-        
-        cLog(() => { console.log("Once Load"); });
-        
-        if(_once_load === 0) {
-            _once_load = _once_load + 1;
-            
-            cLog(() => { console.log("Once Load", window.loadgooglesheetpublish); });
-            initLoadGroup();
-            loadStyle();
-            loadRealtime();
-            autoUpdatelistLinkCalendar(true);
-            clickAction();
-            loadEmailTemplateAction();
-            panelAddShortcutLink();
-            crSubjectByHotKeyEmail();
-            openGAdsbyAdsID();
-            initQplusLoad();
-            uiOnCallPanel();
-            // Load code vanbo
-            tagteamFocusCase();    
-            mailTemplateControl();    
-            tagteam_showGTMID();
-            recheckInfoCase();
-            showListFollowUp();
-            keyupEscAction();
-            chatBotPopup();
-        }
-    })
+    var _initLOAD = () => {
+        initLoadGroup();
+        loadStyle();
+        loadRealtime();
+        autoUpdatelistLinkCalendar(true);
+        clickAction();
+        loadEmailTemplateAction();
+        panelAddShortcutLink();
+        crSubjectByHotKeyEmail();
+        openGAdsbyAdsID();
+        initQplusLoad();
+        uiOnCallPanel();
+        // Load code vanbo
+        tagteamFocusCase();    
+        mailTemplateControl();    
+        tagteam_showGTMID();
+        recheckInfoCase();
+        showListFollowUp();
+        keyupEscAction();
+        chatBotPopup();
+    }
+
+    if(window.isloadgooglesheetonlinewebpublics) {
+        _initLOAD();
+    } else {
+        var _once_load = 0;
+        loadGoogleSheetOnlineWebPublics(() => {
+            if(_once_load === 0) {
+                _once_load = _once_load + 1;
+                _initLOAD()
+            }
+        });
+    }
 }

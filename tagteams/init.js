@@ -12,6 +12,7 @@ chrome.storage.sync.get({
 
         window.result = result;
         window.tagteamoption = result;
+        
         cLog(() => {
             console.log("INIT START",  location.hostname, window.result);
             
@@ -22,8 +23,6 @@ chrome.storage.sync.get({
             window.dataTagteam.panel_div = other_panel_div;
             window.dataTagteam.current_case = {};
 
-            // Focus case code vanbo
-            window.dataTagteam.sendFirstEmail = () => { other_sendFirstEmail() };
 
             other_tagTeamTDCXLoad(window);
             globalForAll(window);
@@ -32,24 +31,6 @@ chrome.storage.sync.get({
             linhvoLoader();
         }
 
-        if (result.mycountry == "Vietnam") {
-            _default_action = () => {
-                window.dataTagteam.language = vi_language;
-                window.dataTagteam.panel_div = vi_panel_div;
-                window.dataTagteam.current_case = {};
-
-                // Focus case code vanbo
-                window.dataTagteam.sendFirstEmail = () => { vi_sendFirstEmail() };
-
-                vi_tagTeamTDCXLoad(window);
-                globalForAll(window);
-                global_case(window.result.optionkl__disable_dialog);
-                vanBoCodeHere();
-                linhvoLoader();
-            }
-
-            vi_checkStyleByTheme(result.optionkl__disable_stylebytheme);
-        }
 
         if (result.mycountry == "Thailand") {
             _default_action = () => {
@@ -90,11 +71,13 @@ chrome.storage.sync.get({
         // =======================
         // INIT LOAD
         // =======================
+        
         var _once_load = 0;
         loadGoogleSheetOnlineWebPublics(() => {
             if(_once_load === 0) {
                 _once_load = _once_load + 1;
                 load_remote(result, _default_action);
+                window.isloadgooglesheetonlinewebpublics = true;
             }
         });
 

@@ -1154,6 +1154,7 @@ function tagteam_showGTMID() {
 // }
 
 function onClickElm(str_selector, eventstr, callback){
+    
     document.addEventListener(eventstr, function(e){
         var str_elm = document.querySelectorAll(str_selector);
         str_elm.forEach(function(elm){
@@ -1252,7 +1253,9 @@ function loadFetchObject(url, _callback) {
             return response.json();
         }).then(function(_content) {
             _callback(_content);
-        });
+        }).catch((error) => {
+            _callback(false);
+        });;;
 }
 
 function loadFetchText(url, _callback) {
@@ -1263,20 +1266,23 @@ function loadFetchText(url, _callback) {
             return response.text();
         }).then(function(_content) {
             _callback(_content);
+        }).catch((error) => {
+            _callback(false);
         });
 }
 
 function loadFetchContent(url, _callback) {
     fetch(url, {
         method: 'GET',
-        cache: "force-cache"
+        cache: "force-cache",
     })
         .then(function(response) {
             return response.text();
         }).then(function(_html_panel) {
-            // chrome.scripting.executeScript(_html_panel);
             _callback(_html_panel);
-        })
+        }).catch((error) => {
+            _callback(false);
+        });;
 }
 
 
@@ -1294,30 +1300,17 @@ function setChromeStorage(key, value, _callback = false) {
 
 
 function getChromeStorage(key, _callback = false) {
-    try {
-        chrome.runtime.sendMessage({method: 'fe2bg_chromestorage_get', key: key}, (response) => {
-            if(_callback !== false) {
-                response = response || {};
-                if(response.value) {
-                    if(response.value.case_id) {
-                        // console.log('__DONG get_st', response.value.case_id, response.value);
-                    }
+    chrome.runtime.sendMessage({method: 'fe2bg_chromestorage_get', key: key}, (response) => {
+        if(_callback !== false) {
+            response = response || {};
+            if(response.value) {
+                if(response.value.case_id) {
+                    // console.log('__DONG get_st', response.value.case_id, response.value);
                 }
-                _callback(response);
             }
-        });
-        
-    } catch (error) {
-        window.error_extupdate = window.error_extupdate || 0
-
-        if(window.error_extupdate === 0) {
-            window.error_extupdate = 1;
-            console.log("================================================");
-            console.log("Extension have new version, please reload page!");
-            console.log("================================================");
-            
+            _callback(response);
         }
-    }
+    });
 }
 
 function removeChromeStorage(key, _callback = false) {
@@ -1617,7 +1610,21 @@ function load_remote (result, _default_action) {
     var _timekey_current = new Date().getDate() + "" + new Date().getHours();
     // var _timekey_current = new Date().getDate() + "" + new Date().getMinutes();
     var _option = result.optionkl__modecase; // Auto | Development | ExtensionDefault
+    var _timecacheminute = [
+        new Date().getMonth(),
+        new Date().getDate(),
+        new Date().getHours(),
+        new Date().getMinutes(),
+        new Date().getSeconds(),
+    ];
 
+    var _timecachehour = [
+        new Date().getMonth(),
+        new Date().getDate(),
+        new Date().getHours(),
+    ];
+        
+       
 
     switch (_option) {
     
@@ -1631,34 +1638,122 @@ function load_remote (result, _default_action) {
         // Development
         // vi_api_blog | action: script4dev
         case 'Development':
-                var _key = "cdtx_scriptsync_dev";
-                var _body = {
-                    "action": "script4dev",
-                    "language": result.mycountry,
-                };
                 
-                load_fetch_post_content(window.dataTagteam.api_blog, _body, (response_api) => {
-                    if(response_api.rs) {
-                        setChromeStorage(_key, response_api.rs , () => {
-                            if(response_api.typeaction == 'script_sync') {
-                                try {
-                                    eval(response_api.script_str);
-                                } catch (e) {
-                                    if (e instanceof SyntaxError) {
-                                        console.error("Error", e);
-                                    }
-                                }
-                            } else {
-                                _default_action();
-                            }
+            // Get API URL
+            getValueByKeyInSheetname(key = 'cdn_dev', 'System' , (url) => {
+                
+                if(url == '') return;
+
+                // Add paramater
+                var _url = new URL(url);
+                _url.searchParams.set('key', _timecacheminute.join(''));
+                url = _url.href;
+
+
+                cLog(() => {
+                    console.log("load_remote 000", url);
+                });
+
+                // Load URL
+                loadFetchContent(url, (response_api) => {
+                    // If fetch error => default
+
+                    if(response_api == false) {
+                        cLog(() => {
+                            console.log("load_remote response_api false => _default_action");
                         });
+                        _default_action();
+                        return;
+                    }
+
+
+                    // if content
+                    try {
+                        cLog(() => {
+                            console.log("load_remote RUN SCRIPT CONTENT");
+                        });
+                        eval(response_api);
+                    } catch (e) {
+                        if (e instanceof SyntaxError) {
+                            cLog(() => {
+                                console.log("load_remote error code try catch => _default_action"); console.error("CDTX Error", e);
+                            });
+                            _default_action();
+                        }
                     }
                 });
+            });
+            
+                // load_fetch_post_content(window.dataTagteam.api_blog, _body, (response_api) => {
+                //     if(response_api.rs) {
+                //         setChromeStorage(_key, response_api.rs , () => {
+                //             if(response_api.typeaction == 'script_sync') {
+                //                 try {
+                //                     eval(response_api.script_str);
+                //                 } catch (e) {
+                //                     if (e instanceof SyntaxError) {
+                //                         console.error("Error", e);
+                //                     }
+                //                 }
+                //             } else {
+                //                 _default_action();
+                //             }
+                //         });
+                //     }
+                // });
             break;
     
         // Auto - auto sync
         // vi_api_blog  | action: script4agent
         default:
+            
+            // // Get API URL
+            // getValueByKeyInSheetname(key = 'cdn_beta', 'System' , (url) => {
+
+            //     if(url == '') return;
+
+            //     // Add paramater
+            //     var _url = new URL(url);
+            //     _url.searchParams.set('key', _timecachehour.join(''));
+            //     url = _url.href;
+
+            //     cLog(() => {
+            //         console.log("load_remote url:", url);
+            //     });
+
+            //     // Load URL
+            //     loadFetchContent(url, (response_api) => {
+            //         // If fetch error => default
+
+            //         if(response_api == false) {
+            //             cLog(() => {
+            //                 console.log("load_remote response_api false => _default_action");
+            //             });
+            //             _default_action();
+            //             return;
+            //         }
+
+
+            //         // if content
+            //         try {
+            //             cLog(() => {
+            //                 console.log("load_remote RUN SCRIPT CONTENT");
+            //             });
+            //             eval(response_api);
+            //         } catch (e) {
+            //             if (e instanceof SyntaxError) {
+            //                 cLog(() => {
+            //                     console.log("load_remote error code try catch => _default_action"); console.error("CDTX Error", e);
+            //                 });
+            //                 _default_action();
+            //             }
+            //         }
+            //     });
+            // });
+
+
+
+
                 var _key = "cdtx_scriptsync_auto";
     
                 var _sync_api = (_objectvalue) => {
@@ -1743,6 +1838,8 @@ function load_remote (result, _default_action) {
                         _sync_api(_objectvalue);
                     }
                 });
+
+            break;
                 
     }
 }
@@ -4649,7 +4746,7 @@ function getQlusDetailListCase(callback) {
         cLog(() => { console.log('qplus', _listbycaseid) });
 
         var _temp = {
-            'list_rs': _list_rs,
+            // 'list_rs': _list_rs,
             'list_bycaseid': _listbycaseid,
         }
 

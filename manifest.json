@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "KL TAG TEAM",
-	"version": "8.5",
+	"version": "8.5.1",
 	"description": "KL TAG TEAM",
 	"icons": {
 		"16": "icon16x16.png",
@@ -40,7 +40,7 @@
 		{
             "js": [ "wfm_helper.js" ],
             "matches": [ "https://appointments.connect.corp.google.com/*",
-			 "https://spewall-backend-uat.corp.google.com/*" 
+						"https://spewall-backend-uat.corp.google.com/*"	
 	    		],
             "run_at": "document_end"
         },

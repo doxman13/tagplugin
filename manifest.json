@@ -39,7 +39,9 @@
 	"content_scripts": [
 		{
             "js": [ "wfm_helper.js" ],
-            "matches": [ "https://appointments.connect.corp.google.com/*" ],
+            "matches": [ "https://appointments.connect.corp.google.com/*",
+			 "https://spewall-backend-uat.corp.google.com/*" 
+	    		],
             "run_at": "document_end"
         },
 		{

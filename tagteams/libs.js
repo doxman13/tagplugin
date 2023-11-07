@@ -24,6 +24,13 @@ function loadCaseDatabaseByID(case_id) {
     return false;
 }
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+}
+
+  
 function getDomainOnlyURL(_argurl) {
     // var _argurl = 'dong.com'
     var _url = '';
@@ -240,6 +247,7 @@ function toggleClass(_class, _elm) {
 // ====
 
 function wait4Elem(selector) {
+    cLog(() => {console.log('wait4Elem use ' + selector)});
     return new Promise(function (resolve, reject) {
         var el = document.querySelector(selector);
         if (el) {
@@ -3320,17 +3328,17 @@ function clearAndPrepareCRTemplate() {
                 }
 
                 // remove text
-                var _tr = _email_body_content_top_content.querySelectorAll("tr");
-                if(_tr.length) {
-                    _tr.forEach((item) => {
-                        var _text = item.innerText.trim();
-                        vi_searchandremove.forEach((item2) => {
-                            if(_text == item2) {
-                                item.remove();
-                            }
-                        })
-                    })
-                }
+                // var _tr = _email_body_content_top_content.querySelectorAll("tr");
+                // if(_tr.length) {
+                //     _tr.forEach((item) => {
+                //         var _text = item.innerText.trim();
+                //         vi_searchandremove.forEach((item2) => {
+                //             if(_text == item2) {
+                //                 item.remove();
+                //             }
+                //         })
+                //     })
+                // }
 
 
                 // Update action
@@ -3413,6 +3421,8 @@ function getSystemsSheetByKeyAndLanguage(_columnname, _keylanguage) {
 
     return false;
 }
+
+
 
 
 // timeLeftGoogleCalendar
@@ -3625,6 +3635,7 @@ function timeLeftGoogleCalendar() {
 
         for (let i1 = 0; i1 < _cols.length; i1++) {
             const element = _cols[i1];
+            // console.log('calendarGetInfoRealtime', )
             // Nếu trong cột ngày có tồn tại kim thời gian thực => cột của ngày hiện tại
             if(element.querySelector('.H3tRZe')) {
                 var _col = element;
@@ -3658,11 +3669,13 @@ function timeLeftGoogleCalendar() {
 
                         // console.log('_get_caseid', _get_caseid);
                         
-                        // 1. Nếu tồn tại Google Meet ID  
-                        var _jslog = _elm.getAttribute('jslog');
-                        if(getMeetID(_jslog)) {
+                        // // 1. Nếu tồn tại Google Meet ID  --- 27/10 Google have remove
+                        // var _jslog = _elm.getAttribute('jslog'); --- 27/10 Google have remove
+                        // if(getMeetID(_jslog)) { --- 27/10 Google have remove
+                        // 2. nếu chứa từ khóa "Calendar: Connect Appointments"
+                        if(_elm.querySelector('.ynRLnc').innerText.includes('Calendar: Connect Appointments')) {
                             if(IS_DEBUG) {
-                                console.log(convertPostion2Time(_pos_realtime_elm_time), convertPostion2Time(_timecasecurrent), _pos_realtime_elm_time, _timecasecurrent, _get_caseid,  getMeetID(_jslog));    
+                                console.log(convertPostion2Time(_pos_realtime_elm_time), convertPostion2Time(_timecasecurrent), _pos_realtime_elm_time, _timecasecurrent, _get_caseid);    
                             }
                             if(_timecasecurrent - _pos_realtime_elm_time > 0) {
                                 var _minute_timeleft = convertPostion2Minute(_timecasecurrent - _pos_realtime_elm_time);
@@ -3694,7 +3707,8 @@ function timeLeftGoogleCalendar() {
                         }
                         
                         // 1.2 Get task
-                        if(_elm.getAttribute('jslog').includes('tasks@tasks.google.com')) {
+                        // console.log('data-eventid', _elm.getAttribute('data-eventid'), _elm.getAttribute('data-eventid').includes('tasks_'));
+                        if(_elm.getAttribute('data-eventid').includes('tasks_')) {
                             if(!_elm.querySelector('.w9eXqe')) {
                                 var _temp_info = {
                                     'timeleft': _minute_timeleft,
@@ -5729,4 +5743,189 @@ function toastify_act(messenger){
         }
     }).showToast();
 }
+
+
+function halloWeenEvent(){
+    if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
+    
+    cLog(() => {  console.log('halloWeenEvent', parseInt(formatDate(new Date(), 'Ym')) > parseInt('202310'), parseInt(formatDate(new Date(), 'Ym')), parseInt('202310')); });
+            
+    var is_end = false;
+    if(parseInt(formatDate(new Date(), 'Ym')) >  parseInt('202310')) {
+        is_end = true;
+        return true;
+    }
+
+    observeOnce((elm) => {
+        if(document.querySelector('._casecalendar_info')) {
+            if(!document.querySelector('._casecalendar_info.cpanel_halloween')) {
+                document.querySelector('._casecalendar_info').classList.add('cpanel_halloween')
+                
+                clearInterval(window.__halloween_interval);
+
+                var __haloween = function() {
+                    return document.querySelector('._connectcase_info--outer span.__haloween');   
+                }
+                if(!__haloween()) {
+                    if(_outer = document.querySelector('._connectcase_info--outer')) {
+                        _outer.insertAdjacentHTML('beforeEnd', '<span class="__haloween"></span>')
+                    }
+                }
+            
+                var __halloween_style = function() {
+                    return document.querySelector('._connectcase_info--outer style.__halloween_style');   
+                }
+                if(!__halloween_style()) {
+                    if(_outer = document.querySelector('._connectcase_info--outer')) {
+                        _outer.insertAdjacentHTML('beforeEnd', '<style class="__halloween_style"></style>')
+                    }
+                }
+            
+                
+                var _style = function(lst_src, _nstype) {
+                    if(!(lst_src[_nstype])) return false;
+
+                    var _percent_arr = [5, 10, 20, 30, 40, 50, 60, 70];
+                    var _percent_arr_2 = [50,60,70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170];
+
+                    var _n_rand_pos_x = _percent_arr[getRandomInt(0, _percent_arr.length - 1)];
+                    var _n_rand_pos_y = _percent_arr[getRandomInt(0, _percent_arr.length - 1)];
+                    var _get = lst_src[_nstype];
+
+                    
+                    var _n_scale = 1;
+                    if(_get.scale) {
+                        if(_get.scale === 'rand') {
+                            _n_scale = _percent_arr_2[getRandomInt(0, _percent_arr_2.length - 1)] / 100;
+                        } else {
+                            _n_scale = _get.scale;
+                        }
+                    }
+                    
+                    
+                    return `.cpanel_halloween  ._connectcase_info--outer {
+                            position: relative;
+                            background: ${_get.bgcolor} !important;
+                            z-index: 1;
+                            padding-bottom: 100px;
+                            overflow: hidden;
+                        }
+                        
+                        .cpanel_halloween  ._connectcase_info--outer span.__haloween {
+                            content: "";
+                            position: absolute;
+                            height: 201px;
+                            width: 250px;
+                            left: ${_n_rand_pos_x}%;
+                            bottom: ${_n_rand_pos_y}%;
+                            background: url('${_get.img}') no-repeat right bottom !important;
+                            background-size: contain !important;
+                            pointer-events: none;
+                            opacity: 1;
+                            z-index: -1;
+                            transform: scale(${_n_scale || 1});
+                            opacity: ${_get.opacity || 1};
+                        }
+                        
+                        .cpanel_halloween  ._connectcase_info--outer ._casecalendar_info--inner *:not(._btn_stall) {
+                            color: ${_get.color} !important;
+                        }
+                    `;
+                }
+
+                var lst_src = [
+                    { color: '#ffffff', bgcolor: '#1e1421', img: 'https://i.pinimg.com/originals/7b/64/7f/7b647f845f4a51ead52e302e0e933fcb.gif' },
+                    { color: '#ffffff', bgcolor: '#413478', img: 'https://i.pinimg.com/originals/d4/d7/e2/d4d7e22ee5f5f434bf0d3176c1718748.gif' },
+                    { color: '#ffffff', bgcolor: '#000000', opacity: 0.7, img: 'https://i.pinimg.com/originals/b5/35/be/b535be0968007c911d87253536da4e48.gif' },
+                    { color: '#ffffff', bgcolor: '#000000', img: 'https://i.pinimg.com/originals/d2/38/08/d23808bfc4ede7de94391c0af818a802.gif' },
+                    { color: '#000000', bgcolor: '#fdd4aa', img: 'https://i.pinimg.com/originals/6c/ba/05/6cba052156541635baac4991b5517ab8.gif' },
+                    { color: '#000000', bgcolor: '#99cc66', scale: 'rand', img: 'https://i.pinimg.com/originals/20/25/92/2025928f3645955c320dd781c2fbb235.gif' },
+                    { color: '#ffffff', bgcolor: '#000000', scale: 'rand', img: 'https://i.pinimg.com/originals/1d/13/ab/1d13abdbefe9ba7af8f0455a90f88b0e.gif'},
+                    { color: '#ffffff', bgcolor: '#101010', opacity: 0.7, scale: 2, img: 'https://i.pinimg.com/originals/39/72/17/3972179e5043dc6bdb61c44d2cab604f.gif'},
+                    { color: '#ffffff', bgcolor: '#000000', opacity: 0.7, img: 'https://i.pinimg.com/originals/4f/35/a3/4f35a346f29bc5572b26750e751ba01c.gif' },
+                    { color: '#ffffff', bgcolor: '#000000', img: 'https://i.pinimg.com/originals/05/97/b1/0597b171925ff0f2f009785b14bb9d44.gif' },
+                    { color: '#ffffff', bgcolor: '#202020', scale: 'rand', img: 'https://i.pinimg.com/originals/8a/61/ab/8a61abcf8effc6010b0094f50c1fc912.gif' },
+                    
+                ]
+
+                
+
+                if(__halloween_style()) {
+                    
+                    var _run = () => {
+                        var _st = parseInt(localStorage.getItem('__halloweenstyle')) || 0;
+                        if(__halloweentime = localStorage.getItem('__halloweentime')) {
+                            const date1 = new Date();
+                            const date2 = new Date(__halloweentime);
+                            const diffTime = Math.abs(date2 - date1);
+                            const diffMinute = Math.ceil(diffTime / (1000 * 60)); 
+    
+                            cLog(() => { console.log('halloWeenEvent diffMinute', diffMinute);});
+    
+                            if(diffMinute > 60) {
+                                localStorage.removeItem('__halloweenstyle');
+                                localStorage.removeItem('__halloweentime');
+                            }
+    
+                        } else {    
+                            var n_rand = getRandomInt(0, lst_src.length - 1);
+                            localStorage.setItem('__halloweenstyle', n_rand);
+                            localStorage.setItem('__halloweentime', new Date());
+                            _st = n_rand;
+                        }
+    
+    
+                        __halloween_style().innerHTML = _style(lst_src, _st);    
+                    };
+                    
+                    
+                    _run();
+                    window.__halloween_interval = setInterval(() => {
+                        _run();
+                    }, 60 * 1000);
+
+                }
+            }
+        }
+    })
+    
+
+}
+
+
+
+function rules_vardatacase(string) {
+    var str = `All {{abv_dec}} of us except @Emran {{abv_dec}} , @Raju and @Noman were there \n {{def}}
+    cdfdf
+    sdfsdf
+    {{avb}}
+    `;
+    str = string;
+
+    try {
+        var _arr = str.match(/{{\w*}}/g)
+        
+        if(typeof _arr == 'object') {
+            _arr = _arr.filter(n => n)
+            _arr = _arr.filter((c, index) => {
+                return _arr.indexOf(c) === index;
+            });
+            
+            
+            _arr.forEach((item) => {
+                var _name = item.replace('{{', '').replace('}}', '');
+                if(value = window.dataCase[_name]) {
+                    str = str.replace(item, value);    
+                }
+            });
+        }
+        
+            
+    } catch (error) {
+        return str;    
+    }
+
+    return str;
+}
+
 

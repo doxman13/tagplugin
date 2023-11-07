@@ -1749,7 +1749,7 @@ var tagteamFocusCase = () => {
                     waitForElm('.suggestion-list .list-item').then(elm => {
                         elm.click();
                         divLoading.remove();
-                        var _title = vi_hotkey_email[key] ? vi_hotkey_email[key] : "Đội giải pháp kỹ thuật - Thông báo";
+                        var _title = "Đội giải pháp kỹ thuật - Thông báo";
                         var _subject = `${_title} [${caseid}]`;
                         
                         if(window.subject_hotkey_email) {

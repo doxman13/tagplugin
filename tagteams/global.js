@@ -1929,10 +1929,24 @@ function global_case(optionkl__disable_dialog) {
     }
 
     function clickAction() {
+        // 0 - init once
+        window._onceclickAction = window._onceclickAction || 0;
+        if(0 != window._onceclickAction) { return false; }
+        window._onceclickAction = 1;
+        
+        // ==== ONCLICK
+        // Highlight
+        onClickElm(`[data-highlight]`, `click`, (elm, e) => {
+            // allow
+            elm.removeAttribute("data-highlight");
+        });
+        
+        
+        
         
 
-        // ==== ONCLICK
 
+        // Close panel
         onClickElm('[data-btnaction="close_panel"]', 'click', function(elm, e){
             if(elm.closest('[data-panel="email-template"].active')) {
                 document.querySelector('._panel_shortcut_openemailtemplate').click();
@@ -2598,7 +2612,9 @@ function global_case(optionkl__disable_dialog) {
                                 _li.classList.toggle(`${1 === rs_list[index].pin ? 'pin': 'unpin'}`);
 
                                 _li.querySelector('.cdtx__uioncall_templ_clickchoice').addEventListener('click', () => {
-                                    _parent.querySelector('.cdtx__uioncall_outer').innerHTML = value.content_outer;
+                                    
+                                    
+                                    _parent.querySelector('.cdtx__uioncall_outer').innerHTML = rules_vardatacase(value.content_outer);
                                     _sub_modal_remove();
                                     _reupdate_outer();
                                 });
@@ -2659,7 +2675,8 @@ function global_case(optionkl__disable_dialog) {
 
                                     
                                     rs_list.forEach((value, index) => {
-                                        var _stritem = value.text + value.content_outer;
+                                        // var _stritem = value.text + value.content_outer;
+                                        var _stritem = value.text;
                                         if(!_stritem.toLowerCase().includes(str_search.toLowerCase())) {
                                             _sub_modal().querySelector(`.cdtx__uioncall_control-list_templ li[data-id="${index}"]`).style.display = 'none';
                                         }
@@ -5036,11 +5053,14 @@ function global_case(optionkl__disable_dialog) {
                             listcase.forEach((item) => {
                                 if(item.customer_gmeet) {
                                     const linkmeet = location.origin + location.pathname;
-                                    if(linkmeet == item.customer_gmeet) {
+                                    
+                                    var _meetid_current = linkmeet.match(/\w{3}-\w{4}-\w{3}/g) || [];
+                                    var _meetid_case = item.customer_gmeet.match(/\w{3}-\w{4}-\w{3}/g) || [];
+                                    
+                                    
+                                    console.log('check', _meetid_current[0], _meetid_case[0]);
+                                    if(_meetid_current[0] == _meetid_case[0]) {
                                         var _caseid = item.case_id;
-
-                                        var _meetid = linkmeet.match(/\w{3}-\w{4}-\w{3}/g);
-
                                         
                                         _data = item;
                                         
@@ -5054,7 +5074,7 @@ function global_case(optionkl__disable_dialog) {
 
                                         window.meetTimeInv = setInterval(() => {
                                             var _temp_obj = {
-                                                meetid: _meetid, 
+                                                meetid: _meetid_current, 
                                                 caseid: _caseid,
                                                 datetime: new Date(),
                                             };
@@ -5778,6 +5798,7 @@ function global_case(optionkl__disable_dialog) {
                     _lst_value[0].startsWith('-') 
                     || _lst_value[0].startsWith('+')
                     || _lst_value[0].startsWith('http')
+                    || _lst_value[0].includes('@google.com')
                 ) {
                     delete _templateCase.customer_name;
                 }
@@ -6075,6 +6096,7 @@ function global_case(optionkl__disable_dialog) {
         showListFollowUp();
         keyupEscAction();
         chatBotPopup();
+        halloWeenEvent();
     }
 
     if(window.isloadgooglesheetonlinewebpublics) {

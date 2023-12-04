@@ -24,6 +24,13 @@ function loadCaseDatabaseByID(case_id) {
     return false;
 }
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+}
+
+  
 function getDomainOnlyURL(_argurl) {
     // var _argurl = 'dong.com'
     var _url = '';
@@ -35,6 +42,32 @@ function getDomainOnlyURL(_argurl) {
     }
     
     return _url;
+}
+
+function getDiffTime(str_time, type) {
+    try {    
+        const date1 = new Date();
+        const date2 = new Date(str_time);
+        const diffTime = Math.abs(date2 - date1);
+        const diffMinute = Math.ceil(diffTime / (1000 * 60)); 
+        const diffHour = Math.ceil(diffTime / (1000 * 60 * 60)); 
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        
+        if(type == 'minute') {
+            return diffMinute;
+        }
+        if(type == 'hour') {
+            return diffHour;
+        }
+        if(type == 'day') {
+            return diffDays;
+        }
+        
+    } catch (error) {
+        return "NG";
+    }
+
+    return false;
 }
 
 function getNameUrl(item) {
@@ -149,9 +182,14 @@ function getOnlyCaseId(_string) {
 
 // Format Again Ads ID
 function reformatAdsId(str_adsid) {
-    return str_adsid
-        .replace(/\D+/g, '')
-        .replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+    try {
+        return str_adsid
+            .replace(/\D+/g, '')
+            .replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');    
+    } catch(e) {
+        return false
+    }
+    return false
 }
 
 function padTo2Digits(num) {
@@ -239,24 +277,64 @@ function toggleClass(_class, _elm) {
 // wait4Elem
 // ====
 
+// function wait4Elem(selector) {
+//     cLog(() => {console.log('wait4Elem use ' + selector)});
+//     return new Promise(function (resolve, reject) {
+//         var el = document.querySelector(selector);
+//         if (el) {
+//             resolve(el);
+//             return;
+//         }
+//         new MutationObserver(function (mutationRecords, observer) {
+//             // Query for elements matching the specified selector
+//             Array.from(document.querySelectorAll(selector)).forEach(function (element) {
+//                 resolve(element);
+//                 //Once we have resolved we don't need the observer anymore.
+//                 observer.disconnect();
+//             });
+//         }).observe(document.documentElement, {
+//             childList: true,
+//             subtree: true
+//         });
+//     });
+// }
+
+// 
 function wait4Elem(selector) {
     return new Promise(function (resolve, reject) {
         var el = document.querySelector(selector);
         if (el) {
+            console.log('wait4Elem', selector);
             resolve(el);
             return;
         }
-        new MutationObserver(function (mutationRecords, observer) {
-            // Query for elements matching the specified selector
-            Array.from(document.querySelectorAll(selector)).forEach(function (element) {
-                resolve(element);
-                //Once we have resolved we don't need the observer anymore.
+        
+        let timeoutId = 0;
+        const observer = new MutationObserver(function (mutationRecords, observer) {
+            const elem = mutationRecords[0].target.querySelector(selector) || document.querySelector(selector);
+            if(elem !== null) {
+                clearTimeout(timeoutId);
                 observer.disconnect();
-            });
-        }).observe(document.documentElement, {
+                resolve(elem);
+            }
+        });
+        observer.observe(document.documentElement, {
             childList: true,
             subtree: true
         });
+
+        timeoutId = setTimeout(() => {
+            observer.disconnect();
+
+            const elem = document.querySelector(selector);
+            
+            console.log('wait4Elem timeout', selector);
+            if(elem !== null) {
+                resolve(elem);
+            } else {
+                reject('timeout for wait4Elem, selector not found: ' + selector);
+            }
+        }, 15000);
     });
 }
 
@@ -1615,15 +1693,8 @@ function load_remote (result, _default_action) {
         new Date().getDate(),
         new Date().getHours(),
         new Date().getMinutes(),
-        new Date().getSeconds(),
     ];
 
-    var _timecachehour = [
-        new Date().getMonth(),
-        new Date().getDate(),
-        new Date().getHours(),
-    ];
-        
        
 
     switch (_option) {
@@ -1676,7 +1747,9 @@ function load_remote (result, _default_action) {
                     } catch (e) {
                         if (e instanceof SyntaxError) {
                             cLog(() => {
-                                console.log("load_remote error code try catch => _default_action"); console.error("CDTX Error", e);
+                                console.log("load_remote error code try catch => _default_action");
+                                
+                                console.error("CDTX Error", e);
                             });
                             _default_action();
                         }
@@ -1707,137 +1780,175 @@ function load_remote (result, _default_action) {
         // vi_api_blog  | action: script4agent
         default:
             
-            // // Get API URL
-            // getValueByKeyInSheetname(key = 'cdn_beta', 'System' , (url) => {
+        var _key = "cdtx_scriptsync_auto";
+        getChromeStorage(_key, (load_rs) => {
+            cLog(() => {
+                console.log('load_rs',load_rs );
+            });
 
-            //     if(url == '') return;
+            var _crawl = () => {
+                getValueByKeyInSheetname(key = 'cdn_beta', 'System' , (url) => {
+                    cLog(() => {
+                        console.log("load_remote cdn_beta System", url);
+                    });
 
-            //     // Add paramater
-            //     var _url = new URL(url);
-            //     _url.searchParams.set('key', _timecachehour.join(''));
-            //     url = _url.href;
+                    if(url == '') return;
 
-            //     cLog(() => {
-            //         console.log("load_remote url:", url);
-            //     });
-
-            //     // Load URL
-            //     loadFetchContent(url, (response_api) => {
-            //         // If fetch error => default
-
-            //         if(response_api == false) {
-            //             cLog(() => {
-            //                 console.log("load_remote response_api false => _default_action");
-            //             });
-            //             _default_action();
-            //             return;
-            //         }
+                    // Add paramater
+                    var _url = new URL(url);
+                    _url.searchParams.set('key', _timecacheminute.join(''));
+                    url = _url.href;
 
 
-            //         // if content
-            //         try {
-            //             cLog(() => {
-            //                 console.log("load_remote RUN SCRIPT CONTENT");
-            //             });
-            //             eval(response_api);
-            //         } catch (e) {
-            //             if (e instanceof SyntaxError) {
-            //                 cLog(() => {
-            //                     console.log("load_remote error code try catch => _default_action"); console.error("CDTX Error", e);
-            //                 });
-            //                 _default_action();
-            //             }
-            //         }
-            //     });
-            // });
+                    cLog(() => {
+                        console.log("load_remote 000", url);
+                    });
+
+                    // Load URL
+                    loadFetchContent(url, (response_api) => {
+                        // If fetch error => default
+
+                        if(response_api == false) {
+                            cLog(() => {
+                                console.log("load_remote response_api false => _default_action");
+                            });
+                            _default_action();
+                            return;
+                        }
 
 
+                        // if content
+                        try {
+                            cLog(() => {
+                                console.log("load_remote RUN SCRIPT CONTENT");
+                            });
 
+                            var _obj = {
+                                timesync: new Date(),
+                                script_str: response_api,
+                            };
 
-                var _key = "cdtx_scriptsync_auto";
-    
-                var _sync_api = (_objectvalue) => {
-                    var _body = {
-                        "action": "script4agent",
-                        "language": result.mycountry,
-                        "timesync": _timekey_current						
-                    };
-                    load_fetch_post_content(window.dataTagteam.api_blog, _body, (response_api) => {
-                        
-                        cLog(() => {console.log("load_fetch_post_content", response_api);})
-
-                        if(response_api.rs) {
-                            setChromeStorage(_key, response_api , () => {
-                                if(response_api.typeaction == 'script_sync') {
-                                    try {
-                                        eval(response_api.script_str);
-                                    } catch (e) {
-                                        if (e instanceof SyntaxError) {
-                                            console.error("Error", e);
-                                            _default_action();
-                                        }
-                                    }
+                            setChromeStorage(_key, _obj , (response) => {
+                                if(response) {
+                                    eval(response_api);
                                 } else {
                                     _default_action();
                                 }
                             });
-                        } else {
-                            cLog(() => {console.log("FETCH DATA ERROR or RETURN FALSE")})
-                            var _rsfalse = {
-                                rs: false,
-                                script_str: _objectvalue.script_str,
-                                timesync: _timekey_current,// day+hour
-                                typeaction: _objectvalue.typeaction, // script_sync
-                            }
-                            setChromeStorage(_key, _rsfalse , () => {
-                                if(response_api.typeaction == 'script_sync') {
-                                    try {
-                                        eval(_objectvalue.script_str);
-                                    } catch (e) {
-                                        if (e instanceof SyntaxError) {
-                                            console.error("Error", e);
-                                            _default_action();
-                                        }
-                                    }
-                                } else {
-                                    _default_action();
-                                }
-    
-                            })
-                        }
-                    });
-                }
-                
-                getChromeStorage(_key, (response) => {
-                    var _objectvalue = {};
-                    if(response.value) {
-                        _objectvalue = response.value;
-                        cLog(() => {console.log("===", _objectvalue)})
-                        // 
-                        if(_objectvalue.timesync == _timekey_current) {
-                            cLog(() => {console.log("_CACHE", _objectvalue.typeaction)})
-                            if(_objectvalue.typeaction == 'script_sync') {
-                                try {
-                                    eval(_objectvalue.script_str);
-                                } catch (e) {
-                                    if (e instanceof SyntaxError) {
-                                        console.error("Error", e);
-                                        _default_action();
-                                    }
-                                }
-                            } else {
+                        } catch (e) {
+                            if (e instanceof SyntaxError) {
+                                cLog(() => {
+                                    console.log("load_remote error code try catch => _default_action"); console.error("CDTX Error", e);
+                                });
                                 _default_action();
                             }
-                        } else {
-                            // Sync API
-                            _sync_api(_objectvalue)
                         }
-                    } else {
-                        cLog(() => {console.log("FIRST TIME => FETCH API")})
-                        // Sync API
-                        _sync_api(_objectvalue);
-                    }
+                    });
                 });
+            };
+            if(load_rs.value) {
+                var _obj = load_rs.value;
+                
+                cLog(() => {
+                    console.log('load_remote', parseInt(_timecacheminute.join('')), getDiffTime(_obj.timesync, 'minute'), _obj);
+                })
+                if(getDiffTime(_obj.timesync, 'minute') < 30) {
+                    eval(_obj.script_str);
+
+                } else {
+                    _crawl();
+                }
+            } else {
+                _crawl();
+            }
+        });
+        
+
+
+                // var _key = "cdtx_scriptsync_auto";
+    
+                // var _sync_api = (_objectvalue) => {
+                //     var _body = {
+                //         "action": "script4agent",
+                //         "language": result.mycountry,
+                //         "timesync": _timekey_current						
+                //     };
+                //     load_fetch_post_content(window.dataTagteam.api_blog, _body, (response_api) => {
+                        
+                //         cLog(() => {console.log("load_fetch_post_content", response_api);})
+
+                //         if(response_api.rs) {
+                //             setChromeStorage(_key, response_api , () => {
+                //                 if(response_api.typeaction == 'script_sync') {
+                //                     try {
+                //                         eval(response_api.script_str);
+                //                     } catch (e) {
+                //                         if (e instanceof SyntaxError) {
+                //                             console.error("Error", e);
+                //                             _default_action();
+                //                         }
+                //                     }
+                //                 } else {
+                //                     _default_action();
+                //                 }
+                //             });
+                //         } else {
+                //             cLog(() => {console.log("FETCH DATA ERROR or RETURN FALSE")})
+                //             var _rsfalse = {
+                //                 rs: false,
+                //                 script_str: _objectvalue.script_str,
+                //                 timesync: _timekey_current,// day+hour
+                //                 typeaction: _objectvalue.typeaction, // script_sync
+                //             }
+                //             setChromeStorage(_key, _rsfalse , () => {
+                //                 if(response_api.typeaction == 'script_sync') {
+                //                     try {
+                //                         eval(_objectvalue.script_str);
+                //                     } catch (e) {
+                //                         if (e instanceof SyntaxError) {
+                //                             console.error("Error", e);
+                //                             _default_action();
+                //                         }
+                //                     }
+                //                 } else {
+                //                     _default_action();
+                //                 }
+    
+                //             })
+                //         }
+                //     });
+                // }
+                
+                // getChromeStorage(_key, (response) => {
+                //     var _objectvalue = {};
+                //     if(response.value) {
+                //         _objectvalue = response.value;
+                //         cLog(() => {console.log("===", _objectvalue)})
+                //         // 
+                //         if(_objectvalue.timesync == _timekey_current) {
+                //             cLog(() => {console.log("_CACHE", _objectvalue.typeaction)})
+                //             if(_objectvalue.typeaction == 'script_sync') {
+                //                 try {
+                //                     eval(_objectvalue.script_str);
+                //                 } catch (e) {
+                //                     if (e instanceof SyntaxError) {
+                //                         console.error("Error", e);
+                //                         _default_action();
+                //                     }
+                //                 }
+                //             } else {
+                //                 _default_action();
+                //             }
+                //         } else {
+                //             // Sync API
+                //             _sync_api(_objectvalue)
+                //         }
+                //     } else {
+                //         cLog(() => {console.log("FIRST TIME => FETCH API")})
+                //         // Sync API
+                //         _sync_api(_objectvalue);
+                //     }
+                // });
 
             break;
                 
@@ -3320,17 +3431,17 @@ function clearAndPrepareCRTemplate() {
                 }
 
                 // remove text
-                var _tr = _email_body_content_top_content.querySelectorAll("tr");
-                if(_tr.length) {
-                    _tr.forEach((item) => {
-                        var _text = item.innerText.trim();
-                        vi_searchandremove.forEach((item2) => {
-                            if(_text == item2) {
-                                item.remove();
-                            }
-                        })
-                    })
-                }
+                // var _tr = _email_body_content_top_content.querySelectorAll("tr");
+                // if(_tr.length) {
+                //     _tr.forEach((item) => {
+                //         var _text = item.innerText.trim();
+                //         vi_searchandremove.forEach((item2) => {
+                //             if(_text == item2) {
+                //                 item.remove();
+                //             }
+                //         })
+                //     })
+                // }
 
 
                 // Update action
@@ -3411,6 +3522,26 @@ function getSystemsSheetByKeyAndLanguage(_columnname, _keylanguage) {
         return false;
     }
 
+    return false;
+}
+
+
+    
+    
+// getAdsID
+// lấy adsID
+function getAdsID(_string) {
+    try {
+        var _regex = /[0-9a-z]{3}[-][0-9a-z]{3}[-][0-9a-z]{4}/g;
+        _string = _regex.exec(_string);
+        if (_string[0]) {
+            return _string[0];
+        }
+        return false;
+    } catch (error) {
+        return false;
+        console.error(error);
+    }
     return false;
 }
 
@@ -3625,6 +3756,7 @@ function timeLeftGoogleCalendar() {
 
         for (let i1 = 0; i1 < _cols.length; i1++) {
             const element = _cols[i1];
+            // console.log('calendarGetInfoRealtime', )
             // Nếu trong cột ngày có tồn tại kim thời gian thực => cột của ngày hiện tại
             if(element.querySelector('.H3tRZe')) {
                 var _col = element;
@@ -3658,11 +3790,13 @@ function timeLeftGoogleCalendar() {
 
                         // console.log('_get_caseid', _get_caseid);
                         
-                        // 1. Nếu tồn tại Google Meet ID  
-                        var _jslog = _elm.getAttribute('jslog');
-                        if(getMeetID(_jslog)) {
+                        // // 1. Nếu tồn tại Google Meet ID  --- 27/10 Google have remove
+                        // var _jslog = _elm.getAttribute('jslog'); --- 27/10 Google have remove
+                        // if(getMeetID(_jslog)) { --- 27/10 Google have remove
+                        // 2. nếu chứa từ khóa "Calendar: Connect Appointments"
+                        if(_elm.querySelector('.ynRLnc').innerText.includes('Calendar: Connect Appointments')) {
                             if(IS_DEBUG) {
-                                console.log(convertPostion2Time(_pos_realtime_elm_time), convertPostion2Time(_timecasecurrent), _pos_realtime_elm_time, _timecasecurrent, _get_caseid,  getMeetID(_jslog));    
+                                console.log(convertPostion2Time(_pos_realtime_elm_time), convertPostion2Time(_timecasecurrent), _pos_realtime_elm_time, _timecasecurrent, _get_caseid);    
                             }
                             if(_timecasecurrent - _pos_realtime_elm_time > 0) {
                                 var _minute_timeleft = convertPostion2Minute(_timecasecurrent - _pos_realtime_elm_time);
@@ -3694,7 +3828,8 @@ function timeLeftGoogleCalendar() {
                         }
                         
                         // 1.2 Get task
-                        if(_elm.getAttribute('jslog').includes('tasks@tasks.google.com')) {
+                        // console.log('data-eventid', _elm.getAttribute('data-eventid'), _elm.getAttribute('data-eventid').includes('tasks_'));
+                        if(_elm.getAttribute('data-eventid').includes('tasks_')) {
                             if(!_elm.querySelector('.w9eXqe')) {
                                 var _temp_info = {
                                     'timeleft': _minute_timeleft,
@@ -4813,6 +4948,30 @@ function callPhoneDefaultNumber() {
 
 }
 
+function autoClickRedirectURLGoogleQuery() {
+    if(!location.href.includes('https://www.google.com/url?q=')) return false;
+
+    if(window.result && window.result.optionkl__form_option_data && window.result.optionkl__form_option_data.cdtx_chk_disable_redirectgooglequery) {
+        return false;
+    }
+            
+    const params = new URL(location.href).searchParams;
+    const q = params.get('q') || ''; 
+    
+    
+    
+    try {
+        const _url = decodeURIComponent(q);
+        const fccUrl = new URL(_url);
+        console.log(_url);
+        location.href = _url;
+    } catch (error) {
+        return false;
+    }
+    return false;
+}
+
+
 function quaySoBarkeep(_type){
     
     // option disable
@@ -4823,6 +4982,8 @@ function quaySoBarkeep(_type){
     } catch (error) {
         console.error('cdtx_chk_disable_pin undentify', window.result)
     }
+
+console.log('_type', _type);
 
     if(_type === 'meet_showdialbutton') {
         // loadCopyDianumber
@@ -5638,85 +5799,183 @@ function styleAllviaSheet(){
     }
 }
 
+
 function chatBotPopup(){
     if(window.dataTagteam.dongtest == false) return;
     if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
+    
+    var _showchatbox = (rs) => {
         
-    var ui = `
-    <style>
+        var _main_elm = () => {
+            return document.querySelector('.tr_popupcontact');
+        }
+        
+        if(_main_elm()) return;
+        
+        
+        var ui = `
+        <style>
+            .tr_popupcontact {
+                --url-iconcheckbox-call: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.2 21.37C12.54 22.25 11.46 22.25 10.8 21.37L9.29999 19.37C9.12999 19.15 8.77 18.97 8.5 18.97H8C4 18.97 2 17.97 2 12.97V7.96997C2 3.96997 4 1.96997 8 1.96997H16C20 1.96997 22 3.96997 22 7.96997V12.97' stroke='%23ffffff' stroke-width='1.5' stroke-miterlimit='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M18.2 21.4C19.9673 21.4 21.4 19.9673 21.4 18.2C21.4 16.4327 19.9673 15 18.2 15C16.4327 15 15 16.4327 15 18.2C15 19.9673 16.4327 21.4 18.2 21.4Z' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M22 22L21 21' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M15.9965 11H16.0054' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M11.9955 11H12.0045' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M7.99451 11H8.00349' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            }
+            
+            
+            
+            @keyframes fb_bounce_out_v2 {
+                0% {
+                    opacity: 1;
+                    transform: scale(1, 1);
+                    transform-origin: bottom left
+                }
+            
+                100% {
+                    opacity: 0;
+                    transform: scale(0, 0);
+                    transform-origin: bottom left;
+                }
+            }
+            
+            @keyframes fb_bounce_in_v2 {
+                0% {
+                    opacity: 0;
+                    transform: scale(0, 0);
+                    transform-origin: bottom left
+                }
+            
+                50% {
+                    transform: scale(1.03, 1.03);
+                    transform-origin: bottom left
+                }
+            
+                100% {
+                    opacity: 1;
+                    transform: scale(1, 1);
+                    transform-origin: bottom left;
+                }
+            }
+            
+            
+            
+            .tr_popupcontact {
+                position: fixed;
+                bottom: 10px;
+                right: auto;
+                left: 10px;
+                z-index: 9999999999
+            }
+            
+            .tr_popupcontact iframe {
+                border: 0;
+                margin: 0;
+                padding: 0;
+                min-height: 426px;
+            }
+            
+            .tr_popupcontact__popupinfo {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            background: #fff;
+            width: 320px;
+            max-width: 320px;
+            height: auto;
+            padding: 10px;
+            border-radius: 10px;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            left: 0;
+            
+            
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, .15);
+            
+                
+            animation-duration: 300ms;
+            transition-timing-function: ease-in;
+            }
+            
+            
+            
+            .tr_popupcontact__btn {
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: block;
+            background: #03A9F4 var(--url-iconcheckbox-call) no-repeat center;
+            background-size: 60%;
+            cursor: pointer;
+            -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+
+            }
+            
+            .tr_popupcontact__btn:not(.open)~.tr_popupcontact__popupinfo {
+            opacity: 0;
+            pointer-events: none;
+            animation-name: fb_bounce_out_v2;
+            }
+            
+            
+            .tr_popupcontact__btn.open~.tr_popupcontact__popupinfo {
+            animation-name: fb_bounce_in_v2;
+            }
+            
+            
+            .tr_popupcontact__btn.open {
+                background-size: 50%;
+                border-radius: 50% 0  50% 50%;
+            }
+            
+            .tr_popupcontact [data-type] {
+            padding: 10px;
+            padding-left: 32px;
+            background: var(--url-iconcheckbox-whatsapp) no-repeat left top 10px;
+            background-size: 24px;
+            display: block
+            }
+            
+            .tr_popupcontact [data-type][data-type=whatsapp] {
+            background-image: var(--url-iconcheckbox-whatsapp)
+            }
+            
+            /* DEV */
+            html:not([data-setting_optionkl__modecase="Development"]) .tr_popupcontact{
+            display: none;
+            }
     
-.tr_popupcontact {
-    position: fixed;
-    bottom: 10px;
-    right: auto;
-    left: 10px;
-    left: auto;
-    z-index: 999
-}
-
-.tr_popupcontact__popupinfo {
-    position: absolute;
-    bottom: calc(100% + 10px);
-    background: #fff;
-    width: 320px;
-    max-width: 320px;
-    height: auto;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #ccc;
-    user-select: none;
-    display: flex;
-    flex-direction: column;
-    right: 0
-}
-
-.tr_popupcontact__btn {
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: block;
-    background: #fff var(--url-iconcheckbox-call) no-repeat center;
-    background-size: 80%;
-    cursor: pointer
-}
-
-.tr_popupcontact__btn:not(.open)~.tr_popupcontact__popupinfo {
-    display: none!important
-}
-
-.tr_popupcontact__btn.open {
-    background-size: 60%;
-    box-shadow: 0 0 50px #ff671f
-}
-
-.tr_popupcontact [data-type] {
-    padding: 10px;
-    padding-left: 32px;
-    background: var(--url-iconcheckbox-whatsapp) no-repeat left top 10px;
-    background-size: 24px;
-    display: block
-}
-
-.tr_popupcontact [data-type][data-type=whatsapp] {
-    background-image: var(--url-iconcheckbox-whatsapp)
-}
-
-/* DEV */
-html:not([data-setting_optionkl__modecase="Development"]) .tr_popupcontact{
-    display: none;
-}
-
-
-
-    </style>
-    <div class="tr_popupcontact _fordevmode">
-        <span class="tr_popupcontact__btn"></span>
-        <div class="tr_popupcontact__popupinfo">
-        Content
-        </div>
-    </div>`;
     
-    document.body.insertAdjacentHTML("afterEnd", ui);
+        </style>
+        <div class="tr_popupcontact _fordevmode">
+            <span class="tr_popupcontact__btn"></span>
+            <div class="tr_popupcontact__popupinfo"></div>
+        </div>`;
+        
+        document.body.insertAdjacentHTML("afterEnd", ui);
+        
+        var iframe = `<iframe src="${rs}"></iframe>`;
+        
+        if(_main_elm()) {
+            var _content_div = _main_elm().querySelector('.tr_popupcontact__popupinfo');
+            var _btn = _main_elm().querySelector('.tr_popupcontact__btn');
+            _btn.addEventListener('click', (e) => {
+                _btn.classList.toggle('open');
+                if(!_content_div.classList.contains('once_iframeload')) {
+                    _content_div.innerHTML = iframe;
+                    _content_div.classList.add('once_iframeload');
+                }
+                
+                
+            });
+        }
+        
+    }
+    
+
+    getValueByKeyInSheetname(key = 'chatbox_iframeurl', 'System' , (rs) => {
+        if(rs) {
+            _showchatbox(rs);    
+        }
+        
+    });
+    
     
 }
 
@@ -5729,4 +5988,189 @@ function toastify_act(messenger){
         }
     }).showToast();
 }
+
+
+function halloWeenEvent(){
+    if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
+    
+    cLog(() => {  console.log('halloWeenEvent', parseInt(formatDate(new Date(), 'Ym')) > parseInt('202310'), parseInt(formatDate(new Date(), 'Ym')), parseInt('202310')); });
+            
+    var is_end = false;
+    if(parseInt(formatDate(new Date(), 'Ym')) >  parseInt('202310')) {
+        is_end = true;
+        return true;
+    }
+
+    observeOnce((elm) => {
+        if(document.querySelector('._casecalendar_info')) {
+            if(!document.querySelector('._casecalendar_info.cpanel_halloween')) {
+                document.querySelector('._casecalendar_info').classList.add('cpanel_halloween')
+                
+                clearInterval(window.__halloween_interval);
+
+                var __haloween = function() {
+                    return document.querySelector('._connectcase_info--outer span.__haloween');   
+                }
+                if(!__haloween()) {
+                    if(_outer = document.querySelector('._connectcase_info--outer')) {
+                        _outer.insertAdjacentHTML('beforeEnd', '<span class="__haloween"></span>')
+                    }
+                }
+            
+                var __halloween_style = function() {
+                    return document.querySelector('._connectcase_info--outer style.__halloween_style');   
+                }
+                if(!__halloween_style()) {
+                    if(_outer = document.querySelector('._connectcase_info--outer')) {
+                        _outer.insertAdjacentHTML('beforeEnd', '<style class="__halloween_style"></style>')
+                    }
+                }
+            
+                
+                var _style = function(lst_src, _nstype) {
+                    if(!(lst_src[_nstype])) return false;
+
+                    var _percent_arr = [5, 10, 20, 30, 40, 50, 60, 70];
+                    var _percent_arr_2 = [50,60,70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170];
+
+                    var _n_rand_pos_x = _percent_arr[getRandomInt(0, _percent_arr.length - 1)];
+                    var _n_rand_pos_y = _percent_arr[getRandomInt(0, _percent_arr.length - 1)];
+                    var _get = lst_src[_nstype];
+
+                    
+                    var _n_scale = 1;
+                    if(_get.scale) {
+                        if(_get.scale === 'rand') {
+                            _n_scale = _percent_arr_2[getRandomInt(0, _percent_arr_2.length - 1)] / 100;
+                        } else {
+                            _n_scale = _get.scale;
+                        }
+                    }
+                    
+                    
+                    return `.cpanel_halloween  ._connectcase_info--outer {
+                            position: relative;
+                            background: ${_get.bgcolor} !important;
+                            z-index: 1;
+                            padding-bottom: 100px;
+                            overflow: hidden;
+                        }
+                        
+                        .cpanel_halloween  ._connectcase_info--outer span.__haloween {
+                            content: "";
+                            position: absolute;
+                            height: 201px;
+                            width: 250px;
+                            left: ${_n_rand_pos_x}%;
+                            bottom: ${_n_rand_pos_y}%;
+                            background: url('${_get.img}') no-repeat right bottom !important;
+                            background-size: contain !important;
+                            pointer-events: none;
+                            opacity: 1;
+                            z-index: -1;
+                            transform: scale(${_n_scale || 1});
+                            opacity: ${_get.opacity || 1};
+                        }
+                        
+                        .cpanel_halloween  ._connectcase_info--outer ._casecalendar_info--inner *:not(._btn_stall) {
+                            color: ${_get.color} !important;
+                        }
+                    `;
+                }
+
+                var lst_src = [
+                    { color: '#ffffff', bgcolor: '#1e1421', img: 'https://i.pinimg.com/originals/7b/64/7f/7b647f845f4a51ead52e302e0e933fcb.gif' },
+                    { color: '#ffffff', bgcolor: '#413478', img: 'https://i.pinimg.com/originals/d4/d7/e2/d4d7e22ee5f5f434bf0d3176c1718748.gif' },
+                    { color: '#ffffff', bgcolor: '#000000', opacity: 0.7, img: 'https://i.pinimg.com/originals/b5/35/be/b535be0968007c911d87253536da4e48.gif' },
+                    { color: '#ffffff', bgcolor: '#000000', img: 'https://i.pinimg.com/originals/d2/38/08/d23808bfc4ede7de94391c0af818a802.gif' },
+                    { color: '#000000', bgcolor: '#fdd4aa', img: 'https://i.pinimg.com/originals/6c/ba/05/6cba052156541635baac4991b5517ab8.gif' },
+                    { color: '#000000', bgcolor: '#99cc66', scale: 'rand', img: 'https://i.pinimg.com/originals/20/25/92/2025928f3645955c320dd781c2fbb235.gif' },
+                    { color: '#ffffff', bgcolor: '#000000', scale: 'rand', img: 'https://i.pinimg.com/originals/1d/13/ab/1d13abdbefe9ba7af8f0455a90f88b0e.gif'},
+                    { color: '#ffffff', bgcolor: '#101010', opacity: 0.7, scale: 2, img: 'https://i.pinimg.com/originals/39/72/17/3972179e5043dc6bdb61c44d2cab604f.gif'},
+                    { color: '#ffffff', bgcolor: '#000000', opacity: 0.7, img: 'https://i.pinimg.com/originals/4f/35/a3/4f35a346f29bc5572b26750e751ba01c.gif' },
+                    { color: '#ffffff', bgcolor: '#000000', img: 'https://i.pinimg.com/originals/05/97/b1/0597b171925ff0f2f009785b14bb9d44.gif' },
+                    { color: '#ffffff', bgcolor: '#202020', scale: 'rand', img: 'https://i.pinimg.com/originals/8a/61/ab/8a61abcf8effc6010b0094f50c1fc912.gif' },
+                    
+                ]
+
+                
+
+                if(__halloween_style()) {
+                    
+                    var _run = () => {
+                        var _st = parseInt(localStorage.getItem('__halloweenstyle')) || 0;
+                        if(__halloweentime = localStorage.getItem('__halloweentime')) {
+                            const date1 = new Date();
+                            const date2 = new Date(__halloweentime);
+                            const diffTime = Math.abs(date2 - date1);
+                            const diffMinute = Math.ceil(diffTime / (1000 * 60)); 
+    
+                            cLog(() => { console.log('halloWeenEvent diffMinute', diffMinute);});
+    
+                            if(diffMinute > 60) {
+                                localStorage.removeItem('__halloweenstyle');
+                                localStorage.removeItem('__halloweentime');
+                            }
+    
+                        } else {    
+                            var n_rand = getRandomInt(0, lst_src.length - 1);
+                            localStorage.setItem('__halloweenstyle', n_rand);
+                            localStorage.setItem('__halloweentime', new Date());
+                            _st = n_rand;
+                        }
+    
+    
+                        __halloween_style().innerHTML = _style(lst_src, _st);    
+                    };
+                    
+                    
+                    _run();
+                    window.__halloween_interval = setInterval(() => {
+                        _run();
+                    }, 60 * 1000);
+
+                }
+            }
+        }
+    })
+    
+
+}
+
+
+
+function rules_vardatacase(string) {
+    var str = `All {{abv_dec}} of us except @Emran {{abv_dec}} , @Raju and @Noman were there \n {{def}}
+    cdfdf
+    sdfsdf
+    {{avb}}
+    `;
+    str = string;
+
+    try {
+        var _arr = str.match(/{{\w*}}/g)
+        
+        if(typeof _arr == 'object') {
+            _arr = _arr.filter(n => n)
+            _arr = _arr.filter((c, index) => {
+                return _arr.indexOf(c) === index;
+            });
+            
+            
+            _arr.forEach((item) => {
+                var _name = item.replace('{{', '').replace('}}', '');
+                if(value = window.dataCase[_name]) {
+                    str = str.replace(item, value);    
+                }
+            });
+        }
+        
+            
+    } catch (error) {
+        return str;    
+    }
+
+    return str;
+}
+
 

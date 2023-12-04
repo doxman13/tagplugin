@@ -1749,7 +1749,7 @@ var tagteamFocusCase = () => {
                     waitForElm('.suggestion-list .list-item').then(elm => {
                         elm.click();
                         divLoading.remove();
-                        var _title = vi_hotkey_email[key] ? vi_hotkey_email[key] : "Đội giải pháp kỹ thuật - Thông báo";
+                        var _title = "Đội giải pháp kỹ thuật - Thông báo";
                         var _subject = `${_title} [${caseid}]`;
                         
                         if(window.subject_hotkey_email) {
@@ -1761,10 +1761,33 @@ var tagteamFocusCase = () => {
                         
                         _subject = _subject.replaceAll('{%case_id%}', sCaseId());
                         
+                        
+                        
                         document.querySelector('.is-top .subject').value = _subject;
                         document.querySelector('.is-top .subject').focus();
                         document.querySelector('.is-top .subject').dispatchEvent(new Event('input'));
-                        document.execCommand('innerText', false, ' ')
+                        document.execCommand('innerText', false, ' ');
+                        
+                        try {
+                            
+                            if(key.includes('so ver')) {
+                                if(document.querySelector('.is-top [debug-id="solution_offered_checkbox"].disabled')) {                                        
+                                    Toastify({
+                                        text: 'Please update Tracking Issue Time',
+                                        duration: 3000,
+                                        class: "warning",
+                                        callback: function(){
+                                            this.remove();
+                                        }
+                                    }).showToast();
+        
+                                    document.querySelector('[debug-id="dock-item-issue"]').click();
+                                }
+                            }
+                        
+                        } catch (e) {
+                            console.error(e)
+                        }
                     });
                 });
             });

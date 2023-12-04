@@ -193,6 +193,14 @@ function restore_options() {
                     document.querySelector(`form [name="${key}"]`).checked = true;
                 }
             }
+
+            
+            if(key.startsWith('cdtx_select')) {
+                document.querySelector(`form [name="${key}"]`).selected = false;
+                if(value) {
+                    document.querySelector(`form [name="${key}"]`).selected = true;
+                }
+            }
             
             if(key.startsWith('cdtx_text')) {
                 document.querySelector(`form [name="${key}"]`).value = "";

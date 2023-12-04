@@ -44,6 +44,32 @@ function getDomainOnlyURL(_argurl) {
     return _url;
 }
 
+function getDiffTime(str_time, type) {
+    try {    
+        const date1 = new Date();
+        const date2 = new Date(str_time);
+        const diffTime = Math.abs(date2 - date1);
+        const diffMinute = Math.ceil(diffTime / (1000 * 60)); 
+        const diffHour = Math.ceil(diffTime / (1000 * 60 * 60)); 
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        
+        if(type == 'minute') {
+            return diffMinute;
+        }
+        if(type == 'hour') {
+            return diffHour;
+        }
+        if(type == 'day') {
+            return diffDays;
+        }
+        
+    } catch (error) {
+        return "NG";
+    }
+
+    return false;
+}
+
 function getNameUrl(item) {
     // var _argurl = 'dong.com'
     if(item.trim()) {
@@ -156,9 +182,14 @@ function getOnlyCaseId(_string) {
 
 // Format Again Ads ID
 function reformatAdsId(str_adsid) {
-    return str_adsid
-        .replace(/\D+/g, '')
-        .replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+    try {
+        return str_adsid
+            .replace(/\D+/g, '')
+            .replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');    
+    } catch(e) {
+        return false
+    }
+    return false
 }
 
 function padTo2Digits(num) {
@@ -246,25 +277,64 @@ function toggleClass(_class, _elm) {
 // wait4Elem
 // ====
 
+// function wait4Elem(selector) {
+//     cLog(() => {console.log('wait4Elem use ' + selector)});
+//     return new Promise(function (resolve, reject) {
+//         var el = document.querySelector(selector);
+//         if (el) {
+//             resolve(el);
+//             return;
+//         }
+//         new MutationObserver(function (mutationRecords, observer) {
+//             // Query for elements matching the specified selector
+//             Array.from(document.querySelectorAll(selector)).forEach(function (element) {
+//                 resolve(element);
+//                 //Once we have resolved we don't need the observer anymore.
+//                 observer.disconnect();
+//             });
+//         }).observe(document.documentElement, {
+//             childList: true,
+//             subtree: true
+//         });
+//     });
+// }
+
+// 
 function wait4Elem(selector) {
-    cLog(() => {console.log('wait4Elem use ' + selector)});
     return new Promise(function (resolve, reject) {
         var el = document.querySelector(selector);
         if (el) {
+            console.log('wait4Elem', selector);
             resolve(el);
             return;
         }
-        new MutationObserver(function (mutationRecords, observer) {
-            // Query for elements matching the specified selector
-            Array.from(document.querySelectorAll(selector)).forEach(function (element) {
-                resolve(element);
-                //Once we have resolved we don't need the observer anymore.
+        
+        let timeoutId = 0;
+        const observer = new MutationObserver(function (mutationRecords, observer) {
+            const elem = mutationRecords[0].target.querySelector(selector) || document.querySelector(selector);
+            if(elem !== null) {
+                clearTimeout(timeoutId);
                 observer.disconnect();
-            });
-        }).observe(document.documentElement, {
+                resolve(elem);
+            }
+        });
+        observer.observe(document.documentElement, {
             childList: true,
             subtree: true
         });
+
+        timeoutId = setTimeout(() => {
+            observer.disconnect();
+
+            const elem = document.querySelector(selector);
+            
+            console.log('wait4Elem timeout', selector);
+            if(elem !== null) {
+                resolve(elem);
+            } else {
+                reject('timeout for wait4Elem, selector not found: ' + selector);
+            }
+        }, 15000);
     });
 }
 
@@ -1623,15 +1693,8 @@ function load_remote (result, _default_action) {
         new Date().getDate(),
         new Date().getHours(),
         new Date().getMinutes(),
-        new Date().getSeconds(),
     ];
 
-    var _timecachehour = [
-        new Date().getMonth(),
-        new Date().getDate(),
-        new Date().getHours(),
-    ];
-        
        
 
     switch (_option) {
@@ -1684,7 +1747,9 @@ function load_remote (result, _default_action) {
                     } catch (e) {
                         if (e instanceof SyntaxError) {
                             cLog(() => {
-                                console.log("load_remote error code try catch => _default_action"); console.error("CDTX Error", e);
+                                console.log("load_remote error code try catch => _default_action");
+                                
+                                console.error("CDTX Error", e);
                             });
                             _default_action();
                         }
@@ -1715,137 +1780,175 @@ function load_remote (result, _default_action) {
         // vi_api_blog  | action: script4agent
         default:
             
-            // // Get API URL
-            // getValueByKeyInSheetname(key = 'cdn_beta', 'System' , (url) => {
+        var _key = "cdtx_scriptsync_auto";
+        getChromeStorage(_key, (load_rs) => {
+            cLog(() => {
+                console.log('load_rs',load_rs );
+            });
 
-            //     if(url == '') return;
+            var _crawl = () => {
+                getValueByKeyInSheetname(key = 'cdn_beta', 'System' , (url) => {
+                    cLog(() => {
+                        console.log("load_remote cdn_beta System", url);
+                    });
 
-            //     // Add paramater
-            //     var _url = new URL(url);
-            //     _url.searchParams.set('key', _timecachehour.join(''));
-            //     url = _url.href;
+                    if(url == '') return;
 
-            //     cLog(() => {
-            //         console.log("load_remote url:", url);
-            //     });
-
-            //     // Load URL
-            //     loadFetchContent(url, (response_api) => {
-            //         // If fetch error => default
-
-            //         if(response_api == false) {
-            //             cLog(() => {
-            //                 console.log("load_remote response_api false => _default_action");
-            //             });
-            //             _default_action();
-            //             return;
-            //         }
+                    // Add paramater
+                    var _url = new URL(url);
+                    _url.searchParams.set('key', _timecacheminute.join(''));
+                    url = _url.href;
 
 
-            //         // if content
-            //         try {
-            //             cLog(() => {
-            //                 console.log("load_remote RUN SCRIPT CONTENT");
-            //             });
-            //             eval(response_api);
-            //         } catch (e) {
-            //             if (e instanceof SyntaxError) {
-            //                 cLog(() => {
-            //                     console.log("load_remote error code try catch => _default_action"); console.error("CDTX Error", e);
-            //                 });
-            //                 _default_action();
-            //             }
-            //         }
-            //     });
-            // });
+                    cLog(() => {
+                        console.log("load_remote 000", url);
+                    });
+
+                    // Load URL
+                    loadFetchContent(url, (response_api) => {
+                        // If fetch error => default
+
+                        if(response_api == false) {
+                            cLog(() => {
+                                console.log("load_remote response_api false => _default_action");
+                            });
+                            _default_action();
+                            return;
+                        }
 
 
+                        // if content
+                        try {
+                            cLog(() => {
+                                console.log("load_remote RUN SCRIPT CONTENT");
+                            });
 
+                            var _obj = {
+                                timesync: new Date(),
+                                script_str: response_api,
+                            };
 
-                var _key = "cdtx_scriptsync_auto";
-    
-                var _sync_api = (_objectvalue) => {
-                    var _body = {
-                        "action": "script4agent",
-                        "language": result.mycountry,
-                        "timesync": _timekey_current						
-                    };
-                    load_fetch_post_content(window.dataTagteam.api_blog, _body, (response_api) => {
-                        
-                        cLog(() => {console.log("load_fetch_post_content", response_api);})
-
-                        if(response_api.rs) {
-                            setChromeStorage(_key, response_api , () => {
-                                if(response_api.typeaction == 'script_sync') {
-                                    try {
-                                        eval(response_api.script_str);
-                                    } catch (e) {
-                                        if (e instanceof SyntaxError) {
-                                            console.error("Error", e);
-                                            _default_action();
-                                        }
-                                    }
+                            setChromeStorage(_key, _obj , (response) => {
+                                if(response) {
+                                    eval(response_api);
                                 } else {
                                     _default_action();
                                 }
                             });
-                        } else {
-                            cLog(() => {console.log("FETCH DATA ERROR or RETURN FALSE")})
-                            var _rsfalse = {
-                                rs: false,
-                                script_str: _objectvalue.script_str,
-                                timesync: _timekey_current,// day+hour
-                                typeaction: _objectvalue.typeaction, // script_sync
-                            }
-                            setChromeStorage(_key, _rsfalse , () => {
-                                if(response_api.typeaction == 'script_sync') {
-                                    try {
-                                        eval(_objectvalue.script_str);
-                                    } catch (e) {
-                                        if (e instanceof SyntaxError) {
-                                            console.error("Error", e);
-                                            _default_action();
-                                        }
-                                    }
-                                } else {
-                                    _default_action();
-                                }
-    
-                            })
-                        }
-                    });
-                }
-                
-                getChromeStorage(_key, (response) => {
-                    var _objectvalue = {};
-                    if(response.value) {
-                        _objectvalue = response.value;
-                        cLog(() => {console.log("===", _objectvalue)})
-                        // 
-                        if(_objectvalue.timesync == _timekey_current) {
-                            cLog(() => {console.log("_CACHE", _objectvalue.typeaction)})
-                            if(_objectvalue.typeaction == 'script_sync') {
-                                try {
-                                    eval(_objectvalue.script_str);
-                                } catch (e) {
-                                    if (e instanceof SyntaxError) {
-                                        console.error("Error", e);
-                                        _default_action();
-                                    }
-                                }
-                            } else {
+                        } catch (e) {
+                            if (e instanceof SyntaxError) {
+                                cLog(() => {
+                                    console.log("load_remote error code try catch => _default_action"); console.error("CDTX Error", e);
+                                });
                                 _default_action();
                             }
-                        } else {
-                            // Sync API
-                            _sync_api(_objectvalue)
                         }
-                    } else {
-                        cLog(() => {console.log("FIRST TIME => FETCH API")})
-                        // Sync API
-                        _sync_api(_objectvalue);
-                    }
+                    });
                 });
+            };
+            if(load_rs.value) {
+                var _obj = load_rs.value;
+                
+                cLog(() => {
+                    console.log('load_remote', parseInt(_timecacheminute.join('')), getDiffTime(_obj.timesync, 'minute'), _obj);
+                })
+                if(getDiffTime(_obj.timesync, 'minute') < 30) {
+                    eval(_obj.script_str);
+
+                } else {
+                    _crawl();
+                }
+            } else {
+                _crawl();
+            }
+        });
+        
+
+
+                // var _key = "cdtx_scriptsync_auto";
+    
+                // var _sync_api = (_objectvalue) => {
+                //     var _body = {
+                //         "action": "script4agent",
+                //         "language": result.mycountry,
+                //         "timesync": _timekey_current						
+                //     };
+                //     load_fetch_post_content(window.dataTagteam.api_blog, _body, (response_api) => {
+                        
+                //         cLog(() => {console.log("load_fetch_post_content", response_api);})
+
+                //         if(response_api.rs) {
+                //             setChromeStorage(_key, response_api , () => {
+                //                 if(response_api.typeaction == 'script_sync') {
+                //                     try {
+                //                         eval(response_api.script_str);
+                //                     } catch (e) {
+                //                         if (e instanceof SyntaxError) {
+                //                             console.error("Error", e);
+                //                             _default_action();
+                //                         }
+                //                     }
+                //                 } else {
+                //                     _default_action();
+                //                 }
+                //             });
+                //         } else {
+                //             cLog(() => {console.log("FETCH DATA ERROR or RETURN FALSE")})
+                //             var _rsfalse = {
+                //                 rs: false,
+                //                 script_str: _objectvalue.script_str,
+                //                 timesync: _timekey_current,// day+hour
+                //                 typeaction: _objectvalue.typeaction, // script_sync
+                //             }
+                //             setChromeStorage(_key, _rsfalse , () => {
+                //                 if(response_api.typeaction == 'script_sync') {
+                //                     try {
+                //                         eval(_objectvalue.script_str);
+                //                     } catch (e) {
+                //                         if (e instanceof SyntaxError) {
+                //                             console.error("Error", e);
+                //                             _default_action();
+                //                         }
+                //                     }
+                //                 } else {
+                //                     _default_action();
+                //                 }
+    
+                //             })
+                //         }
+                //     });
+                // }
+                
+                // getChromeStorage(_key, (response) => {
+                //     var _objectvalue = {};
+                //     if(response.value) {
+                //         _objectvalue = response.value;
+                //         cLog(() => {console.log("===", _objectvalue)})
+                //         // 
+                //         if(_objectvalue.timesync == _timekey_current) {
+                //             cLog(() => {console.log("_CACHE", _objectvalue.typeaction)})
+                //             if(_objectvalue.typeaction == 'script_sync') {
+                //                 try {
+                //                     eval(_objectvalue.script_str);
+                //                 } catch (e) {
+                //                     if (e instanceof SyntaxError) {
+                //                         console.error("Error", e);
+                //                         _default_action();
+                //                     }
+                //                 }
+                //             } else {
+                //                 _default_action();
+                //             }
+                //         } else {
+                //             // Sync API
+                //             _sync_api(_objectvalue)
+                //         }
+                //     } else {
+                //         cLog(() => {console.log("FIRST TIME => FETCH API")})
+                //         // Sync API
+                //         _sync_api(_objectvalue);
+                //     }
+                // });
 
             break;
                 
@@ -3423,6 +3526,24 @@ function getSystemsSheetByKeyAndLanguage(_columnname, _keylanguage) {
 }
 
 
+    
+    
+// getAdsID
+// lấy adsID
+function getAdsID(_string) {
+    try {
+        var _regex = /[0-9a-z]{3}[-][0-9a-z]{3}[-][0-9a-z]{4}/g;
+        _string = _regex.exec(_string);
+        if (_string[0]) {
+            return _string[0];
+        }
+        return false;
+    } catch (error) {
+        return false;
+        console.error(error);
+    }
+    return false;
+}
 
 
 // timeLeftGoogleCalendar
@@ -4827,6 +4948,30 @@ function callPhoneDefaultNumber() {
 
 }
 
+function autoClickRedirectURLGoogleQuery() {
+    if(!location.href.includes('https://www.google.com/url?q=')) return false;
+
+    if(window.result && window.result.optionkl__form_option_data && window.result.optionkl__form_option_data.cdtx_chk_disable_redirectgooglequery) {
+        return false;
+    }
+            
+    const params = new URL(location.href).searchParams;
+    const q = params.get('q') || ''; 
+    
+    
+    
+    try {
+        const _url = decodeURIComponent(q);
+        const fccUrl = new URL(_url);
+        console.log(_url);
+        location.href = _url;
+    } catch (error) {
+        return false;
+    }
+    return false;
+}
+
+
 function quaySoBarkeep(_type){
     
     // option disable
@@ -4837,6 +4982,8 @@ function quaySoBarkeep(_type){
     } catch (error) {
         console.error('cdtx_chk_disable_pin undentify', window.result)
     }
+
+console.log('_type', _type);
 
     if(_type === 'meet_showdialbutton') {
         // loadCopyDianumber
@@ -5652,85 +5799,183 @@ function styleAllviaSheet(){
     }
 }
 
+
 function chatBotPopup(){
     if(window.dataTagteam.dongtest == false) return;
     if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
+    
+    var _showchatbox = (rs) => {
         
-    var ui = `
-    <style>
+        var _main_elm = () => {
+            return document.querySelector('.tr_popupcontact');
+        }
+        
+        if(_main_elm()) return;
+        
+        
+        var ui = `
+        <style>
+            .tr_popupcontact {
+                --url-iconcheckbox-call: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.2 21.37C12.54 22.25 11.46 22.25 10.8 21.37L9.29999 19.37C9.12999 19.15 8.77 18.97 8.5 18.97H8C4 18.97 2 17.97 2 12.97V7.96997C2 3.96997 4 1.96997 8 1.96997H16C20 1.96997 22 3.96997 22 7.96997V12.97' stroke='%23ffffff' stroke-width='1.5' stroke-miterlimit='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M18.2 21.4C19.9673 21.4 21.4 19.9673 21.4 18.2C21.4 16.4327 19.9673 15 18.2 15C16.4327 15 15 16.4327 15 18.2C15 19.9673 16.4327 21.4 18.2 21.4Z' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M22 22L21 21' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M15.9965 11H16.0054' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M11.9955 11H12.0045' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M7.99451 11H8.00349' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            }
+            
+            
+            
+            @keyframes fb_bounce_out_v2 {
+                0% {
+                    opacity: 1;
+                    transform: scale(1, 1);
+                    transform-origin: bottom left
+                }
+            
+                100% {
+                    opacity: 0;
+                    transform: scale(0, 0);
+                    transform-origin: bottom left;
+                }
+            }
+            
+            @keyframes fb_bounce_in_v2 {
+                0% {
+                    opacity: 0;
+                    transform: scale(0, 0);
+                    transform-origin: bottom left
+                }
+            
+                50% {
+                    transform: scale(1.03, 1.03);
+                    transform-origin: bottom left
+                }
+            
+                100% {
+                    opacity: 1;
+                    transform: scale(1, 1);
+                    transform-origin: bottom left;
+                }
+            }
+            
+            
+            
+            .tr_popupcontact {
+                position: fixed;
+                bottom: 10px;
+                right: auto;
+                left: 10px;
+                z-index: 9999999999
+            }
+            
+            .tr_popupcontact iframe {
+                border: 0;
+                margin: 0;
+                padding: 0;
+                min-height: 426px;
+            }
+            
+            .tr_popupcontact__popupinfo {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            background: #fff;
+            width: 320px;
+            max-width: 320px;
+            height: auto;
+            padding: 10px;
+            border-radius: 10px;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            left: 0;
+            
+            
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, .15);
+            
+                
+            animation-duration: 300ms;
+            transition-timing-function: ease-in;
+            }
+            
+            
+            
+            .tr_popupcontact__btn {
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: block;
+            background: #03A9F4 var(--url-iconcheckbox-call) no-repeat center;
+            background-size: 60%;
+            cursor: pointer;
+            -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+
+            }
+            
+            .tr_popupcontact__btn:not(.open)~.tr_popupcontact__popupinfo {
+            opacity: 0;
+            pointer-events: none;
+            animation-name: fb_bounce_out_v2;
+            }
+            
+            
+            .tr_popupcontact__btn.open~.tr_popupcontact__popupinfo {
+            animation-name: fb_bounce_in_v2;
+            }
+            
+            
+            .tr_popupcontact__btn.open {
+                background-size: 50%;
+                border-radius: 50% 0  50% 50%;
+            }
+            
+            .tr_popupcontact [data-type] {
+            padding: 10px;
+            padding-left: 32px;
+            background: var(--url-iconcheckbox-whatsapp) no-repeat left top 10px;
+            background-size: 24px;
+            display: block
+            }
+            
+            .tr_popupcontact [data-type][data-type=whatsapp] {
+            background-image: var(--url-iconcheckbox-whatsapp)
+            }
+            
+            /* DEV */
+            html:not([data-setting_optionkl__modecase="Development"]) .tr_popupcontact{
+            display: none;
+            }
     
-.tr_popupcontact {
-    position: fixed;
-    bottom: 10px;
-    right: auto;
-    left: 10px;
-    left: auto;
-    z-index: 999
-}
-
-.tr_popupcontact__popupinfo {
-    position: absolute;
-    bottom: calc(100% + 10px);
-    background: #fff;
-    width: 320px;
-    max-width: 320px;
-    height: auto;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #ccc;
-    user-select: none;
-    display: flex;
-    flex-direction: column;
-    right: 0
-}
-
-.tr_popupcontact__btn {
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: block;
-    background: #fff var(--url-iconcheckbox-call) no-repeat center;
-    background-size: 80%;
-    cursor: pointer
-}
-
-.tr_popupcontact__btn:not(.open)~.tr_popupcontact__popupinfo {
-    display: none!important
-}
-
-.tr_popupcontact__btn.open {
-    background-size: 60%;
-    box-shadow: 0 0 50px #ff671f
-}
-
-.tr_popupcontact [data-type] {
-    padding: 10px;
-    padding-left: 32px;
-    background: var(--url-iconcheckbox-whatsapp) no-repeat left top 10px;
-    background-size: 24px;
-    display: block
-}
-
-.tr_popupcontact [data-type][data-type=whatsapp] {
-    background-image: var(--url-iconcheckbox-whatsapp)
-}
-
-/* DEV */
-html:not([data-setting_optionkl__modecase="Development"]) .tr_popupcontact{
-    display: none;
-}
-
-
-
-    </style>
-    <div class="tr_popupcontact _fordevmode">
-        <span class="tr_popupcontact__btn"></span>
-        <div class="tr_popupcontact__popupinfo">
-        Content
-        </div>
-    </div>`;
     
-    document.body.insertAdjacentHTML("afterEnd", ui);
+        </style>
+        <div class="tr_popupcontact _fordevmode">
+            <span class="tr_popupcontact__btn"></span>
+            <div class="tr_popupcontact__popupinfo"></div>
+        </div>`;
+        
+        document.body.insertAdjacentHTML("afterEnd", ui);
+        
+        var iframe = `<iframe src="${rs}"></iframe>`;
+        
+        if(_main_elm()) {
+            var _content_div = _main_elm().querySelector('.tr_popupcontact__popupinfo');
+            var _btn = _main_elm().querySelector('.tr_popupcontact__btn');
+            _btn.addEventListener('click', (e) => {
+                _btn.classList.toggle('open');
+                if(!_content_div.classList.contains('once_iframeload')) {
+                    _content_div.innerHTML = iframe;
+                    _content_div.classList.add('once_iframeload');
+                }
+                
+                
+            });
+        }
+        
+    }
+    
+
+    getValueByKeyInSheetname(key = 'chatbox_iframeurl', 'System' , (rs) => {
+        if(rs) {
+            _showchatbox(rs);    
+        }
+        
+    });
+    
     
 }
 

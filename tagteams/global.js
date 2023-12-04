@@ -1645,6 +1645,7 @@ function global_case(optionkl__disable_dialog) {
                         </div>
                         <div class="cdtx__uioncall_outer">
                             <p dir="auto"><b>Sub-status:&nbsp;&nbsp;<span class="_sub_i" data-btnclk="choice_status_list" data-infocase="status_case" >Click Choice</span></b> </p>
+                            <p dir="auto"><b>AM Program: <span data-highlight="need_recheck">{{customer_program}}</span></b>&nbsp;&nbsp; </p>
                             <p dir="auto"><b>Sub-status Reason:</b>&nbsp;&nbsp; </p>
                             <p dir="auto"><b data-btnclk="oncall_templ_act_flchoice" data-dateformat="d/m/Y" >FL:&nbsp;&nbsp;</b><span data-text="oncall_templ_act_flchoice-text" >NA</span></p>
                             <p dir="auto"><b>Speakeasy ID:&nbsp;&nbsp;</b> Call log</p>
@@ -1674,10 +1675,9 @@ function global_case(optionkl__disable_dialog) {
 
                         dom.addEventListener("click", () => {
                             var _paneltext = document.createElement('div');
-                            _paneltext.innerHTML = text;
+                            _paneltext.innerHTML = rules_vardatacase(text);
                             var _caseid = document.querySelector('[debug-id="case-id"] span.case-id').innerText;
                             
-
                             
                             
                             
@@ -2605,6 +2605,7 @@ function global_case(optionkl__disable_dialog) {
                                 _li.setAttribute('data-id', index);
                                 _li.innerHTML = `<span class="cdtx__uioncall_templ_clickchoice" >${value.text}</span>
                                 <span class="gr">
+                                    <span class="cdtx__uioncall_templ_clickedit" >Edit</span>
                                     <span class="cdtx__uioncall_templ_clickdelete" >Del</span>
                                     <span class="cdtx__uioncall_templ_clickpin" >${1 === rs_list[index].pin ? 'Unpin': 'Pin'}</span>
                                 </span>
@@ -2632,6 +2633,46 @@ function global_case(optionkl__disable_dialog) {
                                         _li.remove();
                                         _parent.classList.remove('isloading');
                                     });   
+                                });
+                                
+                                // Edit
+                                _li.querySelector('.cdtx__uioncall_templ_clickedit').addEventListener('click', (e_edit) => {
+                                    var areaedit = function() { return _li.querySelector('.cdtx__uioncall_templ_areaedit'); };
+                                    
+                                    var btnthis = e_edit.target;
+                                    
+                                    if(!areaedit()) {
+                                        btnthis.innerText = 'Save!';
+                                        const dom_areaedit = document.createElement("div");
+                                        dom_areaedit.className = 'cdtx__uioncall_templ_areaedit';
+                                        // console.log('zzzzzzzzzzz', window.dataCase);
+                                        
+                                        var a_key = [];
+                                        for (const [key, value] of Object.entries(window.dataCase)) {
+                                            a_key.push(`<span>{{${key}}}</span>`);
+                                        }
+                                        
+
+                                        dom_areaedit.innerHTML = `<div class="cdtx__uioncall_templ_areaedit--shortbar" data-length="${a_key.length}">${a_key.join(' | ')}</div><div class="cdtx__uioncall_templ_areaedit--content" contenteditable="true" >${value.content_outer}</div>`;
+                                        
+                                        _li.insertAdjacentElement('beforeEnd', dom_areaedit);
+                                        _li.classList.add('isediting');
+                                    } else {
+                                        
+                                        rs_list[index].content_outer = areaedit().querySelector('.cdtx__uioncall_templ_areaedit--content').innerHTML;
+                                        
+                                        // console.log(rs_list);
+                                        setChromeStorage("oncall_templ_list", rs_list, (response) => {
+                                            // console.log(response)
+                                        });   
+                                    
+                                    
+                                        btnthis.innerText = "Edit";
+                                        
+                                        areaedit().remove();
+                                        _li.classList.remove('isediting');
+                                    }
+                                    
                                 });
 
                                 _li.querySelector('.cdtx__uioncall_templ_clickpin').addEventListener('click', (e) => {
@@ -5138,6 +5179,9 @@ function global_case(optionkl__disable_dialog) {
         var elm_popup_lstcasefl = () => {return document.querySelector('.li-popup_lstcasefl');};
         
         var data_case = {};
+        
+        
+        var isshowallcase = isshowallcase || false;
 
         try {
             
@@ -5183,17 +5227,21 @@ function global_case(optionkl__disable_dialog) {
                     // cLog(() => { console.log('showListFollowUp listcase', listcase) });
     
                     var n_havedate = 0;
+                    var n_havedatefl = 0;
                     var listcase_havefl = [];
                     var isadd = false;
+                    var ishave_appointmenttime = false;
                     listcase.forEach((item) => {
                         isadd = false;
+                        ishave_appointmenttime = false;
+                        
                         if(item.appointment_time) {
                             var [_day,_month,_year] = item.appointment_time.split('/');
                             if(_day && _month && _year) {
                                 item.order_datetimeformat = new Date(`${_year}/${_month}/${_day}`);
                                 item.appointment_time_datetimeformat = new Date(`${_year}/${_month}/${_day}`);
-                                
-                                
+                                        
+                                ishave_appointmenttime = true;
                                 if(_get_diffday_number(`${_year}/${_month}/${_day}`) > -1) {
                                     isadd = true;
                                     
@@ -5213,13 +5261,14 @@ function global_case(optionkl__disable_dialog) {
                                 item.order_datetimeformat = new Date(`${_year}/${_month}/${_day}`);
                                 item.follow_up_time_datetimeformat = new Date(`${_year}/${_month}/${_day}`);
                                 
+                                n_havedatefl++;   
                                 isadd = true;
                             }
                         }
                         
                         // console.log('compare', isadd, item.follow_up_time, _get_diffday_number(`${_year}/${_month}/${_day}`));
-                                
-                        if(isadd) {
+                        // console.log(`zzzz ${ishave_appointmenttime}`);
+                        if(isadd || isshowallcase) {
                             n_havedate++;
                             listcase_havefl.push(item);
                         }
@@ -5228,6 +5277,7 @@ function global_case(optionkl__disable_dialog) {
                     if(n_havedate > 0) {
                         data_case.rs = true;
                         data_case.n_havedate = n_havedate;
+                        data_case.n_havedatefl = n_havedatefl;
                         data_case.listcase_havefl = listcase_havefl;
             
                         _callback();
@@ -5277,7 +5327,9 @@ function global_case(optionkl__disable_dialog) {
                     <div class="cdtx_lstcasefl--container">
                         <div class="cdtx_lstcasefl--listheader">
                             <a href="#" class="cdtx_lstcasefl--listheader-a-dboard_qplus _btn_stall" target="_blank">Dashboard Q+</a>
+                            <span class="cdtx_lstcasefl--listheader-showall _btn_stall" >All case</span>
                         </div>
+                        <div class="cdtx_lstcasefl--searchbar"><span class="cdtx_lstcasefl--searchbar-input" contenteditable="true" data-value="" ></span></div>
                         <div class="cdtx_lstcasefl--tablecontainer">
                         </div>
                     </div>`;
@@ -5296,6 +5348,40 @@ function global_case(optionkl__disable_dialog) {
                             elm.setAttribute('data-url_qplus_dashboard_check', rs);
                         }
                     });
+                    
+                    if(elm = cdtx_lstcasefl_elm.querySelector('.cdtx_lstcasefl--listheader-showall')) {
+                        elm.addEventListener('click', (e) => {
+                            _sub_modal().innerHTML = '';
+                            isshowallcase = true;
+                            ui_table_list_modal();
+                        });
+                    }
+                    
+                    if(elm = cdtx_lstcasefl_elm.querySelector('.cdtx_lstcasefl--searchbar-input')) {
+                        var _uiqplus_table = function() { return document.querySelector('.uiqplus_table'); };
+                        elm.addEventListener('keyup', (e) => {
+                            var textinput = e.target.innerText;
+                            e.target.setAttribute('data-value', textinput);
+                            console.log(textinput);
+                            if(_uiqplus_table()) {
+                                _uiqplus_table().querySelectorAll('tbody tr').forEach((elm_tr) => {
+                                    var _str1 = '';
+                                    if(elm_herrre = elm_tr.querySelector('[data-dateinstall]')) {
+                                        _str1 = elm_herrre.getAttribute('data-dateinstall');
+                                    }
+                                    var _str2 = elm_tr.innerText;
+                                    if(_str1.includes(textinput) || _str2.includes(textinput)) {
+                                        elm_tr.style.display = "";
+                                    } else {
+                                        elm_tr.style.display = "none";
+                                    }
+                                })
+                            }
+                        });
+                    }
+                    
+                    
+                    
 
                     var _tr = '';
                     var _lst_arr_followup = [];
@@ -5342,8 +5428,17 @@ function global_case(optionkl__disable_dialog) {
                             <td style="white-space: nowrap"><a href="https://cases.connect.corp.google.com/#/case/${item.case_id}" ${location.hostname != 'cases.connect.corp.google.com' ? ` target="_blank" ` : ''}>${item.case_id}</a>
                             ${ item.is_caselt ? `<br> <span class="uiqplus_table-qluslable">LT</span>` : ``}
                             </td>
-                            <td><strong>${item.customer_name}</strong>
-                            <br>${getDomainOnlyURL(item.customer_website)}</td>
+                            <td>
+                            <div>
+                                <strong>${item.customer_name}</strong>
+                                <br>
+                                <small style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; " >
+                                    ${getDomainOnlyURL(item.customer_website)}
+                                    <br>${reformatAdsId(item.customer_adsid) || 'N/A'} <sup>${item.customer_ocid}</sup>
+                                    <br>${item.tasks}
+                                <small>
+                            </div>
+                            </td>
                             <td style="white-space: nowrap" >
                                 <span data-dateinstall="${item.appointment_time_dmy}">${item.follow_up_time_dmy + ` <i date-st="${item.follow_up_time_diffday}">${item.follow_up_time_diffday}</i>`}</span>
                             </td>
@@ -5356,7 +5451,7 @@ function global_case(optionkl__disable_dialog) {
                             <tr>
                                 <th>Case ID</th>
                                 <th>Adv info</th>
-                                <th><span>Date FL (${data_case.n_havedate})</span></th>
+                                <th><span>Date FL (${data_case.n_havedatefl + " / " + data_case.n_havedate})</span></th>
                                 <th class="uiqplus-act"><span data-btnclk="ui-qplus-addtrviewall" >View all</span></th>
                             </tr>
                         </thead>
@@ -5388,6 +5483,7 @@ function global_case(optionkl__disable_dialog) {
                                 
                                 
                                 elm_popup_lstcasefl().addEventListener('click', (elm) => {
+                                    isshowallcase = false;
                                     ui_table_list_modal();
                                 });
                             } 
@@ -5733,7 +5829,7 @@ function global_case(optionkl__disable_dialog) {
                     && (
                         _lowertext.startsWith('p:')
                         || _lowertext.startsWith('+')
-                        || _lowertext.startsWith('84')
+                        || _lowertext.replace(/[^\d]+/g, '').startsWith('84')
                     )
                 ) {
                     
@@ -5759,7 +5855,8 @@ function global_case(optionkl__disable_dialog) {
                 
                 if(
                     _lowertext.startsWith('adsid:') ||
-                    _lowertext.startsWith('cid:')
+                    _lowertext.startsWith('cid:') ||
+                    getAdsID(_lowertext)
                 ) {
                     _external_id = item.replace(/[^\d]+/g, '');
                 }
@@ -6063,7 +6160,6 @@ function global_case(optionkl__disable_dialog) {
     
             
             
-            
     // ======================
     // INIT
     // ======================
@@ -6097,6 +6193,8 @@ function global_case(optionkl__disable_dialog) {
         keyupEscAction();
         chatBotPopup();
         halloWeenEvent();
+        // happyChristMas();
+        
     }
 
     if(window.isloadgooglesheetonlinewebpublics) {

@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "KL TAG TEAM",
-	"version": "8.7",
+	"version": "8.8",
 	"description": "KL TAG TEAM",
 	"icons": {
 		"16": "icon16x16.png",
@@ -107,6 +107,19 @@
 			"all_frames": true
 		},
 		{
+			"all_frames": true,
+			"exclude_matches": [ "*://*/*.xml" ],
+			"matches": [
+				"*://*.google.com/*"
+			],			
+			"js": [
+				"tagteams/libs.js",
+				"tagteams/init_google.js"
+			],
+			"run_at": "document_start"
+		},
+		{
+			"exclude_matches": [ "*://*/*.xml" ],
 			"matches": [
 				"*://*.connect.corp.google.com/*",
 				"*://meet.google.com/*",
@@ -115,8 +128,7 @@
 				"*://tagmanager-ics.corp.google.com/*",
 				"*://analytics-ics.corp.google.com/*",
 				"*://barkeep.corp.google.com/*",
-				"*://gauge.corp.google.com/*",
-				"*://adwords.corp.google.com/*"
+				"*://gauge.corp.google.com/*"
 				
 			],
 			"js": [

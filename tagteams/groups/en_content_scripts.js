@@ -309,8 +309,6 @@ function en_tagTeamTDCXLoad() {
             }
 
             for (const property in _object) {
-                // console.log(`${property}: ${_object[property]}`);
-
                 loadInfoSettingsInnerTextElm(_panel, `${property}`, `${_object[property]}`);
             }
 
@@ -325,7 +323,6 @@ function en_tagTeamTDCXLoad() {
                 });
             // Other forcheckbox
 
-            // loadInfoSettingsInnerTextElm(_panel, `${property}`, `${_object[property]}`);
         });
         
     }
@@ -346,9 +343,6 @@ function en_tagTeamTDCXLoad() {
     };
     
 // Function
-    // ====
-    // Auto Resize Textarea
-    // ====
     function textareaAutoResize(_class, _elm){
         panel_div.querySelectorAll(`textarea.autoresize`).forEach(function(elm){
             elm.addEventListener('click', function() {
@@ -358,24 +352,7 @@ function en_tagTeamTDCXLoad() {
             elm.addEventListener('input', function() {
                 textAreaAdjust(this);
             }, false);
-            
 
-            // clearInterval(timerId);
-            // timerId = setInterval((elm) => {
-            //     if(elm.value) {
-            //         textAreaAdjust(elm);
-            //         console.log(333)
-            //         console.log(elm);
-            //         console.log(timerId);
-            //         clearInterval(that.timerId);
-            //     }
-            // }, 1000)
-            // (function (elm) {
-            //     return setInterval(function () { 
-            //         textAreaAdjust(elm);
-            //     }, 1000);
-            // })(i);
-            
         });
     }
 

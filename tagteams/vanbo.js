@@ -192,7 +192,7 @@ var tagteamFocusCase = () => {
         }
         
         #signature .tag-shopping .form-group {
-            width: 800px;
+            width: 100%;
             display: flex;
             margin: 0.8em 0.5em;
             align-items: center;
@@ -342,7 +342,7 @@ var tagteamFocusCase = () => {
             color: #202124;
             cursor: pointer;
             padding: 10px;
-            width: 578px;
+            width: 100%;
             border: 1px solid #202124;
             text-align: left;
             outline: none;
@@ -1130,7 +1130,7 @@ var tagteamFocusCase = () => {
         function addToNote() {
             // var noteHtml = `${document.querySelector('#preview-area').innerHTML = ()}`;
             caseSumary = document.querySelector('.case-summary').value;
-            var caseSumaryNote = document.querySelector('[aria-label="Enter a case summary"]');
+            var caseSumaryNote = document.querySelector('[debug-id="case-summary-input"] textarea');
             caseSumaryNote.value = caseSumary;
             caseSumaryNote.focus();
             caseSumaryNote.dispatchEvent(new Event('input'));
@@ -1457,6 +1457,8 @@ var tagteamFocusCase = () => {
         observeOnce((elm) => {
             if(document.querySelector('.read-card.focused')) {
                 if(!document.querySelector('.dock-float')) {
+                    
+                    cLog(() => { console.log('observeOnce - lấy danh sách' ) })
                     renderDock();
                 }
             }
@@ -1604,6 +1606,9 @@ var tagteamFocusCase = () => {
             // Load input hide
             if(!document.querySelector('.selected-target .field .value')) {
                 document.querySelector('.target-input').dispatchEvent(new Event('mouseover'));
+                document.querySelector('.target-input input').dispatchEvent(new Event('blur'));
+                document.querySelector('.target-input input').dispatchEvent(new Event('focus'));
+
             }
 
             wait4Elem('.selected-target .field .value').then((_elm) => {
@@ -1618,7 +1623,7 @@ var tagteamFocusCase = () => {
                             // console.log('vanbo 2', _myTimeout, _label().innerText, _label().innerText.toLowerCase().includes('internal'));
 
                             var _is_ok = false;
-                            if(_label().innerText.toLowerCase().includes('internal')) {
+                            if(_label().innerText.toLowerCase().includes('internal id')) {
                                 if(_label().innerText.trim()) {
                                     var _value = elm.querySelector('.value');
                                     var _ocid = _value.innerText.trim();

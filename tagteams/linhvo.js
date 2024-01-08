@@ -132,6 +132,9 @@ try {
                 
                 
                 observeOnce((elm) => {
+                    
+                    cLog(() => { console.log('observeOnce - linhvoLoader' ) })
+                    
                     var _navi = document.querySelectorAll('queues-navigation .section');
         
                    

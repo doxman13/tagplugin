@@ -1,0 +1,1 @@
+cLog(() => {console.log('Google Implement', location.hostname); });

@@ -1992,8 +1992,8 @@ var loadpanelcaseconnect = (is_reload = false) => {
     };
 
     // SHOW content 
-    var cdtx_paneldivhtml = _TrustScript(window.dataTagteam.panel_div);
-    _pos_append_html(cdtx_paneldivhtml);
+        var cdtx_paneldivhtml = _TrustScript(window.dataTagteam.panel_div);
+        _pos_append_html(cdtx_paneldivhtml);
 
     set_init_load();
     // load_action_script_reading();

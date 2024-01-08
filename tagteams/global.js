@@ -372,16 +372,20 @@ function global_case(optionkl__disable_dialog) {
     var addButtonToDocContent = () => {
         try {
             
+            // please don't remove this
             var _contenthtml = `
-                <div class="material-button" data-btnclk="open_panelnote" >
+                <div class="material-button" data-btnid="open_panelnote" data-btnclk="open_panelnote" style="display: none" >
                     <div class="content">Panel</div>
+                </div>
+                <div class="material-button" data-btnid="crawl_case"  data-btnclk="_connectcase_info-act_recrawl" >
+                    <div class="content" style=" font-size: 11px; text-align: center; font-weight: bold; ">CRAWL<small style=" display: block; ">CASE</small></div>
                 </div>`;
     
             if (document.querySelector('._panel_btnshortcut')) {
                 var _panel_btnshortcut = document.querySelector('._panel_btnshortcut');
                 
                 // For Panel
-                if (!_panel_btnshortcut.querySelector(`[data-btnclk="open_panelnote"]`)) {
+                if (!_panel_btnshortcut.querySelector(`[data-btnid="crawl_case"]`)) {
                     _contenthtml = _TrustScript(_contenthtml);
                     _panel_btnshortcut.insertAdjacentHTML('afterBegin', _contenthtml);
                 }
@@ -435,6 +439,11 @@ function global_case(optionkl__disable_dialog) {
         }
     }
     
+    
+    var addBtnMail = () => {
+
+    };
+
     var addButtonResetVersion = () => {
         var _contenthtml = `
         <div class="material-button _fordevmode" data-btnclk="enable_devmode" >
@@ -1633,11 +1642,8 @@ function global_case(optionkl__disable_dialog) {
                 // 
                 // <span class="cdtx__uioncall_control-lt_sliptempl" data-text="LT S & T" data-btntooltip="LT SPLIT & TRANSFER" data-btnclk="oncall_templ_lt_template" >&nbsp;</span>
 
-                var _temp_oncall = {
-                    'id' : 'cdtx__uioncall--btn',
-                    'btn_text': 'On Call (new)',
-                    'content_insert' : `
-                    <div class="cdtx__uioncall">
+                var _content_insert = `
+                    <div class="cdtx__uioncall" data-note="this is old version">
                         <div class="cdtx__uioncall_control" contenteditable="false" >
                             <span class="cdtx__uioncall_control-load" data-text="List" data-btnclk="oncall_templ_act_load" >&nbsp;</span>
                             <span class="cdtx__uioncall_control-save" data-text="Save" data-btnclk="oncall_templ_act_save" data-btntooltip="Save template Reuse"  >&nbsp;</span>
@@ -1645,22 +1651,31 @@ function global_case(optionkl__disable_dialog) {
                         </div>
                         <div class="cdtx__uioncall_outer">
                             <p dir="auto"><b>Sub-status:&nbsp;&nbsp;<span class="_sub_i" data-btnclk="choice_status_list" data-infocase="status_case" >Click Choice</span></b> </p>
-                            <p dir="auto"><b>AM Program: <span data-highlight="need_recheck">{{customer_program}}</span></b>&nbsp;&nbsp; </p>
+                            <p dir="auto"><b>AM Program: <span data-highlight="need_recheck">{{sales_program}}</span></b>&nbsp;&nbsp; </p>
                             <p dir="auto"><b>Sub-status Reason:</b>&nbsp;&nbsp; </p>
                             <p dir="auto"><b data-btnclk="oncall_templ_act_flchoice" data-dateformat="d/m/Y" >FL:&nbsp;&nbsp;</b><span data-text="oncall_templ_act_flchoice-text" >NA</span></p>
-                            <p dir="auto"><b>Speakeasy ID:&nbsp;&nbsp;</b> Call log</p>
                             <p dir="auto"><b>On Call Comments:&nbsp;&nbsp; </b>Like Sub-status Reason</p>
+                            <p dir="auto"><b>Speakeasy ID:&nbsp;&nbsp;</b> Call log</p>
                             <p dir="auto"><b data-btnclk="oncall_templ_act_taskchoice" data-type="">Tags Implemented:&nbsp;&nbsp;</b><span data-text="oncall_templ_act_taskchoice-text" ></span></p>
                             <p dir="auto"><b><span class="cdtx__uioncall_control-flchoice">Screenshots: Attach</span></b></p>
                             <p dir="auto"><b>Multiple CIDs:&nbsp;&nbsp;</b>NA</p>
                             <p dir="auto"><b><span class="cdtx__uioncall_control-flchoice">On Call Screenshot: Attach</span></b></p>
                         </div>
                     </div>
-                    `
+                `;
+                var _lt_template = getVariableSheetByKeyAndLanguage('OnCall note template', window.keylanguage);
+                if(_lt_template.trim()) {
+                    _content_insert = _lt_template;
+                }
+                
+                
+                var _temp_oncall = {
+                    'id' : 'cdtx__uioncall--btn',
+                    'btn_text': 'On Call (new)',
+                    'content_insert' : _content_insert,
                 };
                 _arr_btnlist.push(_temp_oncall);
-
-
+                
 
                 _arr_btnlist.forEach((item) => {
                     var _elmcasenote = _istopelm.querySelector(`.case-note`);
@@ -1689,6 +1704,7 @@ function global_case(optionkl__disable_dialog) {
                             _elm_content.dispatchEvent(new Event('input'));
                             _elm_content.dispatchEvent(new Event('focus'));
                             _elm_content.dispatchEvent(new Event('click'));
+                            
                         })
                     }    
                 })
@@ -1707,15 +1723,26 @@ function global_case(optionkl__disable_dialog) {
         try {
             window._recheckInfo_Case = 0;
             observeOnce((elm) => {
+                cLog(() => { console.log('observeOnce - recheckInfoCase 1' ) })
+                
+                    
                 var panel = () => { return document.querySelector('._casecalendar_info'); };
                 var email_lst = () => { return document.querySelectorAll('internal-user-info .email'); }
                 if(email_lst().length < 1) return; 
-                if(!panel()) return;
                 
+                cLog(() => { console.log('observeOnce - recheckInfoCase 2' ) })
+                
+                
+                
+                    
+                if(!panel()) return;
                 
                 if(window.dataCase.am_email) {
                     window._recheckInfo_Case = 1;
                 
+                
+                    
+                    
                     // s2
                     var _isset = false;
                     email_lst().forEach(elm => {
@@ -1734,23 +1761,30 @@ function global_case(optionkl__disable_dialog) {
                         }
                     });
                     
-                    // s3
-                    // cLog(() => { console.log('recheckInfoCase - ', _isset, email_datacase, email_inui ) })
-                    if(_isset) {
-                        if(panel().classList.contains('am_email_nomatch')) {
-                            panel().classList.remove('am_email_nomatch')
-                        }
-                    } else {
-                        if(!panel().classList.contains('am_email_nomatch')) {
-                            panel().classList.add('am_email_nomatch')
-                        }
+                    var _isset_v2 = false; 
+                    if(elm_readdeck = document.querySelector('read-deck')) {
+                        _isset_v2 = elm_readdeck.innerText.includes(window.dataCase.am_email)
                     }
+                    
+                    // cLog(() => { console.log('recheckInfoCase - ', email_lst().length, panel(), window.dataCase ) })
+                    
+                    // s3
+                    // cLog(() => { console.log('recheckInfoCase - ', _isset, _isset_v2 ) })
+                    // if(_isset) {
+                    //     if(panel().classList.contains('am_email_nomatch')) {
+                    //         panel().classList.remove('am_email_nomatch')
+                    //     }
+                    // } else {
+                    //     if(!panel().classList.contains('am_email_nomatch')) {
+                    //         panel().classList.add('am_email_nomatch')
+                    //     }
+                    // }
                     
                     
                     
                     
                 }
-            })            
+            });
         } catch (e) {
             console.error(e);    
         }
@@ -1764,7 +1798,10 @@ function global_case(optionkl__disable_dialog) {
         
         window.ncreate = window.ncreate || 1;
         observeOnce((elm) => {
-            
+
+            cLog(() => { console.log('observeOnce - mailTemplateControl' ) })
+
+
             if(window.result.optionkl__form_option_data) {
                 if(!window.result.optionkl__form_option_data.cdtx_chk_enable_emailcontrol) return false;
             }
@@ -1775,9 +1812,18 @@ function global_case(optionkl__disable_dialog) {
                     if(email_body_header = _istopelm.querySelector('#email-body-header')) {
                         var _elmcontrol = () => {
                             return _istopelm.querySelector('.cdtx__uiemailtempcontrol');
-                        }
+                        };
+
                         if(!_elmcontrol()) {
-                            if(window.ncreate > 10) return false; window.ncreate++; console.log("DONGMAI", _elmcontrol())
+                            
+                            
+                            // Anti loop
+                            if(window.ncreate > 10) return false; window.ncreate++; 
+
+
+                            console.log("DONGMAI", _elmcontrol())
+
+                            cLog(() => { console.log('observeOnce - mailTemplateControl - once' ) })
                             
                             const dom = document.createElement("span");
                             dom.className = 'cdtx__uiemailtempcontrol';
@@ -2001,6 +2047,23 @@ function global_case(optionkl__disable_dialog) {
 
                 if(_action === 'popup_update_LT') {
                     popupUpdateLT()
+                }
+
+                if(_action === 'crawl_case') {
+                    saveCaseNow(__case_id(), (caseload) => {
+                        
+                        cLog(() => { console.log('cdtx - TH 2 here - saveCaseNow - DONE', caseload) });
+                        window.caseCurrent = {};
+                        window.caseCurrent = caseload;
+
+                        reupdateForAll(caseload);
+                        
+                        global_checkAddLoadMoreInfo(_caseid);
+                        
+                        checkInputEmailInboxAndFix();
+                        
+                    });
+
                 }
 
                 if(_action === '_clickshow') {
@@ -2645,7 +2708,6 @@ function global_case(optionkl__disable_dialog) {
                                         btnthis.innerText = 'Save!';
                                         const dom_areaedit = document.createElement("div");
                                         dom_areaedit.className = 'cdtx__uioncall_templ_areaedit';
-                                        // console.log('zzzzzzzzzzz', window.dataCase);
                                         
                                         var a_key = [];
                                         for (const [key, value] of Object.entries(window.dataCase)) {
@@ -3374,8 +3436,24 @@ function global_case(optionkl__disable_dialog) {
                 
                 // xxxx
                 if(_action === '_connectcase_info-act_recrawl') {
+
+                    // checkLdap
+                    if(!checkLdapAssignee()) {
+                        Toastify({
+                            text: `This case not assign to you!!!`,
+                            class: "warning",
+                            duration: 3000,
+                            callback: function(){
+                                this.remove();
+                            }
+                        }).showToast();
+
+                        return false;
+                    }
+
                     window.casetype_lt = false;
                     if(_strcaseid = __case_id()) {
+                        elm.classList.remove('isnew');
                         
                         document.querySelector('._casecalendar_info').remove();
                         
@@ -4236,9 +4314,12 @@ function global_case(optionkl__disable_dialog) {
                     <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.tasks || ''}" ></span>
                 </span>
                 <span class="_casecalendar_info-50per" data-title="Attribution Model:" data-infocase="customer_attributionmodel" ></span>
-                <span class="_casecalendar_info-50per" data-title="Quick link:" >
-                    <span data-infocase_html="toolshortlink" ></span>
-                    <span data-infocase_html="toolquicklink" ></span>
+                
+                <span class="_casecalendar_info-50per" data-title="Qplus status:"  >
+                    <span data-infocase="qplus_status" ></span>
+                </span>
+
+                <span class="_casecalendar_info-100per" data-title="Quick link:" data-area="btn-shortcutcase" >
                 </span>
                 
                 <span class="_casecalendar_info-100per _casecalendar_info-uidatefl_install" >
@@ -4273,9 +4354,6 @@ function global_case(optionkl__disable_dialog) {
 
                         <span class="_btn_stall" data-btnclk="_connectcase_info-act_push2summary" title="update to case summary">Push</span>
                     </div>
-                </span>
-                <span class="_casecalendar_info-100per" data-title="Qplus status:"  >
-                    <span data-infocase="qplus_status" ></span>
                 </span>
                 <span class="_casecalendar_info-100per" data-title="Note:" data-notearea="1">
                     <span data-btnclk="note_edit"></span>
@@ -4598,7 +4676,7 @@ function global_case(optionkl__disable_dialog) {
                 location.hostname === 'cases.connect.corp.google.com'
                 || location.hostname === 'calendar.google.com'
                 || location.hostname === 'meet.google.com'
-                || location.hostname === 'barkeep.corp.google.com'
+                // || location.hostname === 'barkeep.corp.google.com'
                 || location.hostname === 'gauge.corp.google.com'
                 )
                 ) 
@@ -4626,6 +4704,8 @@ function global_case(optionkl__disable_dialog) {
         run_style();
         styleAllviaSheet();
         observeOnce((elm) => {
+            cLog(() => { console.log('observeOnce - run_style' ) })
+
             // Add link style head
             run_style();
             
@@ -4650,6 +4730,8 @@ function global_case(optionkl__disable_dialog) {
         var _title = '';
         var _caseid_once = '';
         observeOnce((elm) => {
+            cLog(() => { console.log('observeOnce - loadRealtime', location.hostname) })
+
             // if(!document.querySelector('#kl_tagteam_inline_style')) {
                 
             //     var style_tag = `<style id="kl_tagteam_inline_style">${window.dataTagteam.panel_div_style}</style>`;
@@ -4660,6 +4742,8 @@ function global_case(optionkl__disable_dialog) {
             // for cases.connect.corp.google.com
             if(location.hostname === 'cases.connect.corp.google.com') {
                 if(!document.querySelector('[debug-id="case-id"] span.case-id')) return false;
+
+                
 
 
                 // 1. detech change case-id
@@ -4691,71 +4775,101 @@ function global_case(optionkl__disable_dialog) {
                         loadTemplateEmailGoogleSheet(_caseid, _keylanguage);
 
 
+                    // ========
+                    // Load data case
+                    // ========
+                        if(_caseid != _caseid_once) {
+                            cLog(() => { console.log('DONG CHECK' , _caseid, _caseid_once); })
+                            var _btn_recrawl = () => {
+                                return document.querySelector('[data-btnid="crawl_case"]');
+                            };
+
+                            loadCaseStorageByID(_caseid, (response) => {
+                                cLog(() => { console.log('DONG CHECK 2' , response); })
+                                var caseload = response.value || false;
+
+                                // Remove class
+                                if(_btn_recrawl()) {
+                                    _btn_recrawl().classList.remove('isnew')
+                                }
+                                
+                                if(caseload) {
+                                    window.dataCase = caseload;
+                                } else {
+                                    if(_btn_recrawl()) {
+                                        _btn_recrawl().classList.add('isnew')
+                                    }
+                                }
+                            });
+
+                            _caseid_once = _caseid;
+                        }
                     
                     // ========
                     // Save case
                     // ========
-                        // TH 1: caseid diff caseonce    
-                        if(_caseid != _caseid_once) {
-                            cLog(() => { console.log("cdtx - TH 1 here", window.dataCase.case_id, _caseid); });
+                    
+                        // // TH 1: caseid diff caseonce    
+                        // if(_caseid != _caseid_once) {
+                        //     cLog(() => { console.log("cdtx - TH 1 here", window.dataCase.case_id, _caseid); });
 
-                            var _panel_closebtn = document.querySelector('._infocase_byme.open [data-btnclk="_infocase_byme-openact"]');
-                            if(_panel_closebtn) {
-                                _panel_closebtn.click();
-                            }
+                        //     var _panel_closebtn = document.querySelector('._infocase_byme.open [data-btnclk="_infocase_byme-openact"]');
+                        //     if(_panel_closebtn) {
+                        //         _panel_closebtn.click();
+                        //     }
                             
                             
-                            // addGoCase2Calendar 
-                            addGoCase2Calendar(_caseid);
+                        //     // addGoCase2Calendar 
+                        //     addGoCase2Calendar(_caseid);
                             
                             
-                            saveCaseNow(_caseid, (caseload) => {
-                                if(typeof caseload == 'undefined') return false;
+                        //     saveCaseNow(_caseid, (caseload) => {
+                        //         if(typeof caseload == 'undefined') return false;
                                 
-                                cLog(() => { console.log('cdtx - TH 1 here -  saveCaseNow - DONE', caseload); });
+                        //         cLog(() => { console.log('cdtx - TH 1 here -  saveCaseNow - DONE', caseload); });
                                 
-                                window.caseCurrent = {};
-                                window.caseCurrent = caseload;
+                        //         window.caseCurrent = {};
+                        //         window.caseCurrent = caseload;
                                 
-                                reupdateForAll(caseload);
+                        //         reupdateForAll(caseload);
                                 
-                                global_checkAddLoadMoreInfo(_caseid);
+                        //         global_checkAddLoadMoreInfo(_caseid);
                                 
-                                checkInputEmailInboxAndFix();
+                        //         checkInputEmailInboxAndFix();
                                 
                                 
                                 
-                            });
-                            _caseid_once = _caseid;
-                        }
+                        //     });
+                        //     _caseid_once = _caseid;
+                        // }
 
-                        // TH 2: assignee status
-                        // var state_button = document.querySelector('[debug-id="state-button"]');
-                        var state_button = document.querySelector('div.action-buttons');
-                        if(state_button) {
-                            window.once_state_button = window.once_state_button || state_button.innerText;
-                            if(window.once_state_button !== state_button.innerText) {
-                                cLog(() => { console.log("cdtx - TH 2 HERE"); })
-                                saveCaseNow(_caseid, (caseload) => {
-                                    if(typeof caseload == 'undefined') return false;
+                        // // // TH 2: assignee status
+                        // // var state_button = document.querySelector('[debug-id="state-button"]');
+                        // var state_button = document.querySelector('div.action-buttons');
+                        // if(state_button) {
+                        //     window.once_state_button = window.once_state_button || state_button.innerText;
+                        //     if(window.once_state_button !== state_button.innerText) {
+                        //         cLog(() => { console.log("cdtx - TH 2 HERE"); })
+                        //         saveCaseNow(_caseid, (caseload) => {
+                        //             if(typeof caseload == 'undefined') return false;
                                     
-                                    cLog(() => { console.log('cdtx - TH 2 here - saveCaseNow - DONE', caseload) });
-                                    window.caseCurrent = {};
-                                    window.caseCurrent = caseload;
+                        //             cLog(() => { console.log('cdtx - TH 2 here - saveCaseNow - DONE', caseload) });
+                        //             window.caseCurrent = {};
+                        //             window.caseCurrent = caseload;
 
-                                    reupdateForAll(caseload);
+                        //             reupdateForAll(caseload);
                                     
                                     
-                                    global_checkAddLoadMoreInfo(_caseid);
+                        //             global_checkAddLoadMoreInfo(_caseid);
                                     
-                                    checkInputEmailInboxAndFix();
+                        //             checkInputEmailInboxAndFix();
                                     
-                                });
+                        //         });
 
-                                // Overwrite
-                                window.once_state_button = state_button.innerText;
-                            }
-                        }
+                        //         // Overwrite
+                        //         window.once_state_button = state_button.innerText;
+                        //     }
+                        // }
 
 
                     
@@ -4930,129 +5044,6 @@ function global_case(optionkl__disable_dialog) {
                 quaySoBarkeep('');
             }
             
-            // if(location.hostname === 'barkeep.corp.google.com') {
-
-            //     var is_record = false
-            //     var is_qa_recode_show = false
-            //     var _pcurrentid = null;
-            //     var _pcurrentid_str = '';
-            //     var _pcurrent_object = {};
-
-            //     // Check entry
-            //     var list_callentry = document.querySelectorAll('#call-history .container .entry');
-            //     var _arr_list_callentry = [];
-            //     if(list_callentry.length > 0) {
-            //         try {
-            //             _pcurrentid = list_callentry[0].querySelector('.session-id');
-            //             if(_pcurrentid) {
-            //                 _pcurrentid_str = _pcurrentid.innerText;
-                            
-            //                 _pcurrentid_date = list_callentry[0].querySelector('.date').innerText;
-            //                 _pcurrentid_time = list_callentry[0].querySelector('.time').innerText;
-            //                 _pcurrent_object.id = _pcurrentid_str;
-            //                 _pcurrent_object.date = _pcurrentid_date;
-            //                 _pcurrent_object.time = _pcurrentid_time;
-
-            //                 list_callentry.forEach(item => {
-            //                     var _temp_info = {};
-            //                     _temp_info.id = item.querySelector('.session-id').innerText;
-            //                     _temp_info.date = item.querySelector('.date').innerText;
-            //                     _temp_info.time = item.querySelector('.time').innerText;
-            //                     _arr_list_callentry.push(_temp_info);
-            //                 })
-                            
-            //             }
-            //             cLog(() => { console.log('cdtx barkeep ', list_callentry.length, _pcurrentid_str); })
-            //         } catch (error) {
-            //             console.log("cdtx barkeep", error)
-            //         }
-            //     }
-
-            //     // Check recording 
-            //     if(document.querySelector('#consent-yes-button')) {
-            //         is_qa_recode_show = true;
-            //         cLog(() => { console.log('cdtx barkeep is_qa_recode_show', is_qa_recode_show); })
-            //     }
-
-            //     if(document.querySelector('session-panel.footer')) {
-            //         if(
-            //             document.querySelector('session-panel.footer participant-list-item') 
-            //             && document.querySelector('#duration') 
-            //         ) {
-                        
-            //             var _timeduration =  document.querySelector('#duration').innerText.trim().replace(/[^\d]+/g, '');
-            //             _timeduration = parseInt(_timeduration);
-            //             if(_timeduration % 10 == 0) {
-            //                 cLog(() => { console.log('cdtx barkeep load oncall record'); })
-            //                 is_record = true;
-                            
-            //                 if(_pcurrentid) {
-            //                     cLog(() => { console.log('cdtx barkeep start', is_record, _pcurrentid.innerText); })
-                                
-                                
-            //                     setChromeStorage("cdtx_caseidcurrentmeet_consentyesbutton", is_qa_recode_show, (response) => {
-            //                         cLog(() => { console.log('cdtx barkeep cdtx_caseidcurrentmeet_consentyesbutton', is_qa_recode_show, _pcurrentid_str, _timeduration); })
-            //                     });
-                                
-            //                     // Only qa_record show => OK
-            //                     if(is_qa_recode_show == false) {
-            //                         // isset last call
-            //                         if(_arr_list_callentry.length > 0) {
-            //                             getChromeStorage("cdtx_caseidcurrentmeet", (response) => {
-            //                                 var _data = response.value || null;
-            //                                 if(_data.caseid) {
-            //                                     if(_data.datetime) {
-            //                                         const date1 = new Date();
-            //                                         const date2 = new Date(_data.datetime);
-            //                                         const diffTime = Math.abs(date2 - date1);
-            //                                         const diffMinute = Math.ceil(diffTime / (1000 * 60)); 
-
-            //                                         if(diffMinute < 5) {
-            //                                             _data.pcurrentid = _pcurrentid_str;
-            //                                             cLog(() => { console.log('cdtx barkeep load oncall record', _data, diffMinute + " min", _pcurrentid_str, is_record, _timeduration); })
-                
-                
-            //                                             // merge to object
-            //                                             _pcurrent_object.meetid = _data.meetid;
-            //                                             _pcurrent_object.caseid = _data.caseid;
-            //                                             _pcurrent_object.datetime = _data.datetime;
-            //                                             _arr_list_callentry = merge2array(_arr_list_callentry, [_pcurrent_object], "id");
-    
-            //                                             // merge to data
-            //                                             getChromeStorage("cdtx_caseidcurrentmeet_pspeakeasy_caseid", (response) => {
-            //                                                 var _list_rs = response.value || [];
-                                                            
-            //                                                 if(typeof _list_rs === 'object') {
-            //                                                     _list_rs = merge2array(_arr_list_callentry, _list_rs, "id");
-            //                                                     _list_rs = merge2array(_list_rs, [_pcurrent_object], "id");
-            
-            //                                                     console.log('cdtx list 2', _list_rs, _arr_list_callentry);
-            
-            //                                                     setChromeStorage("cdtx_caseidcurrentmeet_pspeakeasy_caseid", _list_rs, (response) => {
-            //                                                         cLog(() => { console.log('cdtx barkeep cdtx_caseidcurrentmeet_pspeakeasy_caseid have save', _list_rs) })
-            //                                                     })
-            //                                                 }
-                
-                
-            //                                             });
-                                                        
-            //                                         } 
-                                                    
-            //                                     }
-            //                                 }
-            //                             });     
-            //                         }   
-            //                     }
-                                
-            //                 } 
-            //             }
-                        
-            //         }
-            //     }
-
-                
-            // }
-
             if(location.hostname === 'meet.google.com') {
                 loadKLCall(_keylanguage);
 
@@ -5224,7 +5215,6 @@ function global_case(optionkl__disable_dialog) {
                 loadAllCaseID((listcase) => {
                     window.isload_once = 0;
                     if(typeof listcase !== 'object') return;
-                    // cLog(() => { console.log('showListFollowUp listcase', listcase) });
     
                     var n_havedate = 0;
                     var n_havedatefl = 0;
@@ -5473,6 +5463,8 @@ function global_case(optionkl__disable_dialog) {
             list_case_havefl(() => {
                 if(window.location.hostname == 'cases.connect.corp.google.com') {
                     observeOnce((elm) => {
+                        cLog(() => { console.log('observeOnce - list_case_havefl cases.connect.corp' ) });
+
                         if(!document.querySelector('.dock-float-container')) return;
                 
                         // if have data
@@ -5496,6 +5488,7 @@ function global_case(optionkl__disable_dialog) {
                 
                 if(window.location.hostname == 'calendar.google.com') {
                     observeOnce((elm) => {
+                        cLog(() => { console.log('observeOnce - run_style list_case_havefl 2 calendar.google' ) })
                         if(!document.querySelector('.panel_info-listbtn')) return;
                 
                         // if have data
@@ -5971,25 +5964,13 @@ function global_case(optionkl__disable_dialog) {
             adv_name.dispatchEvent(new Event('input'));
             adv_name.dispatchEvent(new Event('change'));
             adv_name.dispatchEvent(new Event('blur'));
+            adv_name.dispatchEvent(new Event('enter'));
+            adv_name.dispatchEvent(new Event('keypress'));
         }
         
     
         var _updateinput = () => {
             
-            // Ocid
-            if(_templateCase.customer_ocid) {
-                if(adv_name = document.querySelector('action-bar [debug-id="target-input"] input')) {
-                    adv_name.value = _templateCase.customer_ocid;
-                    _actevent(adv_name);
-                }
-            } else {
-                if(_templateCase.customer_adsid) {
-                    if(adv_name = document.querySelector('action-bar [debug-id="target-input"] input')) {
-                        adv_name.value = _templateCase.customer_adsid;
-                        _actevent(adv_name);
-                    }
-                }
-            }
     
             if(_templateCase.customer_name) {
                 if(adv_name = document.querySelector('action-bar [debug-id="name-input"] input')) {
@@ -6019,6 +6000,22 @@ function global_case(optionkl__disable_dialog) {
                 if(adv_name = document.querySelector('phone-number-input input')) {
                     adv_name.value = _templateCase.customer_contact;
                     _actevent(adv_name);
+                }
+            }
+            
+            
+            // Ocid
+            if(_templateCase.customer_ocid) {
+                if(adv_name = document.querySelector('action-bar [debug-id="target-input"] input')) {
+                    adv_name.value = _templateCase.customer_ocid;
+                    _actevent(adv_name);
+                }
+            } else {
+                if(_templateCase.customer_adsid) {
+                    if(adv_name = document.querySelector('action-bar [debug-id="target-input"] input')) {
+                        adv_name.value = _templateCase.customer_adsid;
+                        _actevent(adv_name);
+                    }
                 }
             }
         }   
@@ -6158,6 +6155,7 @@ function global_case(optionkl__disable_dialog) {
         })
     };
     
+    
             
             
     // ======================
@@ -6191,9 +6189,7 @@ function global_case(optionkl__disable_dialog) {
         recheckInfoCase();
         showListFollowUp();
         keyupEscAction();
-        chatBotPopup();
-        halloWeenEvent();
-        // happyChristMas();
+        happyChristMas();
         
     }
 

@@ -48,7 +48,8 @@ function getDiffTime(str_time, type) {
     try {    
         const date1 = new Date();
         const date2 = new Date(str_time);
-        const diffTime = Math.abs(date2 - date1);
+        const diffTime = (date2 - date1);
+        // const diffTime = Math.abs(date2 - date1);
         const diffMinute = Math.ceil(diffTime / (1000 * 60)); 
         const diffHour = Math.ceil(diffTime / (1000 * 60 * 60)); 
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
@@ -1130,8 +1131,8 @@ function globalForAll(window) {
             observeOnce((elm) => {
                 // on-call, precall button 
                 var _istopelm = document.querySelector(`md-dialog.ics-data-access-reason-dialog [name="caseId"]`);
-                
-                cLog(() => { console.log("analytics - 1") });
+                cLog(() => { console.log('observeOnce - globalForAll' ) });
+
                 if(_istopelm) {
                     if(!_istopelm.classList.contains('is_insert')) {
                         _istopelm.classList.add('is_insert');
@@ -1201,10 +1202,9 @@ function tagteam_showGTMID() {
     var callback = () => {
         if(gtmpublish = document.querySelector('header .gtm-container-public-id')) {
             if(!(gtmclone = document.querySelector(".gtm-clone"))) {
+                cLog(() => { console.log('observeOnce - tagteam_showGTMID' ) })
                 // if(gtmpublish.classList.contains('done')) return;
                 // gtmpublish.classList.add('done')
-                
-                cLog(() => {console.log("tagteam_showGTMID", "start")});
                 
                 // START
                 var is_copy = () => {
@@ -1383,7 +1383,7 @@ function getChromeStorage(key, _callback = false) {
             response = response || {};
             if(response.value) {
                 if(response.value.case_id) {
-                    // console.log('__DONG get_st', response.value.case_id, response.value);
+                    // console.log('__DONG get_st', key, response.value.case_id, response.value);
                 }
             }
             _callback(response);
@@ -1500,182 +1500,15 @@ function load_fetch_post_content(url, _body, _callback) {
 
 function readPoolCase() {
     return;
-    try {
-            
-        if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
-        cLog(() => {console.log("_readPoolCase", "Start");});
-        
-
-        var _loadurl = function(url_file, frameID, _text, _color) {
-            cLog(() => {console.log("_readPoolCase", "url_file", url_file);});
-            var _str_iframe = '<iframe src="' + url_file + '" id="' + frameID + '" style="width: 1600px; height: 768px; transform: scale(.3); position: absolute; left: 0; top: 0; opacity: 0; pointer-events: none;"></iframe>';
-            document.body.insertAdjacentHTML("beforeEnd",_str_iframe);
-            
-            var _button_navigation = `<div class="section _mycasecustom_pool" style=" border-bottom: 1px solid #dadce0; padding: 16px 16px 16px 0; "> <a href="__URLFILE__" style=" align-items: center; border-radius: 0 18px 18px 0; color: #3c4043; cursor: pointer; display: flex; font-family: Google Sans,Helvetica,Arial; font-weight: 500; line-height: 36px; padding-left: 24px; "><div class="name _ngcontent-dzv-45">${_text}</div><div class="search-count _ngcontent-dzv-45" style=" margin-left: auto; margin-right: 16px; color: ${_color} ">__NUMBER__</div></a> </div>`;
-            
-    
-            var _temp_memory = sessionStorage || localStorage;
-            var _number = 0;
-            var _date_key = [
-                new Date().getFullYear(),
-                ("0" + new Date().getMonth()).slice(-2),
-                ("0" + new Date().getDate()).slice(-2),
-                ("0" + new Date().getHours()).slice(-2),
-                ("0" + new Date().getMinutes()).slice(-2),
-            ];
-
-
-            var _loadui = () => {
-                // Callback function to execute when mutations are observed
-                var n_once = 0;
-                var n_once_2 = 0;
-                var _elm_queuesnavigation = null;
-                var _elm_mycasesnavi = null;
-                var callback = function(mutationList, observer) {
-                    
-                    cLog(() => {console.log("_readPoolCase", "scan");});
-
-                    _elm_queuesnavigation = document.querySelector('queues-navigation');
-                    _elm_mycasesnavi = document.querySelector('navigation-item.my-cases .text');
-                    
-                    if(_elm_mycasesnavi) {
-                        if(n_once === 0) {
-                            var _str_separate = (_elm_mycasesnavi.querySelector('[data-number]')) ? " / " : "";
-                            _elm_mycasesnavi.innerHTML = _elm_mycasesnavi.innerHTML + _str_separate + ` <span style="color: ${_color}" data-number="${_number}">(${_number})</span>`;
-                            n_once++;
-                        }
-                    } else {
-                        n_once = 0;
-                    }
-
-                    
-                    if(_elm_queuesnavigation) {
-                        if(n_once_2 === 0) {
-                            _button_navigation = _button_navigation.replace('__URLFILE__', url_file);
-                            _button_navigation = _button_navigation.replace('__NUMBER__', _number)
-                            _elm_queuesnavigation.insertAdjacentHTML("beforeEnd", _button_navigation);
-                            n_once_2++;
-                        }
-                    } else {
-                        n_once_2 = 0;
-                    }
-                };
-
-                observeOnce(callback, document.querySelector('redbull-app'));
-            }
-
-            var _storage = _temp_memory.getItem("data_caseover" + frameID);
-            if(_storage) {
-
-                var _date_key_st = _storage.split("|-|")[0];
-                _number = _storage.split("|-|")[1];
-                cLog(() => {console.log("_Test", parseInt(_date_key.join("")) , parseInt(_date_key_st), parseInt(_date_key.join("")) - parseInt(_date_key_st));})
-                if((parseInt(_date_key.join("")) - parseInt(_date_key_st)) < 30) {
-                    if(parseInt(_number) > 0) {
-                        _loadui();
-                    }
-                } else {
-                    _temp_memory.removeItem("data_caseover" + frameID);
-                }
-            } else {
-                // Frame
-                const iframe = document.getElementById(frameID);
-                const handleLoad = () => {
-                    var nTime = 0;
-                    var myTime = setInterval(function() {
-                        var frameObj = document.getElementById(frameID);
-                        if(frameObj) {
-                            var frameContent = frameObj.contentWindow.document.documentElement.outerHTML || frameObj.contentWindow.document.body.innerHTML;
-                            var frameContentObj = frameObj.contentWindow.document.documentElement || frameObj.contentWindow.document.body;
-                            
-                            var _elms = frameContentObj.querySelectorAll(".selection-count");
-                            var _elms_id_sumary = frameContentObj.querySelectorAll(`[debug-id="summary"]`);
-                            
-                            var _isfinish = false;
-                            if(_elms_id_sumary.length) {  
-                                _isfinish = true;
-                            }
-            
-                            // 6s
-                            if(nTime > 6) {
-                                frameObj.remove();
-                                
-                                // Save to storage
-                                _temp_memory.setItem("data_caseover" + frameID, (_date_key.join("")) + "|-|" + _number);
-                                cLog(() => {console.log("_readPoolCase", "NG", _elms_id_sumary);});
-                            }
-            
-                            if(_isfinish) {
-                                _number = _elms_id_sumary.length;
-                                cLog(() => {console.log("_readPoolCase", "OK",_elms_id_sumary.length )});
-            
-                                if(parseInt(_number) > 0) {
-
-                                    // LOAD UI
-                                    _loadui();
-                                }
-                                
-            
-
-                                // Save to storage
-                                _temp_memory.setItem("data_caseover" + frameID, (_date_key.join("")) + "|-|" + _number);
-                                
-                                // Stop
-                                clearInterval(myTime);
-                                frameObj.remove();
-                            }
-                        } else {
-                            var _str_iframe = '<iframe src="' + url_file + '" id="' + frameID + '" style="width: 1600px; height: 768px; transform: scale(.3); position: absolute; left: 0; top: 0; opacity: 0; pointer-events: none;"></iframe>';
-                            document.body.insertAdjacentHTML("beforeEnd",_str_iframe);
-                        }
-                        
-                        cLog(() => {console.log("_readPoolCase", nTime, _elms);});
-                        
-                        // 10s
-                        if(nTime > 10) {
-                            clearInterval(myTime);
-                        }
-                        nTime++;       
-                    }, 2000);
-        
-        
-                };
-        
-                iframe.addEventListener('load', handleLoad, true);
-            }
-        }
-        
-
-        
-        
-        var is_live = window.tagteamoption.optionkl__modecase != "Development" ? true : false;
-        var untouch_over_10_days = '';
-        var email_due_reply_24hrs = '';
-
-        if(is_live) {
-            untouch_over_10_days = `https://cases.connect.corp.google.com/#/queues/pool/3004773/-state%3A%28finished%20%7C%20solution_offered%29%20-modified%3A10d%20assignee%3Ame%0A/IMPORTANCE`;
-            _loadurl(untouch_over_10_days, "_live_oncehere", "Untouch over 10 days", "#f44336");
-
-            email_due_reply_24hrs = `https://cases.connect.corp.google.com/#/queues/pool/3004773/state%3Aassigned%20num_out_email%3E1%20duein%3A24%20assignee%3A%20me/IMPORTANCE`;
-            _loadurl(email_due_reply_24hrs, "_live_oncehere_2",  "Email Due Reply 24hrs", "#ff9800");
-        } else {
-            
-            untouch_over_10_days = `https://cases.connect.corp.google.com/#/queues/pool/3004773/-state%3A%28finished%20%7C%20solution_offered%29%20-modified%3A10d%20assignee%3Axuanthac/IMPORTANCE`;
-            _loadurl(untouch_over_10_days, "_dev_oncehere", "Untouch over 10 days", "#f44336");
-
-            email_due_reply_24hrs = `https://cases.connect.corp.google.com/#/queues/pool/3004773/state%3Aassigned%20num_out_email%3E1%20duein%3A24/IMPORTANCE`;
-            _loadurl(email_due_reply_24hrs, "_dev_oncehere_2",  "Email Due Reply 24hrs", "#ff9800");
-
-
-        }
-        
-    } catch (error) {
-            
-    }
 }
 
 function observeOnce(callback, targetNode = document.body, config = { attributes: true, childList: true, subtree: true }) {
-    var observer = new MutationObserver(callback);
+    var callback_control = (elm) => {
+        // cLog(() => { console.log('observeOnce', elm[0].target) });
+        callback(elm);
+    };
+    
+    var observer = new MutationObserver(callback_control);
 
     // Start observing the target node for configured mutations
     observer.observe(targetNode, config);
@@ -1686,7 +1519,6 @@ function observeOnce(callback, targetNode = document.body, config = { attributes
 
 function load_remote (result, _default_action) {
     var _timekey_current = new Date().getDate() + "" + new Date().getHours();
-    // var _timekey_current = new Date().getDate() + "" + new Date().getMinutes();
     var _option = result.optionkl__modecase; // Auto | Development | ExtensionDefault
     var _timecacheminute = [
         new Date().getMonth(),
@@ -2171,6 +2003,8 @@ function loadEmailTemplateAction(){
                 body_content.style.width = '100%';
                 // Insert value
                 subject.value = template_title.innerText;
+                
+                
                 
                 
                 replaceAllHtmlElement(template_body, window.dataCase);
@@ -2904,86 +2738,70 @@ function panelAddShortcutLink() {
     
     
 
-    try {
-        
-		// Select the node that will be observed for mutations
-		var targetNode = document.body;
+    observeOnce((elm) => {
+        var _istopelm = document.querySelector(`[data-area="btn-shortcutcase"]`);
+        if(_istopelm) {
+            var _el_tool_shortlink = () => {
+                return document.querySelector("#tool_shortlink");
+            };
 
-		// Options for the observer (which mutations to observe)
-		var config = { attributes: true, childList: true, subtree: true };
+            if (!_el_tool_shortlink()) {
 
-		// Callback function to execute when mutations are observed
-		var callback = function(mutationList, observer) {
-			var _istopelm = document.querySelector(`[data-area="btn-shortcutcase"]`);
-			if(_istopelm) {
-				if (_istopelm.querySelector("#tool_shortlink") === null) {
-                    
-                    var tool_shortlink_html = _TrustScript(`<div class="tool_shortlink_row">
-                            <div class="tool_shortlink_gr-row tool_shortlink_gr-list" ></div>
+                var tool_shortlink_html = _TrustScript(`<div class="tool_shortlink_row">
+                        <div class="tool_shortlink_gr-row tool_shortlink_gr-list" ></div>
+                    </div>
+                    <span class="tool_shortlink_btn" data-btnsclick="add_shortlink" >+</span>
+                    <div class="tool_shortlink_row">
+                        <div class="tool_shortlink_gr-row tool_shortlink_gr-content" >
+                            <span class="tool_shortlink_gr-url" data-tttip="Url" title="URL" contenteditable="plaintext-only"></span>
+                            <span class="tool_shortlink_gr-text" data-tttip="Name" title="Name" contenteditable="plaintext-only"></span>
+                            <span class="tool_shortlink_btn" data-btnsclick="save" >Save</span>
+                            <span class="tool_shortlink_btn" data-btnsclick="close" >Close</span>
                         </div>
-                        <span class="tool_shortlink_btn" data-btnsclick="add_shortlink" >+ Add shortlink</span>
-                        <div class="tool_shortlink_row">
-                            <div class="tool_shortlink_gr-row tool_shortlink_gr-content" >
-                                <span class="tool_shortlink_gr-url" data-tttip="Url" title="URL" contenteditable="plaintext-only"></span>
-                                <span class="tool_shortlink_gr-text" data-tttip="Name" title="Name" contenteditable="plaintext-only"></span>
-                                <span class="tool_shortlink_btn" data-btnsclick="save" >Save</span>
-                                <span class="tool_shortlink_btn" data-btnsclick="close" >Close</span>
-                            </div>
-                        </div>`);
-                    
-                    const dom = document.createElement('div');
-                    dom.innerHTML = tool_shortlink_html;
-                    dom.id = 'tool_shortlink';
-                    dom.className = 'tool_shortlink';
-                    _istopelm.appendChild(dom);
+                    </div>`);
+                
+                const dom = document.createElement('div');
+                dom.innerHTML = tool_shortlink_html;
+                dom.id = 'tool_shortlink';
+                dom.className = 'tool_shortlink';
+                _istopelm.appendChild(dom);
 
-                    setTimeout(() => {
-                        var _tool_shortlink = document.querySelector('.tool_shortlink');
-                        if(__case_id()) {
-                            var _caseid = __case_id();
-                            window._caseid_toolscript = window._caseid_toolscript || '';
+                
 
-                            if(_caseid !== window._caseid_toolscript) {
-                                
-                                getToolShortlink(_caseid, (data) => {
-                                    if(data) {
-                                        _tool_shortlink.querySelector('.tool_shortlink_gr-list').innerHTML = data;
-                                    }
-                                });
-                                
-                                window._caseid_toolscript = _caseid;
-                            }
+                if(__case_id()) {
+
+                    getToolShortlink(__case_id(), (data) => {
+
+                        if(data) {
+                            _el_tool_shortlink().querySelector('.tool_shortlink_gr-list').innerHTML = data;
+                        } else {
+                            _el_tool_shortlink().querySelector('.tool_shortlink_gr-list').innerHTML = '';
                         }
-
-                        
-                        onClickElm('.tool_shortlink [contenteditable]', 'keypress', function(elm, e){
-                            if (e.which === 13) {
-                                e.preventDefault();
-                                _shortcutlink_actsave(elm, () => {
-                                    cLog(() => { console.log('cdtx Have save'); })
-                                });
-                            }
-                        });
-                    }, 1000)
+                    });
                     
+                }
 
-				}
-				
                 
+                onClickElm('.tool_shortlink [contenteditable]', 'keypress', function(elm, e){
+                    if (e.which === 13) {
+                        e.preventDefault();
+                        _shortcutlink_actsave(elm, () => {
+                            cLog(() => { console.log('cdtx Have save'); })
+                        });
+                    }
+                });
                 
-                     
-                
-                
-			}
-		};
 
-		// Create an observer instance linked to the callback function
-		var observer = new MutationObserver(callback);
-		// Start observing the target node for configured mutations
-		observer.observe(targetNode, config);
-    } catch (error) {
-        console.error('cdtx panelAddShortcutLink function');
-    }
+            }
+            
+            
+            
+                    
+            
+            
+        }
+    });
+
 
     try {
         
@@ -3383,6 +3201,8 @@ function clearAndPrepareCRTemplate() {
         
         _email_body_content_top_content.innerHTML = '<p dir="auto"><br></p>';
         
+        
+        
         var ntime = 0;
         var myInterval = setInterval(() => {
             cLog(()=>{console.log("CR -> interval focus cursor point and check content")});
@@ -3442,14 +3262,20 @@ function clearAndPrepareCRTemplate() {
                 //         })
                 //     })
                 // }
+                
+                document.querySelectorAll('.is-top #email-body-content-top-content table[width="348"]').forEach((elm) => {
+                    if(elm.innerText.toLocaleLowerCase().includes("thay mặt cho google")){
+                        elm.style.padding = "0 30px"
+                    }
+                })
 
 
                 // Update action
                 _email_body_content_top_content.dispatchEvent(new Event('input'));
                 _email_body_content_top_content.dispatchEvent(new Event('focus'));
+                _email_body_content_top_content.dispatchEvent(new Event('blur'));
                 _email_body_content_top_content.dispatchEvent(new Event('click'));
                 _email_body_content_top_content.click();
-                document.execCommand("insertText", false, " ");
             }
 
             // more than 10s
@@ -4983,7 +4809,6 @@ function quaySoBarkeep(_type){
         console.error('cdtx_chk_disable_pin undentify', window.result)
     }
 
-console.log('_type', _type);
 
     if(_type === 'meet_showdialbutton') {
         // loadCopyDianumber
@@ -5783,6 +5608,8 @@ function stripHtml(html) {
 
 function initLoadGroup() {
     console.log('initLoadGroup', window.result);
+    var event_str = '';
+    
     document.documentElement.setAttribute("data-hostname", window.location.hostname);
     document.documentElement.setAttribute("data-setting_mycountry", window.result.mycountry);
     document.documentElement.setAttribute("data-setting_optionkl__modecase", window.result.optionkl__modecase);
@@ -5990,152 +5817,7 @@ function toastify_act(messenger){
 }
 
 
-function halloWeenEvent(){
-    if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
-    
-    cLog(() => {  console.log('halloWeenEvent', parseInt(formatDate(new Date(), 'Ym')) > parseInt('202310'), parseInt(formatDate(new Date(), 'Ym')), parseInt('202310')); });
-            
-    var is_end = false;
-    if(parseInt(formatDate(new Date(), 'Ym')) >  parseInt('202310')) {
-        is_end = true;
-        return true;
-    }
 
-    observeOnce((elm) => {
-        if(document.querySelector('._casecalendar_info')) {
-            if(!document.querySelector('._casecalendar_info.cpanel_halloween')) {
-                document.querySelector('._casecalendar_info').classList.add('cpanel_halloween')
-                
-                clearInterval(window.__halloween_interval);
-
-                var __haloween = function() {
-                    return document.querySelector('._connectcase_info--outer span.__haloween');   
-                }
-                if(!__haloween()) {
-                    if(_outer = document.querySelector('._connectcase_info--outer')) {
-                        _outer.insertAdjacentHTML('beforeEnd', '<span class="__haloween"></span>')
-                    }
-                }
-            
-                var __halloween_style = function() {
-                    return document.querySelector('._connectcase_info--outer style.__halloween_style');   
-                }
-                if(!__halloween_style()) {
-                    if(_outer = document.querySelector('._connectcase_info--outer')) {
-                        _outer.insertAdjacentHTML('beforeEnd', '<style class="__halloween_style"></style>')
-                    }
-                }
-            
-                
-                var _style = function(lst_src, _nstype) {
-                    if(!(lst_src[_nstype])) return false;
-
-                    var _percent_arr = [5, 10, 20, 30, 40, 50, 60, 70];
-                    var _percent_arr_2 = [50,60,70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170];
-
-                    var _n_rand_pos_x = _percent_arr[getRandomInt(0, _percent_arr.length - 1)];
-                    var _n_rand_pos_y = _percent_arr[getRandomInt(0, _percent_arr.length - 1)];
-                    var _get = lst_src[_nstype];
-
-                    
-                    var _n_scale = 1;
-                    if(_get.scale) {
-                        if(_get.scale === 'rand') {
-                            _n_scale = _percent_arr_2[getRandomInt(0, _percent_arr_2.length - 1)] / 100;
-                        } else {
-                            _n_scale = _get.scale;
-                        }
-                    }
-                    
-                    
-                    return `.cpanel_halloween  ._connectcase_info--outer {
-                            position: relative;
-                            background: ${_get.bgcolor} !important;
-                            z-index: 1;
-                            padding-bottom: 100px;
-                            overflow: hidden;
-                        }
-                        
-                        .cpanel_halloween  ._connectcase_info--outer span.__haloween {
-                            content: "";
-                            position: absolute;
-                            height: 201px;
-                            width: 250px;
-                            left: ${_n_rand_pos_x}%;
-                            bottom: ${_n_rand_pos_y}%;
-                            background: url('${_get.img}') no-repeat right bottom !important;
-                            background-size: contain !important;
-                            pointer-events: none;
-                            opacity: 1;
-                            z-index: -1;
-                            transform: scale(${_n_scale || 1});
-                            opacity: ${_get.opacity || 1};
-                        }
-                        
-                        .cpanel_halloween  ._connectcase_info--outer ._casecalendar_info--inner *:not(._btn_stall) {
-                            color: ${_get.color} !important;
-                        }
-                    `;
-                }
-
-                var lst_src = [
-                    { color: '#ffffff', bgcolor: '#1e1421', img: 'https://i.pinimg.com/originals/7b/64/7f/7b647f845f4a51ead52e302e0e933fcb.gif' },
-                    { color: '#ffffff', bgcolor: '#413478', img: 'https://i.pinimg.com/originals/d4/d7/e2/d4d7e22ee5f5f434bf0d3176c1718748.gif' },
-                    { color: '#ffffff', bgcolor: '#000000', opacity: 0.7, img: 'https://i.pinimg.com/originals/b5/35/be/b535be0968007c911d87253536da4e48.gif' },
-                    { color: '#ffffff', bgcolor: '#000000', img: 'https://i.pinimg.com/originals/d2/38/08/d23808bfc4ede7de94391c0af818a802.gif' },
-                    { color: '#000000', bgcolor: '#fdd4aa', img: 'https://i.pinimg.com/originals/6c/ba/05/6cba052156541635baac4991b5517ab8.gif' },
-                    { color: '#000000', bgcolor: '#99cc66', scale: 'rand', img: 'https://i.pinimg.com/originals/20/25/92/2025928f3645955c320dd781c2fbb235.gif' },
-                    { color: '#ffffff', bgcolor: '#000000', scale: 'rand', img: 'https://i.pinimg.com/originals/1d/13/ab/1d13abdbefe9ba7af8f0455a90f88b0e.gif'},
-                    { color: '#ffffff', bgcolor: '#101010', opacity: 0.7, scale: 2, img: 'https://i.pinimg.com/originals/39/72/17/3972179e5043dc6bdb61c44d2cab604f.gif'},
-                    { color: '#ffffff', bgcolor: '#000000', opacity: 0.7, img: 'https://i.pinimg.com/originals/4f/35/a3/4f35a346f29bc5572b26750e751ba01c.gif' },
-                    { color: '#ffffff', bgcolor: '#000000', img: 'https://i.pinimg.com/originals/05/97/b1/0597b171925ff0f2f009785b14bb9d44.gif' },
-                    { color: '#ffffff', bgcolor: '#202020', scale: 'rand', img: 'https://i.pinimg.com/originals/8a/61/ab/8a61abcf8effc6010b0094f50c1fc912.gif' },
-                    
-                ]
-
-                
-
-                if(__halloween_style()) {
-                    
-                    var _run = () => {
-                        var _st = parseInt(localStorage.getItem('__halloweenstyle')) || 0;
-                        if(__halloweentime = localStorage.getItem('__halloweentime')) {
-                            const date1 = new Date();
-                            const date2 = new Date(__halloweentime);
-                            const diffTime = Math.abs(date2 - date1);
-                            const diffMinute = Math.ceil(diffTime / (1000 * 60)); 
-    
-                            cLog(() => { console.log('halloWeenEvent diffMinute', diffMinute);});
-    
-                            if(diffMinute > 60) {
-                                localStorage.removeItem('__halloweenstyle');
-                                localStorage.removeItem('__halloweentime');
-                            }
-    
-                        } else {    
-                            var n_rand = getRandomInt(0, lst_src.length - 1);
-                            localStorage.setItem('__halloweenstyle', n_rand);
-                            localStorage.setItem('__halloweentime', new Date());
-                            _st = n_rand;
-                        }
-    
-    
-                        __halloween_style().innerHTML = _style(lst_src, _st);    
-                    };
-                    
-                    
-                    _run();
-                    window.__halloween_interval = setInterval(() => {
-                        _run();
-                    }, 60 * 1000);
-
-                }
-            }
-        }
-    })
-    
-
-}
 
 
 
@@ -6172,5 +5854,102 @@ function rules_vardatacase(string) {
 
     return str;
 }
+
+
+function happyChristMas(){
+    if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
+    
+    cLog(() => {  console.log('happyChristMas', getDiffTime('2023-12-31', "day")) });
+            
+    var is_end = false;
+    
+    var days = getDiffTime( new Date().getFullYear() + '-12-31', "day");
+    if(!(days > 0 && days < 20)) {
+        is_end = true;
+        localStorage.removeItem("_christmas_theme")
+        return false;
+    }
+    
+    var isthemest = localStorage.getItem("_christmas_theme");
+    
+    
+    if(isthemest) {
+        document.documentElement.setAttribute("data-event", "christmas");    
+    }
+    
+
+    observeOnce((elm) => {
+        if(!(btn_toggle_event = document.querySelector('[data-btnclk="toggle_event"]'))) {
+           if(open_panelnote = document.querySelector('.material-button[data-btnclk="open_panelnote"]')) {
+            cLog(() => { console.log('observeOnce - happyChristMas' ) })
+
+
+               var imgsrc = isthemest ? 'https://cdn-icons-png.flaticon.com/128/13109/13109989.png' : 'https://cdn-icons-gif.flaticon.com/13109/13109989.gif';
+               open_panelnote.insertAdjacentHTML('beforeBegin', `<div class="material-button" data-btnclk="toggle_event"><div class="content"><img src="${imgsrc}" style=" mix-blend-mode: multiply; transform: scale(${isthemest ? 1.5 : 2}); "></div></div>`);
+               
+               
+               onClickElm('[data-btnclk="toggle_event"]', 'click', function(elm, e){
+                    if (confirm("You sure " + (isthemest ? 'remove' : 'change') + " theme Christmas?")) {
+                        
+                        if(!isthemest) {
+                            localStorage.setItem("_christmas_theme", "true")    
+                        } else {
+                            localStorage.removeItem("_christmas_theme")
+                        }
+                        
+                        location.reload();
+                    }
+               })
+           }
+        }
+        
+        if(isthemest && (app_bar = document.querySelector('app-bar[debugid="cases-app-bar"]'))) {
+            var cdtx_christmas_trangtri = function () { return app_bar.querySelector('#cdtx_christmas_trangtri') };
+            if(!cdtx_christmas_trangtri()) {
+                app_bar.insertAdjacentHTML('afterBegin', `
+                <style>
+                #cdtx_christmas_trangtri {
+                    position: fixed;
+                    z-index: 9999;
+                    width: 86px;
+                    height: 86px;
+                    pointer-events: none;
+                }
+                
+                #cdtx_christmas_trangtri:hover {
+                    opacity: 0.3;
+                }
+                </style>
+                <video id="cdtx_christmas_trangtri" autoplay="true" loop="" src="https://bucket-o39pcy.s3.ap-southeast-1.amazonaws.com/cdtx.lyl.vn/assets/webp/1702347051608.webm" ></video>`)
+
+                cdtx_christmas_trangtri().addEventListener('click', function(){
+                    cdtx_christmas_trangtri().remove()
+                })
+            }
+            
+        }
+    });
+}
+
+function checkLdapAssignee() {
+
+    try {
+        
+        if(_ldap_photo = document.querySelector('profile-icon img.photo')) {
+            var _ldap = _ldap_photo.src.split('/');
+            _ldap = _ldap[_ldap.length - 1].split('?')[0];
+
+            var _userassigneer = document.querySelector('[debug-id="assignee"]').innerText.replace(/[^a-z]/g,'');
+            if(_ldap === _userassigneer) {
+                return true;
+            }
+        }
+    } catch (error) {
+        return false;
+    }
+
+    return false;
+}
+
 
 

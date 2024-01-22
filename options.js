@@ -15,7 +15,6 @@ function save_options() {
     
     var optionkl__modecase = document.getElementById('optionkl__modecase').value || "";
     var optionkl__inputyourname = document.getElementById('optionkl__inputyourname').value || "";
-    var optionkl__inputyourshortname = document.getElementById('optionkl__inputyourshortname').value || "";
 
     var optionkl__disable_dialog = false;
     if(chkelm = document.getElementById('optionkl__disable-dialog')) {
@@ -74,7 +73,6 @@ function save_options() {
 
         optionkl__modecase: optionkl__modecase,
         optionkl__inputyourname: optionkl__inputyourname,
-        optionkl__inputyourshortname: optionkl__inputyourshortname,
         optionkl__disable_dialog: optionkl__disable_dialog,
         optionkl__enable_sf_helper: optionkl__enable_sf_helper,
         optionkl__form_option_data: optionkl__form_option_data,
@@ -157,7 +155,6 @@ function restore_options() {
         myInjector: '',
         gtmToDo: 'notStart',
         optionkl__modecase: "Auto",
-        optionkl__inputyourshortname: "",
         optionkl__inputyourname: "",
         optionkl__disable_dialog: false,
         optionkl__enable_sf_helper: false,
@@ -171,7 +168,6 @@ function restore_options() {
 
         document.getElementById('optionkl').setAttribute("data-optionkl", items.mycountry);
         document.getElementById('optionkl__modecase').value = items.optionkl__modecase;
-        document.getElementById('optionkl__inputyourshortname').value = items.optionkl__inputyourshortname;
         document.getElementById('optionkl__inputyourname').value = items.optionkl__inputyourname;
 
         if(elm = document.getElementById('optionkl__disable-dialog')) {

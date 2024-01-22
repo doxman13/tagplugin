@@ -315,9 +315,6 @@ function en_tagTeamTDCXLoad() {
             
             // Overwrite
             // your name, your shortname
-                _panel.querySelectorAll('[data-infosetting="your-shortname"]').forEach(function(elm){
-                    elm.innerText = window.tagteamoption.optionkl__inputyourshortname;
-                });
                 _panel.querySelectorAll('[data-infosetting="your-name"]').forEach(function(elm){
                     elm.innerText = window.tagteamoption.optionkl__inputyourname;
                 });

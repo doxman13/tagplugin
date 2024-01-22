@@ -128,17 +128,22 @@ try {
                         })    
                     }
                 }
-                // console.log('LINHVO ADD MENU LINK 3', location.host, linkchk_10days_name, linkchk_10days_link);
+
+                // console.log('LINHVO ADD MENU LINK 3', location.host, window.keylanguage, _lstbtn);
                 
                 
                 observeOnce((elm) => {
                     
-                    cLog(() => { console.log('observeOnce - linhvoLoader' ) })
+                    
                     
                     var _navi = document.querySelectorAll('queues-navigation .section');
+                    var _navilinks = document.querySelectorAll('.cdtx_navylink');
         
                    
-                    if(_navi.length > 0) {
+                    if(_navi.length > 0 && _navilinks.length == 0) {
+                        
+                        cLog(() => { console.log('observeOnce - linhvoLoader' ) })
+                        
                         _lstbtn.forEach((_item, _index) => {
                             var _id = `cdtx_navylink${_index}`;
                             var _navi_html = `<a href="${_item.link}" id="${_id}" class="nav-item cdtx_navylink" 

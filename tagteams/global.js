@@ -111,11 +111,8 @@ function global_case(optionkl__disable_dialog) {
                     
                     // Validate Email
                     if(typeof value === 'string') {
-                        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/gm;
-                        var rs_regmatch = value.match(validRegex);
-                        // console.log('___DONG 1 email', value, rs_regmatch);
+                        var rs_regmatch = extractEmails(value);
                         if(rs_regmatch) {
-                            // console.log('___DONG 2 email', value, rs_regmatch);
                             if(!value.includes('@google.com')) {
                                 if(key != 'contact_email_field') {
                                     _tempdataCase['customer_name'] = key;
@@ -377,7 +374,9 @@ function global_case(optionkl__disable_dialog) {
                 <div class="material-button" data-btnid="open_panelnote" data-btnclk="open_panelnote" style="display: none" >
                     <div class="content">Panel</div>
                 </div>
-                <div class="material-button" data-btnid="crawl_case"  data-btnclk="_connectcase_info-act_recrawl" >
+                <div class="material-button" data-btnid="crawl_case"  data-btnclk="_connectcase_info-act_recrawl" 
+                title="Force get Case's info properly"
+                >
                     <div class="content" style=" font-size: 11px; text-align: center; font-weight: bold; ">CRAWL<small style=" display: block; ">CASE</small></div>
                 </div>`;
     
@@ -394,7 +393,7 @@ function global_case(optionkl__disable_dialog) {
                 // For go Team
                 if (!document.querySelector(`._panel_btnshortcut ._panel_shortcut_go_teamvietnam`)) {
                     // data-textview="You have not accessed the group link today?" 
-                    _contenthtml = `<a href="#" target="_blank" class="material-button _panel_shortcut_go_teamvietnam" style="display: none" >
+                    _contenthtml = `<a href="#" target="_blank" data-debugid="goteam" class="material-button _panel_shortcut_go_teamvietnam" style="display: none" >
                             <img src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/jpteam/go_JPdashboard.png">
                     </a>`;
                     _contenthtml = _TrustScript(_contenthtml);
@@ -452,12 +451,6 @@ function global_case(optionkl__disable_dialog) {
             </div>
         </div>
         
-        <div class="material-button" data-btnclk="dashboard_chklst_sop" title="check EC, OGT, ...." >
-            <div class="content">
-                <img src="${assets_img_checklist}" alt="" >
-            </div>
-        </div>
-        
         <div class="material-button" data-btnclk="popup_update_LT" >
             <div class="content">
                 LT
@@ -485,11 +478,6 @@ function global_case(optionkl__disable_dialog) {
             <div class="material-button _fordevmode" data-btnclk="tool_mail_test" >
                 <div class="content">
                     Mail test
-                </div>
-            </div>
-            <div class="material-button" data-btnclk="removecase_example" title="remove 1 case storage example" >
-                <div class="content">
-                    <img src="${assets_img_removeicon}" alt="" srcset="">
                 </div>
             </div>
             <div class="material-button _fordevmode" data-btnclk="get_window_data_case" >
@@ -816,65 +804,21 @@ function global_case(optionkl__disable_dialog) {
     }
 
 
-    var addGoCase2Calendar = (_caseid) => {
+    var addGoCase2Calendar = () => {
         // go_caseincalendar
         // https://calendar.google.com/calendar/u/0/r/search?q=2-4476000033977
         
-        var _link = `https://calendar.google.com/calendar/u/0/r/search?q=${_caseid}`;
         
         
-        if(!document.querySelector('#go_caseincalendar')) {
-            var _contenthtml = `<a href="${_link}" target="_blank" id="go_caseincalendar">Go calendar</a>`;
-            // _contenthtml += `<ul class="dock_icon">
-            //     <li class="li-2 open-email">
-            //         <span class="name">Send mail</span>
-            //         <img class="ico" src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/gmail.png">
-            //     </li>
-            //     <li class="li-3 click2call">
-            //         <span class="name">Click to call</span>
-            //         <img class="ico click2call"
-            //             src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/phone-call-mac.png" alt="">
-            //     </li>
-            //     <li class="li-5 open-note">
-            //         <span class="name">Oncall Notes</span>
-            //         <img class="ico" src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/note.png" >
-            //     </li>
-            //     <li class="li-10">
-            //         <span class="name">Ads ICS</span>
-            //         <img class="ico ads-ics"
-            //             src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/icon-google-ads.png" >
-            //     </li>
-            //     <li class="li-11">
-            //         <span class="name">Gearloose</span>
-            //         <img class="ico open-gearloose"
-            //             src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/icon-gearloose.png" >
-            //     </li>
-            //     <li class="li-12">
-            //         <span class="name">OGT Dashboard</span>
-            //         <img class="ico ogt-dashboard"
-            //             src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/dashboard.png" >
-            //     </li>
-            //     <li class="li-13">
-            //         <span class="name">EC Dashboard</span>
-            //         <img class="ico ec-dashboard"
-            //             src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/groups/dashboard.png" >
-            //     </li>
-            //     <li class="li-14">
-            //         <span class="name">Connect Appointment</span>
-            //         <img class="ico connect-appointment"
-            //             src="https://cdtx.lyl.vn/cdtx-assistant/filemanager_api/tagteam/assets/img/groups/connect-appointment.png" >
-            //     </li>
-            // </ul>`;
-
-            _contenthtml = `${_contenthtml} `;
-            _contenthtml = _TrustScript(_contenthtml);
-            document.querySelector('.home.header .card-title').insertAdjacentHTML('beforeEnd', _contenthtml);
-        }
+        if(! __case_id()) return false; 
+        if(document.querySelector('#go_caseincalendar')) return false;
         
+        var _link = `https://calendar.google.com/calendar/u/0/r/search?q=${__case_id()}`;
         
-        if(document.querySelector('#go_caseincalendar')) {
-            document.querySelector('#go_caseincalendar').setAttribute('href', _link);
-        }
+        var _contenthtml = `<a href="${_link}" target="_blank" id="go_caseincalendar">Go calendar</a>`;
+        _contenthtml = `${_contenthtml} `;
+        _contenthtml = _TrustScript(_contenthtml);
+        document.querySelector('.home.header .card-title').insertAdjacentHTML('beforeEnd', _contenthtml);
         
            
     }
@@ -908,9 +852,9 @@ function global_case(optionkl__disable_dialog) {
                     <span class="${_getmemory_isopen === 'CLOSE' ? 'CLOSE' : 'OPEN' }" data-btnclk="_connectcase_info-act_toggleopen" ></span>
                 </div>
                 <div class="_connectcase_info--outer ${_getmemory_isopen === 'CLOSE' ? '_none' : ''}">
-                    <div class="_casecalendar_info--controls _t_right" >
+                    <div class="_casecalendar_info--controls _t_right" style=" margin-bottom: 10px; " >
                     
-                        <span class="_btn_stall _connectcase_info-act_refresh" data-btnclk="_connectcase_info-act_recrawl" title="reupdate case info">🗘</span>
+                        <span class="_btn_stall _connectcase_info-act_refresh" data-btnclk="removecase_example" title="reupdate case info">╳ </span>
                         <span class="_btn_stall _connectcase_info-act_refresh" data-btnclk="_connectcase_info-act_refresh" >⟳</span>
                         <span class="_btn_stall _connectcase_info-act_edit" data-btnclk="_connectcase_info-act_edit" >EDIT</span>
                     </div>
@@ -1019,6 +963,7 @@ function global_case(optionkl__disable_dialog) {
                         <div class="_infocase_byme-field" data-title="Customer Website" data-infocase="customer_website" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Customer Gmeet" data-infocase="customer_gmeet" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="AM email" data-infocase="am_email" data-disnewline="1" contenteditable="plaintext-only" ></div>
+                        <div class="_infocase_byme-field" data-title="Sale Team" data-infocase="sales_program" data-disnewline="1" contenteditable="plaintext-only" ></div>
                         <div class="_infocase_byme-field" data-title="Tasks" data-infocase="tasks" data-disnewline="1" contenteditable="plaintext-only"
                             data-btnclk="oncall_templ_act_taskchoice"
                             data-text="oncall_templ_act_taskchoice-text"
@@ -1371,7 +1316,7 @@ function global_case(optionkl__disable_dialog) {
                     var _contenttext = elm.querySelector('sanitized-content').innerText;
                     _contenttext = _contenttext.split('was submitted by')[1];
                     if(_contenttext.includes('@google.com')) {
-                        var _emails = _contenttext.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
+                        var _emails = extractEmails(_contenttext);
     
                         var am_emailgoogle = _emails.find((_item2) => { return _item2.includes('@google.com')});
     
@@ -1723,14 +1668,12 @@ function global_case(optionkl__disable_dialog) {
         try {
             window._recheckInfo_Case = 0;
             observeOnce((elm) => {
-                cLog(() => { console.log('observeOnce - recheckInfoCase 1' ) })
                 
                     
                 var panel = () => { return document.querySelector('._casecalendar_info'); };
                 var email_lst = () => { return document.querySelectorAll('internal-user-info .email'); }
                 if(email_lst().length < 1) return; 
                 
-                cLog(() => { console.log('observeOnce - recheckInfoCase 2' ) })
                 
                 
                 
@@ -1742,6 +1685,7 @@ function global_case(optionkl__disable_dialog) {
                 
                 
                     
+                    cLog(() => { console.log('observeOnce - recheckInfoCase 2' ) }, 2)
                     
                     // s2
                     var _isset = false;
@@ -1799,7 +1743,6 @@ function global_case(optionkl__disable_dialog) {
         window.ncreate = window.ncreate || 1;
         observeOnce((elm) => {
 
-            cLog(() => { console.log('observeOnce - mailTemplateControl' ) })
 
 
             if(window.result.optionkl__form_option_data) {
@@ -1808,6 +1751,9 @@ function global_case(optionkl__disable_dialog) {
             
             var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"]`);
             if(_istopelm) {
+                
+                
+                
                 if(email_topcontent = _istopelm.querySelector('#email-body-content-top')) {
                     if(email_body_header = _istopelm.querySelector('#email-body-header')) {
                         var _elmcontrol = () => {
@@ -1815,7 +1761,7 @@ function global_case(optionkl__disable_dialog) {
                         };
 
                         if(!_elmcontrol()) {
-                            
+                            cLog(() => { console.log('observeOnce - mailTemplateControl' ) })
                             
                             // Anti loop
                             if(window.ncreate > 10) return false; window.ncreate++; 
@@ -2208,7 +2154,8 @@ function global_case(optionkl__disable_dialog) {
                             
                             
                             
-
+                            _sub_modal().querySelector('.cdtx__uioncall_control-searchtempl').focus();
+                            
                             _sub_modal().querySelector('.cdtx__uioncall_control-searchtempl').addEventListener('keyup', function(e){
                                 // console.log(e.target.innerText);
                                 var status_search = (str_search) => {
@@ -2306,23 +2253,6 @@ function global_case(optionkl__disable_dialog) {
                 }
                 
                 
-                if(_action === 'dashboard_chklst_sop') {
-                    
-                    var iframe_dashboard_chklst_sop = 'https://app.bsd.education/share/o/zxnmpa42/';
-                    if(iframe_dash_here = getVariableSheetByKeyAndLanguage('dashboard_chklst_sop', window.keylanguage)) {
-                        iframe_dashboard_chklst_sop = iframe_dash_here;
-                    }
-                    
-                    _sub_modal().insertAdjacentHTML('beforeEnd', `
-                        <span class="_sub_modal_close"></span>
-                        <div class="_sub_modal_container_outer" >
-                            <iframe src="${iframe_dashboard_chklst_sop}"></iframe>
-                        </div>
-                    `);
-
-                    _sub_modal().classList.add('show');
-                }
-                        
                 if(_action === 'mail_templ_act_remove') {
                     var _parent = elm.closest('#email-body-container');
                     var _emailbodycontenttop = _parent.querySelector('#email-body-content-top');
@@ -3007,11 +2937,11 @@ function global_case(optionkl__disable_dialog) {
                 
                 if(_action === 'removecase_example') {
                     var _caseid = 'cdtx_caseid_' + document.querySelector('[debug-id="case-id"] .case-id').innerText;
-                    if (confirm(`You sure refresh ${_caseid} at memory`)) {
+                    if (confirm(`You sure remove ${_caseid} at memory`)) {
                         document.querySelector('._casecalendar_info._connectcase_info').remove()
                         removeChromeStorage(_caseid, () => {
                             Toastify({
-                                text: `Remove ${_caseid} success!!!`,
+                                text: `Action rm ${_caseid} success!!!`,
                                 duration: 3000,
                                 callback: function(){
                                     this.remove();
@@ -3329,6 +3259,16 @@ function global_case(optionkl__disable_dialog) {
                                 <span class="_sub_i_li" data-key="AS - Agent Reschedule" ></span>
                                 <span class="_sub_i_li" data-key="Other" ></span>
                             `;
+                            
+                        // overwrite
+                        if(sheetdata = getSheetByTabName('Status Note Case')) {
+                            _lst = '';
+                            sheetdata.forEach((item) => {
+                                _lst += `<span class="_sub_i_li" data-key="${item.Title}" style="background-color: ${item.Color}" ></span>`;
+                            })
+                        }
+                        
+                        
                         var _position_screen = elm.getBoundingClientRect();
                         
                         var _sub_i_ul_elm = document.createElement('span');
@@ -3453,8 +3393,15 @@ function global_case(optionkl__disable_dialog) {
 
                     window.casetype_lt = false;
                     if(_strcaseid = __case_id()) {
-                        elm.classList.remove('isnew');
                         
+                        // Confirm
+                        if(window.dataCase.case_id == __case_id()) {
+                            if(!window.confirm("Is recrawl, Are you sure?")) return false;
+                        }
+                        
+                        
+                        // action
+                        elm.classList.remove('isnew');
                         document.querySelector('._casecalendar_info').remove();
                         
                         // 1. Xoa
@@ -3527,8 +3474,14 @@ function global_case(optionkl__disable_dialog) {
                     //         });
                     //     });
                     // }
-                    
-                    document.querySelector('._casecalendar_info').remove(); 
+                    loadCaseStorageByID(__case_id(), (response) => {
+                        var caseload = response.value || false;
+                        
+                        if(caseload) {
+                            window.dataCase = caseload;
+                        }
+                        document.querySelector('._casecalendar_info').remove(); 
+                    });
                     
                 }
 
@@ -4319,8 +4272,7 @@ function global_case(optionkl__disable_dialog) {
                     <span data-infocase="qplus_status" ></span>
                 </span>
 
-                <span class="_casecalendar_info-100per" data-title="Quick link:" data-area="btn-shortcutcase" >
-                </span>
+                
                 
                 <span class="_casecalendar_info-100per _casecalendar_info-uidatefl_install" >
                     <div class="_1">
@@ -4354,6 +4306,9 @@ function global_case(optionkl__disable_dialog) {
 
                         <span class="_btn_stall" data-btnclk="_connectcase_info-act_push2summary" title="update to case summary">Push</span>
                     </div>
+                </span>
+                <span class="_casecalendar_info-100per" data-title="Quicklink:" data-area="btn-shortcutcase" >
+                    <span data-infocase_html="toolshortlink" ></span>
                 </span>
                 <span class="_casecalendar_info-100per" data-title="Note:" data-notearea="1">
                     <span data-btnclk="note_edit"></span>
@@ -4704,7 +4659,7 @@ function global_case(optionkl__disable_dialog) {
         run_style();
         styleAllviaSheet();
         observeOnce((elm) => {
-            cLog(() => { console.log('observeOnce - run_style' ) })
+            cLog(() => { console.log('observeOnce - run_style' ) }, 2)
 
             // Add link style head
             run_style();
@@ -4729,8 +4684,10 @@ function global_case(optionkl__disable_dialog) {
         var _title_diff = '';
         var _title = '';
         var _caseid_once = '';
+        var _caseid_isnew = '';
+        var _caseid_once_autoclickcraw = '';
         observeOnce((elm) => {
-            cLog(() => { console.log('observeOnce - loadRealtime', location.hostname) })
+            cLog(() => { console.log('observeOnce - loadRealtime', location.hostname) }, 2)
 
             // if(!document.querySelector('#kl_tagteam_inline_style')) {
                 
@@ -4750,6 +4707,7 @@ function global_case(optionkl__disable_dialog) {
                 // 2. compare ldap (ldap vs profile ldap)
                 // 3. is assigned === true
                 // 4. is save case
+                
                 
                 var _caseidelm = document.querySelector('.case-id');
                 if(_caseidelm) {
@@ -4778,11 +4736,15 @@ function global_case(optionkl__disable_dialog) {
                     // ========
                     // Load data case
                     // ========
-                        if(_caseid != _caseid_once) {
-                            cLog(() => { console.log('DONG CHECK' , _caseid, _caseid_once); })
-                            var _btn_recrawl = () => {
+                        var _btn_recrawl = () => {
                                 return document.querySelector('[data-btnid="crawl_case"]');
-                            };
+                        };
+                        
+                        if(_caseid != _caseid_once) {
+                            _caseid_once = _caseid;
+                            
+                            cLog(() => { console.log('DONG CHECK' , _caseid, _caseid_once); })
+                            
 
                             loadCaseStorageByID(_caseid, (response) => {
                                 cLog(() => { console.log('DONG CHECK 2' , response); })
@@ -4797,13 +4759,65 @@ function global_case(optionkl__disable_dialog) {
                                     window.dataCase = caseload;
                                 } else {
                                     if(_btn_recrawl()) {
-                                        _btn_recrawl().classList.add('isnew')
+                                        _btn_recrawl().classList.add('isnew');
+                                        _caseid_isnew = _caseid;
                                     }
                                 }
                             });
 
-                            _caseid_once = _caseid;
                         }
+                        
+
+                        // Count down auto craw
+                        var nMyTime = null;
+                        if(
+                            __case_id() != _caseid_once_autoclickcraw  
+                            && __case_id() === _caseid_isnew
+                        ) {
+                            
+                            
+                            if(checkLdapAssignee())  {
+                                
+                                if(isHaveReviewCase()) {
+                                if(_btn_recrawl()) {
+                                    if(_btn_recrawl().classList.contains('isnew')) {
+                                        _caseid_once_autoclickcraw = _caseid_isnew;
+                                        
+                                        // Once
+                                        
+                                        cLog(() => { 
+                                            console.log("checkLdapAssignee -> Btn isnew class"); 
+                                        })
+                                        
+                                        
+                                        var ncountdown = 7;
+                                        nMyTime = setInterval(() => {
+                                            
+                                            _btn_recrawl().setAttribute('data-ncountdow', ncountdown);
+                                            
+                                            if(__case_id() != _caseid_isnew) {
+                                                // console.log('ZZZZZZZ Clear', __case_id(), _caseid_once_autoclickcraw, _caseid, _caseid_isnew);
+                                                _caseid_isnew = '';
+                                                _caseid_once_autoclickcraw = '';
+                                                clearInterval(nMyTime);
+                                            }
+                                            
+
+                                            ncountdown--;
+                                            if(ncountdown < 0) {
+                                                clearInterval(nMyTime);
+                                                _btn_recrawl().click();
+                                            }
+                                        }, 1000);        
+                                    }
+                                        
+                                }     
+                                }
+                                
+                                
+                            }
+                            
+                        } 
                     
                     // ========
                     // Save case
@@ -4883,6 +4897,10 @@ function global_case(optionkl__disable_dialog) {
 
                 // callUI
                 callPhoneDefaultNumber();
+                
+                
+                // go Case to calendar
+                addGoCase2Calendar();
             }
 
 
@@ -5488,13 +5506,16 @@ function global_case(optionkl__disable_dialog) {
                 
                 if(window.location.hostname == 'calendar.google.com') {
                     observeOnce((elm) => {
-                        cLog(() => { console.log('observeOnce - run_style list_case_havefl 2 calendar.google' ) })
                         if(!document.querySelector('.panel_info-listbtn')) return;
                 
                         // if have data
                         if(data_case.rs) {
                             
+                            
+                            
                             if(!elm_popup_lstcasefl()) {
+                                cLog(() => { console.log('observeOnce - run_style list_case_havefl 2 calendar.google' ) })
+                                
                                 document.querySelector('.panel_info-listbtn').insertAdjacentHTML('afterEnd', `<span class="li-popup_lstcasefl" data-attr="${data_case.n_havedate}" ><span class="ico"></span></span>`)
                                 
                                 
@@ -5665,7 +5686,6 @@ function global_case(optionkl__disable_dialog) {
         <span class="_sub_modal_close"></span>
         <div id="_contentPopupUpdateLT">
             <div id="_contentPopupUpdateLT_input" contenteditable="" data-tiptitle="Update case" ></div>
-            <label for="_contentPopupUpdateLT_input_chksetquicklink" ><input type="checkbox" id="_contentPopupUpdateLT_input_chksetquicklink"/> Set Quick link</label>
             <span id="_contentPopupUpdateLT_input_submit"></span>
             <pre id="_contentPopupUpdateLT_readmore">${
                 ['Ex: copy bellow paste for demo:',
@@ -5703,26 +5723,18 @@ function global_case(optionkl__disable_dialog) {
         var _contentPopupUpdateLT_input_submit = document.querySelector('#_contentPopupUpdateLT_input_submit');
         var _contentPopupUpdateLT_readmore = document.querySelector('#_contentPopupUpdateLT_readmore');
         var _contentPopupUpdateLT_input_count = document.querySelector('#_contentPopupUpdateLT_input_count');
-        var _contentPopupUpdateLT_input_chksetquicklink = document.querySelector('#_contentPopupUpdateLT_input_chksetquicklink');
         var _templateCase = {};
         var urls_isquicklink = [];
-        var is_quicklink = false;
+        
         
         
 
         // Show Input
-        _contentPopupUpdateLT_input_chksetquicklink.addEventListener('change', function(e){
-            _contentPopupUpdateLT_input.dispatchEvent(new Event('keyup'));
-            
-            _contentPopupUpdateLT_input.setAttribute('data-tiptitle', e.target.checked ? 'Quick link': 'Update case');
-            
-        })
         _contentPopupUpdateLT_input.addEventListener('keyup', function(e){
             // var _innerHtml = e.target.innerHTML;
             // _text = stripHtml(_innerHtml);
             // console.log(_text);
             
-            is_quicklink = false;
             var _val = e.target.innerText;
             
             
@@ -5744,7 +5756,7 @@ function global_case(optionkl__disable_dialog) {
             urls.forEach((item) => {
                 _all_url.push(item);
 
-                if(!item.includes('google.com')) {
+                if(!(item.includes('google.com') || item.includes('tel.meet'))) {
                     urls_notgoogle.push(item);
                 }
     
@@ -5756,26 +5768,7 @@ function global_case(optionkl__disable_dialog) {
                     const params = new URL(item).searchParams;
                     ocid = params.get('ocid') || ''; 
                 }
-    
-                if(item.includes('//analytics-ics.corp.google.com')) {
-                    urls_isquicklink.push(item);
-                }
                 
-                if(item.includes('//tagmanager-ics.corp.google.com')) {
-                    urls_isquicklink.push(item);
-                }
-                
-                if(item.includes('//cases.connect.corp.google.com')) {
-                    urls_isquicklink.push(item);
-                }
-                
-                if(item.includes('//mcn-ics.corp.google.com')) {
-                    urls_isquicklink.push(item);
-                }
-
-                if(item.includes('//adwords.corp.google.com')) {
-                    urls_isquicklink.push(item);
-                }
             });
 
             
@@ -5789,13 +5782,18 @@ function global_case(optionkl__disable_dialog) {
                 var emails_notgoogle = [];
                 var emails_google = [];
                 
-                emails.forEach((item) => {
-                    if(!item.includes('@google.com')) {
-                        emails_notgoogle.push(item);
-                    } else {
-                        emails_google.push(item);
-                    }
-                });
+                if(emails) {
+                    emails.forEach((item) => {
+                        if(!item.includes('@google.com')) {
+                            emails_notgoogle.push(item);
+                        } else {
+                            emails_google.push(item);
+                        }    
+                   
+                        
+                    });    
+                }
+                
             
                 emails_google = emails_google.filter((c, index) => {
                     return emails_google.indexOf(c) === index;
@@ -5825,6 +5823,12 @@ function global_case(optionkl__disable_dialog) {
                         || _lowertext.replace(/[^\d]+/g, '').startsWith('84')
                     )
                 ) {
+                    
+                    
+                    var _phone_tmp = _lowertext.replace(/[^\d]+/g, '')
+                    if(_phone_tmp.startsWith('84')) {
+                        item = `+${_phone_tmp}`;
+                    }
                     
                     if(_phone_get = reFormatPhone(item)) {
                         _phone = _phone_get;
@@ -5945,14 +5949,6 @@ function global_case(optionkl__disable_dialog) {
 
             _contentPopupUpdateLT_input_rs.innerText = JSON.stringify(_templateCase,null,'\t');
 
-            if(_contentPopupUpdateLT_input_chksetquicklink.checked || (urls_isquicklink.length > 0 && length_temcase < 3)) {
-                is_quicklink = true; 
-                var _urls_link = _contentPopupUpdateLT_input_chksetquicklink.checked ? _all_url : urls_isquicklink;
-
-                _contentPopupUpdateLT_input_count.innerText = `Quick link internal add to case: ${_urls_link.length}`;
-                _contentPopupUpdateLT_input_rs.innerText = _urls_link.join("\n");
-
-            }
         });
     
     
@@ -6037,14 +6033,6 @@ function global_case(optionkl__disable_dialog) {
             // };
             
             // Update url
-            if(is_quicklink) {
-                setGetQuickLink(__case_id(), urls_isquicklink.join('\n'), (data) => {
-                    cLog(() => { console.log('UPDATE', data) });
-                });
-
-                // reset
-                _templateCase = {};
-            }
             
             
             // If have data
@@ -6079,6 +6067,8 @@ function global_case(optionkl__disable_dialog) {
                 //   __content += (`${property}: ${_templateCase[property]}`) + "\n";
                 // }
                 
+                
+                // Update note case
                 __content = `${_contentPopupUpdateLT_input.innerText }`;
                 
                 getNoteCase(_templateCase.case_id, (data) => {
@@ -6100,7 +6090,10 @@ function global_case(optionkl__disable_dialog) {
                     var merge2obj = Object.assign(caseload, _templateCase);
                     // console.log("compare", caseload, _templateCase, merge2obj);
     
-        
+                    if(!merge2obj.appointment_time) {
+                        merge2obj.appointment_time = formatDate(new Date(), 'd/m/Y');
+                    }
+                    
                     // ====== END -> SAVE
                     // saveCase2Storage(caseload, _callback);
                     saveCase2Storage(merge2obj, (response) => {
@@ -6190,6 +6183,13 @@ function global_case(optionkl__disable_dialog) {
         showListFollowUp();
         keyupEscAction();
         happyChristMas();
+        
+        addDashboardChklstSOP();
+        addDashboardCheckWinCriteria();
+        // addBoadListEmailTemplate();
+        
+        lastVisitCase();
+        
         
     }
 

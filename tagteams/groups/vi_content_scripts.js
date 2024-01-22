@@ -57,14 +57,12 @@ function vi_tagTeamTDCXLoad() {
         myInjector: 'gtm-xxx',
         gtmToDo: 'notStart',
         optionkl__modecase: "Your shortname",
-        optionkl__inputyourshortname: "Your shortname",
         optionkl__inputyourname: "Your name",
         optionkl__disable_dialog: false,
         optionkl__disable_focuscase: false,
         optionkl__disable_autofixemail: false,
     }, function (result) {
         window.tagteamoption.optionkl__modecase = result.optionkl__modecase;
-        window.tagteamoption.optionkl__inputyourshortname = result.optionkl__inputyourshortname;
         window.tagteamoption.optionkl__inputyourname = result.optionkl__inputyourname;
         window.tagteamoption.optionkl__disable_dialog = result.optionkl__disable_dialog;
         window.tagteamoption.optionkl__disable_focuscase = result.optionkl__disable_focuscase;
@@ -337,9 +335,6 @@ function vi_tagTeamTDCXLoad() {
             
             // Overwrite
             // your name, your shortname
-                _panel.querySelectorAll('[data-infosetting="your-shortname"]').forEach(function(elm){
-                    elm.innerText = window.tagteamoption.optionkl__inputyourshortname;
-                });
                 _panel.querySelectorAll('[data-infosetting="your-name"]').forEach(function(elm){
                     elm.innerText = window.tagteamoption.optionkl__inputyourname;
                 });

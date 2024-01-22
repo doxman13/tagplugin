@@ -193,6 +193,20 @@ function reformatAdsId(str_adsid) {
     return false
 }
 
+
+// Case Format 0-000000
+function isCaseFormat(str_adsid) {
+    try {
+        var dateReg = /^\d{1}([./-])\d{13}$/
+
+        return str_adsid.match(dateReg) ? true : false;
+
+    } catch(e) {
+        return false
+    }
+    return false
+}
+
 function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
 }
@@ -1069,37 +1083,10 @@ function globalForAll(window) {
             var _caseid_indata = "";
             var n_once = 0;
             var _listcase = [];
+            var __lastvisitcasse = "";
             
             var _key = 'cdtx_analytics-ics_listcaseandlink';
-            // getChromeStorage(_key, (response) => {
-            //     _datatemp = response.value || "";
-            //     cLog(() => {console.log("analytics - here started", _datatemp)});
-
-            //     if(_datatemp) {
-            //         var _caseinput = _datatemp.split("|--|");
-            //         _caseinput = _caseinput.filter(function(e){return e});
-                    
-            //         _caseinput.forEach((elm) => {
-            //             if(elm.includes(location.href)) {
-            //                 _caseid_indata = elm.split('|-|')[1];
-            //             }
-            //         });
-            //         cLog(() => {console.log("analytics - list", _caseinput)});
-
-            //     }
-
-            //     onClickElm('md-dialog.ics-data-access-reason-dialog button.ics-dialog-confirm', 'click', function(elm, e){
-            //         var _parent = elm.closest('md-dialog.ics-data-access-reason-dialog');
-            //         var caseid = _parent.querySelector('[name="caseId"]').value;
-            //         var _keysave = (location.href + "|-|" + caseid );
-            //         if(_datatemp.includes(_keysave) == false) {
-            //             _datatemp = _datatemp + "|--|" + _keysave;
-            //             setChromeStorage(_key, _datatemp);
-            //         }
-            //     });
-            // });
-
-
+            
             var _key = 'cdtx_tool_quicklink';
             getChromeStorage(_key, (response) => {
                 _datatemp = response.value || {};
@@ -1115,53 +1102,107 @@ function globalForAll(window) {
                 });
                 
                 
-                // if(_datatemp) {
-                //     var _caseinput = _datatemp.split("\n");
-                //     _caseinput = _caseinput.filter(function(e){return e});
-                    
-                //     _caseinput.forEach((elm) => {
-                        
-                //     });
-                //     cLog(() => {console.log("dongmai - list", _caseinput)});
-
-                // }
             });
+            
 
-
+            
+            
+            getChromeStorage("__lastvisitcasse", (response) => {
+                __lastvisitcasse = response.value || '';
+            });
+            
+            
             observeOnce((elm) => {
                 // on-call, precall button 
-                var _istopelm = document.querySelector(`md-dialog.ics-data-access-reason-dialog [name="caseId"]`);
-                cLog(() => { console.log('observeOnce - globalForAll' ) });
-
-                if(_istopelm) {
+                
+                
+                if(_istopelm = document.querySelector(`md-dialog.ics-data-access-reason-dialog [name="caseId"]`)) {
+                    
                     if(!_istopelm.classList.contains('is_insert')) {
+                        cLog(() => { console.log('observeOnce - globalForAll' ) });
+                    
                         _istopelm.classList.add('is_insert');
                         
-                        console.log(_listcase);
-                        cLog(() => { console.log("analytics - 2", _listcase, _caseid_indata, _datatemp) });
+                        getChromeStorage("__lastvisitcasse", (response) => {
+                            __lastvisitcasse = response.value || '';
+                            
+                            cLog(() => { console.log("analytics - 2", __lastvisitcasse, _listcase, _caseid_indata, _datatemp) });
                         
-                        _istopelm.value = _caseid_indata;
+                            _istopelm.value = _caseid_indata;
+                            
+                            _istopelm.dispatchEvent(new Event('input'));
+                            _istopelm.dispatchEvent(new Event('enter'));
+                            _istopelm.dispatchEvent(new Event('change'));
+                            _istopelm.dispatchEvent(new Event('blur'));
+                            
+                            
+                            if(elm_here = _istopelm.closest('md-input-container')) {
+                                var lst = '';
+                                _listcase.forEach(item => {
+                                    if(item != _caseid_indata) {
+                                        lst += `<span  data-debugid="actfillcaseid"  >${item}</span>`;
+                                    }
+                                });
+                                
+                                if(__lastvisitcasse) {
+                                    var caseidextract = __lastvisitcasse.split('|||');
+                                    lst += `<span data-debugid="actfillcaseid" data-text="${caseidextract[1] ? `Last visit: ${caseidextract[1]}` : ''  }" >${caseidextract[0]}</span>`;
+                                }
+                                
+                                if(lst) {
+                                    elm_here.insertAdjacentHTML('beforeEnd', `
+                                    <style>.cdtx_lstcaserelated [data-debugid]{position:relative;display:inline-block;font-size:80%;line-height:1;white-space:nowrap;border-radius:5px;margin:10px 10px 10px 0;cursor:pointer;padding:10px 0}
+                                    
+                                    .cdtx_lstcaserelated [data-debugid][data-text]:before{content:attr(data-text);position:absolute;bottom:calc(70% + 2px);font-size:80%;opacity:.7} .cdtx_lstcaserelated [data-debugid][data-text] {color:#9E9E9E}
+                                    .cdtx_lstcaserelated [data-debugid][data-text]:hover {
+                                        color: #009688;
+                                    }
+                                    </style>
+                                    <div class="cdtx_lstcaserelated">${lst}</div>`);
+                                }
+                            }
+                            
+                        });
+                        
+                        
+                        
+                        
+                    }
+                    
+                }
+            });
+            
+            // Event Click
+            onClickElm('[data-debugid="actfillcaseid"]', 'click', function(elm, e){
+                
+                if(_istopelm = document.querySelector(`md-dialog.ics-data-access-reason-dialog [name="caseId"]`)) {
+                        cLog(() => { console.log("analytics - 2", __lastvisitcasse, _listcase, _caseid_indata, _datatemp) });
+        
+                        _istopelm.value = elm.innerText;
                         
                         _istopelm.dispatchEvent(new Event('input'));
                         _istopelm.dispatchEvent(new Event('enter'));
                         _istopelm.dispatchEvent(new Event('change'));
                         _istopelm.dispatchEvent(new Event('blur'));
-                        
-                        
-                        if(elm_here = _istopelm.closest('md-input-container')) {
-                            _listcase.forEach(item => {
-                                if(item != _caseid_indata) {
-                                    elm_here.insertAdjacentHTML('beforeEnd', `<span style="user-select: all;padding: 6px 10px;display: inline-block;font-size: 80%;border-bottom: 1px solid #ccc;line-height: 1;white-space: nowrap;border-radius: 5px;margin: 10px 10px 10px 0;">${item}</span>`);    
-                                }
-                                
-                            });
-                            
-                        }
-                        
-                    }
                     
                 }
-            })
+            
+            });
+            
+            onClickElm('.ics-dialog-confirm', 'click', function(elm, e){
+                if(_istopelm = document.querySelector(`md-dialog.ics-data-access-reason-dialog [name="caseId"]`)) {
+                    var _caseid_here = _istopelm.value.trim();
+                    if(isCaseFormat(_caseid_here)) {
+                        setGetQuickLink(_caseid_here, location.href, () => {
+                            console.log(123123123)
+                        });
+                    }
+                }
+                
+            
+            });
+            
+            
         } catch (error) {
             console.error(error)
         }
@@ -1286,10 +1327,14 @@ function searchAndReturnValue(_str_data, _keysearch, _posvalue = 1){
     return false;
 }
 
-function cLog(callback) {
-    if(localStorage.getItem('dongtest')) {
+function cLog(callback, type = 1) {
+
+    if(type == 1 && localStorage.getItem('dongtest') == '1') {
         callback();
-    }
+    } 
+    if(type == 2 && localStorage.getItem('dongtest') == '2') {
+        callback();
+    } 
 }
 
 
@@ -1504,7 +1549,7 @@ function readPoolCase() {
 
 function observeOnce(callback, targetNode = document.body, config = { attributes: true, childList: true, subtree: true }) {
     var callback_control = (elm) => {
-        // cLog(() => { console.log('observeOnce', elm[0].target) });
+        cLog(() => { console.log('observeOnce', elm[0].target) }, 2);
         callback(elm);
     };
     
@@ -2763,13 +2808,13 @@ function panelAddShortcutLink() {
                 const dom = document.createElement('div');
                 dom.innerHTML = tool_shortlink_html;
                 dom.id = 'tool_shortlink';
-                dom.className = 'tool_shortlink';
-                _istopelm.appendChild(dom);
+                dom.className = 'tool_shortlink _casecalendar_info-100per';
+                dom.style.marginBottom = "20px";
+                dom.setAttribute('data-title', 'Quicklink')
+                _istopelm.replaceWith(dom);
 
                 
-
-                if(__case_id()) {
-
+                if(__case_id() && _el_tool_shortlink()) {
                     getToolShortlink(__case_id(), (data) => {
 
                         if(data) {
@@ -2948,7 +2993,6 @@ function crSubjectByHotKeyEmail() {
                         window.subject_hotkey_email[item['Key']] = _tempsubject;
                     });    
                 }
-                
             }
         });
 
@@ -3338,6 +3382,38 @@ function getSystemsSheetByKeyAndLanguage(_columnname, _keylanguage) {
                 }
                 
             }
+        }
+            
+    } catch (error) {
+        cLog(() => {
+            console.error('getVariableSheetByKeyAndLanguage', _columnname, _keylanguage, error)
+        });
+        
+        return false;
+    }
+
+    return false;
+}
+
+// getSheetByTabName('Status Note Case');
+function getSheetByTabName(tabname) {
+    try {
+        if(window.loadgooglesheetpublish) {
+            var _rs = window.loadgooglesheetpublish;
+            var _arr = _rs[tabname].sheettab;
+            // cLog(() => { console.log('xxx', _targetarr) });
+            return _arr;
+            // for (let index = 0; index < _targetarr.length; index++) {
+            //     const _item = _targetarr[index];
+                
+            //     if(_item['key'].includes(_keylanguage)) {
+            //         // cLog(() => { console.log('xxx',_item[_columnname]) });;
+            //         // Load
+            //         return _item[_columnname];
+            //         break;
+            //     }
+                
+            // }
         }
             
     } catch (error) {
@@ -4488,7 +4564,9 @@ function initQplusLoad() {
                             // // Sub-Status
                             if (_elminframe.innerText.includes('Sub-Status')) {
                                 cLog(() => { console.log("Sub-Status", _elminframe.querySelector('.FEZIwd').innerText); });
-                                _list_case[_index].statusCase = _elminframe.querySelector('.FEZIwd').innerText;
+                                if(!_elminframe.querySelector('.FEZIwd').innerText.includes('Question not encountered by')) {
+                                    _list_case[_index].statusCase = _elminframe.querySelector('.FEZIwd').innerText;    
+                                }
                             }
         
                             // // Follow up date
@@ -5519,26 +5597,33 @@ function ___casecalendar_elm() {
 
 function extractEmails(text) {
     // Regular expression to match emails
-    const emailRegex = /([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+)/;
+    const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/gi;
+    // const emailRegex = /([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+)/;
+    
+    const emails = text.match(emailRegex);
+    // console.log(emails);  // Output: ["info@example.com", "support@example.net"]
+
+
 
     // Create a mutable array to store the emails
-    const emails = [];
+    // const emails = [];
 
-    // Split the text string on spaces
-    var words = text.replace(/(\r\n|\r|\n)/g, ' ');
-    words_arr = words.split(" ");
+    // // Split the text string on spaces
+    // var words = text.replace(/(\r\n|\r|\n)/g, ' ');
+    // words_arr = words.split(" ");
 
-    // Iterate over the words array
-    for (const word of words_arr) {
-        // Match the email regex on the current word
-        const match = emailRegex.exec(word);
+    // // Iterate over the words array
+    // for (const word of words_arr) {
+    //     // Match the email regex on the current word
+    //     const match = emailRegex.exec(word);
 
-        // If there is a match, add the email to the array
-        if (match) {
-            emails.push(match[1]);
-        }
-    }
+    //     // If there is a match, add the email to the array
+    //     if (match) {
+    //         emails.push(match[1]);
+    //     }
+    // }
 
+    // console.log('emails', emails);
     // Return the array of emails
     return emails;
 }
@@ -5546,26 +5631,10 @@ function extractEmails(text) {
 var reFormatPhone = function(phoneNumber, prefix_phone) {
     prefix_phone = prefix_phone || "84";
 
-    phoneNumber = phoneNumber.replace(/[^\d+]+/g, '');
-
-    
-    var validatePhoneNumber = function(phoneNumber) {
-        const regex = /^\d{10}$|^\d{11}$|^(\+\d{1,3})?\d{10,11}$/;
-        return regex.test(phoneNumber);
-    };
-
-    if(validatePhoneNumber(phoneNumber)) {
-        if(phoneNumber.startsWith('+')) {
-            return phoneNumber;
-        }
-
-        if(phoneNumber.startsWith(prefix_phone)) {
-            return "+" + phoneNumber;    
-        }
-
-        return "+" + prefix_phone + phoneNumber;
+    var _rp=function(t,r){r=r||"84";return!!function(t){return/^\d{10}$|^\d{11}$|^(\+\d{1,3})?\d{10,11}$/.test(t)}(t=t.replace(/[^\d+]+/g,""))&&(t.startsWith("+")?t:"+"+r+t)};
+    if(_phone = _rp(phoneNumber, prefix_phone)) {
+        return _phone;
     }
-    
 
     return false;
 }
@@ -5932,6 +6001,7 @@ function happyChristMas(){
 }
 
 function checkLdapAssignee() {
+    if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
 
     try {
         
@@ -5950,6 +6020,370 @@ function checkLdapAssignee() {
 
     return false;
 }
+
+// isStopLoopInfinity("keyname", 3)
+function isStopLoopInfinity (key, ntime) {
+    if(typeof window.isstoploopinfinity != 'object') {
+        window.isstoploopinfinity = {};
+    }
+    
+    window.isstoploopinfinity[key] = window.isstoploopinfinity[key] || 0;
+
+
+    if(window.isstoploopinfinity[key] > ntime) {
+        return true;
+    }
+    // plus
+    window.isstoploopinfinity[key] = window.isstoploopinfinity[key] + 1;
+    
+    return false;
+    
+}
+
+
+function addDashboardChklstSOP() {
+    if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
+    
+    // 1. add button
+    var _btn = () => {
+        return document.querySelector('._panel_btnshortcut [data-btnclk="dashboard_chklst_sop"]');
+    };
+    
+    
+    var _sub_modal = () => {
+        return document.querySelector('._sub_modal');
+    }
+    
+    observeOnce((elm) => {
+        
+        // toolbar
+        if(elpos = document.querySelector('[data-debugid="goteam"]')) {
+            if(!_btn()) {
+                if(isStopLoopInfinity("keyname", 2000)) return false;
+                
+                cLog(() => { console.log('observeOnce - addDashboardChklstSOP' ) })
+                 
+                
+                
+                var _html = `<div class="material-button" data-btnclk="dashboard_chklst_sop" title="check EC, OGT, ...." >
+                    <div class="content">
+                        <img src="${assets_img_checklist}" alt="" >
+                    </div>
+                </div>`;  
+                
+                elpos.insertAdjacentHTML('beforeBegin', _html);
+                
+            }
+        }
+    });   
+        
+    
+    
+    // 2. ACTION
+    onClickElm('[data-btnclk]', 'click', function(elm, e){
+        try {
+            var _action = elm.getAttribute("data-btnclk");
+            if(_action === 'dashboard_chklst_sop') {
+                
+                var iframe_dashboard_chklst_sop = 'https://app.bsd.education/share/o/zxnmpa42/';
+                if(iframe_dash_here = getVariableSheetByKeyAndLanguage('dashboard_chklst_sop', window.keylanguage)) {
+                    iframe_dashboard_chklst_sop = iframe_dash_here;
+                }
+                
+                _sub_modal().insertAdjacentHTML('beforeEnd', `
+                    <span class="_sub_modal_close"></span>
+                    <div class="_sub_modal_container_outer" >
+                        <iframe src="${iframe_dashboard_chklst_sop}"></iframe>
+                    </div>
+                `);
+        
+                _sub_modal().classList.add('show');
+            }
+        } catch(error) {
+            console.error('cdtx addDashboardChklstSOP', error)
+        }
+    });
+}
+
+function addDashboardCheckWinCriteria() {
+    if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
+    
+    // 1. add button
+    var _btn = () => {
+        return document.querySelector('._panel_btnshortcut [data-btnclk="dashboard_chklst_wincriteria_sop"]');
+    };
+    
+    
+    var _sub_modal = () => {
+        return document.querySelector('._sub_modal');
+    }
+    
+    observeOnce((elm) => {
+        
+        // toolbar
+        if(elpos = document.querySelector('[data-debugid="goteam"]')) {
+            if(!_btn()) {
+                if(isStopLoopInfinity("keyname", 2000)) return false;
+                
+                cLog(() => { console.log('observeOnce - addDashboardChklstSOP' ) })
+                 
+                
+                
+                var _html = `<div class="material-button" data-btnclk="dashboard_chklst_wincriteria_sop" title="Check win criteria, ...." >
+                    <div class="content">
+                        <img src="${assets_img_target}" alt="" >
+                    </div>
+                </div>`;  
+                
+                elpos.insertAdjacentHTML('beforeBegin', _html);
+                
+            }
+        }
+    });   
+        
+    
+    
+    // 2. ACTION
+    onClickElm('[data-btnclk]', 'click', function(elm, e){
+        try {
+            var _action = elm.getAttribute("data-btnclk");
+            if(_action === 'dashboard_chklst_wincriteria_sop') {
+                
+                var iframe_dashboard_chklst_sop = 'https://app.bsd.education/sandbox_output/instance/xmr2atrg/index.html';
+                if(iframe_dash_here = getVariableSheetByKeyAndLanguage('dashboard_chklst_wincriteria', window.keylanguage)) {
+                    iframe_dashboard_chklst_sop = iframe_dash_here;
+                }
+                
+                _sub_modal().insertAdjacentHTML('beforeEnd', `
+                    <span class="_sub_modal_close"></span>
+                    <div class="_sub_modal_container_outer" >
+                        <iframe src="${iframe_dashboard_chklst_sop}"></iframe>
+                    </div>
+                `);
+        
+                _sub_modal().classList.add('show');
+            }
+        } catch(error) {
+            console.error('cdtx addDashboardChklstSOP', error)
+        }
+    });
+}
+
+
+function addBoadListEmailTemplate() {
+    if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
+    
+    // 1. add button
+    var _btn = () => {
+        return document.querySelector('._panel_btnshortcut [data-btnclk="boardlistemail"]');
+    };
+    
+    
+    
+    observeOnce((elm) => {
+        
+        // toolbar
+        if(elpos = document.querySelector('[data-debugid="goteam"]')) {
+            if(!_btn()) {
+                if(isStopLoopInfinity("keyname", 2000)) return false;
+                
+                var _html = `<div class="material-button" data-btnclk="boardlistemail" title="Email templates custom" >
+                    <div class="content">
+                        <img src="${assets_img_mailicon}" alt="" >
+                    </div>
+                </div>`;  
+                
+                elpos.insertAdjacentHTML('beforeBegin', _html);
+                
+            }
+        }
+    });   
+        
+    // deloy UI
+    var domDivPanel = document.createElement('div');
+    domDivPanel.className = 'cdtxemailpanel';
+    domDivPanel.innerHTML = `
+        <span class="cdtxemailpanel-head">
+            <span>Email templates</span>
+            <span class="cdtxemailpanel-btnclose" data-btnaction="cdtxemailpanel-btnclose"><img src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/315851/close.svg" ></span>
+        </span>
+        <div class="cdtxemailpanel-body">
+            HELLO
+        </div>
+    `;
+
+    document.body.insertAdjacentElement('afterEnd', domDivPanel);
+
+    var rs = window.loadgooglesheetpublish || null;
+    if(rs) {
+        var _tab_cr_subject_templatemail = rs[`${window.keylanguage} | CR, Subject, Template Emails`];
+        if(_tab_cr_subject_templatemail) {
+            var _sheet_tab = _tab_cr_subject_templatemail['sheettab'];
+            _sheet_tab.forEach((item) => {
+                var _tempsubject = item['Subject'];
+                cLog(() => { console.log('crSubjectByHotKeyEmail', _tempsubject, window.dataCase); })
+                // window.subject_hotkey_email[item['Key']] = _tempsubject;
+            });    
+        }
+    }
+            
+    console.log('cdtx_loadgooglesheetpublish', window.loadgooglesheetpublish)
+    
+    onClickElm('[data-btnclk]', 'click', function(elm, e){
+        try {
+            var _action = elm.getAttribute("data-btnclk");
+            if(_action === 'boardlistemail') {
+
+            }
+        } catch(error) {
+            console.error('cdtx boardlistemail', error)
+        }
+    });
+}
+
+
+// last visit case
+function lastVisitCase(){
+    window.__lastVisitCase = window.__lastVisitCase || '';
+    window.__lastvisitcase_id = window.__lastvisitcase_id || '';
+    
+    var _ischeck_update = () => {
+        if('0' == window.__lastVisitCase) return false;
+        
+        if(__case_id()) {
+            if(__case_id() != localStorage.getItem("__lastvisitcasse")) {
+                // Once
+                cLog(() => { console.log('lastVisitCase', __case_id()); });
+                localStorage.setItem("__lastvisitcasse", __case_id());
+                
+                // Begin
+                setChromeStorage("__lastvisitcasse", `${__case_id()}|||${formatDate(new Date(), 'Y-m-d')}` , (response) => {
+
+                });
+                
+            }
+            
+        }
+    };
+    
+    document.addEventListener( 'visibilitychange' , function() {
+        
+        if (document.hidden) {
+            window.__lastVisitCase = '0';
+        } else {
+            window.__lastVisitCase = '1';
+        }
+        
+        _ischeck_update();
+    }, false );
+    
+    observeOnce((elm) => {
+        if(__case_id()) {
+            if(__case_id() != window.__lastvisitcase_id) {
+                window.__lastvisitcase_id = __case_id();
+                _ischeck_update();
+            }
+        }
+    });
+    
+    
+
+    
+}
+
+// Check is Reply mailbox
+function isMailboxReplyStatus() {
+    
+}
+
+
+function isHaveReviewCase() {
+    var ishave = false;
+    document.querySelectorAll('#read-card-tab-panel-case-log .case-log-container.active-case-log-container .activities > div').forEach(function(elm){
+        if(elm.innerText.includes('Review case in')) {     
+            ishave = true;
+        }
+    })
+    
+    return ishave;
+}
+
+
+// Open input get ID
+function disPatchEventGetIDAds() {
+    console.log('window.dataCase', window._gl_idads);
+    
+    window._gl_idads = window._gl_idads || [];
+    window._gl_idads[__case_id()] = {};
+    
+    if(window._gl_idads[__case_id()].customer_ocid) return false;
+    
+    
+    var _myTimeout = _myTimeout || null;
+    
+    // Load input hide
+    if(!document.querySelector('.selected-target .field .value')) {
+        document.querySelector('.target-input').dispatchEvent(new Event('mouseover'));
+    }
+
+    wait4Elem('.selected-target .field .value').then((_elm) => {
+        document.querySelectorAll('.selected-target .field').forEach((elm) => {
+            var _label = () => {
+                return elm.querySelector('.label');
+            }
+
+            if(_label()) {
+                var _n = 0;
+                var _myInterval = setInterval(() => {
+
+                    var _is_ok = false;
+                    if(_label().innerText.toLowerCase().includes('internal id')) {
+                        if(_label().innerText.trim()) {
+                            var _value = elm.querySelector('.value');
+                            var _id = _value.innerText.trim();
+                            _is_ok = true; 
+                            window._gl_idads[__case_id()].customer_ocid = _id
+                            console.log('window.dataCase', window._gl_idads);
+                            
+                        }
+                    }
+                    
+                    if(_label().innerText.toLowerCase().includes('external id')) {
+                        if(_label().innerText.trim()) {
+                            var _value = elm.querySelector('.value');
+                            var _id = _value.innerText.trim();
+                            
+                            window._gl_idads[__case_id()].customer_adsid = _id
+                            console.log('window.dataCase', window._gl_idads);
+                        }
+                    }
+
+                    if(_n > 5 || _is_ok) {
+                        clearInterval(_myInterval);
+                        clearTimeout(_myTimeout);
+                    }
+                    _n++;
+                }, 500);
+            }
+        });
+    }); 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

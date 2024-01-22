@@ -2,85 +2,85 @@
 try {
     // For group and detech
     function vanBoCodeHere(){
-        function detectConnectcase(){
-            //code vanbo new
-            function convertHour(time) {
-                var hoursMinutes = time.split(/[.:]/);
-                var hours = parseInt(hoursMinutes[0], 10);
-                var minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
-                return hours + minutes / 60;
-            }
-            function detectTime()  {
-                document.querySelectorAll('[id*="tsc"]').forEach(function(item){
-                    let date = item.innerText.split(',')[2].trim()
-                    let newDate = new Date(date)
-                    let today = new Date()
-                    if(newDate.getDate() == today.getDate()){
-                        let todayEvent = item.parentElement.querySelector('[role="presentation"]')
-                        todayEvent.querySelectorAll('[jslog]').forEach(function(evt){
-                            let caseTitle = evt.querySelector('.FAxxKc').innerText.match(/\d-\d+/g);
-                            if(caseTitle){
-                                let timeApp = evt.querySelector('.YSbf0c div:nth-child(2)')
-                                if(timeApp){
-                                    timeApp = timeApp.innerText;
-                                    let ampm = timeApp.split(' – ')[1].match(/am|pm/) ? timeApp.split(' – ')[1].match(/am|pm/)[0] : null;
-                                    let start = timeApp.split(' – ')[0]
-                                    start = start.match(/am|pm/) ? start : start + ampm
-                                    let newStart = start.match(/\d+:\d+/) ? start.match(/\d+:\d+/)[0] : start
-                                    if(newStart) start = convertHour(newStart)
+        // function detectConnectcase(){
+        //     //code vanbo new
+        //     function convertHour(time) {
+        //         var hoursMinutes = time.split(/[.:]/);
+        //         var hours = parseInt(hoursMinutes[0], 10);
+        //         var minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
+        //         return hours + minutes / 60;
+        //     }
+        //     function detectTime()  {
+        //         document.querySelectorAll('[id*="tsc"]').forEach(function(item){
+        //             let date = item.innerText.split(',')[2].trim()
+        //             let newDate = new Date(date)
+        //             let today = new Date()
+        //             if(newDate.getDate() == today.getDate()){
+        //                 let todayEvent = item.parentElement.querySelector('[role="presentation"]')
+        //                 todayEvent.querySelectorAll('[jslog]').forEach(function(evt){
+        //                     let caseTitle = evt.querySelector('.FAxxKc').innerText.match(/\d-\d+/g);
+        //                     if(caseTitle){
+        //                         let timeApp = evt.querySelector('.YSbf0c div:nth-child(2)')
+        //                         if(timeApp){
+        //                             timeApp = timeApp.innerText;
+        //                             let ampm = timeApp.split(' – ')[1].match(/am|pm/) ? timeApp.split(' – ')[1].match(/am|pm/)[0] : null;
+        //                             let start = timeApp.split(' – ')[0]
+        //                             start = start.match(/am|pm/) ? start : start + ampm
+        //                             let newStart = start.match(/\d+:\d+/) ? start.match(/\d+:\d+/)[0] : start
+        //                             if(newStart) start = convertHour(newStart)
                                     
-                                    if(ampm) {
-                                        if(ampm.endsWith('am')){
-                                            start = convertHour(newStart)
-                                        } else if (ampm.endsWith('pm')) {
-                                            start = Math.floor(start)==12||Math.floor(start)==11 ? start : start+12
-                                        }
+        //                             if(ampm) {
+        //                                 if(ampm.endsWith('am')){
+        //                                     start = convertHour(newStart)
+        //                                 } else if (ampm.endsWith('pm')) {
+        //                                     start = Math.floor(start)==12||Math.floor(start)==11 ? start : start+12
+        //                                 }
                                         
-                                    }
-                                // console.log(start)
-                                let tempDate = new Date()
-                                let decimalPart = start- Math.floor(start)
-                                if(decimalPart == 0) {
-                                    tempDate.setHours(start-1);
-                                    tempDate.setMinutes(decimalPart*60 + 55)
-                                } else {
-                                    tempDate.setHours(start)
-                                    tempDate.setMinutes(decimalPart*60 - 5)
-                                }
+        //                             }
+        //                         // console.log(start)
+        //                         let tempDate = new Date()
+        //                         let decimalPart = start- Math.floor(start)
+        //                         if(decimalPart == 0) {
+        //                             tempDate.setHours(start-1);
+        //                             tempDate.setMinutes(decimalPart*60 + 55)
+        //                         } else {
+        //                             tempDate.setHours(start)
+        //                             tempDate.setMinutes(decimalPart*60 - 5)
+        //                         }
                                 
-                                tempDate.setSeconds(0)
-                                events[caseTitle] = tempDate
-                                }
-                            }
-                        })
+        //                         tempDate.setSeconds(0)
+        //                         events[caseTitle] = tempDate
+        //                         }
+        //                     }
+        //                 })
                         
-                    }
-                })
-                if(new Date().getHours() > 19) clearInterval(notifyTime)
-            }
-            function notifyTime(){
-                // Tạm thời tắt để theo dõi
-                // let time = new Date()
-                // console.log(time)
-                // Object.keys(events).forEach(evt => {
-                //     let nearEvent = events[evt]
-                //     let caseid = evt
-                //     if(nearEvent.getHours() == time.getHours() && nearEvent.getMinutes() == time.getMinutes()){
-                //     console.log('vanbo anoucement: your case '+caseid+' is comming')
-                //         window.open('https://appointments.connect.corp.google.com/appointmentDetails?caseId='+caseid,
-                //         'window',
-                //         'fullscreen'
-                //         );
-                //     }
-                // })
-                // if(time.getHours() > 19) clearInterval(notifyTime)
-            }
-            var events = {};
-            detectTime();
-            // var countEvent = setInterval(detectTime, 1000*60*15)
-            // var notifyEvent = setInterval(notifyTime, 1000*60)
-            //end code vanbo
-        }
+        //             }
+        //         })
+        //         if(new Date().getHours() > 19) clearInterval(notifyTime)
+        //     }
+        //     function notifyTime(){
+        //         // Tạm thời tắt để theo dõi
+        //         // let time = new Date()
+        //         // console.log(time)
+        //         // Object.keys(events).forEach(evt => {
+        //         //     let nearEvent = events[evt]
+        //         //     let caseid = evt
+        //         //     if(nearEvent.getHours() == time.getHours() && nearEvent.getMinutes() == time.getMinutes()){
+        //         //     console.log('vanbo anoucement: your case '+caseid+' is comming')
+        //         //         window.open('https://appointments.connect.corp.google.com/appointmentDetails?caseId='+caseid,
+        //         //         'window',
+        //         //         'fullscreen'
+        //         //         );
+        //         //     }
+        //         // })
+        //         // if(time.getHours() > 19) clearInterval(notifyTime)
+        //     }
+        //     var events = {};
+        //     detectTime();
+        //     // var countEvent = setInterval(detectTime, 1000*60*15)
+        //     // var notifyEvent = setInterval(notifyTime, 1000*60)
+        //     //end code vanbo
+        // }
 
 
         // Run
@@ -124,9 +124,9 @@ try {
             console.log('asdfasfdasdfasdfasdfasdf')
         }
 
-        if(location.hostname === 'calendar.google.com') {
-            detectConnectcase();
-        }
+        // if(location.hostname === 'calendar.google.com') {
+        //     detectConnectcase();
+        // }
     }
 } catch (error) {
     console.error('vanbo - ', error);
@@ -906,6 +906,40 @@ var tagteamFocusCase = () => {
             
 
         }
+        
+        var _lst = `<option value="">--None--</option>
+                    <option value="AS - Work in Progress">AS - Work in Progress</option>
+                    <option value="AS - Reschedule 1">AS - Reschedule 1</option>
+                    <option value="AS - Reschedule 2">AS - Reschedule 2</option>
+                    <option value="AS - Acceptable Reschedule">AS - Acceptable Reschedule</option>
+                    <option value="NI - Awaiting Inputs">NI - Awaiting Inputs</option>
+                    <option value="NI - In Consult">NI - In Consult</option>
+                    <option value="NI - Awaiting Validation">NI - Awaiting Validation</option>
+                    <option value="NI - Attempted Contact">NI - Attempted Contact</option>
+                    <option value="NI - Other">NI - Other</option>
+                    <option value="SO - Verified">SO - Verified</option>
+                    <option value="SO - Unverified">SO - Unverified</option>
+                    <option value="SO - Verification Not Needed">SO - Verification Not Needed</option>
+                    <option value="IN - Infeasible">IN - Infeasible</option>
+                    <option value="IN - Out of Scope - Rerouted">IN - Out of Scope - Rerouted</option>
+                    <option value="IN - Not Reachable">IN - Not Reachable</option>
+                    <option value="IN - Not Interested">IN - Not Interested</option>
+                    <option value="IN - Not Ready">IN - Not Ready</option>
+                    <option value="IN - Reschedule Limit Exceeded">IN - Reschedule Limit Exceeded</option>
+                    <option value="IN - Other">IN - Other</option>
+                    <option value="DC - Not Needed">DC - Not Needed</option>
+                    <option value="DC - Test Case">DC - Test Case</option>
+                    <option value="DC - Out of Scope - Rerouted">DC - Out of Scope - Rerouted</option>
+                    <option value="Other">Other</option>`;
+        
+        
+        if(sheetdata = getSheetByTabName('Status Note Case')) {
+            _lst = ``;
+            sheetdata.forEach((item) => {
+                _lst += `<option value="${item.Title}" style="background-color: ${item.Color}">${item.Title}</option>
+                    `;
+            })
+        }
 
         var modalHtml = `
             <div id="sinature-modal" class="modal">
@@ -1007,30 +1041,7 @@ var tagteamFocusCase = () => {
                             <div class="form-group">
                                 <label for="">Sub-status</label>
                                 <select class="form-control" aria-label="Sub-status" style="background: #fff;width: 410px;">
-                                    <option value="">--None--</option>
-                                    <option value="AS - Work in Progress">AS - Work in Progress</option>
-                                    <option value="AS - Reschedule 1">AS - Reschedule 1</option>
-                                    <option value="AS - Reschedule 2">AS - Reschedule 2</option>
-                                    <option value="AS - Acceptable Reschedule">AS - Acceptable Reschedule</option>
-                                    <option value="NI - Awaiting Inputs">NI - Awaiting Inputs</option>
-                                    <option value="NI - In Consult">NI - In Consult</option>
-                                    <option value="NI - Awaiting Validation">NI - Awaiting Validation</option>
-                                    <option value="NI - Attempted Contact">NI - Attempted Contact</option>
-                                    <option value="NI - Other">NI - Other</option>
-                                    <option value="SO - Verified">SO - Verified</option>
-                                    <option value="SO - Unverified">SO - Unverified</option>
-                                    <option value="SO - Verification Not Needed">SO - Verification Not Needed</option>
-                                    <option value="IN - Infeasible">IN - Infeasible</option>
-                                    <option value="IN - Out of Scope - Rerouted">IN - Out of Scope - Rerouted</option>
-                                    <option value="IN - Not Reachable">IN - Not Reachable</option>
-                                    <option value="IN - Not Interested">IN - Not Interested</option>
-                                    <option value="IN - Not Ready">IN - Not Ready</option>
-                                    <option value="IN - Reschedule Limit Exceeded">IN - Reschedule Limit Exceeded</option>
-                                    <option value="IN - Other">IN - Other</option>
-                                    <option value="DC - Not Needed">DC - Not Needed</option>
-                                    <option value="DC - Test Case">DC - Test Case</option>
-                                    <option value="DC - Out of Scope - Rerouted">DC - Out of Scope - Rerouted</option>
-                                    <option value="Other">Other</option>
+                                    ${_lst}
                                 </select>
                             </div>
                             <div class="form-group">
@@ -1107,7 +1118,7 @@ var tagteamFocusCase = () => {
 
         var modalNode = document.createElement('div');
         modalNode.innerHTML = modalHtml;
-        document.body.appendChild(modalNode);
+        document.body.insertAdjacentElement('afterEnd',modalNode);
         
         //collapse
         let coll = document.querySelectorAll(".collapsible");
@@ -1518,32 +1529,91 @@ var tagteamFocusCase = () => {
             }
         }
 
+
+        function tempLoadOcid(callback) {
+            var _id = null;
+            
+            window._gl_idads = window._gl_idads || [];
+            window._gl_idads[__case_id()] = window._gl_idads[__case_id()] || {};
+            
+            
+            if(window.dataCase.case_id == __case_id()) {
+               if(window.dataCase.customer_ocid) {
+                    window._gl_idads[__case_id()].customer_ocid = window.dataCase.customer_ocid;
+                    
+                    
+                    _id = window._gl_idads[__case_id()].customer_ocid || cid;
+                    callback(_id);
+                    
+                    return true;
+               }
+            }
+            
+            if(window._gl_idads[__case_id()]) {
+                
+                if(window._gl_idads[__case_id()].customer_ocid) {
+                    _id = window._gl_idads[__case_id()].customer_ocid || cid;
+                    
+                    callback(_id);
+                    
+                    return false;
+                }    
+            }
+            
+            
+            // Other way
+            disPatchEventGetIDAds();
+            
+            var _myTimeout = _myTimeout || null;
+            _myTimeout = setTimeout(() => {
+                if(window._gl_idads[__case_id()]) {
+                    _id = window._gl_idads[__case_id()].customer_ocid || cid;
+                    if(_id) {
+                        callback(_id);    
+                    } else {
+                        _id = prompt("Enter OCID ", "");
+                        if(_id) {
+                            callback(_id); 
+                        }
+                    }
+                    
+                }
+            }, 2000)
+            
+        }
         function adsICS() {
             
-            var adsUrl = 'https://adwords.corp.google.com/aw/go?cid=' + cid;
             
-            
-            if(window.dataCase.customer_ocid) {
-                window.dataCase.customer_ocid.split(',').forEach((item) => {
-                    var _int = item.trim();
-                    adsUrl = `https://adwords.corp.google.com/aw/conversions?ocid=${_int}`;
-                    window.open(adsUrl, '_blank').focus();
-                })
+            // if(window.dataCase.customer_ocid) {
+            //     window.dataCase.customer_ocid.split(',').forEach((item) => {
+            //         var _int = item.trim();
+            //         adsUrl = `https://adwords.corp.google.com/aw/conversions?ocid=${_int}`;
+            //         window.open(adsUrl, '_blank').focus();
+            //     })
                 
-                return true;
-            }
+            //     return true;
+            // }
             
             
-            if(window.dataCase.customer_adsid) {
+            // if(window.dataCase.customer_adsid) {
                 
-                adsUrl = `https://adwords.corp.google.com/aw/go?external_cid=${window.dataCase.customer_adsid}`;
-                window.open(adsUrl, '_blank').focus();
+            //     adsUrl = `https://adwords.corp.google.com/aw/go?external_cid=${window.dataCase.customer_adsid}`;
+            //     window.open(adsUrl, '_blank').focus();
                 
-                return true;
-            }
+            //     return true;
+            // }
             
             
-            window.open(adsUrl, '_blank').focus();
+            
+            var url_root = 'https://adwords.corp.google.com/aw/go?cid=';
+            
+            tempLoadOcid((_id) => {
+                _id.split(',').forEach((_int) => {
+                    var _Url = url_root + _int;
+                    window.open(_Url, '_blank').focus();
+                });
+            })
+            
             return false;            
             
             
@@ -1553,100 +1623,41 @@ var tagteamFocusCase = () => {
         function gearloose() {
             var url_root = 'https://gearloose.corp.google.com/#/search/merchants?q=awid:';
             
-            if(window.dataCase.customer_ocid) {
-                window.dataCase.customer_ocid.split(',').forEach((item) => {
-                    var _int = item.trim();
-                    var ecUrl = url_root + _int;
-                    window.open(ecUrl, '_blank').focus();
-                });
-                
-                return true;
-            }
+            tempLoadOcid((_id) => {
+                _id.split(',').forEach((_int) => {
+                    var _Url = url_root + _int;
+                    window.open(_Url, '_blank').focus();
+                })
+            });
             
-            var gearlooseUrl = url_root + cid;
-            
-            window.open(gearlooseUrl, '_blank').focus();
+            return false;
         }
 
         function ogtDashboard() {
-            
-            if(window.dataCase.customer_ocid) {
-                window.dataCase.customer_ocid.split(',').forEach((item) => {
-                    var _int = item.trim();
+            tempLoadOcid((_id) => {
+                _id.split(',').forEach((_int) => {
                     var ogtauditUrl = 'https://dashboards.corp.google.com/view/_a186557f_a4ad_4e9b_b1f0_fc360bc3143e?f=customer_id:in:' + _int;
                     var ogtTechsolURL = 'https://dashboards.corp.google.com/view/_7f750f18_1d9b_4f6e_82b8_70e37c1e992a?f=customer_id:eq:'+ _int;
                     window.open(ogtauditUrl, '_blank').focus();
                     window.open(ogtTechsolURL, '_blank');
                 })
-                
-                return true;
-            }
-            
-            
-            var ogtauditUrl = 'https://dashboards.corp.google.com/view/_a186557f_a4ad_4e9b_b1f0_fc360bc3143e?f=customer_id:in:' + cid;
-            var ogtTechsolURL = 'https://dashboards.corp.google.com/view/_7f750f18_1d9b_4f6e_82b8_70e37c1e992a?f=customer_id:eq:'+cid
-            window.open(ogtauditUrl, '_blank').focus();
-            window.open(ogtTechsolURL, '_blank');
+            });
         }
 
+
+        
         function ecDashboard() {
-            var _ec_urlpath = 'https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:';
-            if(window.dataCase.customer_ocid) {
-                window.dataCase.customer_ocid.split(',').forEach((item) => {
-                    var _int = item.trim();
-                    var ecUrl = _ec_urlpath + _int;
-                    window.open(ecUrl, '_blank').focus();
+            
+            var url_root = 'https://dashboards.corp.google.com/view/_0ded1099_6ef3_4bc9_bba0_2445840d1b69?f=customer_id:in:';
+            tempLoadOcid((_id) => {
+                _id.split(',').forEach((_int) => {
+                    var _Url = url_root + _int;
+                    window.open(_Url, '_blank').focus();
                 })
-                
-                return true;
-            }
-            
-            var _myTimeout = null;
-            
-            // Load input hide
-            if(!document.querySelector('.selected-target .field .value')) {
-                document.querySelector('.target-input').dispatchEvent(new Event('mouseover'));
-                document.querySelector('.target-input input').dispatchEvent(new Event('blur'));
-                document.querySelector('.target-input input').dispatchEvent(new Event('focus'));
-
-            }
-
-            wait4Elem('.selected-target .field .value').then((_elm) => {
-                document.querySelectorAll('.selected-target .field').forEach((elm) => {
-                    var _label = () => {
-                        return elm.querySelector('.label');
-                    }
-
-                    if(_label()) {
-                        var _n = 0;
-                        var _myInterval = setInterval(() => {
-                            // console.log('vanbo 2', _myTimeout, _label().innerText, _label().innerText.toLowerCase().includes('internal'));
-
-                            var _is_ok = false;
-                            if(_label().innerText.toLowerCase().includes('internal id')) {
-                                if(_label().innerText.trim()) {
-                                    var _value = elm.querySelector('.value');
-                                    var _ocid = _value.innerText.trim();
-                                    _is_ok = true; 
-                                    var ecUrl = _ec_urlpath + _ocid;
-                                    window.open(ecUrl, '_blank').focus();
-                                }
-                            }
-
-                            if(_n > 5 || _is_ok) {
-                                clearInterval(_myInterval);
-                                clearTimeout(_myTimeout);
-                            }
-                            _n++;
-                        }, 500);
-                    }
-                });
             });
-                
-            _myTimeout = setTimeout(() => {
-                var ecUrl = _ec_urlpath + cid;
-                window.open(ecUrl, '_blank').focus();
-            }, 2000)
+            
+            return false;
+            
             
         }
 
@@ -1732,6 +1743,14 @@ var tagteamFocusCase = () => {
                 document.querySelector('.view-tag-shopping').classList.add('hidden');
                 document.querySelector('.view-leadgen').classList.remove('hidden');
             });
+            
+            var _istop = function () { 
+                return document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top');
+            };
+
+                
+            
+
             document.querySelectorAll('.cr-list li').forEach(function(cr, idx) {
                 cr.addEventListener('click', function() {
                     // Remove old item
@@ -1757,6 +1776,7 @@ var tagteamFocusCase = () => {
                         var _title = "Đội giải pháp kỹ thuật - Thông báo";
                         var _subject = `${_title} [${caseid}]`;
                         
+                        
                         if(window.subject_hotkey_email) {
                             if(window.subject_hotkey_email[key]) {
                                 _subject = window.subject_hotkey_email[key];
@@ -1766,12 +1786,14 @@ var tagteamFocusCase = () => {
                         
                         _subject = _subject.replaceAll('{%case_id%}', sCaseId());
                         
+                        if(!document.querySelector('.finished-reply')) {
+                            _istop().querySelector("input.subject").value = _subject;
+                            _istop().querySelector("input.subject").focus();
+                            _istop().querySelector("input.subject").dispatchEvent(new Event('input'));
+                            document.execCommand('innerText', false, ' ');
+                        }
                         
                         
-                        document.querySelector('.is-top .subject').value = _subject;
-                        document.querySelector('.is-top .subject').focus();
-                        document.querySelector('.is-top .subject').dispatchEvent(new Event('input'));
-                        document.execCommand('innerText', false, ' ');
                         
                         try {
                             
@@ -1844,6 +1866,10 @@ var tagteamFocusCase = () => {
 
         
         onClickElm('[debug-id="canned_response_button"]', 'click', function(elm){ 
+            if('function' == typeof checkInputEmailInboxAndFix) {
+                checkInputEmailInboxAndFix();
+            }
+            
             prepareForEmail();
         });
         // ==== END CODE - VAN BO       

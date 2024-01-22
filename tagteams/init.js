@@ -4,7 +4,6 @@ chrome.storage.sync.get({
     optionkl__modecase: "Auto",
     optionkl__disable_dialog: false,
     optionkl__enable_sf_helper: false,
-    optionkl__inputyourshortname: false,
     optionkl__inputyourname: false,
     optionkl__form_option_data: false,
 },

@@ -107,18 +107,6 @@
 			"all_frames": true
 		},
 		{
-			"all_frames": true,
-			"exclude_matches": [ "*://*/*.xml" ],
-			"matches": [
-				"*://*.google.com/*"
-			],			
-			"js": [
-				"tagteams/libs.js",
-				"tagteams/init_google.js"
-			],
-			"run_at": "document_start"
-		},
-		{
 			"exclude_matches": [ "*://*/*.xml" ],
 			"matches": [
 				"*://*.connect.corp.google.com/*",

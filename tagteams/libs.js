@@ -1302,7 +1302,7 @@ function searchAndReturnValue(_str_data, _keysearch, _posvalue = 1){
     var _item = "";
     for (let index = 0; index < _newline.length; index++) {
         _item = _newline[index];
-        _item = _item.split(":");
+        _item = _item.split("|||");
         _item = _item.map(s => s.trim());
         
         // Only loop key, if ok => get value
@@ -2047,10 +2047,9 @@ function loadEmailTemplateAction(){
                 body_content.style.padding = '0px';
                 body_content.style.width = '100%';
                 // Insert value
-                subject.value = template_title.innerText;
-                
-                
-                
+                if(!window.hasClkReply && !_card_istop.querySelector(".finished-reply")) {
+                    subject.value = template_title.innerText;
+                }
                 
                 replaceAllHtmlElement(template_body, window.dataCase);
                 
@@ -3221,7 +3220,7 @@ function clearAndPrepareCRTemplate() {
                     // Other replace 
                     _strreplace = _strreplace.replaceAll(`{%case_id%}`,`${sCaseId()}`)
                     
-                    _str_list_search += item['Find'] + ":" + _strreplace + "\n";
+                    _str_list_search += item['Find'] + "|||" + _strreplace + "\n";
                 })
             }   
         } catch (error) {
@@ -3451,7 +3450,6 @@ function getAdsID(_string) {
 // timeLeftGoogleCalendar
 function timeLeftGoogleCalendar() {
 
-    
     // _TrustScript
     if(typeof _TrustScript !== 'function') {
         function _TrustScript(_string) {
@@ -3491,6 +3489,7 @@ function timeLeftGoogleCalendar() {
         return calendar_tablist.querySelector('.panel_info-btnrunremide');
     };
     if(btn_reminder()) return false;
+    
     
     
 
@@ -3828,6 +3827,7 @@ function timeLeftGoogleCalendar() {
     }
 
     // Run Once
+    
     var _oncerun = 0;
     var _run = () => {
         if(_oncerun > 0) return false;
@@ -4129,7 +4129,11 @@ function initQplusLoad() {
                                             <td>${getDomainOnlyURL(value.customer_website)}</td>
                                             <td>${value.customer_adsid}</td>
                                             <td>${value.status_case}</td>
-                                            <td><span data-btnclk="ui-qplus-addtrviewdetail" data-caseidhere="${value.case_id}" >View</span></td>
+                                            <td>
+                                            <span data-btnclk="ui-qplus-addtrviewdetail" data-caseidhere="${value.case_id}" >View</span>
+                                            <span data-btnclk="ui-qplus-addtrdelete" data-caseidhere="${value.case_id}" >Delete</span>
+                                            </td>
+                                            
                                         </tr>`;
                             }                            
                         
@@ -6202,42 +6206,240 @@ function addBoadListEmailTemplate() {
     // deloy UI
     var domDivPanel = document.createElement('div');
     domDivPanel.className = 'cdtxemailpanel';
+    domDivPanel.style.display = 'none';
     domDivPanel.innerHTML = `
         <span class="cdtxemailpanel-head">
+            <span class="cdtxemailpanel-btnclose" data-btnclk="cdtxemailpanel-btnclose"><img src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/315851/close.svg" ></span>
             <span>Email templates</span>
-            <span class="cdtxemailpanel-btnclose" data-btnaction="cdtxemailpanel-btnclose"><img src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/315851/close.svg" ></span>
         </span>
+        <span class="cdtxemailpanel-searchinput" contenteditable="true"></span>
         <div class="cdtxemailpanel-body">
-            HELLO
+        
         </div>
     `;
 
     document.body.insertAdjacentElement('afterEnd', domDivPanel);
 
+    var _elm_body = function() {
+        return domDivPanel.querySelector('.cdtxemailpanel-body');
+    };
+    
     var rs = window.loadgooglesheetpublish || null;
     if(rs) {
         var _tab_cr_subject_templatemail = rs[`${window.keylanguage} | CR, Subject, Template Emails`];
         if(_tab_cr_subject_templatemail) {
             var _sheet_tab = _tab_cr_subject_templatemail['sheettab'];
+            var domItem = null;
+
+            var _insertmailbox = (_objdata) => {
+            
+                var template_subject = _objdata.subject;
+                var template_body = _objdata.template_body;
+                
+                // Wait and insert
+                wait4Elem('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"] #email-body-content-top').then(function (elm) {
+                    cLog(() => {console.log("checkInputEmailInboxAndFix 2"); });
+                    checkInputEmailInboxAndFix();
+                    
+                    var _card_istop = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top');
+    
+                    
+                    var subject = _card_istop.querySelector("input.subject");
+                    var body_content = _card_istop.querySelector("#email-body-content");
+                    var body_content_top = _card_istop.querySelector("#email-body-content-top");
+                    var body_content_top_content = _card_istop.querySelector("#email-body-content-top-content");
+    
+                    body_content.style.padding = '0px';
+                    body_content.style.width = '100%';
+                    
+                    // Insert value
+                    if(!window.hasClkReply && !_card_istop.querySelector(".finished-reply")) {
+                        subject.value = template_subject.innerText;    
+                    }
+                    
+                    
+                    
+                    replaceAllHtmlElement(template_body, window.dataCase);
+                    
+                    var _replace_all = template_body.innerHTML;
+                    
+                    body_content_top.innerHTML = _replace_all;
+                    
+                    // action save status
+                        subject.dispatchEvent(new Event('input'));
+                        body_content.dispatchEvent(new Event('input'));
+                        body_content_top.dispatchEvent(new Event('input'));
+    
+                        if(body_content_top_content) {
+                            body_content_top_content.dispatchEvent(new Event('input'));
+                        }
+                        
+                        _card_istop.querySelector('[debug-id="add_highlight"]').click();
+                    
+                    // Click offer
+                        if(
+                            _objdata.crname.includes("SO - ")
+                        ) {
+                        
+                            if(_card_istop.querySelector('[debug-id="solution_offered_checkbox"].disabled')) {                                        
+                                Toastify({
+                                    text: 'Please update Tracking Issue Time',
+                                    duration: 3000,
+                                    class: "warning",
+                                    callback: function(){
+                                        this.remove();
+                                    }
+                                }).showToast();
+    
+                                document.querySelector('[debug-id="dock-item-issue"]').click();
+                            }
+                            
+                            if(_card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled)')) {
+                                _card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled):not(._active)').click();
+                                _card_istop.querySelector('[debug-id="solution_offered_checkbox"]:not(.disabled)').classList.add('_active');
+                            }
+                        }
+    
+                    // Open document doc list
+                        document.querySelector('compose-card-content-wrapper').click();
+                        document.querySelector('compose-card-content-wrapper').focus();
+                        
+                });
+                
+            }
+
+
             _sheet_tab.forEach((item) => {
-                var _tempsubject = item['Subject'];
-                cLog(() => { console.log('crSubjectByHotKeyEmail', _tempsubject, window.dataCase); })
-                // window.subject_hotkey_email[item['Key']] = _tempsubject;
-            });    
+                if('1' == item['Is HTML Custom']) {
+                    domItem = document.createElement('span');
+                    domItem.className = 'cdtxemailpanel-item';
+                    domItem.title = `${item['Key']}`;
+                    domItem.innerHTML = `
+                        ${item['CR Name']}
+                    `;
+                    
+                    
+                    
+                    // replaceAllHtmlElement(template_body, window.dataCase);
+                    
+                    // click event
+                    domItem.addEventListener("click", (e) => {
+                        
+                        if(__case_id() !== window.dataCase.case_id) {
+                            Toastify({
+                                text: 'Data case not ready! Please check, Make sure all good! ',
+                                duration: 3000,
+                                class: "warning",
+                                callback: function(){
+                                    this.remove();
+                                }
+                            }).showToast();
+                            
+                            // return false;
+                        }
+                        
+                        var _str_template_body = replaceTextByData(item['Email Templates Custom']);
+                        var template_body = document.createElement('div');
+                        template_body.innerHTML = _str_template_body;
+                        
+                        
+                        var _str_template_subject = replaceTextByData(item['Subject']);
+                        var template_subject = document.createElement('div');
+                        template_subject.innerHTML = _str_template_subject;
+                        replaceAllHtmlElement(template_subject, window.dataCase);
+                        
+                       
+                        var _objdata = {
+                            subject: template_subject,
+                            template_body: template_body,
+                            crname: item['CR Name'],
+                        }; 
+                        
+                       cLog(() => { console.log('addBoadListEmailTemplate', _objdata); })
+                        
+                        if(document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"] #email-body-content-top')) {
+                            _insertmailbox(_objdata);
+                        } else {
+                            document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
+                            document.querySelector("material-fab.themeable.compose").addEventListener("click", () => {
+                                var n_card = document.querySelectorAll("card[casesanimate].write-card").length || 0;
+                                var myTimeCheck = setInterval(() => {
+                                    var n_card_2 = document.querySelectorAll("card[casesanimate].write-card").length || 0;
+                                    if(n_card_2 > n_card) {
+                                        clearInterval(myTimeCheck);
+                                        _insertmailbox(_objdata);
+                
+                                        // Close dial
+                                        document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter'));
+                
+                                    }
+                                }, 1000)
+                                
+                            });
+                            
+                            // 1.2
+                            document.querySelector("material-fab.themeable.compose").click();
+                            
+                        }
+                        
+                       
+                    });
+                    
+                    // append to body
+                    _elm_body().insertAdjacentElement('beforeEnd', domItem);
+                }
+                
+            
+            }); 
+            
+            cLog(() => { console.log('addBoadListEmailTemplate', window.dataCase); })
         }
     }
             
-    console.log('cdtx_loadgooglesheetpublish', window.loadgooglesheetpublish)
+    console.log('addBoadListEmailTemplate', window.loadgooglesheetpublish)
+    
+    var _toggleDomPanel = () => {
+        if('block' != domDivPanel.style.display) {
+            domDivPanel.style.display = "block";
+            document.documentElement.style.marginRight = '320px';
+            
+        } else {
+            domDivPanel.style.display = "none";
+            document.documentElement.style.marginRight = '';
+        }
+        
+    };
+    
     
     onClickElm('[data-btnclk]', 'click', function(elm, e){
         try {
             var _action = elm.getAttribute("data-btnclk");
+            
+            console.log('addBoadListEmailTemplate', _action)
+            
             if(_action === 'boardlistemail') {
-
+                _toggleDomPanel();
             }
+            
+            if(_action === 'cdtxemailpanel-btnclose') {
+                _toggleDomPanel();
+            }
+            
         } catch(error) {
             console.error('cdtx boardlistemail', error)
         }
+    });
+    
+    // Search 
+    onClickElm('.cdtxemailpanel-searchinput', 'keyup', function(elm_inputparent, e){
+        var _search = elm_inputparent.innerText.toLowerCase();
+        domDivPanel.querySelectorAll('.cdtxemailpanel-item').forEach((elm) => {
+            // elm
+            elm.style.display = 'none';
+            if(elm.innerText.toLowerCase().includes(_search)) {
+                elm.style.display = '';
+            }
+        });
     });
 }
 

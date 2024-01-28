@@ -2931,6 +2931,12 @@ function global_case(optionkl__disable_dialog) {
                             console.log('cdtx debug - window - cdtx_qlus_detail_list_case ', _list_rs);
                             
                         });
+                        
+                        getChromeStorage("cdtx_tool_quicklink", (response) => {
+                            var _list_rs = response.value || [];
+                            console.log('cdtx debug - window - cdtx_tool_quicklink ', _list_rs);
+                            
+                        });
                     })
                     
                 }
@@ -3393,6 +3399,7 @@ function global_case(optionkl__disable_dialog) {
 
                     window.casetype_lt = false;
                     if(_strcaseid = __case_id()) {
+                        clearInterval(window.__nMyTime);
                         
                         // Confirm
                         if(window.dataCase.case_id == __case_id()) {
@@ -3496,7 +3503,7 @@ function global_case(optionkl__disable_dialog) {
                 
                 // xxxx
                 if(_action === 'ui-qplus-addtrdelete') {
-                    if(window.confirm("Your sure del this?")) {
+                    // if(window.confirm("Your sure del this?")) {
                         var _idcase = elm.getAttribute('data-caseidhere');
                         getChromeStorage("cdtx_qlus_detail_list_case", (response) => {
                             var _lst_case = response.value;
@@ -3514,7 +3521,7 @@ function global_case(optionkl__disable_dialog) {
                             })
                             
                         });
-                    }
+                    // }
                 }
                 
                 
@@ -4769,7 +4776,7 @@ function global_case(optionkl__disable_dialog) {
                         
 
                         // Count down auto craw
-                        var nMyTime = null;
+                        window.__nMyTime = window.__nMyTime || null;
                         if(
                             __case_id() != _caseid_once_autoclickcraw  
                             && __case_id() === _caseid_isnew
@@ -4791,7 +4798,7 @@ function global_case(optionkl__disable_dialog) {
                                         
                                         
                                         var ncountdown = 7;
-                                        nMyTime = setInterval(() => {
+                                        window.__nMyTime = setInterval(() => {
                                             
                                             _btn_recrawl().setAttribute('data-ncountdow', ncountdown);
                                             
@@ -4799,13 +4806,13 @@ function global_case(optionkl__disable_dialog) {
                                                 // console.log('ZZZZZZZ Clear', __case_id(), _caseid_once_autoclickcraw, _caseid, _caseid_isnew);
                                                 _caseid_isnew = '';
                                                 _caseid_once_autoclickcraw = '';
-                                                clearInterval(nMyTime);
+                                                clearInterval(window.__nMyTime);
                                             }
                                             
 
                                             ncountdown--;
                                             if(ncountdown < 0) {
-                                                clearInterval(nMyTime);
+                                                clearInterval(window.__nMyTime);
                                                 _btn_recrawl().click();
                                             }
                                         }, 1000);        
@@ -4906,7 +4913,7 @@ function global_case(optionkl__disable_dialog) {
 
             if(location.hostname === 'calendar.google.com') {
                 // For reminder
-                
+                cLog(() => { console.log("cdtx calendar.google.com timeleft"); })
                 timeLeftGoogleCalendar();
                 
                 // For case
@@ -4949,6 +4956,8 @@ function global_case(optionkl__disable_dialog) {
                         
                         
                         if(!document.querySelector('[jscontroller="dIQ6id"] ._casecalendar_info')) {
+                            cLog(() => { console.log("cdtx calendar.google.com 0000"); })
+                            window._once_2 = window._once_2 || 0;
 
                             // Display after Title
                                 // Ads ID, Ocid
@@ -4997,45 +5006,51 @@ function global_case(optionkl__disable_dialog) {
 
 
                             if(!window.htmlPanelTemp) {
-
-                                loadCaseStorageByID(_caseid, (response) => {
-                                    if(!response.value) return false;
-                                    var _data = response.value;
-                                    cLog(() => { console.log("cdtx calendar.google.com ", _data); })
+                                
+                                if(window._once_2 == 0) {
+                                    window._once_2 = 1;
                                     
-                                    if(_data.case_id) {
-                                        // Display content
-                                        window.calendarCaseNowCaseID = _data.case_id;
-                                        templateDisplay(_panel(), _data);
-                                        window.dataCase = _data;
+                                    loadCaseStorageByID(_caseid, (response) => {
+                                        window._once_2 = 0;
                                         
-                                    }
-    
-    
-                                    // Meet link
-                                    var _linkmeet = _data.customer_gmeet || '';
-                                    var _parent = _panel().closest('[jscontroller="dIQ6id"]');
-                                    if(_parent) {
-                                        var _atagmeet = _parent.querySelector('a[href*="https://meet.google.com"]');
-                                        if(_atagmeet) {
-                                            if(_linkmeet != _atagmeet.getAttribute('href')) {
-                                                _linkmeet = _atagmeet.getAttribute('href');
-                                                _linkmeet = _linkmeet.split('?')[0];
-                                                _data.customer_gmeet = _linkmeet;
-    
-                                                
-                                                replaceKeyHTMLByCaseID(_panel(), 'customer_gmeet', _linkmeet, _data);
+                                        if(!response.value) return false;
+                                        var _data = response.value;
+                                        cLog(() => { console.log("cdtx calendar.google.com ", _data); })
+                                        
+                                        if(_data.case_id) {
+                                            // Display content
+                                            window.calendarCaseNowCaseID = _data.case_id;
+                                            templateDisplay(_panel(), _data);
+                                            window.dataCase = _data;
+                                            
+                                        }
         
-                                                saveCase2Storage(_data,  (response) => {
-                                                    cLog(() => { console.log('cdtx-save case - add link meet', response); })
-                                                });
+        
+                                        // Meet link
+                                        var _linkmeet = _data.customer_gmeet || '';
+                                        var _parent = _panel().closest('[jscontroller="dIQ6id"]');
+                                        if(_parent) {
+                                            var _atagmeet = _parent.querySelector('a[href*="https://meet.google.com"]');
+                                            if(_atagmeet) {
+                                                if(_linkmeet != _atagmeet.getAttribute('href')) {
+                                                    _linkmeet = _atagmeet.getAttribute('href');
+                                                    _linkmeet = _linkmeet.split('?')[0];
+                                                    _data.customer_gmeet = _linkmeet;
+        
+                                                    
+                                                    replaceKeyHTMLByCaseID(_panel(), 'customer_gmeet', _linkmeet, _data);
+            
+                                                    saveCase2Storage(_data,  (response) => {
+                                                        cLog(() => { console.log('cdtx-save case - add link meet', response); })
+                                                    });
+                                                }
                                             }
                                         }
-                                    }
-    
-    
-    
-                                });
+        
+        
+        
+                                    });   
+                                }
                             }
 
                             // HIDE Description

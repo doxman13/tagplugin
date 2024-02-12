@@ -2,15 +2,17 @@
 function save_options() {
     var country = document.getElementById('country').value;
     var youremail = document.getElementById('youremail').value;
-    document.getElementById('c_country').innerHTML = country;
     console.log(country);
     chrome.runtime.sendMessage({ message: country });
 
     var cdtx_option_form = document.getElementById('cdtx_option_form');
     var formDataObj = {};
-    var formData = new FormData(cdtx_option_form);
-    if(formData) {
-        formData.forEach((value, key) => (formDataObj[key] = value));
+
+    if(cdtx_option_form) {
+        var formData = new FormData(cdtx_option_form);
+        if(formData) {
+            formData.forEach((value, key) => (formDataObj[key] = value));
+        }
     }
     
     var optionkl__modecase = document.getElementById('optionkl__modecase').value || "";
@@ -91,7 +93,7 @@ function save_options() {
 
 
 function inject_options() {
-    var myGTM = document.getElementById('yourGTM').value;
+    var myGTM = document.getElementById('yourGTM').value.trim();
     console.log("my GTM injector ID is " + myGTM);
     chrome.runtime.sendMessage({ message: myGTM });
 
@@ -99,9 +101,12 @@ function inject_options() {
 
     chrome.storage.sync.set({
         myInjector: myGTM, gtmToDo: 'start'
-    }, function () {
+    }, function (items) {
         // Update status to let user know options were saved.
         var status = document.getElementById('status');
+        
+        document.getElementById('optionkl').setAttribute("data-gtmtodo", 'start');
+        
         status.textContent = 'GTM injected, refresh your browser';
         setTimeout(function () {
             status.textContent = '';
@@ -119,7 +124,9 @@ function stop_injector() {
 
     chrome.storage.sync.set({
         gtmToDo: 'stop'
-    }, function () {
+    }, function (items) {
+        document.getElementById('optionkl').setAttribute("data-gtmtodo", 'stop');
+
         // Update status to let user know options were saved.
         var status = document.getElementById('status');
         status.textContent = 'GTM injector stopped, refresh your browser';
@@ -160,6 +167,7 @@ function restore_options() {
         optionkl__enable_sf_helper: false,
         optionkl__form_option_data: {},
     }, function (items) {
+        var _country_lowercase = items.mycountry ? items.mycountry.toLocaleLowerCase() : '';
         console.log(items);
         console.log('why not here ' + items.myInjector + ' ' + items.gtmToDo);
         document.getElementById('country').value = items.mycountry;
@@ -167,6 +175,14 @@ function restore_options() {
         document.getElementById('yourGTM').value = items.myInjector;
 
         document.getElementById('optionkl').setAttribute("data-optionkl", items.mycountry);
+        document.getElementById('optionkl').setAttribute("data-gtmtodo", items.gtmToDo);
+
+        if(_country_lowercase) {
+            if(elm = document.getElementById('optionkl').querySelector('.optionkl_logo')){
+                elm.insertAdjacentHTML('afterBegin', `<span class="optionkl_flagmarket" ></span>`);
+            }
+        }
+        
         document.getElementById('optionkl__modecase').value = items.optionkl__modecase;
         document.getElementById('optionkl__inputyourname').value = items.optionkl__inputyourname;
 
@@ -213,8 +229,6 @@ function restore_options() {
         console.log(items.ouremail);
         y = items.mycountry;
         window.superx = y;
-        console.log(superx);
-        document.getElementById('c_country').innerHTML = superx;
         chrome.runtime.sendMessage({ message: country });
     });
 }
@@ -270,9 +284,14 @@ if(optionkl__databtnclk_resetdata = document.querySelector('[data-btnclk="resetd
     })
 }
 
-$('#startGTM').click(inject_options);
-$('#stopGTM').click(stop_injector);
 
+document.querySelector('#startGTM').addEventListener('click', function(){
+    inject_options()
+})
+
+document.querySelector('#stopGTM').addEventListener('click', function(){
+    stop_injector()
+})
 
 
 

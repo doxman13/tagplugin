@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "KL TAG TEAM",
-	"version": "8.9",
+	"version": "9.0",
 	"description": "KL TAG TEAM",
 	"icons": {
 		"16": "icon16x16.png",
@@ -107,6 +107,18 @@
 			"all_frames": true
 		},
 		{
+			"all_frames": true,
+			"exclude_matches": [ "*://*/*.xml" ],
+			"matches": [
+				"*://*.google.com/*"
+			],			
+			"js": [
+				"tagteams/libs.js",
+				"tagteams/init_google.js"
+			],
+			"run_at": "document_start"
+		},
+		{
 			"exclude_matches": [ "*://*/*.xml" ],
 			"matches": [
 				"*://*.connect.corp.google.com/*",
@@ -115,6 +127,7 @@
 				"*://tagmanager.google.com/*",
 				"*://tagmanager-ics.corp.google.com/*",
 				"*://analytics-ics.corp.google.com/*",
+				"*://barkeep.corp.google.com/*",
 				"*://gauge.corp.google.com/*"
 				
 			],
@@ -125,15 +138,6 @@
 				"tagteams/global.js",
 				"tagteams/vanbo.js",
 				"tagteams/linhvo.js",
-				"tagteams/groups/other_panel_div.js",
-				"tagteams/groups/other_sub.js",
-				"tagteams/groups/other_content_scripts.js",
-				"tagteams/groups/th_panel_div.js",
-				"tagteams/groups/th_sub.js",
-				"tagteams/groups/th_content_scripts.js",
-				"tagteams/groups/jp_panel_div.js",
-				"tagteams/groups/jp_sub.js",
-				"tagteams/groups/jp_content_scripts.js",
 				"tagteams/init.js"
 			]
 		}

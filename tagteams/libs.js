@@ -7,6 +7,11 @@ window.dataTagteam.urlgooglesheet = 'https://docs.google.com/spreadsheets/u/2/d/
 window.dataTagteam.dongtest = localStorage.getItem("dongtest") || false; 
 
 // ==== LIB ====
+    // Toastify
+    !function(t){var i=function(t){return new i.lib.init(t)};i.lib=i.prototype={toastify:"0.0.1",constructor:i,init:function(t){return t||(t={}),this.options={},this.options.text=t.text||"Hi there!",this.options.duration=t.duration||3e3,this.options.selector=t.selector,this.options.class=t.class || "",this.options.callback=t.callback||function(){},this},buildToast:function(){if(!this.options)throw"Toastify is not initialized";var t=document.createElement("div");return t.className="_panel_toastify on " + this.options.class,t.innerHTML=this.options.text,t.addEventListener("click",this.options.callback),t},showToast:function(){var t,o=this.buildToast();if(!(t=void 0===this.options.selector?document.body:document.getElementById(this.options.selector)))throw"Root element is not defined";return t.insertBefore(o,t.firstChild),i.reposition(),window.setTimeout((function(){o.classList.remove("on"),window.setTimeout((function(){o.remove(),i.reposition()}).bind(this),400)}).bind(this),this.options.duration),this}},i.reposition=function(){for(var t=15,i=document.getElementsByClassName("_panel_toastify"),o=0;o<i.length;o++){var n=i[o].offsetHeight;i[o].style.top=t+"px",t+=n+15}return this},i.lib.init.prototype=i.lib,t.Toastify=i}(window);
+
+
+
 function loadCaseDatabaseByID(case_id) {
     // console.log(window.dataTagteam.current_case)
     if (dataStatus.case_list) {
@@ -50,10 +55,14 @@ function getDiffTime(str_time, type) {
         const date2 = new Date(str_time);
         const diffTime = (date2 - date1);
         // const diffTime = Math.abs(date2 - date1);
+        const diffSecond = Math.ceil(diffTime / (1000)); 
         const diffMinute = Math.ceil(diffTime / (1000 * 60)); 
         const diffHour = Math.ceil(diffTime / (1000 * 60 * 60)); 
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
         
+        if(type == 'second') {
+            return diffSecond;
+        }
         if(type == 'minute') {
             return diffMinute;
         }
@@ -2045,7 +2054,7 @@ function loadEmailTemplateAction(){
                 var body_content_top_content = _card_istop.querySelector("#email-body-content-top-content");
 
                 body_content.style.padding = '0px';
-                body_content.style.width = '100%';
+                body_content.style.maxWidth = '100%';
                 // Insert value
                 if(!window.hasClkReply && !_card_istop.querySelector(".finished-reply")) {
                     subject.value = template_title.innerText;
@@ -2560,6 +2569,14 @@ function replaceTextByData(_str) {
         return _str;
     }
     
+    
+    // case id replace
+    if(__case_id()) {
+        _str = _str.replaceAll(`{%case_id%}`, __case_id());
+        return _str;
+    }
+    
+    
     return _str;
 }
 
@@ -2605,107 +2622,118 @@ function getToolShortlink(_caseid, _callback) {
 
 
 function loadGoogleSheetOnlineWebPublics(_callback_ready) {
-    function GoogleSheetOnline(_htmlelm, _callback) {
-        function decodeHTMLEntities(text) {
-            var textArea = document.createElement('textarea');
-            textArea.innerHTML = text;
-            return textArea.value;
-        }
-    
-    
-        function ConvertSheetTable2JsonObject(table) {
-            // var table = document.querySelector('[id="1451083050"] table tbody');
-            // table.querySelector('thead').remove()
-            var header = [];
-            var rows = [];
-            var _innerHTML = '';
-    
-            for (var i = 0; i < table.rows[0].cells.length; i++) {
-                header.push(table.rows[0].cells[i].innerText);
+    // Convert table html => object
+        function GoogleSheetOnline(_htmlelm, _callback) {
+            function decodeHTMLEntities(text) {
+                var textArea = document.createElement('textarea');
+                textArea.innerHTML = text;
+                return textArea.value;
             }
-    
-            for (var i = 1; i < table.rows.length; i++) {
-                var row = {};
-    
-                // exclude column 0
-                for (var j = 1; j < table.rows[i].cells.length; j++) {
-                    _innerText = table.rows[i].cells[j].innerText;
-    
-                    // get Result
-                    row[header[j]] = _innerText;
+        
+        
+            function ConvertSheetTable2JsonObject(table) {
+                // var table = document.querySelector('[id="1451083050"] table tbody');
+                // table.querySelector('thead').remove()
+                var header = [];
+                var rows = [];
+                var _innerHTML = '';
+        
+                for (var i = 0; i < table.rows[0].cells.length; i++) {
+                    header.push(table.rows[0].cells[i].innerText);
                 }
-                rows.push(row);
+        
+                for (var i = 1; i < table.rows.length; i++) {
+                    var row = {};
+        
+                    // exclude column 0
+                    for (var j = 1; j < table.rows[i].cells.length; j++) {
+                        _innerText = table.rows[i].cells[j].innerText;
+        
+                        // get Result
+                        row[header[j]] = _innerText;
+                    }
+                    rows.push(row);
+                }
+        
+                return rows;
             }
-    
-            return rows;
-        }
-    
-        // Giao doan 1: chuyen doi Sheet table -> json
-        var _sheetobj = {};
-        var _objtemp = {};
-        var _id, _text, _rsConvert;
-    
-        _htmlelm.querySelectorAll('#sheet-menu li').forEach((item) => {
-            _objtemp = {};
-            _objtemp.id = item.getAttribute('id').replace('sheet-button-', '');
-            _objtemp.text = item.innerText;
-            _objtemp.sheettab = ConvertSheetTable2JsonObject(_htmlelm.querySelector('[id="' + _objtemp.id + '"] table tbody'));
-            
-            _sheetobj[_objtemp.text] = _objtemp;
-        });
-    
-        _callback(_sheetobj);
-    
-    
-    }
-
-    window.loadgooglesheetpublish = window.loadgooglesheetpublish || {};
-    
-    getChromeStorage("cdtx_loadgooglesheetpublish_timesave", (response) => {
-        var _rs = response.value || 0;
-        var _time_save = parseInt(_rs);
-        var _time_current = parseInt(minuteDateTime());
-
-
-        cLog(() => { console.log('cdtx - google', response.value, _time_current - _time_save); })
-        if((_time_current - _time_save) > 15) {
-            // https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vRMxOxerJ3zWV07uTOdTQCaa13ODbTfZVj5SB7-4Q6QlFhFTU8uXA-wsywXAUUqzHtOiGQdGgCYfRmk/pubhtml#
-            fetch(window.dataTagteam.urlgooglesheet)
-            .then((response) => response.text())
-            .then((data) => {
-                var tempDiv = document.createElement('div');
-                tempDiv.innerHTML = data;
+        
+            // Giao doan 1: chuyen doi Sheet table -> json
+            var _sheetobj = {};
+            var _objtemp = {};
+            var _id, _text, _rsConvert;
+        
+            _htmlelm.querySelectorAll('#sheet-menu li').forEach((item) => {
+                _objtemp = {};
+                _objtemp.id = item.getAttribute('id').replace('sheet-button-', '');
+                _objtemp.text = item.innerText;
+                _objtemp.sheettab = ConvertSheetTable2JsonObject(_htmlelm.querySelector('[id="' + _objtemp.id + '"] table tbody'));
                 
-                GoogleSheetOnline(tempDiv, (_sheetobj) => {
-                    
-                    setChromeStorage("cdtx_loadgooglesheetpublish", _sheetobj, () => {
-                        if(_sheetobj) {
-                            window.loadgooglesheetpublish = _sheetobj;
-
-                            cLog(() => { console.log("LOADSHEET --- DONE ", window.loadgooglesheetpublish); });
-                            _callback_ready();
-                        }
-                        
-                        setChromeStorage("cdtx_loadgooglesheetpublish_timesave", minuteDateTime(), () => {
-                            cLog(() => { console.log("cdtx - loadgooglesheetpublish at " + minuteDateTime()); })
-                        });
-                    });
-                })
-        
+                _sheetobj[_objtemp.text] = _objtemp;
             });
-        } 
-    });
+        
+            _callback(_sheetobj);
+        
+        
+        }
+
+    window.loadgooglesheetpublish = window.loadgooglesheetpublish || null;
 
     
-    getChromeStorage("cdtx_loadgooglesheetpublish", (response2) => {
-        var _rs = response2.value || 0;
-        
-        if(_rs) {
-            window.loadgooglesheetpublish = _rs;
-            cLog(() => { console.log("LOADSHEET --- DONE 2 "); });
+    // If have any return now
+        cLog(() => { console.log("cdtx - google LOADSHEET - storage", window.loadgooglesheetpublish, location.hostname); });
+        if(window.loadgooglesheetpublish) {
             _callback_ready();
+            return window.loadgooglesheetpublish;
         }
-    });
+
+    // Check time
+        getChromeStorage("cdtx_loadgooglesheetpublish_timesave", (response) => {
+            var _rs = response.value || -1;
+            var _time_save = _rs;
+            var _time_current = new Date();
+            var _minute = Math.abs(getDiffTime(_time_save, 'minute'));
+            
+
+            cLog(() => { console.log('cdtx - google checktime', response.value, _time_save, _minute); })
+            if(_minute > 15 || _time_save < 0) {
+                // https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vRMxOxerJ3zWV07uTOdTQCaa13ODbTfZVj5SB7-4Q6QlFhFTU8uXA-wsywXAUUqzHtOiGQdGgCYfRmk/pubhtml#
+                fetch(window.dataTagteam.urlgooglesheet)
+                .then((response) => response.text())
+                .then((data) => {
+                    var tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = data;
+                    
+                    GoogleSheetOnline(tempDiv, (_sheetobj) => {
+                        
+                        setChromeStorage("cdtx_loadgooglesheetpublish", _sheetobj, () => {
+                            if(_sheetobj) {
+                                window.loadgooglesheetpublish = _sheetobj;
+
+                                cLog(() => { console.log("cdtx - google LOADSHEET -- FETCH--- DONE ", window.loadgooglesheetpublish); });
+                                _callback_ready();
+                            }
+                            
+                            setChromeStorage("cdtx_loadgooglesheetpublish_timesave", _time_current, () => {
+                                cLog(() => { console.log("cdtx - google - loadgooglesheetpublish at " + _time_current); })
+                            });
+                        });
+                    })
+            
+                });
+            } 
+        });
+
+    // check storage
+        getChromeStorage("cdtx_loadgooglesheetpublish", (response2) => {
+            var _rs = response2.value || 0;
+            
+            if(_rs) {
+                window.loadgooglesheetpublish = _rs;
+                cLog(() => { console.log("cdtx - google LOADSHEET --- DONE 2 "); });
+                _callback_ready();
+            }
+        });
 }
 
 // setGetQuickLink
@@ -3233,8 +3261,8 @@ function clearAndPrepareCRTemplate() {
 
 
         var _email_body_content = _composeemailcard.querySelector('#email-body-content');
-        _email_body_content.style.padding = '0px';
-        _email_body_content.style.width = '100%';
+        // _email_body_content.style.padding = '0px';
+        _email_body_content.style.maxWidth = '100%';
 
         var _email_body_content_top = _composeemailcard.querySelector('#email-body-content-top');
         _email_body_content_top.innerHTML = '<div id="email-body-content-top-content"><p dir="auto"></p></div>';
@@ -3319,6 +3347,8 @@ function clearAndPrepareCRTemplate() {
                 _email_body_content_top_content.dispatchEvent(new Event('blur'));
                 _email_body_content_top_content.dispatchEvent(new Event('click'));
                 _email_body_content_top_content.click();
+                
+                reSaveComposerContentAction();
             }
 
             // more than 10s
@@ -3394,7 +3424,7 @@ function getSystemsSheetByKeyAndLanguage(_columnname, _keylanguage) {
     return false;
 }
 
-// getSheetByTabName('Status Note Case');
+// getSheetByTabName('Status Note Hotkey');
 function getSheetByTabName(tabname) {
     try {
         if(window.loadgooglesheetpublish) {
@@ -3417,7 +3447,7 @@ function getSheetByTabName(tabname) {
             
     } catch (error) {
         cLog(() => {
-            console.error('getVariableSheetByKeyAndLanguage', _columnname, _keylanguage, error)
+            console.error('getSheetByTabName', error)
         });
         
         return false;
@@ -6109,6 +6139,82 @@ function addDashboardChklstSOP() {
     });
 }
 
+
+// addBoardIframe({
+//     'urlframe_default': 'https://cdtx.lyl.vn/_support/4agent/index.php',
+//     'urlonsheet_bykey': 'dashboard_bookmark_lsttool',
+//     'btn_keyclick': 'dashboard_bookmark_lsttool',
+//     'tooltip': 'Tools on Bookmark click',
+//     'icon_url': assets_img_bookmark,
+//     'elm_pos_show': `[data-debugid="goteam"]`,
+    
+// })
+
+function addBoardIframe(_opt) {
+    if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
+    
+    // 1. add button
+    var _btn = () => {
+        return document.querySelector(`._panel_btnshortcut [data-btnclk="${_opt.btn_keyclick}"]`);
+    };
+    
+    
+    var _sub_modal = () => {
+        return document.querySelector('._sub_modal');
+    }
+    
+    observeOnce((elm) => {
+        
+        // toolbar
+        if(elpos = document.querySelector(`${_opt.elm_pos_show}`)) {
+            if(!_btn()) {
+                if(isStopLoopInfinity("keyname", 2000)) return false;
+                
+                cLog(() => { console.log('observeOnce - addDashboardBookmarkListTool' ) })
+                 
+                
+                
+                var _html = `<div class="material-button" data-btnclk="${_opt.btn_keyclick}" title="Tools on Bookmark click" >
+                    <div class="content">
+                        <img src="${_opt.icon_url}" alt="" >
+                    </div>
+                </div>`;  
+                
+                elpos.insertAdjacentHTML('beforeBegin', _html);
+                
+            }
+        }
+    });   
+        
+    
+    
+    // 2. ACTION
+    onClickElm('[data-btnclk]', 'click', function(elm, e){
+        try {
+            var _action = elm.getAttribute("data-btnclk");
+            if(_action === `${_opt.btn_keyclick}`) {
+                
+                var iframe_dashboard_chklst_sop = _opt.urlframe_default;
+                if(iframe_dash_here = getVariableSheetByKeyAndLanguage(_opt.urlonsheet_bykey, window.keylanguage)) {
+                    iframe_dashboard_chklst_sop = iframe_dash_here;
+                }
+                
+                _sub_modal().insertAdjacentHTML('beforeEnd', `
+                    <span class="_sub_modal_close"></span>
+                    <div class="_sub_modal_container_outer" >
+                        <iframe src="${iframe_dashboard_chklst_sop}"></iframe>
+                    </div>
+                `);
+        
+                _sub_modal().classList.add('show');
+            }
+        } catch(error) {
+            console.error('cdtx addDashboardChklstSOP', error)
+        }
+    });
+}
+
+
 function addDashboardCheckWinCriteria() {
     if(window.location.hostname !== 'cases.connect.corp.google.com') return false;
     
@@ -6128,10 +6234,7 @@ function addDashboardCheckWinCriteria() {
         if(elpos = document.querySelector('[data-debugid="goteam"]')) {
             if(!_btn()) {
                 if(isStopLoopInfinity("keyname", 2000)) return false;
-                
                 cLog(() => { console.log('observeOnce - addDashboardChklstSOP' ) })
-                 
-                
                 
                 var _html = `<div class="material-button" data-btnclk="dashboard_chklst_wincriteria_sop" title="Check win criteria, ...." >
                     <div class="content">
@@ -6182,26 +6285,6 @@ function addBoadListEmailTemplate() {
         return document.querySelector('._panel_btnshortcut [data-btnclk="boardlistemail"]');
     };
     
-    
-    
-    observeOnce((elm) => {
-        
-        // toolbar
-        if(elpos = document.querySelector('[data-debugid="goteam"]')) {
-            if(!_btn()) {
-                if(isStopLoopInfinity("keyname", 2000)) return false;
-                
-                var _html = `<div class="material-button" data-btnclk="boardlistemail" title="Email templates custom" >
-                    <div class="content">
-                        <img src="${assets_img_mailicon}" alt="" >
-                    </div>
-                </div>`;  
-                
-                elpos.insertAdjacentHTML('beforeBegin', _html);
-                
-            }
-        }
-    });   
         
     // deloy UI
     var domDivPanel = document.createElement('div');
@@ -6212,7 +6295,7 @@ function addBoadListEmailTemplate() {
             <span class="cdtxemailpanel-btnclose" data-btnclk="cdtxemailpanel-btnclose"><img src="chrome-extension://gnhkacnhcenacadhaohjdkmkgfikdkoh/assets/img/315851/close.svg" ></span>
             <span>Email templates</span>
         </span>
-        <span class="cdtxemailpanel-searchinput" contenteditable="true"></span>
+        <span class="cdtxemailpanel-searchinput" contenteditable="true" data-elm_inputparent=""></span>
         <div class="cdtxemailpanel-body">
         
         </div>
@@ -6225,6 +6308,7 @@ function addBoadListEmailTemplate() {
     };
     
     var rs = window.loadgooglesheetpublish || null;
+    var _1st_email_elm = null;
     if(rs) {
         var _tab_cr_subject_templatemail = rs[`${window.keylanguage} | CR, Subject, Template Emails`];
         if(_tab_cr_subject_templatemail) {
@@ -6249,14 +6333,13 @@ function addBoadListEmailTemplate() {
                     var body_content_top = _card_istop.querySelector("#email-body-content-top");
                     var body_content_top_content = _card_istop.querySelector("#email-body-content-top-content");
     
-                    body_content.style.padding = '0px';
-                    body_content.style.width = '100%';
+                    // body_content.style.padding = '0px';
+                    body_content.style.maxWidth = '100%';
                     
                     // Insert value
                     if(!window.hasClkReply && !_card_istop.querySelector(".finished-reply")) {
                         subject.value = template_subject.innerText;    
                     }
-                    
                     
                     
                     replaceAllHtmlElement(template_body, window.dataCase);
@@ -6318,6 +6401,9 @@ function addBoadListEmailTemplate() {
                         ${item['CR Name']}
                     `;
                     
+                    if(domItem.title.trim() == 'ts as new') {
+                        _1st_email_elm = domItem;
+                    }
                     
                     
                     // replaceAllHtmlElement(template_body, window.dataCase);
@@ -6325,18 +6411,22 @@ function addBoadListEmailTemplate() {
                     // click event
                     domItem.addEventListener("click", (e) => {
                         
-                        if(__case_id() !== window.dataCase.case_id) {
-                            Toastify({
-                                text: 'Data case not ready! Please check, Make sure all good! ',
-                                duration: 3000,
-                                class: "warning",
-                                callback: function(){
-                                    this.remove();
-                                }
-                            }).showToast();
-                            
-                            // return false;
+                        if(window.dataCase.case_id) {
+                            if(__case_id() !== window.dataCase.case_id) {
+                                Toastify({
+                                    text: 'Data case not ready! Please check, Make sure all good! ',
+                                    duration: 3000,
+                                    class: "warning",
+                                    callback: function(){
+                                        this.remove();
+                                    }
+                                }).showToast();
+                                
+                                // return false;
+                                window.dataCase = {};
+                            }    
                         }
+                        
                         
                         var _str_template_body = replaceTextByData(item['Email Templates Custom']);
                         var template_body = document.createElement('div');
@@ -6396,7 +6486,37 @@ function addBoadListEmailTemplate() {
         }
     }
             
-    console.log('addBoadListEmailTemplate', window.loadgooglesheetpublish)
+    
+    
+    
+    observeOnce((elm) => {
+        
+        // toolbar
+        if(elpos = document.querySelector('[data-btnid="crawl_case"]')) {
+            if(!_btn()) {
+                if(isStopLoopInfinity("keyname", 2000)) return false;
+                
+                var _html = `<div class="material-button" data-btnclk="boardlistemail" title="Email templates custom" >
+                    <div class="content">
+                        <img src="${assets_img_mailicon}" alt="" >
+                    </div>
+                </div>`;
+                
+                if(_1st_email_elm) {
+                    _html += `<div class="material-button" data-btnclk="board_clk1stemail_tag" title="Send 1st email - Tag" >
+                    <div class="content">
+                        <img src="${assets_img_1semail}">
+                    </div>
+                </div>`
+                }
+                
+                elpos.insertAdjacentHTML('afterEnd', _html);
+                
+            }
+        }
+    });   
+    
+    // console.log('addBoadListEmailTemplate', window.loadgooglesheetpublish)
     
     var _toggleDomPanel = () => {
         if('block' != domDivPanel.style.display) {
@@ -6415,7 +6535,9 @@ function addBoadListEmailTemplate() {
         try {
             var _action = elm.getAttribute("data-btnclk");
             
-            console.log('addBoadListEmailTemplate', _action)
+            cLog(() => { 
+                console.log('addBoadListEmailTemplate', _action)
+            });
             
             if(_action === 'boardlistemail') {
                 _toggleDomPanel();
@@ -6425,6 +6547,12 @@ function addBoadListEmailTemplate() {
                 _toggleDomPanel();
             }
             
+            if(_action === 'board_clk1stemail_tag') {
+                _1st_email_elm.click();
+            }
+            
+            
+            
         } catch(error) {
             console.error('cdtx boardlistemail', error)
         }
@@ -6433,6 +6561,7 @@ function addBoadListEmailTemplate() {
     // Search 
     onClickElm('.cdtxemailpanel-searchinput', 'keyup', function(elm_inputparent, e){
         var _search = elm_inputparent.innerText.toLowerCase();
+        elm_inputparent.setAttribute('data-elm_inputparent', _search);
         domDivPanel.querySelectorAll('.cdtxemailpanel-item').forEach((elm) => {
             // elm
             elm.style.display = 'none';
@@ -6572,8 +6701,174 @@ function disPatchEventGetIDAds() {
 }
 
 
+// push to Obsever
+function detechAMemailMissing(){
+    if(window.location.hostname !== "cases.connect.corp.google.com") return false;
+    
+    var _istopelm = document.querySelector(`.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"]`);
+    if(_istopelm) {
+        var _inputcc = () => {
+            return _istopelm.querySelector('.input.cc');
+        };
+        
+        var _inputbcc = () => {
+            return _istopelm.querySelector('.input.bcc');
+        };
+        
+        var _attr_eieid = () => {
+            return _istopelm.querySelector('[data-eieid]');
+        };
+        
+        
+        
+        
+        var _expand_btn = () => {
+            return _istopelm.querySelector('[debug-id="expand-button"]');
+        };
+        
+        
+        if(!(_inputcc() || _inputbcc())) {
+            if(_expand_btn()) {
+                // cLog(() => { console.log('DTEST expand'); })
+                _expand_btn().click();
+            }
+        } else {
+            
+            if(!window.dataCase.case_id) return false;
 
+            if(_inputcc().innerText.includes('@')) {
+                // cLog(() => { console.log('DTEST OKOK') });
+            } else {
+                if(
+                    (
+                    _inputcc().querySelector('input') 
+                    || _inputbcc().querySelector('input')
+                    )
+                    
+                    && !_attr_eieid()
+                ) {
+                    if(!_istopelm.classList.contains('_once')) {
+                        // cLog(() => { console.log('DTEST fix now'); })
+                        _istopelm.classList.add('_once')
+                        checkInputEmailInboxAndFix();    
+                    }
+                    
+                }
+                
+            }
+        }
+        
+        
+    }
+    
+}
 
+function reSaveComposerContentAction() {
+    var _istop = function () {
+        return document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top');
+    };
+    
+    if(!_istop()) return;
+
+    _istop().querySelector("input.subject").focus();
+    
+    var _composeemailcard = document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="compose"]');
+    
+    if(_email_body_content_top_content = _composeemailcard.querySelector('[debug-id="underline"]')) {
+        // Update action
+        _email_body_content_top_content.click();
+
+    }
+    
+
+}
+
+// update new data elem
+function recheckVersionForResetData(){
+    if(window.location.hostname !== "cases.connect.corp.google.com") return false;
+    
+    if(
+        !(
+            window.result.optionkl__modecase == 'Development'
+            || window.result.optionkl__modecase == 'Auto'
+        )
+    ) return false;
+
+    // isForLiveBeta
+    // getVersion
+        window._once_recheckversionforresetdata = window._once_recheckversionforresetdata || 0;
+        window._once_recheckversionforresetdata_time = window._once_recheckversionforresetdata_time || new Date();
+        var _second = Math.abs(getDiffTime(window._once_recheckversionforresetdata_time, 'second'));
+        cLog(() => { console.log('recheckVersionForResetData', _second, 'second'); });
+
+        var _fetch_compare = () => {
+            if(window._once_recheckversionforresetdata > 0) return false;
+            window._once_recheckversionforresetdata = 1;
+            getValueByKeyInSheetname(key = 'extension_ver_url', 'System' , (rs) => {
+                if(rs) { 
+
+                    // Start check
+                    loadFetchText(rs, function(content){
+                        cLog(() => { console.log('recheckVersionForResetData fetch', content); });
+
+                        if(content) {
+                            if(vers = Number(content)) {
+                                cLog(() => { console.log('recheckVersionForResetData vers', vers); });
+
+                                var _key = 'cdtx_ver_extremote';
+                                getChromeStorage(_key, (response) => {
+                                    _ver_storage = response.value || 0;
+                                    
+                                    cLog(() => { console.log('recheckVersionForResetData compare', vers, _ver_storage); });
+                                    if(vers != _ver_storage) {
+
+                                        // 0 clear
+
+                                        // 1 sync
+
+                                        // 2 save
+                                        setChromeStorage(_key, vers, (response) => {
+                                            cLog(() => { console.log('recheckVersionForResetData save done', vers); });                                    
+                                        })
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                    // END
+                     
+                }
+            });
+        }
+        
+            if(window._once_recheckversionforresetdata == 0) {
+                _fetch_compare(); 
+            }
+
+        if(_second > (10 * 60)) {
+            window._once_recheckversionforresetdata = 0;
+            window._once_recheckversionforresetdata_time = new Date();
+            _fetch_compare();
+        }
+        // Compare width storage
+}
+
+var addShortCutBtn = () => {
+    var _panel_addshortcutbtn = document.querySelector(".dock-container._panel_btnshortcut");
+    if(!_panel_addshortcutbtn) {
+        var dock_container = document.querySelector(".dock-container");
+        if(dock_container) {
+            var strhtml = `<div class="dock-container _panel_btnshortcut"></div>`;
+            
+            var dock_container_add = _TrustScript(strhtml);
+            // // Open
+            // document.querySelector('[data-btnaction="openmain"]').click();
+            dock_container.insertAdjacentHTML("afterEnd", dock_container_add);
+        }
+        
+    }
+};
 
 
 

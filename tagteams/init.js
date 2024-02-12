@@ -18,12 +18,8 @@ chrome.storage.sync.get({
         });
         
         var _default_action = () => {
-            window.dataTagteam.language = other_language;
-            window.dataTagteam.panel_div = other_panel_div;
             window.dataTagteam.current_case = {};
 
-
-            other_tagTeamTDCXLoad(window);
             globalForAll(window);
             global_case(window.result.optionkl__disable_dialog);
             vanBoCodeHere();
@@ -31,41 +27,6 @@ chrome.storage.sync.get({
         }
 
 
-        if (result.mycountry == "Thailand") {
-            _default_action = () => {
-                window.dataTagteam.language = th_language;
-                window.dataTagteam.panel_div = th_panel_div;
-                window.dataTagteam.current_case = {};
-
-                // Focus case code vanbo
-                window.dataTagteam.sendFirstEmail = () => { th_sendFirstEmail() };
-
-                th_tagTeamTDCXLoad(window);
-                globalForAll(window);
-                global_case(window.result.optionkl__disable_dialog);
-                vanBoCodeHere();
-                linhvoLoader();
-            }
-        }
-
-
-        // JP
-        if (result.mycountry == "Japan") {
-            _default_action = () => {
-                window.dataTagteam.language = jp_language;
-                window.dataTagteam.panel_div = jp_panel_div;
-                window.dataTagteam.current_case = {};
-
-                // Focus case code vanbo
-                window.dataTagteam.sendFirstEmail = () => { jp_sendFirstEmail() };
-
-                jp_tagTeamTDCXLoad(window);
-                globalForAll(window);
-                global_case(window.result.optionkl__disable_dialog);
-                vanBoCodeHere();
-                linhvoLoader();
-            }
-        }
         
         // =======================
         // INIT LOAD

@@ -658,6 +658,8 @@ var tagteamFocusCase = () => {
             position: absolute;
             padding-left: 12px;
             padding-bottom: 12px;
+            margin: 0px;
+            margin-top: 10px;
         }
         
         .cr-list li {
@@ -725,6 +727,37 @@ var tagteamFocusCase = () => {
             max-height: calc(100vh - 64px);
         }
         
+        [data-crid]:not(._choice) {
+            display: none;
+        }
+        
+        
+        [data-crlinkid] {
+            display: inline-block;
+            padding: 6px 10px;
+            background: #fff;
+            border: 1px solid #444;
+            color: #444;
+            border-radius: 4px;
+            user-select: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+            z-index: 9;
+            position: relative;
+            
+        }
+        
+        [data-crlinkid]:not(._choice) {
+            background: #eee;
+            border-color: #ddd;
+            color: #999;
+        }
+
+        [data-crlinkid]:hover {
+            border: 1px solid #444;
+            background: #fff;
+        }
         `;
         var head = document.head || document.getElementsByTagName('head')[0];
         var style = document.createElement('style');
@@ -933,10 +966,10 @@ var tagteamFocusCase = () => {
                     <option value="Other">Other</option>`;
         
         
-        if(sheetdata = getSheetByTabName('Status Note Case')) {
+        if(sheetdata = getSheetByTabName('Status Note Hotkey')) {
             _lst = ``;
             sheetdata.forEach((item) => {
-                _lst += `<option value="${item.Title}" style="background-color: ${item.Color}">${item.Title}</option>
+                _lst += `<option value="${item.TitleSubnote}" style="background-color: ${item.ColorSubnote}">${item.TitleSubnote}</option>
                     `;
             })
         }
@@ -1662,87 +1695,115 @@ var tagteamFocusCase = () => {
         }
 
         function prepareCR() {
-            var actionCR = `<button class="view-leadgen">View Leadgen Hotkey</button>
-    <button class="view-tag-shopping hidden">View Tag/Shopping Hotkey</button>`
+            var _lst_tag = '';
+            var _lst_shopping = '';
+            var _lst_lead = '';
+            var _hotkey = '';
+            if(sheetdata = getSheetByTabName('Status Note Hotkey')) {
+                sheetdata.forEach((item) => {
+                    _hotkey = item.HotKeyTag || null;
+                    if(_hotkey) {
+                        if(_hotkey.trim()) {
+                            _lst_tag += `
+                                <li data-key="${_hotkey}" style="${item.ColorTag ? `color: ${item.ColorTag}`: ''}">${item.TitleTag}</li>
+                            `;
+                        }    
+                    }
+                    
+                    _hotkey = item.HotKeyShopping || null;
+                    if(_hotkey) {
+                        if(_hotkey.trim()) {
+                            _lst_shopping += `
+                                <li data-key="${_hotkey}" style="${item.ColorShopping ? `color: ${item.ColorShopping}`: ''}">${item.TitleShopping}</li>
+                            `;
+                        }    
+                    }
+                    
+                    _hotkey = item.HotKeyShopping || null;
+                    if(_hotkey) {
+                        if(_hotkey.trim()) {
+                            _lst_lead += `
+                                <li data-key="${_hotkey}" style="${item.ColorLeadgen ? `color: ${item.ColorLeadgen}`: ''}">${item.TitleLeadgen}</li>
+                            `;
+                        }    
+                    }
+                    
+                })
+            }
+
+            var actionCR = `
+                <button class="view-tag _choice" data-crlinkid="tag" >Tag</button>
+                <button class="view-shopping" data-crlinkid="shopping" >Shopping</button>
+                <button class="view-leadgen" data-crlinkid="leadgen" >Leadgen</button>
+            `;
+
+            var lst_major_tag = `
+                <li data-key="" style="color: #000000">TAG</li><li data-key="ts as new" style="color: #770088">AS - Send First Email (ts as new)</li> <li data-key="ts as dr" style="color: #770088">AS - Direct Reschedule (ts as dr) =&gt; HK Not Released Yet</li> <li data-key="ts as resched1" style="color: #770091">AS - Reschedule 1 (ts as resched1)</li> <li data-key="ts as reschedok" style="color: #770092">AS - Acceptable Reschedule (ts as reschedok)</li> <li data-key="ts so verif" style="color: #207d02">SO - Imple - Verified (ts so verif)</li> <li data-key="ts so verif nrc" style="color: #207d03">SO - Imple - Verified No Recent Conversion (ts so verif nrc)</li> <li data-key="ts so unv" style="color: #207d04">SO - Imple - Unverified (ts so unv)</li> <li data-key="ts so Edu" style="color: #207d05">SO - Educational Only (ts so Edu) =&gt; Not Released Yet</li> <li data-key="ts so trbl" style="color: #207d05">SO - Troubleshooting Only (ts so trbl) =&gt; Not Released Yet</li> <li data-key="ts ni ai" style="color: #944e00">NI - Awaiting Inputs (ts ni ai)</li> <li data-key="ts ni ic" style="color: #944e01">NI - In Consult (ts ni ic)</li> <li data-key="ts ni av" style="color: #944e02">NI - Awaiting Validation (ts ni av)</li> <li data-key="ts ni ac" style="color: #944e03">NI - Attempted Contact (ts ni ac)</li> <li data-key="ts ni oth" style="color: #944e04">NI - Other (ts ni oth)</li> <li data-key="ts in inf" style="color: #000000">IN - Infeasible (ts in inf)</li> <li data-key="ts in nrch" style="color: #000000">IN - Not Reachable (ts in nrch)</li> <li data-key="ts in ni" style="color: #000000">IN - Not Interested (ts in ni)</li> <li data-key="ts in nrdy" style="color: #000000">IN - Not Ready (ts in nrdy)</li> <li data-key="ts in oost" style="color: #000000">IN - Out of Scope - Rerouted to Internal Team (ts in oost)</li> <li data-key="ts in oosu" style="color: #000000">IN - Out of Scope - Unable to Transfer (ts in oosu)</li> <li data-key="ts in oos seller" style="color: #000000">IN - Out of Scope - Email to Seller (ts in oos seller)</li> <li data-key="ts in limit" style="color: #000000">IN - Reschedule Limit Exceeded (ts in limit) =&gt; Not Released Yet</li> <li data-key="ts in tf" style="color: #000000">IN - Troubleshooting [Transferred] (ts in tf) =&gt; Not Released Yet</li>
+            `;
+            
+            var lst_major_shopping = `
+                <li data-key="" style="color: #000000">SHOPPING</li><li data-key="ts as new dfa" style="color: #770087">AS - Send DfA First Email (ts as new dfa)</li> <li data-key="ts as new" style="color: #770088">AS - Send First Email (ts as new)</li> <li data-key="ts as wip offtfr" style="color: #770089">AS - Work in Progress - Offline Support (ts as wip offtfr)</li> <li data-key="ts as wip offs" style="color: #770090">AS - Work in Progress - Offline Support (ts as wip offs)</li> <li data-key="ts as resched1" style="color: #770091">AS - Reschedule 1 (ts as resched1)</li> <li data-key="ts as reschedok" style="color: #770092">AS - Acceptable Reschedule (ts as reschedok)</li> <li data-key="ts so verif" style="color: #207d02">SO - Verified (ts so verif)</li> <li data-key="ts so verif nrc" style="color: #207d03">SO - Verified No Recent Conversion (ts so verif nrc)</li> <li data-key="ts so unv" style="color: #207d04">SO - Unverified (ts so unv)</li> <li data-key="ts so vnn" style="color: #207d05">SO - Verification Not Needed (ts so vnn)</li> <li data-key="ts ni ai" style="color: #944e00">NI - Awaiting Inputs (ts ni ai)</li> <li data-key="ts ni ic" style="color: #944e01">NI - In Consult (ts ni ic)</li> <li data-key="ts ni av" style="color: #944e02">NI - Awaiting Validation (ts ni av)</li> <li data-key="ts ni ac" style="color: #944e03">NI - Attempted Contact (ts ni ac)</li> <li data-key="ts ni oth" style="color: #944e04">NI - Other (ts ni oth)</li> <li data-key="ts in inf" style="color: #000000">IN - Infeasible (ts in inf)</li> <li data-key="ts in nrch" style="color: #000000">IN - Not Reachable (ts in nrch)</li> <li data-key="ts in ni" style="color: #000000">IN - Not Interested (ts in ni)</li> <li data-key="ts in nrdy" style="color: #000000">IN - Not Ready (ts in nrdy)</li> <li data-key="ts in oost" style="color: #000000">IN - Out of Scope - Rerouted to Internal Team (ts in oost)</li> <li data-key="ts in oosu" style="color: #000000">IN - Out of Scope - Unable to Transfer (ts in oosu)</li> <li data-key="ts in oos seller" style="color: #000000">IN - Out of Scope - Email to Seller (ts in oos seller)</li> <li data-key="ts in oth" style="color: #000000">IN - Other (ts in oth)</li>
+            `;
+            
+            var lst_major_leadgen = `
+                <li data-key="" style="color: #000000">Leadgen</li><li data-key="ts as new dfa" style="color: #770087">AS - Send First Email (lg as new)</li> <li data-key="ts as new" style="color: #770088">AS - Work in Progress - Offline Support (lg as wip offtfr)</li> <li data-key="ts as wip offtfr" style="color: #770089">AS - Work in Progress - Offline Support (lg as wip offs)</li> <li data-key="ts as wip offs" style="color: #770090">AS - Work in Progress - Pre Implementation Checklist to Seller (lg as wip seller)</li> <li data-key="ts as resched1" style="color: #770091">AS - Reschedule 1 (lg as resched1)</li> <li data-key="ts as reschedok" style="color: #770092">AS - Acceptable Reschedule (lg as reschedok)</li> <li data-key="ts so verif" style="color: #207d02">SO - Verified (lg so verif)</li> <li data-key="ts so verif nrc" style="color: #207d03">SO - Verified Email to Seller (lg so verif seller)</li> <li data-key="ts so unv" style="color: #207d04">SO - Others (lg so oth)</li> <li data-key="ts so vnn" style="color: #944e00">NI - Awaiting Inputs (lg ni ai)</li> <li data-key="ts ni ai" style="color: #944e00">NI - In Consult (lg ni ic)</li> <li data-key="ts ni ic" style="color: #944e00">NI - Awaiting Validation (lg ni av)</li> <li data-key="ts ni av" style="color: #944e00">NI - Attempted Contact (lg ni ac)</li> <li data-key="ts ni ac" style="color: #944e00">NI - Modifying leadform to accept GCLID (lg ni lf)</li> <li data-key="ts ni oth" style="color: #944e00">NI - Updating CRM to accept GCLID (lg ni crm)</li> <li data-key="ts in inf" style="color: #944e00">NI - Preparing data for import (lg ni imp)</li> <li data-key="ts in nrch" style="color: #944e00">NI - Other (lg ni oth)</li> <li data-key="ts in ni" style="color: #000000">IN - Infeasible (lg in inf)</li> <li data-key="ts in nrdy" style="color: #000000">IN - Not Reachable (lg in nrch)</li> <li data-key="ts in oost" style="color: #000000">IN - Not Interested (lg in ni)</li> <li data-key="ts in oosu" style="color: #000000">IN - Not Ready (lg in nrdy)</li> <li data-key="ts in oos seller" style="color: #000000">IN - Out of Scope - Rerouted to Internal Team (lg in oost)</li> <li data-key="ts in oth" style="color: #000000">IN - Out of Scope - Unable to Transfer (lg in oosu)</li>
+            `;
+
             var crTagHtml = `
-    <ul id="cr-list-tag" class="cr-list" style="overflow: auto; height: 300px;">
-        <li data-key="ts as new dfa" style="color: rgb(119, 0, 135);">AS - Send DfA First Email (ts as new dfa)</li>
-        <li data-key="ts as new" style="color: rgb(119, 0, 135);">AS - Send First Email (ts as new)</li>
-        <li data-key="ts as wip offtfr" style="color: rgb(119, 0, 135);">AS - Work in Progress - Offline Support (ts as wip offtfr)</li>
-        <li data-key="ts as wip offs" style="color: rgb(119, 0, 135);">AS - Work in Progress - Offline Support (ts as wip offs)</li>
-        <li data-key="ts as resched1" style="color: rgb(119, 0, 135);">AS - Reschedule 1 (ts as resched1)</li>
-        <li data-key="ts as reschedok" style="color: rgb(119, 0, 135);">AS - Acceptable Reschedule (ts as reschedok)</li>
-
-        <li data-key="ts so verif" style="color: rgb(32, 125, 2);">SO - Verified (ts so verif)</li>
-        <li data-key="ts so verif nrc" style="color: rgb(32, 125, 2);">SO - Verified No Recent Conversion (ts so verif nrc)</li>
-        <li data-key="ts so unv" style="color: rgb(32, 125, 2);">SO - Unverified (ts so unv)</li>
-        <li data-key="ts so vnn" style="color: rgb(32, 125, 2);">SO - Verification Not Needed (ts so vnn)</li>
-
-        <li data-key="ts ni ai" style="color: rgb(148, 78, 0);">NI - Awaiting Inputs (ts ni ai)</li>
-        <li data-key="ts ni ic" style="color: rgb(148, 78, 0);">NI - In Consult (ts ni ic)</li>
-        <li data-key="ts ni av" style="color: rgb(148, 78, 0);">NI - Awaiting Validation (ts ni av)</li>
-        <li data-key="ts ni ac" style="color: rgb(148, 78, 0);">NI - Attempted Contact (ts ni ac)</li>
-        <li data-key="ts ni oth" style="color: rgb(148, 78, 0);">NI - Other (ts ni oth)</li>
-
-        <li data-key="ts in inf">IN - Infeasible (ts in inf)</li>
-        <li data-key="ts in nrch">IN - Not Reachable (ts in nrch)</li>
-        <li data-key="ts in ni">IN - Not Interested (ts in ni)</li>
-        <li data-key="ts in nrdy">IN - Not Ready (ts in nrdy)</li>
-        <li data-key="ts in oost">IN - Out of Scope - Rerouted to Internal Team (ts in oost)</li>
-        <li data-key="ts in oosu">IN - Out of Scope - Unable to Transfer (ts in oosu)</li>
-        <li data-key="ts in oos seller">IN - Out of Scope - Email to Seller (ts in oos seller)</li>
-        <li data-key="ts in oth">IN - Other (ts in oth)</li>
-    </ul>
-    `;
-            var crLeadgenHtml = `
-    <ul id="cr-list-leadgen" class="cr-list hidden" style="overflow: auto; height: 300px;">
-        <li data-key="lg as new" style="color: rgb(119, 0, 135);">AS - Send First Email (lg as new)</li>
-        <li data-key="lg as wip offtfr" style="color: rgb(119, 0, 135);">AS - Work in Progress - Offline Support (lg as wip offtfr)</li>
-        <li data-key="lg as wip offs" style="color: rgb(119, 0, 135);">AS - Work in Progress - Offline Support (lg as wip offs)</li>
-        <li data-key="lg as wip seller" style="color: rgb(119, 0, 135);">AS - Work in Progress - Pre Implementation Checklist to Seller (lg as wip seller)</li>
-        <li data-key="lg as resched1" style="color: rgb(119, 0, 135);">AS - Reschedule 1 (lg as resched1)</li>
-        <li data-key="lg as reschedok" style="color: rgb(119, 0, 135);">AS - Acceptable Reschedule (lg as reschedok)</li>
-
-        <li data-key="lg so verif" style="color: rgb(32, 125, 2);">SO - Verified (lg so verif)</li>
-        <li data-key="lg so verif seller" style="color: rgb(32, 125, 2);">SO - Verified Email to Seller (lg so verif seller)</li>
-        <li data-key="lg so oth" style="color: rgb(32, 125, 2);">SO - Others (lg so oth)</li>
-
-        <li data-key="lg ni ai" style="color: rgb(148, 78, 0);">NI - Awaiting Inputs (lg ni ai)</li>
-        <li data-key="lg ni ic" style="color: rgb(148, 78, 0);">NI - In Consult (lg ni ic)</li>
-        <li data-key="lg ni av" style="color: rgb(148, 78, 0);">NI - Awaiting Validation (lg ni av)</li>
-        <li data-key="lg ni ac" style="color: rgb(148, 78, 0);">NI - Attempted Contact (lg ni ac)</li>
-        <li data-key="lg ni lf" style="color: rgb(148, 78, 0);">NI - Modifying leadform to accept GCLID (lg ni lf)</li>
-        <li data-key="lg ni crm" style="color: rgb(148, 78, 0);">NI - Updating CRM to accept GCLID (lg ni crm)</li>
-        <li data-key="lg ni imp" style="color: rgb(148, 78, 0);">NI - Preparing data for import (lg ni imp)</li>
-        <li data-key="lg ni oth" style="color: rgb(148, 78, 0);">NI - Other (lg ni oth)</li>
-
-        <li data-key="lg in inf" >IN - Infeasible (lg in inf)</li>
-        <li data-key="lg in nrch" >IN - Not Reachable (lg in nrch)</li>
-        <li data-key="lg in ni" >IN - Not Interested (lg in ni)</li>
-        <li data-key="lg in nrdy" >IN - Not Ready (lg in nrdy)</li>
-        <li data-key="lg in oost" >IN - Out of Scope - Rerouted to Internal Team (lg in oost)</li>
-        <li data-key="lg in oosu" >IN - Out of Scope - Unable to Transfer (lg in oosu)</li>
-        <li data-key="lg in oos seller" >IN - Out of Scope - Email to Seller (lg in oos seller)</li>
-        <li data-key="lg in oth" >IN - Other (lg in oth)</li>
-    </ul>
-    `;
+                <ul data-crid="tag" class="cr-list _choice" style="overflow: auto; height: 300px;">
+                    ${_lst_tag || lst_major_tag}
+                </ul>
+                <ul data-crid="shopping" class="cr-list" style="overflow: auto; height: 300px;">
+                    ${_lst_shopping || lst_major_shopping}
+                </ul>
+                
+                <ul data-crid="leadgen" class="cr-list" style="overflow: auto; height: 300px;">
+                    ${_lst_lead || lst_major_leadgen}
+                </ul>
+            `;
+      
             var dialog = document.querySelector('material-dialog footer');
             var crList = document.createElement('div');
             crList.setAttribute('id', 'cr-list');
-            crList.innerHTML = actionCR + crTagHtml + crLeadgenHtml;
+            crList.innerHTML = actionCR + crTagHtml;
             dialog.appendChild(crList);
-            document.querySelector('.view-leadgen').addEventListener('click', function() {
-                document.querySelector('#cr-list-leadgen').classList.remove('hidden');
-                document.querySelector('#cr-list-tag').classList.add('hidden');
-                document.querySelector('.view-leadgen').classList.add('hidden');
-                document.querySelector('.view-tag-shopping').classList.remove('hidden');
+            
+            
+            var _elm_cr_list = () => {
+                return document.querySelector('#cr-list');
+            }
+            
+            if(window._crlinkid_choice) {
+                if(elm2 = _elm_cr_list().querySelector(`[data-crlinkid="${window._crlinkid_choice}"]`)) {
+                   elm2.click(); 
+                }
+            }
+            
+            onClickElm('[data-crlinkid]', 'click', function(elm, e){
+                var attrData = elm.getAttribute('data-crlinkid');
+                
+                window._crlinkid_choice = attrData;
+                
+                // remove active
+                _elm_cr_list().querySelectorAll('[data-crlinkid]').forEach((item) => {
+                    item.classList.remove("_choice")
+                });
+                
+                _elm_cr_list().querySelectorAll('[data-crid]').forEach((item) => {
+                    item.classList.remove("_choice")
+                });
+                
+                // active
+                if(elm2 = _elm_cr_list().querySelector(`[data-crid="${attrData}"]`)){
+                    elm2.classList.add('_choice');
+                }
+                
+                if(elm2 = _elm_cr_list().querySelector(`[data-crlinkid="${attrData}"]`)){
+                    elm2.classList.add('_choice');
+                }
+                
             });
-            document.querySelector('.view-tag-shopping').addEventListener('click', function() {
-                document.querySelector('#cr-list-leadgen').classList.add('hidden');
-                document.querySelector('#cr-list-tag').classList.remove('hidden');
-                document.querySelector('.view-tag-shopping').classList.add('hidden');
-                document.querySelector('.view-leadgen').classList.remove('hidden');
-            });
+            
             
             var _istop = function () { 
                 return document.querySelector('.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top');
@@ -1765,8 +1826,9 @@ var tagteamFocusCase = () => {
                     var divLoading = document.createElement('div');
                     divLoading.setAttribute('id', 'cr-loading');
                     divLoading.innerText = 'Loading template..';
-                    divLoading.style.textAlign = 'right';
+                    divLoading.style.textAlign = 'left';
                     divLoading.style.color = 'red';
+                    divLoading.style.paddingBottom = '12px';
                     document.querySelector('canned-response-dialog search-panel').appendChild(divLoading);
                     
                     

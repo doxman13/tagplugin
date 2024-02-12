@@ -3069,17 +3069,46 @@ function global_case(optionkl__disable_dialog) {
                     
                     var _link_dfa = getVariableSheetByKeyAndLanguage('DFA team folder', window.keylanguage);
                     var _link_ec = getVariableSheetByKeyAndLanguage('EC team folder', window.keylanguage);
+                    var _link_udpga4 = getVariableSheetByKeyAndLanguage('UDP - for GA4 team folder', window.keylanguage);
+                    var _lst_prenote_cus = [];
+                    var _lst_quicklink_cus = () => {
+                        if(__folders_preoncall = localStorage.getItem('__folders_preoncall')) {
+                            __folders_preoncall_arr = __folders_preoncall.split('|+|');
+                            __folders_preoncall_arr.forEach((item) => {
+                                var [_aname, _bname] = item.split('|-|');
+                                if(_aname && _bname) {
+                                    _lst_prenote_cus.push(item);
+                                }
+                            })
+                        }
+                    };
+                    
+                    _lst_quicklink_cus();
+                    
                     var _content = '';
                     if(_link_dfa || _link_ec) {
                         _content = `<small>Quick access:</small> `;
                         if(_link_dfa) {
-                            _content += `<a href="${_link_dfa}" target="_blank">Folder DFA</a>, `;
+                            _content += `<a href="${_link_dfa}" target="_blank">DFA</a>, `;
                         }
 
                         if(_link_ec) {
-                            _content += `<a href="${_link_ec}" target="_blank">Folder EC</a>`;
+                            _content += `<a href="${_link_ec}" target="_blank">EC</a>, `;
                         }
+                        
+                        if(_link_udpga4) {
+                            _content += `<a href="${_link_udpga4}" target="_blank">UDP GA4</a>, `;
+                        }
+                        
+                        _lst_prenote_cus.forEach((item) => {
+                            var [_name, _url] = item.split('|-|');
+                            var _key = `${_name}|-|${_url}`;
+                            _content += `<span data-parentquickaccess="${_key}"><a href="${_url}" target="_blank" title="${_url}" >${_name}</a><span data-btnclk="addQuickAccess" data-action="remove" title="delete this">X</span></span>, `;
+                        })
+                        
                     }
+                    _content += `<span data-btnclk="addQuickAccess" data-action="add" title="Add your folder quick link" >+</span>`;
+                    
                     var _lst = `
                     <span class="_popup_input">
                         ${_content}
@@ -3124,6 +3153,41 @@ function global_case(optionkl__disable_dialog) {
                         }
 
                     })
+                }
+                
+                if(_action === 'addQuickAccess') {
+                        if(elm.getAttribute('data-action') == 'add') {
+                            // console.log('addQuickAccess', 123);
+                            if(_name = prompt('Name')) {
+                                if(_url = prompt('URL')) {
+                                    var _key = `${_name}|-|${_url}`;
+                                    elm.insertAdjacentHTML('beforeBegin', `<span data-parentquickaccess="${_key}"><a href="${_url}" target="_blank" title="${_url}">${_name}</a><span data-btnclk="addQuickAccess" data-action="remove" title="delete this" >X</span></span>, `);
+                                    
+                                    
+                                    var __folders_preoncall_str = localStorage.getItem('__folders_preoncall') || '';
+                                    __folders_preoncall_arr = __folders_preoncall_str.split('|+|');
+                                    __folders_preoncall_arr = __folders_preoncall_arr.filter(function (el) {
+                                        return el.replace(/(\r\n|\n|\r)/gm,"")
+                                    });
+                                    
+                                    __folders_preoncall_arr.push(_key);
+                                    localStorage.setItem('__folders_preoncall', __folders_preoncall_arr.join('|+|'));
+                                }
+                            }   
+                        }
+                        
+                        if(elm.getAttribute('data-action') == 'remove') {
+                            if(!window.confirm("You sure remove?")) return;
+                            var _parent = elm.closest('[data-parentquickaccess]');
+                            var _key = _parent.getAttribute('data-parentquickaccess');
+                            _parent.remove();
+                            
+                            // storage
+                            var __folders_preoncall_str = localStorage.getItem('__folders_preoncall') || '';
+                            
+                            localStorage.setItem('__folders_preoncall', __folders_preoncall_str.replace(_key, ''));
+                            
+                        }
                 }
 
                 if(_action === 'cdtx__uioncall_choice_removeitem') {
@@ -3267,10 +3331,10 @@ function global_case(optionkl__disable_dialog) {
                             `;
                             
                         // overwrite
-                        if(sheetdata = getSheetByTabName('Status Note Case')) {
+                        if(sheetdata = getSheetByTabName('Status Note Hotkey')) {
                             _lst = '';
                             sheetdata.forEach((item) => {
-                                _lst += `<span class="_sub_i_li" data-key="${item.Title}" style="background-color: ${item.Color}" ></span>`;
+                                _lst += `<span class="_sub_i_li" data-key="${item.TitleSubnote}" style="background-color: ${item.ColorSubnote}" ></span>`;
                             })
                         }
                         
@@ -4698,7 +4762,6 @@ function global_case(optionkl__disable_dialog) {
 
             // if(!document.querySelector('#kl_tagteam_inline_style')) {
                 
-            //     var style_tag = `<style id="kl_tagteam_inline_style">${window.dataTagteam.panel_div_style}</style>`;
             //     var style_tag = _TrustScript(style_tag);
             //     document.body.insertAdjacentHTML("afterEnd", style_tag);
             // }
@@ -4723,6 +4786,9 @@ function global_case(optionkl__disable_dialog) {
                     // ===========
                     // Alway load
                     // ===========
+                        recheckVersionForResetData();
+                        // Check email cc
+                        detechAMemailMissing();
                         // Load button
                         addShortCutBtn();
                         // add infocase
@@ -6201,9 +6267,22 @@ function global_case(optionkl__disable_dialog) {
         
         addDashboardChklstSOP();
         addDashboardCheckWinCriteria();
-        // addBoadListEmailTemplate();
+        addBoadListEmailTemplate();
         
         lastVisitCase();
+        
+
+
+        // dashboard_bookmark_lsttool
+        addBoardIframe({
+            'urlframe_default': 'https://cdtx.lyl.vn/_support/4agent/index.php',
+            'urlonsheet_bykey': 'dashboard_bookmark_lsttool',
+            'btn_keyclick': 'dashboard_bookmark_lsttool',
+            'tooltip': 'Tools on Bookmark click',
+            'icon_url': assets_img_bookmark,
+            'elm_pos_show': `[data-debugid="goteam"]`,
+            
+        })
         
         
     }

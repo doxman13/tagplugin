@@ -3,22 +3,20 @@
 
 <head>
     <title>Sugoi TAG TEAM options</title>
-    <link href='http://fonts.googleapis.com/css?family=Rubik' rel='stylesheet' type='text/css'>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <script src="jquery.min.js"></script>
-    <script src="popper.min.js"></script>
-    <script src="bootstrap.min.js"></script>
-    <script src="474611b40f.js" crossorigin="anonymous"></script>
     <style>
-        body {
-      max-height: 500px;
-      height:auto;
-      width: 550px;
-      padding: 15px;
-      margin-bottom: 20px;
-     font-family: Rubik;
+            *, ::after, ::before {
+        box-sizing: border-box;
+    }
+    body {
+        max-height: 500px;
+        height:auto;
+        width: 550px;
+        padding: 15px;
+        margin-bottom: 20px;
+        font-family: Roboto, Rubik, 'Tahoma';
+        background: #fefefe;
     }
     h1 {    
         background-image: linear-gradient( 109.6deg,  rgba(39,142,255,1) 11.2%, rgba(98,113,255,0.78) 100.2% );
@@ -29,21 +27,13 @@
         text-align: center;
       display: block;
     }
-    button {
-      text-align: center;
-        margin: 0 auto;
-        display: block;
-        width: 100%;
-        background: transparent;
-        border: 2px solid #000;
-        padding: 5px 15px;
-        font-weight: bold;
-        transition: all .25s;
-      cursor: pointer;
-    }
-    p{
+    p {
        font-size:14px; 
     }
+    p:not(:last-child) {
+        margin-bottom: 12px;
+    }
+
     button:hover {
       background: #000;
       color: #fff;
@@ -55,27 +45,64 @@
     }
     
     button, input, optgroup, select, textarea{
-        padding:5px;
+        padding: 6px;
         border-radius:3px;
         border:1px solid lightgray;
         background-color:white;
-        font-size:13px !important;
-        }
+        font-size: 13px;
+        margin: 0;
+        outline: 0;
+    }
+    .cdtx_option_form summary {
+        margin-bottom: 8px;
+        cursor: pointer;
+        user-select: none;
+    }
+    .btn {
+        display: inline-block;
+        background: #eee;
+        cursor: pointer;
+        user-select: none;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        font-weight: normal;
+        padding: 6px 10px;
+        margin-right: 10px;
+    }
+
+    .btn:hover {
+        background: #ddd;
+        border: 1px solid #ccc;
+        color: #000
+    }
+
+    .btn.btn-outline-success {
+        border-color: #009688;
+        color: #009688;
+    }
+    .btn.btn-outline-danger  {
+        border-color: #FF5722;
+        color: #FF5722;
+    }
+
+    #yourGTM {
+        margin-right: 10px;
+    }
+
     #save{
         font-size:14px;
         font-weight:bold;
     }
         .btn-outline-primary{
-        border-color:rgba(39,142,255,1) !important;
-        color:rgba(39,142,255,1) ;
-             border:2px solid;
+            border-color:rgba(39,142,255,1) !important;
+            color:rgba(39,142,255,1) ;
+            border:1px solid;
         }
        .btn-outline-primary:hover , .btn-outline-primary:focus , .btn-outline-primary:active{
-        background-color:rgba(39,142,255,1) !important;
-        border-color:rgba(39,142,255,1) !important;
-           border:2px solid;
-           color:white;
-        
+            background-color:rgba(39,142,255,1) !important;
+            border-color:rgba(39,142,255,1) !important;
+            border:1px solid;
+            color:white;
         }
     .info-wrap,.tabs-wrap{
         padding:0 !important;
@@ -85,10 +112,9 @@
         margin-bottom: 0px;
     }
     
+    
+
     /* OPTION */
-    [data-optionkl="Thailand"] .optionkl__option ,
-    [data-optionkl="English"] .optionkl__option ,
-    [data-optionkl="Japan"] .optionkl__option ,
     [data-optionkl] .optionkl__option {
       font-size: 14px;
       border: 1px solid #ddd;
@@ -97,49 +123,35 @@
       margin-bottom: 10px;
     }
     
-    [data-optionkl="Thailand"] .optionkl__option label ,
-    [data-optionkl="English"] .optionkl__option label ,
-    [data-optionkl="Japan"] .optionkl__option label ,
     [data-optionkl] .optionkl__option label {
       user-select: none;
     }
     
-    [data-optionkl="Thailand"] .optionkl__option-row ,
-    [data-optionkl="English"] .optionkl__option-row ,
-    [data-optionkl="Japan"] .optionkl__option-row ,
     [data-optionkl] .optionkl__option-row {
       display: flex;
       flex-wrap: wrap;
+
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
     }
     
-    [data-optionkl="Thailand"] .optionkl__option-col ,
-    [data-optionkl="English"] .optionkl__option-col ,
-    [data-optionkl="Japan"] .optionkl__option-col ,
     [data-optionkl] .optionkl__option-col {
       flex-basis: 0;
       -webkit-box-flex: 1;
       flex-grow: 1;
     }
     
-    [data-optionkl="Thailand"] .optionkl__option-col:not(:last-child) ,
-    [data-optionkl="English"] .optionkl__option-col:not(:last-child) ,
-    [data-optionkl="Japan"] .optionkl__option-col:not(:last-child) ,
     [data-optionkl] .optionkl__option-col:not(:last-child) {
       margin-right: 10px;
     }
     
-    [data-optionkl="Thailand"] .optionkl__option-col input[type="text"] ,
-    [data-optionkl="English"] .optionkl__option-col input[type="text"] ,
-    [data-optionkl="Japan"] .optionkl__option-col input[type="text"] ,
     [data-optionkl] .optionkl__option-col input[type="text"] {
       width: 100%;
       color: #444;
     }
     
     
-    [data-optionkl="Thailand"] input[type="checkbox"] ,
-    [data-optionkl="English"] input[type="checkbox"] ,
-    [data-optionkl="Japan"] input[type="checkbox"] ,
     [data-optionkl] input[type="checkbox"] {
         width: auto;
     }
@@ -147,121 +159,63 @@
 
     /* OPTION */
     
-    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active , .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover ,.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:focus {
-        color: black;
-        padding-bottom: 7px;
-        background-color: #fff;
-        border: none;
-        border-bottom: 3.2px solid rgba(39,142,255,1);
-        font-weight:bold;
-    }
-        .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.purple-link.active , .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.purple-link:hover ,.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.purple-link:focus {
-        color: black;
-        padding-bottom: 7px;
-        background-color: #fff;
-        border: none;
-        border-bottom: 3.2px solid #b367f5;
-        font-weight:bold;
-    }
-            .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.green-link.active , .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.green-link:hover ,.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.green-link:focus {
-        color: black;
-        padding-bottom: 7px;
-        background-color: #fff;
-        border: none;
-        border-bottom: 3.2px solid #6bba32;
-        font-weight:bold;
-    }
-                .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.orange-link.active , .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.orange-link:hover ,.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.orange-link:focus {
-        color: black;
-        padding-bottom: 7px;
-        background-color: #fff;
-        border: none;
-        border-bottom: 3.2px solid #eba400;
-        font-weight:bold;
-    }
-        .nav-tabs .nav-link {
-       outline:none !important;
-            border:none;
-            border-radius:0; 
-            font-weight:normal;
-            color: grey;
-    }
-        .nav-tabs .nav-item {
-        margin-bottom: 0px;
-        margin: 0 5px;
-    }
-        table{
-        font-size:12px !important;
+
+
+        span.optionkl_flagmarket {
+            background-size: contain;
+            position: absolute;
+            height: 33px;
+            width: 33px;
+            z-index: 999;
+            left: calc(100% + 20px);
+            top: 50%;
+            opacity: 1;
+            transform: translateY(-50%);
+        }
+        span.optionkl_logo {
+            position: relative;
+    display: inline-block;
+        }
+        [data-optionkl="Vietnam"] span.optionkl_flagmarket{background-image: url('/assets/img/flag_vietnam.svg')}
+        [data-optionkl="China"] span.optionkl_flagmarket{background-image: url('/assets/img/flag_china.svg')}
+        [data-optionkl="Korea"] span.optionkl_flagmarket{background-image: url('/assets/img/flag_korea.svg')}
+        [data-optionkl="English"] span.optionkl_flagmarket{background-image: url('/assets/img/flag_english.svg')}
+        [data-optionkl="Indonesia"] span.optionkl_flagmarket{background-image: url('/assets/img/flag_indonesia.svg')}
+        [data-optionkl="Thailand"] span.optionkl_flagmarket{background-image: url('/assets/img/flag_thailand.svg')}
+        [data-optionkl="Japan"] span.optionkl_flagmarket{background-image: url('/assets/img/flag_japan.svg')}
+
+        div#status {
+            color: #000;
+            margin-bottom: 25px;
+        }
+
+        [data-optionkl]:not([data-gtmtodo="start"]) ._yourGTM #stopGTM {
+            filter: grayscale(1);
         }
         
-         table thread{
-        font-size:12px !important;
+        [data-gtmtodo="start"] ._yourGTM #startGTM {
+            filter: grayscale(1);
         }
-    .table td, .table th {
-        padding: .75rem;
-        vertical-align: top;
-        border-top: 1px solid #dee2e6;
-        font-weight: normal;
-    }
-        table th{
-           /*color:rgba(39,142,255,1) ;*/
-            color:black;
-        }
-        #impression a{
-            color:#b367f5 !important;
-        }
-        #link a{
-            color:#6bba32;
-        }
-         #pending a{
-            color:#eba400 !important;
-        }
-        .table thead th {
-        vertical-align: bottom;
-        border-bottom: 1px solid #dee2e6;
-    }
-        .nav-tabs {
-        border-bottom: none;
-    }
-        table tbody {
-      display: block;
-      max-height: 330px;
-      overflow-y: scroll;
-    }
-    
-    table thead, table tbody tr {
-      display: table;
-      width: 100%;
-      table-layout: fixed;
-    }
-    .accordion .card-header:after {
-        font-family: 'FontAwesome';  
-        content: "\f068";
-        float: right; 
-    }
-    .accordion .card-header.collapsed:after {
-        /* symbol for "collapsed" panels */
-        content: "\f067"; 
-    }
-    .accordion {
-         font-size: 13px;
-    }
-    .card-body a{
-        color:rgba(39,142,255,1) !important;
-        }
-        .google-icon-color{
-        color:rgba(31, 130, 236, 1);
-        }
-        .list-of-links {
-            max-height:350px;
-            overflow-y:scroll;
+        
+        [data-gtmtodo="start"] input[name="yourGTM"] {
+            
+            border-color: #009688;
+            color: #009688;
+
         }
   </style>
 </head>
 
 <body>
     <div class="container-fluid" id="optionkl">
-        <h1> KL TAG TEAM </h1>
+        <span class="optionkl_logo">
+            <img src="/assets/img/logo_team.svg" alt="logo tagteam" class="logotagteam" style="
+                height: 50px;
+                width: auto;
+                max-width: 100%;
+            ">
+        </span>
+
         <div class="col-12 info-wrap">
             <div class="selector-country">
                 <p> Choose your country :
@@ -276,15 +230,14 @@
                         <option value="Other">Other</option>
                     </select>
             </div>
-            <p>Your current country : <b><span id="c_country">xxxxxx</span></b></p>
             <div class="optionkl__option">
                 <div class="optionkl__option-row">
                     <label class="optionkl__option-col"><input type="text" id="optionkl__inputyourname" placeholder="Signal name, ex: Tim Cook"></label>
                     <div class="optionkl__option-col" style="flex: 0 0 10%;">
                         <select id="optionkl__modecase">
+                            <option value="ExtensionDefault">Release version</option>
                             <option value="Auto">Beta</option>
                             <option value="Development">DEV Mode</option>
-                            <option value="ExtensionDefault">Release version</option>
                             <option value="Basic">Basic</option>
                         </select>
                     </div>
@@ -308,12 +261,12 @@
             </div>
             <p>Your email : <input class="col-6" id="youremail" type="text" name="youremail" value="" placeholder="xxx@mail.com"></p>
             <div class="_yourGTM">
-                <p>GTM Injector : <input class="col-4 mr-2" id="yourGTM" type="text" name="yourGTM" value=""><button id="startGTM" type="button" class="btn btn-outline-success mx-2 col-2"><i class="far fa-save" style="font-size:12px;margin-right:0.5rem"></i><span style="font-size:12px;">Start</span></button><button id="stopGTM" type="button" class="btn btn-outline-danger mx-2 col-2"><i class="far fa-save" style="font-size:12px;margin-right:0.5rem"></i><span style="font-size:12px;">Stop</span></button></p>
+                <p>GTM Injector : <input class="col-4 mr-2" id="yourGTM" type="text" name="yourGTM" value=""><button id="startGTM" type="button" class="btn btn-outline-success mx-2 col-2"><span style="font-size:12px;">Start</span></button><button id="stopGTM" type="button" class="btn btn-outline-danger mx-2 col-2"><span style="font-size:12px;">Stop</span></button></p>
             </div>
             <div id="status"></div>
             <div class="row">
                 <div class="col-12">
-                    <button id="save" type="button" class="btn btn-outline-primary mt-2"><i class="far fa-save" style="font-size:16px;margin-right:0.5rem"></i><span style="font-size:14px;">SAVE</span></button>
+                    <button id="save" type="button" class="btn btn-outline-primary mt-2"><span style="font-size:14px;">SAVE</span></button>
                 </div>
             </div>
         </div>

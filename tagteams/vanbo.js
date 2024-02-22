@@ -1859,7 +1859,7 @@ var tagteamFocusCase = () => {
                         
                         try {
                             
-                            if(key.includes('so ver')) {
+                            if(key.startsWith('ts so')) {
                                 if(document.querySelector('.is-top [debug-id="solution_offered_checkbox"].disabled')) {                                        
                                     Toastify({
                                         text: 'Please update Tracking Issue Time',

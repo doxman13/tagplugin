@@ -1994,6 +1994,33 @@ function global_case(optionkl__disable_dialog) {
                 if(_action === 'popup_update_LT') {
                     popupUpdateLT()
                 }
+                
+                
+                if(_action === 'remind_1st_email_ec') {
+                    if(location.hostname != 'cases.connect.corp.google.com') return false;
+                    
+                    document.querySelector('.cdtxemailpanel-item[title="ec_hightouch_mms"]').click();
+
+                    updateFieldCase2Storage('isremind_1stmail_ec', 1, __case_id(), (response) => {
+                        if(!response.case_id) return false;    
+                        elm.remove()
+                    });   
+                }
+                
+                if(_action === 'remind_add_precall_note') {
+                    if(location.hostname != 'cases.connect.corp.google.com') return false;
+                    
+                    sAddPrecallNote();
+
+                    updateFieldCase2Storage('isremind_precall_ec', 1, __case_id(), (response) => {
+                        if(!response.case_id) return false;    
+                        elm.remove()
+                    });
+                }
+                
+                
+                                        
+                
 
                 if(_action === 'crawl_case') {
                     saveCaseNow(__case_id(), (caseload) => {
@@ -2105,8 +2132,8 @@ function global_case(optionkl__disable_dialog) {
                                     
                                     replaceAllHtmlElement(_emailbodycontenttop, window.dataCase);
                                     
-                                    _emailbodycontent.style.padding = '0px';
-                                    _emailbodycontent.style.width = '100%';
+                                    // _emailbodycontent.style.padding = '0px';
+                                    // _emailbodycontent.style.width = '100%';
                                     
                                     _sub_modal_remove();
                                     _reupdate_outer();
@@ -4014,50 +4041,8 @@ function global_case(optionkl__disable_dialog) {
                                     
                                     _elm_note_add_precall().querySelector('._note_add_precall-addprecall').addEventListener('click', function(ev){
                                         var this_elm  = ev.target;
-                            
-                                        var _casenote = `.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="case-note"]`;
-                                        var _casenote_editor = _casenote + ` .editor[contenteditable="true"]`;
-                                        var _casenote_precall = _casenote + ` #pre-call`;
                                         
-                      
-                                        var ntime = 0;
-                                        var myTime = setInterval(() => {
-                    
-                                            if(document.querySelector(_casenote)) {
-                                                console.log('cdtx - log 1')
-                                                if(document.querySelector(_casenote + ` #cdtx__precallbtn`)) {
-                                                    console.log('cdtx - log 2')
-                                                    _casenote_precall = _casenote + ` #cdtx__precallbtn`;   
-                                                }
-                                                if(document.querySelector(_casenote_precall)) {
-                                                    console.log('cdtx - log 3')
-                                                    document.querySelector(_casenote_precall).click();
-                    
-                                                    if(document.querySelector(_casenote_editor).innerText.trim() !== "") {
-                                                        
-                                                        clearInterval(myTime);
-                                                    }
-                                                }
-                                            } else {
-                                                if(!document.querySelector('material-fab.case-note')) {
-                                                    console.log('cdtx - log 1')
-                                                    document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter')); 
-                                                    if(document.querySelector('material-fab.case-note')) {
-                                                        document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter')); 
-                                                        document.querySelector('material-fab.case-note').click();
-                                                    }
-                                                } else {
-                                                    console.log('cdtx - log 1.2')
-                                                    document.querySelector('material-fab.case-note').click();
-                                                }
-                                            }
-                    
-                                            if(ntime > 10) {
-                                                clearInterval(myTime);
-                                            }
-                                            ntime++;
-                                            
-                                        }, 500);
+                                        sAddPrecallNote();
                     
                                         this_elm.closest('._note_add_precall').remove();
                                     });    
@@ -4336,6 +4321,15 @@ function global_case(optionkl__disable_dialog) {
                 <span class="_casecalendar_info-50per">
                     <span data-title="Tasks:" data-infocase="tasks" ></span>
                     <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.tasks || ''}" ></span>
+                    
+                    ${_data.tasks.includes("Enhanced Conversions") ? `
+                            <span class="remind_1stmail_prenote_ec" >
+                            ${!_data.isremind_1stmail_ec ? '<span data-btnclk="remind_1st_email_ec">1st mail EC</span>' : ''}
+                            ${!_data.isremind_precall_ec ? '<span data-btnclk="remind_add_precall_note">Precall</span></span>' : ''}
+                            </span>
+                        ` : '' 
+                    }
+                    
                 </span>
                 <span class="_casecalendar_info-50per" data-title="Attribution Model:" data-infocase="customer_attributionmodel" ></span>
                 

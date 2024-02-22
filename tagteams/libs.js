@@ -3495,7 +3495,7 @@ function timeLeftGoogleCalendar() {
     
     
     // Search kim realtime
-    var kim_realtime = document.querySelector(`.H3tRZe`);
+    var kim_realtime = document.querySelector(`[data-principal-ids][data-column-index] > div[style*="top"]`);
     if(!kim_realtime) return false;
     
 
@@ -3689,7 +3689,7 @@ function timeLeftGoogleCalendar() {
             const element = _cols[i1];
             // console.log('calendarGetInfoRealtime', )
             // Nếu trong cột ngày có tồn tại kim thời gian thực => cột của ngày hiện tại
-            if(element.querySelector('.H3tRZe')) {
+            if(element.querySelector('[data-principal-ids][data-column-index] > div[style*="top"]')) {
                 var _col = element;
                 var _pos_events = _col.querySelectorAll("[data-eventid]"); 
                 
@@ -3707,7 +3707,7 @@ function timeLeftGoogleCalendar() {
                     }
                 
                     // Lấy vị trí thanh realtime point
-                    var _pos_realtime_elm = _col.querySelector('.H3tRZe');
+                    var _pos_realtime_elm = _col.querySelector('[data-principal-ids][data-column-index] > div[style*="top"]');
                     var _pos_realtime_elm_time = 0;
                     if(_pos_realtime_elm) {
                         _pos_realtime_elm_time = convertPostion(_pos_realtime_elm, _col);
@@ -3782,7 +3782,7 @@ function timeLeftGoogleCalendar() {
             }
             
             
-            if(!element.querySelector('.H3tRZe')) {
+            if(!element.querySelector('[data-principal-ids][data-column-index] > div[style*="top"]')) {
                 if(panel_info = document.querySelector('.panel_info')) {
                     var _elmpause = panel_info.querySelector('.pause');
                     if(_elmpause) _elmpause.remove();
@@ -6870,6 +6870,52 @@ var addShortCutBtn = () => {
     }
 };
 
+
+function sAddPrecallNote() {
+    var _casenote = `.write-cards-wrapper:not([style*="display:none"]):not([style*="display: none"]) card.write-card.is-top[card-type="case-note"]`;
+    var _casenote_editor = _casenote + ` .editor[contenteditable="true"]`;
+    var _casenote_precall = _casenote + ` #pre-call`;
+    
+
+    var ntime = 0;
+    var myTime = setInterval(() => {
+
+        if(document.querySelector(_casenote)) {
+            console.log('cdtx - log 1')
+            if(document.querySelector(_casenote + ` #cdtx__precallbtn`)) {
+                console.log('cdtx - log 2')
+                _casenote_precall = _casenote + ` #cdtx__precallbtn`;   
+            }
+            if(document.querySelector(_casenote_precall)) {
+                console.log('cdtx - log 3')
+                document.querySelector(_casenote_precall).click();
+
+                if(document.querySelector(_casenote_editor).innerText.trim() !== "") {
+                    
+                    clearInterval(myTime);
+                }
+            }
+        } else {
+            if(!document.querySelector('material-fab.case-note')) {
+                console.log('cdtx - log 1')
+                document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter')); 
+                if(document.querySelector('material-fab.case-note')) {
+                    document.querySelector("material-fab-speed-dial").dispatchEvent(new Event('mouseenter')); 
+                    document.querySelector('material-fab.case-note').click();
+                }
+            } else {
+                console.log('cdtx - log 1.2')
+                document.querySelector('material-fab.case-note').click();
+            }
+        }
+
+        if(ntime > 10) {
+            clearInterval(myTime);
+        }
+        ntime++;
+        
+    }, 500);
+}
 
 
 

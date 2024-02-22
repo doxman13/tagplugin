@@ -57,4 +57,29 @@
 }
 
 
+
+.remind_1stmail_prenote_ec {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.remind_1stmail_prenote_ec [data-btnclk] {
+    display: inline-block;
+    background: #FF9800;
+    color:#fff;
+    border-radius: 3px;
+    padding: 2px 6px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 80%;
+}
+
+.remind_1stmail_prenote_ec [data-btnclk]:hover {
+    background: #607D8B
+}
+
+
+
+
+
             `;

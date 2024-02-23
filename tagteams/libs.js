@@ -3687,7 +3687,7 @@ function timeLeftGoogleCalendar() {
 
         for (let i1 = 0; i1 < _cols.length; i1++) {
             const element = _cols[i1];
-            // console.log('calendarGetInfoRealtime', )
+            console.log('calendarGetInfoRealtime', element)
             // Nếu trong cột ngày có tồn tại kim thời gian thực => cột của ngày hiện tại
             if(element.querySelector('[data-principal-ids][data-column-index] > div[style*="top"]')) {
                 var _col = element;
@@ -3699,7 +3699,7 @@ function timeLeftGoogleCalendar() {
                     var _elm = _pos_events[index];
                     
                     // Lấy case ID trong title
-                    var _get_title = _elm.querySelector('.FAxxKc');
+                    var _get_title = _elm; // get this //_elm.querySelector('.I0UMhf');
                     var _get_caseid = '';
                     if(_get_title) {
                         _get_caseid = getOnlyCaseId(_get_title.innerText);
@@ -3719,7 +3719,7 @@ function timeLeftGoogleCalendar() {
                     if(_get_caseid) {
                         var _timecasecurrent = convertPostion(_elm, _col);
 
-                        // console.log('_get_caseid', _get_caseid);
+                        console.log('calendarGetInfoRealtime 2', _get_caseid, _timecasecurrent);
                         
                         // // 1. Nếu tồn tại Google Meet ID  --- 27/10 Google have remove
                         // var _jslog = _elm.getAttribute('jslog'); --- 27/10 Google have remove
@@ -3731,7 +3731,7 @@ function timeLeftGoogleCalendar() {
                             }
                             if(_timecasecurrent - _pos_realtime_elm_time > 0) {
                                 var _minute_timeleft = convertPostion2Minute(_timecasecurrent - _pos_realtime_elm_time);
-                                if(IS_DEBUG) { console.log("time minute left: ", _minute_timeleft); }
+                                if(IS_DEBUG) { console.log("calendarGetInfoRealtime time minute left: ", _minute_timeleft); }
                                 
                                 var _temp_info = {
                                     'timeleft': _minute_timeleft,
@@ -3761,7 +3761,7 @@ function timeLeftGoogleCalendar() {
                         // 1.2 Get task
                         // console.log('data-eventid', _elm.getAttribute('data-eventid'), _elm.getAttribute('data-eventid').includes('tasks_'));
                         if(_elm.getAttribute('data-eventid').includes('tasks_')) {
-                            if(!_elm.querySelector('.w9eXqe')) {
+                            if(_elm.innerText.includes('task: ')) {
                                 var _temp_info = {
                                     'timeleft': _minute_timeleft,
                                     'caseid': _get_caseid,

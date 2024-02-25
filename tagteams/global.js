@@ -1997,7 +1997,9 @@ function global_case(optionkl__disable_dialog) {
                 
                 
                 if(_action === 'remind_1st_email_ec') {
-                    if(location.hostname != 'cases.connect.corp.google.com') return false;
+                    var _attrcaseid = elm.getAttribute("data-forcaseid");
+                    if(!__case_id()) return false;
+                    if(__case_id() != _attrcaseid) return false;
                     
                     document.querySelector('.cdtxemailpanel-item[title="ec_hightouch_mms"]').click();
 
@@ -2008,7 +2010,10 @@ function global_case(optionkl__disable_dialog) {
                 }
                 
                 if(_action === 'remind_add_precall_note') {
-                    if(location.hostname != 'cases.connect.corp.google.com') return false;
+                    var _attrcaseid = elm.getAttribute("data-forcaseid");
+                    if(!__case_id()) return false;
+                    if(__case_id() != _attrcaseid) return false;
+                    
                     
                     sAddPrecallNote();
 
@@ -4324,8 +4329,8 @@ function global_case(optionkl__disable_dialog) {
                     
                     ${_data.tasks.includes("Enhanced Conversions") ? `
                             <span class="remind_1stmail_prenote_ec" >
-                            ${!_data.isremind_1stmail_ec ? '<span data-btnclk="remind_1st_email_ec">1st mail EC</span>' : ''}
-                            ${!_data.isremind_precall_ec ? '<span data-btnclk="remind_add_precall_note">Precall</span></span>' : ''}
+                            ${!_data.isremind_1stmail_ec ? `<span data-btnclk="remind_1st_email_ec" data-forcaseid="${_data.case_id}" >1st mail EC</span>` : ''}
+                            ${!_data.isremind_precall_ec ? `<span data-btnclk="remind_add_precall_note" data-forcaseid="${_data.case_id}" >Precall</span></span>`: ''}
                             </span>
                         ` : '' 
                     }

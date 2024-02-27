@@ -4281,6 +4281,7 @@ function global_case(optionkl__disable_dialog) {
                     window.htmlPanelTemp = _panel.innerHTML;
                 }
             }
+            var __tasks = _data.tasks || '';
             var _contenthtml = `
                 <span class="_casecalendar_info-50per" data-title="Case ID:"  data-info="case_id" >
                     <a href="https://cases.connect.corp.google.com/#/case/{%case_id%}" ${location.hostname != 'cases.connect.corp.google.com' ? ` target="_blank" ` : ''} data-infocase="case_id" ></a><span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.case_id}" ></span>
@@ -4327,7 +4328,8 @@ function global_case(optionkl__disable_dialog) {
                     <span data-title="Tasks:" data-infocase="tasks" ></span>
                     <span class="copycaseid" data-btnclk="copy_attrcopycontent" data-copycontent="${_data.tasks || ''}" ></span>
                     
-                    ${_data.tasks.includes("Enhanced Conversions") ? `
+                    ${
+                    __tasks.includes("Enhanced Conversions") ? `
                             <span class="remind_1stmail_prenote_ec" >
                             ${!_data.isremind_1stmail_ec ? `<span data-btnclk="remind_1st_email_ec" data-forcaseid="${_data.case_id}" >1st mail EC</span>` : ''}
                             ${!_data.isremind_precall_ec ? `<span data-btnclk="remind_add_precall_note" data-forcaseid="${_data.case_id}" >Precall</span></span>`: ''}
